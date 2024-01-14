@@ -1,18 +1,22 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-const categorySchema = new mongoose.Schema({
-    name: {
-        type: String,
+const favoriteSchema = new mongoose.Schema({
+    productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
         required: true
     },
-    description: {
-        type: String,
-        required: false
-    }
-}, {
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
+    }, 
+    {
     timestamps: true
-});
+    },
+);
 
-const Category = mongoose.model('Category', categorySchema);
+const Favorite = mongoose.model("Favorite", favoriteSchema);
 
-export default Category;
+export default Favorite;
