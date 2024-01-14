@@ -6,13 +6,13 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Connect to MongoDB
-mongoose.connect(process.env.DBCONN_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect(process.env.DBCONN_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Set up routes
 const app = express();
-app.use('/auth', /* routes for authController */);
-app.use('/categories', /* routes for categoryController */);
-app.use('/products', /* routes for productController */);
+// app.use('/auth', /* routes for authController */);
+// app.use('/categories', /* routes for categoryController */);
+// app.use('/products', /* routes for productController */);
 
 
 
