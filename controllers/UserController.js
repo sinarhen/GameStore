@@ -1,9 +1,9 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import UserModel from '../models/User.js';
 
-import UserModel from '../model/User.js';
 
-const register = async (req, res) => {
+export const register = async (req, res) => {
     try {
         const password = req.body.password;
         const salt = await bcrypt.genSalt(10);
@@ -12,7 +12,7 @@ const register = async (req, res) => {
         const doc = new UserModel({
             name: req.body.name,
             email: req.body.email,
-            passwordHack: hash,
+            passwordHash: hash,
         })
 
         const user = await doc.save();
@@ -41,8 +41,4 @@ const register = async (req, res) => {
             message: 'Failed to register',
         });
     }
-}
-
-export default {
-    register,
 }
