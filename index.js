@@ -1,7 +1,7 @@
 // Import necessary packages
 import express from 'express';
 import mongoose from 'mongoose';
-import product from './models/product.js';
+import product from './models/Product.js';
 import dotenv from 'dotenv';
 dotenv.config();
 
