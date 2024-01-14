@@ -3,6 +3,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import { register, login } from './controllers/UserController.js';
+import apiRouter from './routers/apiRouter.js';
 
 dotenv.config();
 
@@ -15,10 +16,13 @@ mongoose.connect(process.env.DBCONN_STRING)
 // Set up routes
 const PORT = process.env.PORT || 8000;
 const app = express();
+
 app.use(express.json());
 
 
 // Import routes
+app.use('/api', apiRouter);
+
 app.post("/auth/register", register);
 app.post("/auth/login", login);
 

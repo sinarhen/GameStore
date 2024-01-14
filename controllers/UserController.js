@@ -9,6 +9,25 @@ export const register = async (req, res) => {
         const password = req.body.password;
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
+        
+        var existingUser = await UserModel.findOne({
+            email: req.body.email,
+        })
+        if (existingUser){
+            return res.status(400).json({
+                message: 'User with such email already exists',
+            });
+        }
+
+        existingUser = await UserModel.findOne({
+            name: req.body.name,
+        })
+        if (existingUser){
+            return res.status(400).json({
+                message: 'User with such name already exists',
+            });
+        }
+
 
         const doc = new UserModel({
             name: req.body.name,
@@ -76,3 +95,4 @@ export const login = async (req, res) => {
         });
     }
 }
+
