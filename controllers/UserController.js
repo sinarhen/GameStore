@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import UserModel from '../models/User.js';
-
+import { generateToken } from '../utils/jwt.js';
 
 export const register = async (req, res) => {
     try {
@@ -17,17 +17,9 @@ export const register = async (req, res) => {
 
         const user = await doc.save();
 
-        const token = jwt.sign(
-            {
-                _id: user._id,
-            },
-            process.env.JWT_SECRET,
-            {
-                expiresIn: Date.now() + 1000 * 60 * 60 * 24 * 30, // 30 days 
-            }
-        );
+        const token = generateToken(user._id, user.name);
 
-        const { passwordHack, ...userData } = user._doc;
+        const { passwordHash, ...userData } = user._doc;
 
         res.json({
             ...userData,
@@ -66,15 +58,8 @@ export const login = async (req, res) => {
             });
         }
 
-        const token = jwt.sign(
-            {
-                _id: user._id,
-            },
-            process.env.JWT_SECRET,
-            {
-                expiresIn: Date.now() + 1000 * 60 * 60 * 24 * 30, // 30 days 
-            }
-        );
+        const token = generateToken(user._id, user.name); 
+
 
         const { passwordHash, ...userData } = user._doc;
 

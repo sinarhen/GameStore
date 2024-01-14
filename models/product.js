@@ -2,11 +2,6 @@ import mongoose from 'mongoose';
 import crypto from 'crypto'
 
 const productSchema = new mongoose.Schema({
-    id: {
-        type: String,
-        default: () => crypto.randomUUID(),
-        required: true
-    },
     name: {
         type: String,
         required: true,
