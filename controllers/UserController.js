@@ -150,3 +150,44 @@ export const changeEmail = async (req, res) => {
         })
     }
 }
+
+// delete user endpoint 
+export const deleteUser = async (req, res) => {
+    try {
+        const email = req.body.email;
+        const password = req.body.password;
+        const confirmPassword = req.body.confirmPassword;
+        
+        if (!email || !password) return res.status(400).json({ message: 'Missing email or password' });
+        if (!confirmPassword) return res.status(400).json({ message: 'Missing confirm password' });
+        if (password !== confirmPassword) return res.status(400).json({ message: 'Passwords do not match' });
+
+        const user = await UserModel.findOne({ email });
+        if (!user) {
+            return res.status(404).json({
+                message: 'User not found',
+            });
+        }
+
+
+
+        const passwordValid = await bcrypt.compare(
+            password,
+            user.passwordHash
+        );
+        if (!passwordValid) {
+            return res.status(401).json({
+                message: 'Invalid credentials',
+            });
+        }
+
+        await UserModel.deleteOne({ email });
+
+        res.json({ message: 'User deleted successfully' });
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: 'Failed to delete user',
+        });
+    }
+}
