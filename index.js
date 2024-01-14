@@ -11,7 +11,12 @@ dotenv.config();
 // mongoose.connect(process.env.DBCONN_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Set up routes
+const PORT = process.env.PORT || 8000;
 const app = express();
+app.use(express.json());
+
+
+
 // app.use('/auth', /* routes for authController */);
 // app.use('/categories', /* routes for categoryController */);
 // app.use('/products', /* routes for productController */);
@@ -19,4 +24,4 @@ const app = express();
 
 
 // Start the server
-app.listen(3000, () => console.log('Server started on port 3000'));
+app.listen(PORT, () => console.log('Server started on port 3000'));
