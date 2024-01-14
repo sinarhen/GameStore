@@ -2,7 +2,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import { register, login, changeEmail, changePassword } from './controllers/UserController.js';
 import apiRouter from './routers/apiRouter.js';
 
 dotenv.config();
