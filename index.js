@@ -2,7 +2,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import { register, login } from './controllers/UserController.js';
+import { register, login, changeEmail, changePassword } from './controllers/UserController.js';
 import apiRouter from './routers/apiRouter.js';
 
 dotenv.config();
@@ -25,6 +25,8 @@ app.use('/api', apiRouter);
 
 app.post("/auth/register", register);
 app.post("/auth/login", login);
+app.put("/auth/changeEmail", changeEmail);
+app.put("/auth/changePassword", changePassword);
 
 
 // Start the server
