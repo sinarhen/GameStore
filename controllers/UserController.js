@@ -23,8 +23,7 @@ export const register = async (req, res) => {
             },
             process.env.JWT_SECRET,
             {
-                // Expires in 30 days in timestamp unix format
-                expiresIn: Date.now() + 1000 * 60 * 60 * 24 * 30,
+                expiresIn: Date.now() + 1000 * 60 * 60 * 24 * 30, // 30 days 
             }
         );
 
@@ -39,6 +38,55 @@ export const register = async (req, res) => {
         console.log(err);
         res.status(500).json({
             message: 'Failed to register',
+        });
+    }
+}
+
+
+export const login = async (req, res) => {
+    try {
+        const user = await UserModel.findOne({
+            email: req.body.email,
+        });
+
+        if (!user) {
+            return res.status(404).json({
+                message: 'User not found',
+            });
+        }
+
+        const passwordValid = await bcrypt.compare(
+            req.body.password,
+            user.passwordHash
+        );
+
+        if (!passwordValid) {
+            return res.status(401).json({
+                message: 'Invalid credentials',
+            });
+        }
+
+        const token = jwt.sign(
+            {
+                _id: user._id,
+            },
+            process.env.JWT_SECRET,
+            {
+                expiresIn: Date.now() + 1000 * 60 * 60 * 24 * 30, // 30 days 
+            }
+        );
+
+        const { passwordHash, ...userData } = user._doc;
+
+        res.json({
+            ...userData,
+            token,
+        });
+
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({
+            message: 'Failed to login',
         });
     }
 }

@@ -2,7 +2,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import { register } from './controllers/UserController.js';
+import { register, login } from './controllers/UserController.js';
 
 dotenv.config();
 
@@ -18,7 +18,8 @@ app.use(express.json());
 
 // Import routes
 app.post("/auth/register", register)
+app.post("/auth/login", login)
 
 
 // Start the server
-app.listen(PORT, () => console.log('Server started on port ' + PORT));
+app.listen(PORT, (err) => console.log(err || `Server running on port ${PORT}`));
