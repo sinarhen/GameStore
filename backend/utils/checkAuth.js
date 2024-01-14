@@ -11,12 +11,12 @@ export default (req, res, next) => {
       next();
     } catch (e) {
       return res.status(403).json({
-        message: 'Нет доступа',
+        message: 'Unauthorized',
       });
     }
   } else {
     return res.status(403).json({
-      message: 'Нет доступа',
+      message: 'Unauthorized',
     });
   }
 };
