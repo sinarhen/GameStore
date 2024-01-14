@@ -23,10 +23,6 @@ app.use(express.json());
 // Import routes
 app.use('/api', apiRouter);
 
-app.post("/auth/register", register);
-app.post("/auth/login", login);
-app.put("/auth/changeEmail", changeEmail);
-app.put("/auth/changePassword", changePassword);
 
 
 // Start the server
