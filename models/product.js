@@ -9,7 +9,8 @@ const productSchema = new mongoose.Schema({
     },
     name: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     description: {
         type: String,
@@ -27,17 +28,11 @@ const productSchema = new mongoose.Schema({
         type: String, // This is the id of the category that this product belongs to
         // ref: 'Category', // This is the name of the model that this id refers to
         required: true
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    },
-    updatedAt: {
-        type: Date,
-        default: Date.now
     }
+}, {
+    timestamps: true
 });
 
 const Product = mongoose.model('Product', productSchema);
 
-module.exports = Product;
+export default Product;

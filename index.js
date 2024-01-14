@@ -1,9 +1,11 @@
 // Import necessary packages
 import express from 'express';
 import mongoose from 'mongoose';
-
+import product from './models/product.js';
 import dotenv from 'dotenv';
 dotenv.config();
+
+
 
 // Connect to MongoDB
 // mongoose.connect(process.env.DBCONN_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
