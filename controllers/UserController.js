@@ -21,9 +21,10 @@ const register = async (req, res) => {
             {
                 _id: user._id,
             },
-            'secret123',
+            process.env.JWT_SECRET,
             {
-                expiresIn: '30d',
+                // Expires in 30 days in timestamp unix format
+                expiresIn: Date.now() + 1000 * 60 * 60 * 24 * 30,
             }
         );
 
