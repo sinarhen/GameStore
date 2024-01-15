@@ -2,9 +2,16 @@ import Banner from '../components/Banner';
 import { motion } from 'framer-motion';
 import TextAnim from '../components/TextAnim';
 import { FaAnglesDown } from "react-icons/fa6";
+import { useRef } from 'react';
 const appearDuration = 0.7;
 
 export default function Home() {
+
+    const categoriesSectionRef = useRef<HTMLDivElement>(null);
+
+    function scrollToCategories() {
+        categoriesSectionRef.current?.scrollIntoView({behavior: 'smooth'});
+    }
 
     return (
         <>
@@ -40,18 +47,19 @@ export default function Home() {
             </motion.p>
 
 
-            <div className='flex w-full items-center justify-center mt-10'>
+            <div className='fixed bottom-0 right-0 mb-4 mr-4'>
                 <motion.div
                     initial={{opacity: 0, x: -100}}
                     animate={{opacity: 1, x: 0, animationTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)'}}
                     transition={{delay: appearDuration + 1.5, duration: appearDuration}}
-                    
-                    className='w-10 h-10 rounded-full flex items-center justify-center bg-black p-2.5 cursor-pointer'>
+                    className='w-10 h-10 rounded-full flex items-center justify-center bg-black p-2.5 cursor-pointer'
+                    onClick={scrollToCategories}
+                >
                     <FaAnglesDown className='w-full mt-1.5 h-full text-gray-600 animate-bounce'/>
                 </motion.div>
             </div>
 
-            <div id='categories' className='w-full h-[1000px]'>
+            <div ref={categoriesSectionRef} id='categories' className='w-full h-[1000px]'>
 
             </div>
         </>
