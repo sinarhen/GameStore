@@ -14,7 +14,7 @@ function App() {
       <Router>
         <Navbar />
         {/* container make */}
-        <div className="container mx-auto mt-5">
+        <div className="container h-full mx-auto xl:px-36 px-4 sm:px-6 lg:px-8">
 
         <Routes>
           <Route path='/' element={<Home />} />

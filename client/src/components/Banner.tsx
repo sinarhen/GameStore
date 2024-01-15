@@ -3,7 +3,7 @@ export default function Banner({imageUrl}: {
 }) {
 
     return (
-        <div className="w-full h-48 justify-center flex">
+        <div className="w-full h-48 my-10 justify-center flex">
             <div className="w-full overflow-hidden">
 
                 <img alt="" className="rounded-lg h-full w-full object-cover object-center" 

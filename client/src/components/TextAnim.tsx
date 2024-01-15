@@ -22,6 +22,12 @@ export default function TextAnim({duration, baseText, className, delay}: {
       duration: duration || 1,
       delay: delay || 0,
       ease: "easeInOut",
+      onComplete: () => {
+        setTimeout(() => {
+          setShowBlinker(false);
+        }
+        , 500);
+      }
     });
     return controls.stop;
   }, []);
