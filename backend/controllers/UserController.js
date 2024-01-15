@@ -12,6 +12,7 @@ export const register = async (req, res) => {
             name: req.body.name,
             email: req.body.email,
             passwordHash: hash,
+            avatarUrl: req.body.avatarUrl,
         })
 
         const user = await doc.save();
