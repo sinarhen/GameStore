@@ -37,6 +37,7 @@ export default function Home() {
 
     return (
         <>
+            
             <Section>
                 <Banner imageUrl='https://c4.wallpaperflare.com/wallpaper/335/955/620/apple-inc-black-minimalism-logo-wallpaper-preview.jpg'/>
                 

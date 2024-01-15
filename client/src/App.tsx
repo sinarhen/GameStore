@@ -22,32 +22,31 @@ function App() {
   // }, []);
 
   return (
-    <div className="w-full h-full text-white bg-neutral-900">
+    <div className="w-full mandatory-enabled overflow-y-scroll h-full text-white bg-neutral-900">
       <Router>
         <Navbar />
-        {/* container make */}
         <div className="
-          container 
-          mandatory-enabled
+          container
           overflow-x-visible 
-          overflow-y-scroll
           h-full 
           mx-auto 
           xl:px-36 px-4 sm:px-6 lg:px-8">
+
+            
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/products' element={<Products />} />
+              <Route path='/categories' element={<Categories />} />
+              <Route path='/myaccount' element={<MyAccount />} />
+              <Route path='/favorites' element={<Favorites />} />
+              <Route path='/orders' element={<Orders />} />
+              <Route path='/register' element={<Register />} />
+              <Route path='/login' element={<Login />} />
+            </Routes>
             
         
 
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/products' element={<Products />} />
-            <Route path='/categories' element={<Categories />} />
-            <Route path='/myaccount' element={<MyAccount />} />
-            <Route path='/favorites' element={<Favorites />} />
-            <Route path='/orders' element={<Orders />} />
-            <Route path='/register' element={<Register />} />
-            <Route path='/login' element={<Login />} />
-          </Routes>
-        </div>
+          </div>
       </Router>
 
 
