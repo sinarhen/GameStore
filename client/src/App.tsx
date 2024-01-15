@@ -6,11 +6,16 @@ import Categories from "./pages/Categories";
 import MyAccount from "./pages/MyAccount";
 import Favorites from "./pages/Categories";
 import Orders from "./pages/Orders";
+import Navbar from "./components/Navbar";
 
 function App() {
   return (
     <div className="h-full w-full text-white bg-neutral-900">
       <Router>
+        <Navbar />
+        {/* container make */}
+        <div className="container mx-auto mt-5">
+
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/products' element={<Products />} />
@@ -19,6 +24,8 @@ function App() {
           <Route path='/favorites' element={<Favorites />} />
           <Route path='/orders' element={<Orders />} />
         </Routes>
+
+        </div>
       </Router>
 
 
