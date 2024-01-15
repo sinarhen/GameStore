@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React from "react";
+import axios from "axios";
 
 import "./App.css";
 
@@ -13,13 +15,13 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 
 function App() {
-  // const [products, setProducts] = React.useState([]);
+  const [products, setProducts] = React.useState([]);
 
-  // React.useEffect(() => {
-  //   axios.get("/products/").then((res) => {
-  //     setProducts(res.data);
-  //   })
-  // }, []);
+    React.useEffect(() => {
+    axios.get("/products").then((res) => {
+        setProducts(res.data);
+    })
+    }, []);
 
   return (
     <div className="w-full mandatory-enabled overflow-y-scroll h-full text-white bg-neutral-900">
@@ -35,7 +37,7 @@ function App() {
             
             <Routes>
               <Route path='/' element={<Home />} />
-              <Route path='/products' element={<Products />} />
+              <Route path='/products' element={products.map((product) => <Products product={product} />)} />
               <Route path='/categories' element={<Categories />} />
               <Route path='/myaccount' element={<MyAccount />} />
               <Route path='/favorites' element={<Favorites />} />
