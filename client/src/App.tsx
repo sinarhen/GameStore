@@ -1,5 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React from "react";
+import axios from "axios";
+
 import "./App.css";
+
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import Categories from "./pages/Categories";
@@ -11,6 +15,14 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 
 function App() {
+  const [products, setProducts] = React.useState([]);
+
+  React.useEffect(() => {
+    axios.get("/products/").then((res) => {
+      setProducts(res.data);
+    })
+  }, []);
+
   return (
     <div className="w-full snap-y overflow-hidden text-white bg-neutral-900">
       <Router>
