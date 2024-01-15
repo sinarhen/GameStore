@@ -25,6 +25,14 @@ export default function Home() {
     // function scrollToCategories() {
     //     categoriesSectionRef.current?.scrollIntoView({behavior: 'smooth'});
     // }
+    const scrollUp = () => {
+        window.scrollBy(0, -100);
+    }
+    
+    const scrollDown = () => {
+        console.log("scrollingdown")
+        window.scrollBy(0, 100);
+    }
 
     return (
         <>
@@ -55,11 +63,12 @@ export default function Home() {
                 className='text-gray-400 mt-4 text-md'>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel eos sapiente minus rerum nulla officia deserunt at, distinctio a id qui, est ratione esse. Et reprehenderit accusamus illum odio molestiae.
 
-                    <hr>
-                    
-                    </hr>
                 </motion.p>
-
+                <motion.hr 
+                initial={{opacity: 0, width: 0}}
+                animate={{opacity: 1, width: "100%", animationTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)'}}
+                transition={{delay: appearDuration + 1.5, duration: appearDuration}}
+                className='mt-4 border-gray-400 border-1'/>
             </Section>
             
 
@@ -68,17 +77,6 @@ export default function Home() {
 
             </Section>
             
-            <div className='fixed bottom-0 right-0 mb-4 mr-4'>
-                <motion.div
-                    initial={{opacity: 0, x: -100}}
-                    animate={{opacity: 1, x: 0, animationTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)'}}
-                    transition={{delay: appearDuration + 1.5, duration: appearDuration}}
-                    className='w-10 h-10 rounded-full flex items-center justify-center bg-black p-2.5 cursor-pointer'
-                    // onClick={scrollToCategories}
-                >
-                    <FaAnglesDown className='w-full mt-1.5 h-full text-gray-600 animate-bounce'/>
-                </motion.div>
-            </div>
         </>
         )
 }
