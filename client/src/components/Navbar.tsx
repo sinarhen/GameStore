@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { MdArrowDropDown } from "react-icons/md";
 import UserNav from './UserNav';
 
 const Navbar = ({isAuthenticated = true}: {
