@@ -30,7 +30,7 @@ export default function TextAnim({duration, baseText, className, delay}: {
       }
     });
     return controls.stop;
-  }, []);
+  });
 
   useEffect(() => {
     const timer = setTimeout(() => {
