@@ -2,10 +2,11 @@ import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect, useState } from "react";
 import CursorBlinker from "./CursorBlinker";
 
-export default function TextAnim({baseText, className, delay}: {
+export default function TextAnim({duration, baseText, className, delay}: {
     baseText: string;
     delay?: number;
     className?: string;
+    duration?: number;
 }) {
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) => Math.round(latest));
@@ -18,7 +19,7 @@ export default function TextAnim({baseText, className, delay}: {
   useEffect(() => {
     const controls = animate(count, baseText.length, {
       type: "tween",
-      duration: 1,
+      duration: duration || 1,
       delay: delay || 0,
       ease: "easeInOut",
     });

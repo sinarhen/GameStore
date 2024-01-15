@@ -15,7 +15,7 @@ const Navbar = ({isAuthenticated = true}: {
                         <Link to="/categories" className="text-gray-300 hover:bg-neutral-700 px-3 py-2 rounded-md ">Categories</Link>
                     </div>
                     <div>
-                        {!isAuthenticated ? (
+                        {isAuthenticated ? (
                             <UserNav />
                         ) : (
                             
