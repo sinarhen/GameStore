@@ -10,7 +10,7 @@ import Navbar from "./components/Navbar";
 
 function App() {
   return (
-    <div className="w-full text-white bg-neutral-900">
+    <div className="w-full snap-y overflow-hidden text-white bg-neutral-900">
       <Router>
         <Navbar />
         {/* container make */}

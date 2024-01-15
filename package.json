@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "npm-run-all --parallel dev:*",
     "dev:server": "nodemon backend/index.js",
-    "dev:client": "cd frontend && npm run start"
+    "dev:client": "cd client && npm run start"
   },
   "repository": {
     "type": "git",
