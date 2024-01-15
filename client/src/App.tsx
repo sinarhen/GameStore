@@ -14,7 +14,7 @@ function App() {
       <Router>
         <Navbar />
         {/* container make */}
-        <div className="container overflow-x-hidden mx-auto mt-5">
+        <div className="container mx-auto mt-5">
 
         <Routes>
           <Route path='/' element={<Home />} />
