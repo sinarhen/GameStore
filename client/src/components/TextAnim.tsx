@@ -2,7 +2,6 @@ import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { useEffect, useState } from "react";
 import CursorBlinker from "./CursorBlinker";
 
-
 export default function TextAnim({baseText, className, delay}: {
     baseText: string;
     delay?: number;
@@ -14,6 +13,8 @@ export default function TextAnim({baseText, className, delay}: {
     baseText.slice(0, latest)
   );
 
+  const [showBlinker, setShowBlinker] = useState(false);
+
   useEffect(() => {
     const controls = animate(count, baseText.length, {
       type: "tween",
@@ -24,11 +25,18 @@ export default function TextAnim({baseText, className, delay}: {
     return controls.stop;
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowBlinker(true);
+    }, (delay ? delay-0.7 : 0) * 1000);
+    return () => clearTimeout(timer);
+  }, [delay]);
+
   return (
     <span className={className}>
       {" "}   
-      <motion.span>{displayText }</motion.span>
-      <CursorBlinker />
+      <motion.span className="w-fit mt-2 ">{displayText}</motion.span>
+      {showBlinker && <CursorBlinker />}
     </span>
   );
 }
