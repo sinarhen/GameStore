@@ -67,7 +67,7 @@ async function getProductById(req, res) {
         if (product) {
             res.json(product);
         } else {
-            res.status(404).send(`No product found with id ${id}`);
+            res.status(404).json({ message: 'Product not found' });
         }
     } catch (err) {
         res.status(500).send(err);
