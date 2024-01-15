@@ -40,7 +40,7 @@ export default function Home() {
             </motion.p>
 
 
-            <div className='flex w-full justify-center mt-6 '>
+            <div className='flex w-full items-center justify-center mt-10'>
                 <motion.div
                     initial={{opacity: 0, x: -100}}
                     animate={{opacity: 1, x: 0, animationTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)'}}

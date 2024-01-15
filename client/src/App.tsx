@@ -10,7 +10,7 @@ import Navbar from "./components/Navbar";
 
 function App() {
   return (
-    <div className="h-full w-full text-white bg-neutral-900">
+    <div className="w-full text-white bg-neutral-900">
       <Router>
         <Navbar />
         {/* container make */}
