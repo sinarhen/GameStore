@@ -1,5 +1,6 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
+import { MdArrowDropDown } from "react-icons/md";
+import UserNav from './UserNav';
 
 const Navbar = ({isAuthenticated = true}: {
     isAuthenticated?: boolean;
@@ -16,9 +17,7 @@ const Navbar = ({isAuthenticated = true}: {
                     </div>
                     <div>
                         {isAuthenticated ? (
-                            <>
-                            
-                            </>
+                            <UserNav />
                         ) : (
                             
                             <>
