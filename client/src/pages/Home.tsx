@@ -12,11 +12,15 @@ export default function Home() {
                 initial={{opacity: 0, x: -1000}}
                 animate={{opacity: 1, x: 0, animationTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)'}}
                 transition={{duration: 0.7}}
-                className='flex flex-col justify-center items-center'
+                className='flex flex-col w-full'
             >
-                <h1 className='font-bold mt-5 text-7xl'>
+                <h1 className='text-gray-300 mt-5 text-7xl'>
                     Welcome to  
-                    <TextAnim delay={0.7} baseText='Game store.'/> 
+                    <br/>
+                    <TextAnim
+                    className="text-white rounded-lg mt-4" 
+                    
+                    delay={0.7} baseText='Game store.'/> 
                 </h1>
 
             </motion.div>

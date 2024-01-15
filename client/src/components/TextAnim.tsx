@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import CursorBlinker from "./CursorBlinker";
 
 
-export default function TextAnim({baseText, delay}: {
+export default function TextAnim({baseText, className, delay}: {
     baseText: string;
     delay?: number;
+    className?: string;
 }) {
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) => Math.round(latest));
@@ -24,7 +25,7 @@ export default function TextAnim({baseText, delay}: {
   }, []);
 
   return (
-    <span className="">
+    <span className={className}>
       {" "}   
       <motion.span>{displayText }</motion.span>
       <CursorBlinker />
