@@ -7,6 +7,8 @@ import MyAccount from "./pages/MyAccount";
 import Favorites from "./pages/Categories";
 import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           <Route path='/myaccount' element={<MyAccount />} />
           <Route path='/favorites' element={<Favorites />} />
           <Route path='/orders' element={<Orders />} />
+          <Route path='/register' element={<Register />} />
+          <Route path='/login' element={<Login />} />
         </Routes>
 
         </div>
