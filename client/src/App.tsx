@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
 
 import "./App.css";
@@ -13,6 +13,7 @@ import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import { useScroll } from "framer-motion";
 function App() {
   const [products, setProducts] = React.useState([]);
 
@@ -23,8 +24,9 @@ function App() {
     // });
 
   return (
-    <div className="w-full  
-    mandatory-enabled overflow-y-scroll h-full text-white bg-neutral-900">
+    <div className="w-full 
+    mandatory-enabled overflow-y-scroll  
+     h-full text-white bg-neutral-900">
       <Router>
         <Navbar />
         <div className="

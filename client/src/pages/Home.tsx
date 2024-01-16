@@ -1,6 +1,6 @@
 import Banner from '../components/Banner';
-import { motion } from 'framer-motion';
-import { HTMLAttributes, useRef, useState } from 'react';
+import { motion, useScroll } from 'framer-motion';
+import { HTMLAttributes, useEffect, useRef, useState } from 'react';
 import Header from '../components/Header';
 import Section from '../components/Section';
 const appearDuration = 0.7;
@@ -15,6 +15,7 @@ export default function Home() {
     // function scrollToCategories() {
     //     categoriesSectionRef.current?.scrollIntoView({behavior: 'smooth'});
     // }
+
     const scrollUp = () => {
         window.scrollBy(0, -100);
     }
