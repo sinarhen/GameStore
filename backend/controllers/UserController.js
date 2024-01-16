@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import UserModel from '../models/User.js';
 import { generateToken } from '../utils/jwt.js';
-
+import jwt from 'jsonwebtoken';
 export const register = async (req, res) => {
     try {
         const password = req.body.password;
@@ -258,22 +258,25 @@ export const deleteUser = async (req, res) => {
 
 export const getMe = async (req, res) => {
     try {
-        const user = await UserModel.findById(req.userId);
+        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
 
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        const userId = decodedToken._id;
+
+        const user = await UserModel.findById(userId);
         if (!user) {
-            return res.status(404).json({
-                message: 'User not found',
-            });
+            return res.status(404).json({ message: 'User not found' });
         }
 
         const { passwordHash, ...userData } = user._doc;
 
         res.json(userData);
-    }
-    catch (err) {
+    } catch (err) {
         console.log(err);
-        res.status(500).json({
-            message: 'Failed to get user',
-        })
+        res.status(500).json({ message: 'Failed to get user' });
     }
 }

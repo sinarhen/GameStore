@@ -6,6 +6,7 @@ import Input from "../components/Input";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Cookies from 'js-cookie';
+import { setCookie } from "../lib/auth";
 
 
 const LoginSchema = z.object({
@@ -26,7 +27,7 @@ export default function Login() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await axios.post('/auth/login', data);
-      Cookies.set('token', response.data.token);
+      setCookie(response.data.token);
       window.location.replace('/products');
       toast.success("Logged in successfully")
 
