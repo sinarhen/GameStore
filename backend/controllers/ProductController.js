@@ -12,16 +12,6 @@ function validate(method) {
                 check('categoryId', 'Category ID is required').notEmpty(),
             ];
         }
-        case 'updateProduct': {
-            return [
-                check('id', 'ID is required').notEmpty(),
-                check('name', 'Name is required').notEmpty(),
-                check('description', 'Description is required').notEmpty(),
-                check('price', 'Price is required').isNumeric(),
-                check('imageUrl', 'Image URL is required').isURL(),
-                check('categoryId', 'Category ID is required').notEmpty(),
-            ];
-        }
         case 'deleteProduct': {
             return [
                 check('id', 'ID is required').notEmpty(),
