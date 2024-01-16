@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Cookies from "js-cookie";
+import { setCookie } from "../lib/auth";
 
 const RegisterSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters").max(50, "Name must be less than 50 characters"),
@@ -34,7 +35,8 @@ export default function Register() {
   const onSubmit = async (data: RegisterFormData) => {
     try {
       const response = await axios.post('/auth/register', data);
-      Cookies.set('token', response.data.token);
+      const token = response.data.token;
+      setCookie(token)
       window.location.replace('/products');
       toast.success("Logged in successfully")
 
