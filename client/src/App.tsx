@@ -13,20 +13,11 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./contexts/AuthContext";
-import { useEffect, useState } from "react";
-import {fetchUser} from './lib/auth';
+
+
 function App() {
-
-  const [user, setUser] = useState<any>(null);
-
-  useEffect(() =>{
-    fetchUser().then((fetchedUser: any) => {
-      setUser(fetchedUser)
-      console.log(fetchedUser)
-    });
-  }, [])
   return (
-    <AuthProvider value={{user, setUser}}>
+    <AuthProvider>
       <div className="w-full 
       mandatory-enabled overflow-y-scroll  
       h-full text-white bg-neutral-900">
