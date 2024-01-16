@@ -41,7 +41,7 @@ export default function Products(){
     }
     useEffect(() => {
         console.log(filterBy, orderBy)
-        if (products.length) {
+        if (products) {
             const filteredProducts = sortProducts(products);
             setProducts(filteredProducts);
         }

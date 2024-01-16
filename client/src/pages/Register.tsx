@@ -1,8 +1,30 @@
 import { Link } from "react-router-dom";
 
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import Input from "../components/Input";
 
+const RegisterSchema = z.object({
+    name: z.string().min(2, "Name must be at least 2 characters").max(50, "Name must be less than 50 characters"),
+    email: z.string().email("Invalid email address"),
+    password: z.string().min(5, "Password must be at least 5 characters").max(50, "Password must be less than 50 characters"),
+    repeatPassword: z.string().min(5, "Password must be at least 5 characters").max(50, "Password must be less than 50 characters")
+}).refine((data) => data.password === data.repeatPassword, {
+    message: "Passwords do not match",
+    path: ["repeatPassword"],
+});
+
 export default function Register() {
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: zodResolver(RegisterSchema),
+    });
+
+    const onSubmit = (data: any) => {
+        console.log(data);
+    }
+
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-4 py-8 lg:px-6">
@@ -13,7 +35,7 @@ export default function Register() {
         </div>
 
         <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md">
-          <form className="space-y-4" action="#" method="POST">
+          <form onSubmit={handleSubmit(onSubmit)}>
 
             <Input label="Name" name="name" type="text" id="name" autoComplete="name" />
             <Input label="Email address" name="email" type="email" id="email" autoComplete="email" />
