@@ -14,3 +14,12 @@ export type CategoryType = {
     _id: string;
     name: string;
 }
+
+export type User = {
+    _id: string;
+    email: string;
+    name: string;
+    createdAt: Date;
+    __v: number;
+    updatedAt: Date;
+}
