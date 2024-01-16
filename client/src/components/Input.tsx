@@ -1,31 +1,28 @@
+
 import React from "react";
 
-export default function Input({...props}: { 
-    name: string, 
-    id: string, 
-    type: string, 
-    autoComplete: string,
-    label: string,
-    value: string,
-    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
-}) {
+type InputProps = React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> & {
+    label: string;
+    error?: string;
+  };
+  
+
+const Input: React.FC<InputProps> = ({label, error, ...props}) => {
     return (
         <div>
             <label htmlFor={props.name} className="block text-sm font-medium leading-5 text-white">
-                {props.label}
+                {label}
             </label>
             <div className="mt-1">
                 <input
-                    value={props.value}
-                    onChange={props.onChange}
-                    id={props.id}
-                    name={props.name}
-                    type={props.type}
-                    autoComplete={props.autoComplete}
-                    required
+                    {...props}
                     className="block w-full rounded-md border-0 py-1 px-2 text-black shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 text-sm leading-5"
+                
                 />
+                {error && <p className="text-red-600 text-xs ">{error}</p>}
             </div>
         </div>
     );
 }
+
+export default Input;
