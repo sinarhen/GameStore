@@ -1,5 +1,6 @@
 import { ProductCardType } from '../../lib/types';
 import { CiHeart } from "react-icons/ci";
+import Favorite from './Favorite';
 
 export default function ProductCard({ product, ...props }: { props?: any; product: ProductCardType; }) {
     const imageUrl = "https://media.slovoidilo.ua/media/cache/person_thumb_exx/uploads/persons/origin/Po/Poroshenko-Petr-Alekseevich_origin.png"; 
@@ -16,7 +17,7 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
                 <img className="w-full" src={imageUrl} alt="Product Image" />
                 
                 <div className="absolute top-2 cursor-pointer left-2">
-                    <CiHeart className="text-red-500 text-2xl" />
+                    <Favorite productId={product._id}/>
                 </div>
             </div>
             <div className="p-4">
