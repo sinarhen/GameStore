@@ -1,9 +1,28 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-
+import * as z from 'zod';
 import Input from "../components/Input";
 
+const LoginSchema = z.object({
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(5, "Password must be at least 5 characters").max(50, "Password must be less than 50 characters"),
+})
+
+type LoginFormData = z.infer<typeof LoginSchema>;
 export default function Login() {
-    return (
+  const { register, handleSubmit, formState, getValues } = useForm<LoginFormData>({
+    defaultValues:{
+      email: "",
+      password: ""
+    },
+    resolver: zodResolver(LoginSchema)
+});
+
+    const onSubmit = (data: LoginFormData) => {
+        console.log(data);
+    }
+  return (
         <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-4 py-8 lg:px-6"> 
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -13,10 +32,21 @@ export default function Login() {
         </div>
 
         <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-4" action="#" method="POST"> 
+          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}> 
             
-            {/* <Input label="Email Address" name="email" type="email" id="email" autoComplete="email" />
-            <Input label="Password" name="password" type="password" id="password" autoComplete="current-password" /> */}
+            
+              <Input 
+                  {...register("email")}
+
+                  label="Email address" 
+                  error={formState.errors.email?.message}
+                />
+                <Input 
+                  {...register("password")}
+                  label="Password" 
+                  type='password'
+                  error={formState.errors.password?.message}
+                />
 
             <div>
               <button
