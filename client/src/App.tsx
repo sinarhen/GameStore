@@ -13,17 +13,10 @@ import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-import { useScroll } from "framer-motion";
+import { Toaster } from "react-hot-toast";
 function App() {
-  const [products, setProducts] = React.useState([]);
-
-    // React.useEffect(() => {
-    // axios.get("/products").then((res) => {
-    //     setProducts(res.data);
-    // })
-    // });
-
   return (
+    <>
     <div className="w-full 
     mandatory-enabled overflow-y-scroll  
      h-full text-white bg-neutral-900">
@@ -50,7 +43,9 @@ function App() {
         </div>
       </Router>
     </div>
-  );
+    <Toaster position="bottom-right" />
+    </>
+      );
 }
 
 
