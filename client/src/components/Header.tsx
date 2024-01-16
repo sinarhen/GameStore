@@ -3,9 +3,9 @@ import { HTMLAttributes } from "react";
 import TextAnim from "./TextAnim";
 
 interface HeaderProps extends HTMLAttributes<HTMLHeadingElement> {
-  appearDuration: number;
+  appearDuration?: number;
   animateableText?: string;
-  baseText: string;
+  baseText?: string;
 }
 
 const Header: React.FC<HeaderProps> = ({ appearDuration, animateableText, baseText, ...props }) => {
@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ appearDuration, animateableText, baseTe
       {animateableText && <TextAnim
         className="text-white rounded-lg" 
         duration={appearDuration}
-        delay={appearDuration + 0.5} baseText={animateableText}/> 
+        delay={appearDuration ?? 1 + 0.5} baseText={animateableText}/> 
     
         }
       </div>

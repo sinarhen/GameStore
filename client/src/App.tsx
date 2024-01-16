@@ -11,16 +11,7 @@ import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
-
 function App() {
-  // const [products, setProducts] = React.useState([]);
-
-  // React.useEffect(() => {
-  //   axios.get("/products/").then((res) => {
-  //     setProducts(res.data);
-  //   })
-  // }, []);
-
   return (
     <div className="w-full mandatory-enabled overflow-y-scroll h-full text-white bg-neutral-900">
       <Router>
@@ -28,11 +19,11 @@ function App() {
         <div className="
           container
           overflow-x-visible 
-          h-full 
+          
           mx-auto 
+          h-full
           xl:px-36 px-4 sm:px-6 lg:px-8">
 
-            
             <Routes>
               <Route path='/' element={<Home />} />
               <Route path='/products' element={<Products />} />
@@ -44,14 +35,11 @@ function App() {
               <Route path='/login' element={<Login />} />
             </Routes>
             
-        
-
-          </div>
+        </div>
       </Router>
-
-
     </div>
   );
 }
+
 
 export default App;
