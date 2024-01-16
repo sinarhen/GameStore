@@ -3,10 +3,14 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 export default function Products(){
     const [products, setProducts] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
+
+    const navigate = useNavigate();
     useEffect(() => {
         axios.get("/api/products")
         .then((response) => {
@@ -19,6 +23,10 @@ export default function Products(){
         })
         .catch((error) => {
             toast.error("Something went wrong", {id: "products"});
+        }).finally(() => {
+            // setTimeout(() => {
+                setLoading(false);
+            // }, 1000)
         });
     })   
 
@@ -36,8 +44,20 @@ export default function Products(){
             {products ? products.map((product: any) => 
                 <ProductCard product={product}/>
             ): (
-                <>
-                </>
+                <div className="w-full h-full  flex justify-center items-center ">
+                    <div>
+                    <h1 className="text-8xl text-zinc-600">
+                        Items not found.
+                    </h1>
+                    <p className="text-zinc-700">
+                        Please try again later.
+                    </p>
+                    <button onClick={() => {navigate(0)}} className="underline ">
+                        Refresh
+                    </button>
+                    </div>
+                    
+                </div>
             )}
         
         </>
