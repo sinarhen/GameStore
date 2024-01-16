@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import UserNav from './UserNav';
 
 const Navbar = ({isAuthenticated = true}: {
@@ -11,9 +11,9 @@ const Navbar = ({isAuthenticated = true}: {
                 <div className="flex duration-200 items-center justify-between h-16">
                     <h1 className="text-white"><Link to="/">Game Store</Link></h1>
                     <div className="flex">
-                        <Link to="/" className="text-gray-300 hover:bg-neutral-700 px-3 py-2 rounded-md ">Home</Link>
-                        <Link to="/products" className="text-gray-300 hover:bg-neutral-700 px-3 py-2 rounded-md">Products</Link>
-                        <Link to="/categories" className="text-gray-300 hover:bg-neutral-700 px-3 py-2 rounded-md ">Categories</Link>
+                        <NavLink to="/" className={({isActive}) =>`hover:bg-neutral-700 transition-colors px-3 py-2 rounded-md ${!isActive ? "text-gray-300" : "text-indigo-400"}`}>Home</NavLink>
+                        <NavLink to="/products" className={({isActive}) =>`hover:bg-neutral-700 transition-colors px-3 py-2 rounded-md ${!isActive ? "text-gray-300" : "text-indigo-400"}`}>Products</NavLink>
+
                     </div>
                     <div>
                         {isAuthenticated ? (
