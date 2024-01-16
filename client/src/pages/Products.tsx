@@ -3,8 +3,8 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import NotFound from "../components/NotFound";
+import Header from "../components/Header";
 
 
 export default function Products(){
@@ -12,7 +12,7 @@ export default function Products(){
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
-        axios.get("/api/products")
+        axios.get("/products")
         .then((response) => {
             if (!response.data.length)
             {
@@ -39,15 +39,42 @@ export default function Products(){
             </div>
         )
     }
+    if (!products){
+        return NotFound();
+    }
     return(
         <>
-            {products ? products.map((product: any) => 
-                <ProductCard product={product}/>
-            ): (
-                <NotFound />
-            )}
-        
-        </>
+            <div className="pt-20 w-full h-full">
+                <Header animateableText="Products." appearDuration={1} />
+                {/* Filterby, orderby, pagination  */}
+                <div className="flex justify-between  text-sm items-center w-full py-10">
+                        <div className="flex gap-x-2">
+                            <span>Filter by</span>
+                            <select className="border-2 text-black border-gray-400 rounded-md">
+                                <option value="price">Price</option>
+                                <option value="name">Name</option>
+                                <option value="date">Date</option>
+                            </select>
+                        </div>
+                        <div className="flex gap-x-2">
+                            <span>Order by</span>
+                            <select className="border-2  text-black border-gray-400 rounded-md">
+                                <option value="asc">Ascending</option>
+                                <option value="desc">Descending</option>
+                            </select>
+                        </div>
+                </div>
+                
+                <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:grid-cols-4  gap-4 w-full h-full">
+                    {products && products.map((product: any) => 
+                        <ProductCard product={product}/>
+                    )}
+                </div>
+                
+            
+            </div>
     
+        </>
+         
     );
 }

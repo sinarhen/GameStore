@@ -6,7 +6,7 @@ const Navbar = ({isAuthenticated = true}: {
 } ) => {
     return (
         <>
-        <nav className="bg-neutral-800 fixed w-full">
+        <nav className="bg-neutral-800 z-50 fixed w-full">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex duration-200 items-center justify-between h-16">
                     <h1 className="text-white">GameStore</h1>

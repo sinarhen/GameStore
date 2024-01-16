@@ -9,6 +9,9 @@ interface HeaderProps extends HTMLAttributes<HTMLHeadingElement> {
 }
 
 const Header: React.FC<HeaderProps> = ({ appearDuration, animateableText, baseText, ...props }) => {
+  
+  const delay = (appearDuration ? appearDuration : 0.3);
+  
   return (
     <div className="text-gray-300 text-7xl">
       <motion.h1
@@ -21,7 +24,7 @@ const Header: React.FC<HeaderProps> = ({ appearDuration, animateableText, baseTe
       {animateableText && <TextAnim
         className="text-white rounded-lg" 
         duration={appearDuration}
-        delay={appearDuration ?? 1 + 0.5} baseText={animateableText}/> 
+        delay={delay} baseText={animateableText}/> 
     
         }
       </div>
