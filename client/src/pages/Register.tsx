@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 
 const RegisterSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters").max(50, "Name must be less than 50 characters"),
@@ -20,7 +21,7 @@ const RegisterSchema = z.object({
 type RegisterFormData = z.infer<typeof RegisterSchema>;
 
 export default function Register() {
-  const { register, handleSubmit, formState, getValues } = useForm<RegisterFormData>({
+  const { register, handleSubmit, formState, setError } = useForm<RegisterFormData>({
       defaultValues:{
         name: "",
         email: "",
@@ -29,28 +30,29 @@ export default function Register() {
       },
       resolver: zodResolver(RegisterSchema)
   });
+  
   const onSubmit = async (data: RegisterFormData) => {
     try {
-      const response = await axios.post("/auth/register", {
-        name: data.name,
-        email: data.email,
-        password: data.password,      
-      });
-      console.log(response);
-      const token = response.data.token;
-    
+      const response = await axios.post('/auth/register', data);
+      Cookies.set('token', response.data.token);
+      window.location.replace('/products');
+      toast.success("Logged in successfully")
+
     } catch (error: any) {
-      toast.error(error?.message)
-      console.log(error);
+      if (error.response.data.field)
+      {
+        setError(error.response.data.field, {
+          type: "manual",
+          message: error.response.data.message
+        })
+      } else {
+        toast.error(error?.message)
+      }
     }
+  };
       
-  }
 
-  useEffect(() => {
-    console.log(formState.errors);
-  }, [formState.errors]);
 
-  console.log(getValues("name"));
   return (
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-4 py-8 lg:px-6">

@@ -11,18 +11,21 @@ export const register = async (req, res) => {
         if (!req.body.name)
         {
             return res.status(400).json({
+                field: 'name',
                 message: 'Missing name',
             });
         }
 
         if (!req.body.email) {
             return res.status(400).json({
+                field: 'email',
                 message: 'Missing email',
             });
         }
 
         if (!req.body.password) {
             return res.status(400).json({
+                field: 'password',
                 message: 'Missing password',
             });
         }
@@ -30,6 +33,7 @@ export const register = async (req, res) => {
         if (req.body.password.length < 6)
         {
             return res.status(400).json({
+                field: 'password',
                 message: 'Password too short. Minimum 6 characters required',
             });
         }
@@ -37,9 +41,31 @@ export const register = async (req, res) => {
         if (req.body.name.length < 6)
         {
             return res.status(400).json({
+                field: 'name',
                 message: 'Name too short. Minimum 6 characters required',
             });
         }
+
+        let existingUser = await UserModel.findOne({
+            email: req.body.email,
+        });
+        if (existingUser) {
+            return res.status(400).json({
+                field: 'email',
+                message: 'Email already in use',
+            });
+        }
+
+        existingUser = await UserModel.findOne({
+            name: req.body.name,
+        });
+        if (existingUser) {
+            return res.status(400).json({
+                field: 'name',
+                message: 'Name already in use',
+            });
+        }
+
 
 
         const doc = new UserModel({
@@ -77,6 +103,7 @@ export const login = async (req, res) => {
 
         if (!user) {
             return res.status(404).json({
+                field: 'email',
                 message: 'User not found',
             });
         }
@@ -88,7 +115,8 @@ export const login = async (req, res) => {
 
         if (!passwordValid) {
             return res.status(401).json({
-                message: 'Invalid credentials',
+                field: 'password',
+                message: 'Invalid password',
             });
         }
 
@@ -105,6 +133,7 @@ export const login = async (req, res) => {
     } catch (err) {
         console.log(err);
         res.status(500).json({
+            field: 'email',
             message: 'Failed to login',
         });
     }

@@ -1,4 +1,4 @@
-import { ProductCardType } from '../../lib/types';
+import { ProductCardType } from '../lib/types';
 import { CiHeart } from "react-icons/ci";
 import Favorite from './Favorite';
 

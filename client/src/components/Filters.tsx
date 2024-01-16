@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ProductCardType } from "../../lib/types";
+import { ProductCardType } from "../lib/types";
 
 export default function Filters({products, onProductsChange}: {
     products: ProductCardType[];

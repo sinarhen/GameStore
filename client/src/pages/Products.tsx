@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import NotFound from "../components/NotFound";
 import Header from "../components/Header";
 import { motion } from "framer-motion";
-import { ProductCardType } from "../../lib/types";
+import { ProductCardType } from "../lib/types";
 import Filters from "../components/Filters";
 import AnimatedSeparator from "../components/AnimatedSeparator";
 import Pagination from "../components/Pagination";

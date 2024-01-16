@@ -5,6 +5,8 @@ import * as z from 'zod';
 import Input from "../components/Input";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Cookies from 'js-cookie';
+
 
 const LoginSchema = z.object({
   email: z.string().email("Invalid email address"),
@@ -13,7 +15,7 @@ const LoginSchema = z.object({
 
 type LoginFormData = z.infer<typeof LoginSchema>;
 export default function Login() {
-  const { register, handleSubmit, formState, getValues } = useForm<LoginFormData>({
+  const { register, handleSubmit, formState, getValues, setError } = useForm<LoginFormData>({
     defaultValues:{
       email: "",
       password: ""
@@ -21,21 +23,27 @@ export default function Login() {
     resolver: zodResolver(LoginSchema)
 });
 
-    const onSubmit = async (data: LoginFormData) => {
-      try {
-        const response = await axios.post("/auth/register", {
-          email: data.email,
-          password: data.password,      
-        });
-        console.log(response);
-        const token = response.data.token;
-      
-      } catch (error: any) {
+  const onSubmit = async (data: LoginFormData) => {
+    try {
+      const response = await axios.post('/auth/login', data);
+      Cookies.set('token', response.data.token);
+      window.location.replace('/products');
+      toast.success("Logged in successfully")
+
+    } catch (error: any) {
+      if (error.response.data.field)
+      {
+        setError(error.response.data.field, {
+          type: "manual",
+          message: error.response.data.message
+        })
+      } else {
         toast.error(error?.message)
-        console.log(error);
       }
+    }
+  };
         
-  }
+  
   return (
         <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-4 py-8 lg:px-6"> 
