@@ -4,6 +4,8 @@ import Input from "../components/Input";
 import { useForm } from "react-hook-form";
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from "react";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const RegisterSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters").max(50, "Name must be less than 50 characters"),
@@ -27,8 +29,21 @@ export default function Register() {
       },
       resolver: zodResolver(RegisterSchema)
   });
-  const onSubmit = (data: RegisterFormData) => {
-      console.log(data);
+  const onSubmit = async (data: RegisterFormData) => {
+    try {
+      const response = await axios.post("/auth/register", {
+        name: data.name,
+        email: data.email,
+        password: data.password,      
+      });
+      console.log(response);
+      const token = response.data.token;
+    
+    } catch (error: any) {
+      toast.error(error?.message)
+      console.log(error);
+    }
+      
   }
 
   useEffect(() => {

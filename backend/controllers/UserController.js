@@ -8,6 +8,40 @@ export const register = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
 
+        if (!req.body.name)
+        {
+            return res.status(400).json({
+                message: 'Missing name',
+            });
+        }
+
+        if (!req.body.email) {
+            return res.status(400).json({
+                message: 'Missing email',
+            });
+        }
+
+        if (!req.body.password) {
+            return res.status(400).json({
+                message: 'Missing password',
+            });
+        }
+
+        if (req.body.password.length < 6)
+        {
+            return res.status(400).json({
+                message: 'Password too short. Minimum 6 characters required',
+            });
+        }
+
+        if (req.body.name.length < 6)
+        {
+            return res.status(400).json({
+                message: 'Name too short. Minimum 6 characters required',
+            });
+        }
+
+
         const doc = new UserModel({
             name: req.body.name,
             email: req.body.email,
