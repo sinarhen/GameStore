@@ -46,44 +46,41 @@ export default function Register() {
         </div>
 
         <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md">
-          <form className="space-y-4" action="#" method="POST" onSubmit={handleSubmit(onSubmit)}>
+          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
 
             <Input 
               label="Name"
-              type="text" 
-              id="name" 
-              autoComplete="name" 
               error={formState.errors.name?.message}
               {...register("name")} 
-              />
-            <Input 
-            label="Email address" 
-            type="email" 
-            id="email" 
-            autoComplete="email" 
-            error={formState.errors.email?.message}
-            {...register("email")}
-            />
-            <Input 
-              label="Password" 
-              type="password" 
-              id="password" 
-              error={formState.errors.password?.message}
-              autoComplete="new-password" {...register('password')} 
+
+
             />
 
             <Input 
-              label="Repeat Password" 
-              type="password" 
-              id="repeatPassword" 
-              error={formState.errors.repeatPassword?.message}
-              autoComplete="new-password" 
+              {...register("email")}
+
+              label="Email address" 
+              error={formState.errors.email?.message}
+            />
+            <Input 
+              {...register("password")}
+              label="Password" 
+              type='password'
+              error={formState.errors.password?.message}
+            />
+
+            <Input 
               {...register('repeatPassword')}
+
+              label="Repeat Password"
+              type="password" 
+              error={formState.errors.repeatPassword?.message}
             
             />
 
             <div>
               <button
+                type="submit"
                 className="flex mt-5 w-full justify-center rounded-md bg-indigo-600 px-2 py-1  text-sm font-semibold leading-5 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Register
