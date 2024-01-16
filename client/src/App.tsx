@@ -16,20 +16,20 @@ import Login from "./pages/Login";
 function App() {
   const [products, setProducts] = React.useState([]);
 
-    React.useEffect(() => {
-    axios.get("/products").then((res) => {
-        setProducts(res.data);
-    })
-    }, []);
+    // React.useEffect(() => {
+    // axios.get("/products").then((res) => {
+    //     setProducts(res.data);
+    // })
+    // });
 
   return (
-    <div className="w-full mandatory-enabled overflow-y-scroll h-full text-white bg-neutral-900">
+    <div className="w-full  
+    mandatory-enabled overflow-y-scroll h-full text-white bg-neutral-900">
       <Router>
         <Navbar />
         <div className="
           container
-          overflow-x-visible 
-          
+          overflow-x-visible
           mx-auto 
           h-full
           xl:px-36 px-4 sm:px-6 lg:px-8">

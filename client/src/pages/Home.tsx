@@ -2,19 +2,10 @@ import Banner from '../components/Banner';
 import { motion } from 'framer-motion';
 import { HTMLAttributes, useRef, useState } from 'react';
 import Header from '../components/Header';
+import Section from '../components/Section';
 const appearDuration = 0.7;
 
 
-
-const Section: React.FC<HTMLAttributes<HTMLDivElement>> = ({children, ...props}) => {
-    return (
-        <section 
-            {...props}
-            className="h-full w-full snap-normal snap-center snap-proximity">
-            {children}
-        </section>
-    )
-}
 
 export default function Home() {
 
@@ -34,7 +25,7 @@ export default function Home() {
     }
 
     return (
-        <div className='w-full h-full s'>
+        <div className='w-full h-full'>
             
             <Section>
                 <Banner imageUrl='https://c4.wallpaperflare.com/wallpaper/335/955/620/apple-inc-black-minimalism-logo-wallpaper-preview.jpg'/>
