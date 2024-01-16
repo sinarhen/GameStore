@@ -47,13 +47,13 @@ export default function Home() {
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel eos sapiente minus rerum nulla officia deserunt at, distinctio a id qui, est ratione esse. Et reprehenderit accusamus illum odio molestiae.
 
                 </motion.p>
-                <AnimatedSeparator appearDuration={appearDuration} />
+                <AnimatedSeparator  />
             </Section>
             
             <Section>
                 <Header appearDuration={appearDuration} animateableText='Categories' />
 
-                <AnimatedSeparator appearDuration={appearDuration} />
+                <AnimatedSeparator  />
 
             </Section>
             

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 
-export default function AnimatedSeparator({appearDuration}: {appearDuration: number}) {
+export default function AnimatedSeparator({appearDuration = 0.7}: {appearDuration?: number}) {
     return (
         <motion.hr 
         initial={{opacity: 0, width: 0}}
