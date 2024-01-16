@@ -9,12 +9,18 @@ import { motion } from "framer-motion";
 import { ProductCardType } from "../../lib/types";
 import Filters from "../components/Filters";
 import AnimatedSeparator from "../components/AnimatedSeparator";
+import Pagination from "../components/Pagination";
 
 
 export default function Products(){
     const [products, setProducts] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
 
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+    
+    
+    
     useEffect(() => {
         axios.get("/products")
         .then((response) => {
@@ -44,18 +50,25 @@ export default function Products(){
     if (!products){
         return NotFound();
     }
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
+    
+    const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
     return(
         <>
             <div className="pt-20 w-full h-full">
-                <Header animateableText="Products." appearDuration={1} />
-                <AnimatedSeparator appearDuration={1}/>
+                <Header animateableText="Products." appearDuration={0.7} />
+                <AnimatedSeparator appearDuration={0.7}/>
                 {/* Filterby, orderby, pagination  */}
                 <Filters products={products} onProductsChange={setProducts}/>
                 
                 <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:grid-cols-4  gap-4 w-full h-full">
-                    {products && products.map((product: ProductCardType, index: number) => (
+                    {currentItems && currentItems.map((product: ProductCardType, index: number) => (
                                       <motion.div
-                                      key={product._id}
+                                      key={product._id + index}
                                       initial={{ opacity: 0 }}
                                       animate={{ opacity: 1 }}
                                       exit={{ opacity: 0 }}
@@ -68,7 +81,12 @@ export default function Products(){
                     )
                     )}
                 </div>
-                
+                <Pagination 
+                    itemsPerPage={itemsPerPage} 
+                    totalItems={products.length} 
+                    paginate={paginate} 
+                    currentPage={currentPage}
+                />
             
             </div>
     
