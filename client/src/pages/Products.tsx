@@ -5,6 +5,8 @@ import ProductCard from "../components/ProductCard";
 import { useEffect, useState } from "react";
 import NotFound from "../components/NotFound";
 import Header from "../components/Header";
+import { motion } from "framer-motion";
+import { ProductCardType } from "../../lib/types";
 
 
 export default function Products(){
@@ -66,8 +68,19 @@ export default function Products(){
                 </div>
                 
                 <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:grid-cols-4  gap-4 w-full h-full">
-                    {products && products.map((product: any) => 
-                        <ProductCard product={product}/>
+                    {products && products.map((product: ProductCardType, index: number) => (
+                                      <motion.div
+                                      key={product._id}
+                                      initial={{ opacity: 0 }}
+                                      animate={{ opacity: 1 }}
+                                      exit={{ opacity: 0 }}
+                                      transition={{ delay: index * 0.3, duration: 1}}
+                                    >
+                                        <ProductCard product={product}/>
+
+                                    </motion.div>
+
+                    )
                     )}
                 </div>
                 
