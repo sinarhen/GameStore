@@ -6,11 +6,16 @@ const orderSchema = new mongoose.Schema({
         ref: "User",
         required: true
     },
-    productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
-        required: true
-    },
+    products: [{
+        productId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Product",
+        },
+        price: Number,
+        name: String,
+        description: String,
+        imageUrl: String,
+    }],
     quantity: {
         type: Number,
         required: true
@@ -27,5 +32,7 @@ const orderSchema = new mongoose.Schema({
 );
 
 const Order = mongoose.model("Order", orderSchema);
+
+Order.populate("products.productId", "price name description imageUrl");
 
 export default Order;
