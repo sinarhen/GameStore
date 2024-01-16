@@ -1,5 +1,5 @@
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../components/Dialog";
-import Input from "../components/Input";
+
+import EditProfileForm from "../components/EditProfileDialog";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { FaUser } from "react-icons/fa";
 
@@ -18,40 +18,11 @@ export default function MyAccount() {
             <div className="h-full overflow-clip">
                 <p className="text-zinc-600 ">{user?.email}</p>
                 <h1 className="text-7xl truncate mt-2 w-full h-auto">{user?.name}</h1>
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <button className="bg-indigo-600 bg-opacity-70 transition-all hover:bg-indigo-500 mt-4 hover:bg-opacity-100 text-white px-4 py-2 rounded-md">Edit</button>
-                
-                    </DialogTrigger>
-                    <DialogContent className="bg-neutral-800 text-white sm:max-w-[425px]">
-                        <DialogHeader>
-                        <DialogTitle>Edit profile</DialogTitle>
-                        <DialogDescription>
-                            Make changes to your profile here. Click save when you're done.
-                        </DialogDescription>
-                        </DialogHeader>
-                            <Input
-                            label="Name"
-                            id="name"
-                            defaultValue="Pedro Duarte"
-                            className=""
-
-                            />
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Input
-                            label="Username"
-                            id="username"
-                            defaultValue="@peduarte"
-                            className="col-span-3"
-                            />
-                        </div>
-                        <DialogFooter>
-                            <button className="bg-indigo-600 bg-opacity-70 transition-all hover:bg-indigo-500 mt-4 hover:bg-opacity-100 text-white px-4 py-2 rounded-md">Save</button>
-
-
-                        </DialogFooter>
-                    </DialogContent>
-                    </Dialog>
+                <EditProfileForm initialValues={{
+                    name: user?.name,
+                    email: user?.email,
+                    avatarUrl: user?.avatarUrl
+                }}/>
             </div>
         </div>
     )

@@ -4,12 +4,13 @@ import { twMerge } from "tailwind-merge";
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     label?: string;
     error?: string;
+    wrapperClassName?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-    ({ label, error, ...props }, ref) =>  {
+    ({ wrapperClassName, label, error, ...props }, ref) =>  {
         return (
-            <div>
+            <div className={wrapperClassName}>
                 <label htmlFor={props.name} className="block text-sm font-medium leading-5 text-white">
                     {label}
                 </label>
