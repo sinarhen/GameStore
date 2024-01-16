@@ -3,6 +3,7 @@ import { motion, useScroll } from 'framer-motion';
 import { HTMLAttributes, useEffect, useRef, useState } from 'react';
 import Header from '../components/Header';
 import Section from '../components/Section';
+import AnimatedSeparator from '../components/AnimatedSeparator';
 const appearDuration = 0.7;
 
 
@@ -46,21 +47,14 @@ export default function Home() {
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel eos sapiente minus rerum nulla officia deserunt at, distinctio a id qui, est ratione esse. Et reprehenderit accusamus illum odio molestiae.
 
                 </motion.p>
-                <motion.hr 
-                initial={{opacity: 0, width: 0}}
-                animate={{opacity: 1, width: "100%", animationTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)'}}
-                transition={{delay: appearDuration + 1.5, duration: appearDuration}}
-                className='mt-4 border-gray-400 border-1'/>
+                <AnimatedSeparator appearDuration={appearDuration} />
             </Section>
             
             <Section>
                 <Header appearDuration={appearDuration} animateableText='Categories' />
 
-                <motion.hr 
-                initial={{opacity: 0, width: 0}}
-                animate={{opacity: 1, width: "100%", animationTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)'}}
-                transition={{delay: appearDuration + 1.5, duration: appearDuration}}
-                className='mt-4 border-gray-400 border-1'/>
+                <AnimatedSeparator appearDuration={appearDuration} />
+
             </Section>
             
         </div>

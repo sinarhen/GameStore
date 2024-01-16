@@ -48,6 +48,7 @@ export default function Products(){
         <>
             <div className="pt-20 w-full h-full">
                 <Header animateableText="Products." appearDuration={1} />
+                
                 {/* Filterby, orderby, pagination  */}
                 <div className="flex justify-between  text-sm items-center w-full py-10">
                         <div className="flex gap-x-2">
