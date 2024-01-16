@@ -1,4 +1,4 @@
-import Product from '../models/product.js'; 
+import Product from '../models/Product.js'; 
 import { check, validationResult } from 'express-validator';
 
 function validate(method) {
