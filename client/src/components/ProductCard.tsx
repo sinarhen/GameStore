@@ -12,7 +12,7 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
     });
 
     return (
-        <div className="max-w-md mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg">
+        <div onClick={() => window.location.replace(`/products/${product._id}`)} className="max-w-md group cursor-pointer mx-auto rounded-md overflow-hidden shadow-md hover:shadow-lg">
             <div className="relative">
                 <img className="w-full" src={imageUrl} alt="Product Image" />
                 
@@ -21,7 +21,7 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
                 </div>
             </div>
             <div className="p-4">
-                <h3 className="text-lg font-medium mb-2">Product Title</h3>
+                <h3 className="text-lg font-medium mb-2">{product.name}</h3>
                 <p className="text-gray-600 text-sm mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae ante
                     vel eros fermentum faucibus sit amet euismod lorem.</p>
                 <div className="flex items-center justify-between">
