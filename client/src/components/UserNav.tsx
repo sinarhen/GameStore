@@ -3,8 +3,9 @@ import { MdArrowDropDown } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { removeCookie } from "../lib/auth";
 import toast from "react-hot-toast";
+import { FaUser } from "react-icons/fa";
 
-export default function UserNav({username} : {username?: string})
+export default function UserNav({username, avatarUrl} : {username?: string, avatarUrl?: string | null})
 {
 
     function handleLogout() {
@@ -15,10 +16,13 @@ export default function UserNav({username} : {username?: string})
     const [open, setOpen] = useState(false)
     return (
             <div className='flex items-center gap-x-2'>
-                <div className='rounded-full w-8 h-8 overflow-hidden bg-white'>
-                    <img 
-                        alt="user profile"
-                        src='https://clipart-library.com/images_k/head-silhouette-icon/head-silhouette-icon-22.png'></img>
+                <div className='rounded-full w-10 h-10 overflow-hidden flex items-center justify-center bg-neutral-900'>
+                    {avatarUrl ? (
+                        <img className="w-full h-full object-cover bg-center rounded-3xl" src={avatarUrl} alt={"avatar"}/>
+                    ): (
+                        <FaUser className="w-[66%] h-[66%]"/>
+                    
+                    )}
                 </div>
                 <MdArrowDropDown 
                     className={`cursor-pointer transition-all duration-100 ${open ? 'transform -rotate-90' : ''}`}
@@ -33,7 +37,7 @@ export default function UserNav({username} : {username?: string})
                         
                         <hr className="h-[0.5px] opacity-50 bg-gray-200 bg-opacity-50"/>
                             
-                        <Link to='/myaccount'  className='block transition-colors rounded-b-md px-4 py-2 hover:bg-gray-200 hover:bg-opacity-50 cursor-pointer'>My Account</Link>
+                        <Link to='/me'  className='block transition-colors rounded-b-md px-4 py-2 hover:bg-gray-200 hover:bg-opacity-50 cursor-pointer'>My Account</Link>
                     
                         <Link to='/favorites' className='block transition-colors rounded-md px-4 py-2 hover:bg-gray-200 hover:bg-opacity-50 cursor-pointer'>Favorites</Link>
                     

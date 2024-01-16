@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
-import Cookies from "js-cookie";
 import { setCookie } from "../lib/auth";
 
 const RegisterSchema = z.object({

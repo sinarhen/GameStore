@@ -4,6 +4,7 @@ import { useCurrentUser } from '../hooks/useCurrentUser';
 
 const Navbar = () => {
     const { user } = useCurrentUser();
+    console.log(user)
     return (
         <>
         <nav className="bg-neutral-800 z-50 fixed w-full">
@@ -17,7 +18,7 @@ const Navbar = () => {
                     </div>
                     <div>
                         {user ? (
-                            <UserNav username={user.name}/>
+                            <UserNav avatarUrl={user.avatarUrl} username={user.name}/>
                         ) : (
                             
                             <div className='flex gap-x-2 items-center'>

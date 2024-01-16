@@ -17,6 +17,7 @@ export type CategoryType = {
 
 export type User = {
     _id: string;
+    avatarUrl: string | null;
     email: string;
     name: string;
     createdAt: Date;
