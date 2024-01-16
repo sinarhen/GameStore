@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { MdArrowDropDown } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { removeCookie } from "../lib/auth";
+import toast from "react-hot-toast";
 
 export default function UserNav({username} : {username?: string})
 {
 
     function handleLogout() {
-        // TODO: Implement logout
+        removeCookie()
+        window.location.replace("/")
+        toast.success("Logged out successfully")
     }
     const [open, setOpen] = useState(false)
     return (

@@ -1,9 +1,9 @@
 import { Link, NavLink } from 'react-router-dom';
 import UserNav from './UserNav';
+import { useCurrentUser } from '../hooks/useCurrentUser';
 
-const Navbar = ({isAuthenticated = true}: {
-    isAuthenticated?: boolean;
-} ) => {
+const Navbar = () => {
+    const { user } = useCurrentUser();
     return (
         <>
         <nav className="bg-neutral-800 z-50 fixed w-full">
@@ -16,8 +16,8 @@ const Navbar = ({isAuthenticated = true}: {
 
                     </div>
                     <div>
-                        {isAuthenticated ? (
-                            <UserNav />
+                        {user ? (
+                            <UserNav username={user.name}/>
                         ) : (
                             
                             <div className='flex gap-x-2 items-center'>
