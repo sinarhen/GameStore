@@ -9,7 +9,7 @@ const Navbar = ({isAuthenticated = true}: {
         <nav className="bg-neutral-800 z-50 fixed w-full">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex duration-200 items-center justify-between h-16">
-                    <h1 className="text-white">GameStore</h1>
+                    <h1 className="text-white"><Link to="/">Game Store</Link></h1>
                     <div className="flex">
                         <Link to="/" className="text-gray-300 hover:bg-neutral-700 px-3 py-2 rounded-md ">Home</Link>
                         <Link to="/products" className="text-gray-300 hover:bg-neutral-700 px-3 py-2 rounded-md">Products</Link>
