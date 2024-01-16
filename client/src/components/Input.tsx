@@ -1,9 +1,13 @@
+import React from "react";
+
 export default function Input({...props}: { 
     name: string, 
     id: string, 
     type: string, 
     autoComplete: string,
-    label: string
+    label: string,
+    value: string,
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void
 }) {
     return (
         <div>
@@ -12,6 +16,8 @@ export default function Input({...props}: {
             </label>
             <div className="mt-1">
                 <input
+                    value={props.value}
+                    onChange={props.onChange}
                     id={props.id}
                     name={props.name}
                     type={props.type}

@@ -15,8 +15,8 @@ export default function Login() {
         <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-4" action="#" method="POST"> 
             
-            <Input label="Email Address" name="email" type="email" id="email" autoComplete="email" />
-            <Input label="Password" name="password" type="password" id="password" autoComplete="current-password" />
+            {/* <Input label="Email Address" name="email" type="email" id="email" autoComplete="email" />
+            <Input label="Password" name="password" type="password" id="password" autoComplete="current-password" /> */}
 
             <div>
               <button
