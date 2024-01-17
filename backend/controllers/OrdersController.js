@@ -47,24 +47,18 @@ export const addToOrder = async (req, res) => {
 export const deleteOrder = async (req, res) => {
     try {
         const { productId } = req.params;
-        const { quantity } = req.body;
 
         const token = (req.headers.authorization || "").replace(/Bearer\s?/, '');
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
-        if (!token) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
-
         let order = await Order.findOne({ userId: decodedToken._id });
-
-        if (!order) {
-            return res.status(404).json({ message: 'Order not found' });
-        }
-
         const index = order.products.findIndex((p) => p.productId.toString() === productId);
 
-        if (index === -1) {
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        } else if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        } else if (index === -1) {
             return res.status(404).json({ message: 'Product not found in the order' });
         }
 
