@@ -1,5 +1,5 @@
 
-import EditProfileForm from "../components/EditProfileDialog";
+import EditProfileDialog from "../components/EditProfileDialog";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { FaUser } from "react-icons/fa";
 
@@ -18,7 +18,7 @@ export default function MyAccount() {
             <div className="h-full overflow-clip">
                 <p className="text-zinc-600 ">{user?.email}</p>
                 <h1 className="text-7xl truncate mt-2 w-full h-auto">{user?.name}</h1>
-                <EditProfileForm initialValues={{
+                <EditProfileDialog initialValues={{
                     name: user?.name,
                     email: user?.email,
                     avatarUrl: user?.avatarUrl

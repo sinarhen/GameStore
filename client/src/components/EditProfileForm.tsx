@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./Dialog";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./Dialog";
 import Input from "./Input";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { isValidURLImage } from "../lib/utils";
 import { Trash2 } from "lucide-react";
 import { FaUser } from "react-icons/fa";
+import { updateUser } from "../lib/auth";
 
 const profileEditForm = z.object({
     name: z.string().min(3, { message: "Name should be at least 3 characters long" }),
@@ -36,24 +37,27 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
     });
   
     async function onSubmit(values: TProfileEditForm){
-      try {
-        const formData = new FormData();
-        if (inputType === 'file') {
-        formData.append('file', values?.avatarUrl);
-        formData.append('upload_preset', 'upload_needed'); // TODO: Update upload preset
-        const imageUploaded = await axios.post(
-          'https://api.cloudinary.com/v1_1/something', // TODO: Update cloudinary upload URL
-          formData
-        );
-        values.avatarUrl = imageUploaded.data.secure_url;
-      }
+        try {
+            const formData = new FormData();
+            if (values.avatarUrl !== initialValues.avatarUrl)
+            {
+                if (inputType === 'file') {
+                    formData.append('file', values?.avatarUrl);
+                    formData.append('upload_preset', 'upload_needed'); // TODO: Update upload preset
+                    const imageUploaded = await axios.post(
+                    'https://api.cloudinary.com/v1_1/something', // TODO: Update cloudinary upload URL
+                    formData
+                    );
+                    values.avatarUrl = imageUploaded.data.secure_url;
+                
+                }
+            }
 
-      const res = await axios.put('/auth', values);
-      toast.success('Profile updated successfully');
-      window.location.reload();
-    } catch (e: any) {
-      toast.error(e?.message || 'Something went wrong');
-    };
+            const res = await updateUser(values);
+            toast.success('Profile updated successfully');
+        } catch (e: any) {
+            toast.error(e?.message || 'Something went wrong');
+        };
   }
     const toogleImageUrlDialog = () => {
       setOpenImageUrlDialog(!openImageUrlDialog);
@@ -80,7 +84,6 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
         return null;
     }
      
-    console.log(form.getValues().avatarUrl)
     return (
         <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
             <Input {...form.register('name')} label="Username" error={form.formState.errors.name?.message} />  
@@ -141,7 +144,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                     <div className='w-full relative bg-gray-200 overflow-hidden rounded-lg'>
                         <div className="w-full h-full aspect-square">
                         {tempSrcUrlForFile || form.getValues().avatarUrl ? (
-                            <img src={tempSrcUrlForFile ?? form.getValues().avatarUrl} className="object-cover w-full h-full bg-center"/>
+                            <img alt="avatar" src={tempSrcUrlForFile ?? form.getValues().avatarUrl} className="object-cover w-full h-full bg-center"/>
                         ) : (
                             <FaUser className="w-full h-full"/>
                     

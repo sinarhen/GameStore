@@ -179,34 +179,27 @@ export const changePassword = async (req, res) => {
 }
 export const updateUser = async (req, res) => {
     try {
-        const { email, password, newName, newEmail, newAvatarUrl } = req.body;
+        const { email, name, avatarUrl } = req.body;
 
-        const user = await UserModel.findOne({ email });
+        const user = await UserModel.findById(req.userId);
         if (!user) {
             return res.status(404).json({
                 message: 'User not found',
             });
         }
 
-        const passwordValid = await bcrypt.compare(password, user.passwordHash);
-        if (!passwordValid) {
-            return res.status(401).json({
-                message: 'Invalid credentials',
-            });
+        if (name) {
+            user.name = name;
         }
 
-        if (newName) {
-            user.name = newName;
+        if (email) {
+            user.email = email;
         }
 
-        if (newEmail) {
-            user.email = newEmail;
+        if (avatarUrl) {
+            user.avatarUrl = avatarUrl;
         }
-
-        if (newAvatarUrl) {
-            user.avatarUrl = newAvatarUrl;
-        }
-
+            
         await user.save();
 
         res.json({ message: 'User updated successfully' });
