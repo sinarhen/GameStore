@@ -15,11 +15,11 @@ const orderSchema = new mongoose.Schema({
         name: String,
         description: String,
         imageUrl: String,
+        quantity: {
+            type: Number,
+            default: 1
+        },
     }],
-    quantity: {
-        type: Number,
-        required: true
-    },
     status: {
         type: String,
         enum: ["pending", "processing", "ready", "canceled"],

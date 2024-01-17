@@ -2,7 +2,49 @@ import Product from '../models/Product.js';
 import Order from '../models/Order.js';
 import jwt from 'jsonwebtoken';
 
-export const addOrder = async (req, res) => {
+export const addToOrder = async (req, res) => {
+    try {
+        const { productId } = req.params;
+        const { quantity, products = [] } = req.body;
+
+        const token = (req.headers.authorization || "").replace(/Bearer\s?/, '');
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+
+        if (!token) {
+            return res.status(401).json({ message: 'Unauthorized' });
+        }
+
+        const product = await Product.findById(productId);
+        let order = await Order.findOne({ userId: decodedToken._id });
+
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        if (!order) {
+            order = new Order({ userId: decodedToken._id, products: [] });
+        }
+
+        const newProduct = {
+            _id: product._id,
+            productId: productId,
+            name: product.name,
+            price: product.price,
+            quantity,
+            imageUrl: product.imageUrl,
+        };
+
+        order.products.push(newProduct);
+
+        await order.save();
+
+        res.status(201).json({ message: 'Order added successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const deleteOrder = async (req, res) => {
     try {
         const { productId } = req.params;
         const { quantity } = req.body;
@@ -14,29 +56,29 @@ export const addOrder = async (req, res) => {
             return res.status(401).json({ message: 'Unauthorized' });
         }
 
-        const product = await Product.findById(productId);
+        let order = await Order.findOne({ userId: decodedToken._id });
 
-        if (!product) {
-            return res.status(404).json({ message: 'Product not found' });
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
         }
 
-        const order = new Order({
-            userId: decodedToken._id,
-            products: [
-                {
-                    productId,
-                    price: product.price,
-                    name: product.name,
-                    description: product.description,
-                },
-            ],
-            quantity,
-            status: 'pending',
-        });
+        const index = order.products.findIndex((p) => p.productId.toString() === productId);
+
+        if (index === -1) {
+            return res.status(404).json({ message: 'Product not found in the order' });
+        }
+
+        const productQuantity = order.products[index].quantity;
+
+        if (productQuantity === 1) {
+            order.products.splice(index, 1);
+        } else {
+            order.products[index].quantity = Math.max(1, order.products[index].quantity - 1);
+        }
 
         await order.save();
 
-        res.status(201).json({ message: 'Order added successfully' });
+        res.status(200).json({ message: 'Order updated successfully' });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

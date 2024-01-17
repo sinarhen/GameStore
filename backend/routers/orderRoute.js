@@ -1,10 +1,10 @@
 import express from 'express';
-import { addOrder } from "../controllers/OrdersController.js";
+import { addToOrder, deleteOrder } from "../controllers/OrdersController.js";
 
 const router = express.Router();
 
 // router.get('/', getOrder);
-router.post('/:productId',  addOrder);
-// router.delete('/:productId',  deleteFavorite);
+router.post('/:productId',  addToOrder);
+router.delete('/:productId',  deleteOrder);
 
 export default router;
