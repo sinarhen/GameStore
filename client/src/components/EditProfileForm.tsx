@@ -84,6 +84,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
         return null;
     }
      
+    console.log(form.getValues().avatarUrl)
     return (
         <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
             <Input {...form.register('name')} label="Username" error={form.formState.errors.name?.message} />  
@@ -95,7 +96,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                     form.resetField('avatarUrl');
                   }
                 } }>
-                  <DialogContent className="bg-neutral-800">
+                  <DialogContent className="bg-neutral-800 text-white">
                     <DialogHeader>
                       <DialogTitle>
                         Paste URL 
@@ -103,7 +104,12 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                       <DialogDescription>
                         Paste URL of your profile avatar here.
                       </DialogDescription>
-                        <Input {...form.register('avatarUrl')} label="Profile avatar" error={form?.formState?.errors?.avatarUrl?.message?.toString()} value={imageUrlDialogTempInput} onChange={(e) => setImageUrlDialogTempInput(e.target.value)}/>  
+                        <Input 
+                        {...form.register('avatarUrl')} 
+                        label="Profile avatar" 
+                        error={form?.formState?.errors?.avatarUrl?.message?.toString()} 
+                        value={imageUrlDialogTempInput} 
+                        onChange={(e) => setImageUrlDialogTempInput(e.target.value)}/>  
                       
                       <DialogFooter>
                         <DialogClose asChild>
@@ -111,6 +117,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                             className="bg-indigo-600 bg-opacity-70 transition-all hover:bg-indigo-500 mt-4 hover:bg-opacity-100 text-white px-4 py-2 rounded-md" 
                             disabled={!isValidURLImage(imageUrlDialogTempInput)}
                             onClick={() => {
+                                console.log("saving url image: ", imageUrlDialogTempInput);
                               form.setValue("avatarUrl", imageUrlDialogTempInput);
                               setImageUrlDialogTempInput("");
                               setInputType("url");
@@ -130,29 +137,15 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
             </Dialog>
 
             <div>
-                <div className='block'>
-                        <Input
-                        style={{display: 'block'}}
-                        multiple={false}
-                        onChange={(e) => {
-                            if (!e?.target?.files || !e.target.files[0]) {
-                            return;
-                            }
-                            form.setValue('avatarUrl', e?.target?.files[0]);
-                            setImageUrlFromFile(e?.target?.files[0]);
-                            setInputType("file");
-                        }} type='file' />
-                                
-                </div>
                 <span className='cursor-pointer right-0 ml-2 text-xs text-gray-400' onClick={toogleImageUrlDialog}>
                 Paste url
                 </span>
 
                 {
                     <div className='w-full relative bg-gray-200 overflow-hidden rounded-lg'>
-                        <div className="w-full aspect-square">
-                        {tempSrcUrlForFile || form.getValues().avatarUrl?.value ? (
-                            <img src={tempSrcUrlForFile ?? form.getValues().avatarUrl?.value} className="object-cover w-full h-full bg-center"/>
+                        <div className="w-full h-full aspect-square">
+                        {tempSrcUrlForFile || form.getValues().avatarUrl ? (
+                            <img src={tempSrcUrlForFile ?? form.getValues().avatarUrl} className="object-cover w-full h-full bg-center"/>
                         ) : (
                             <FaUser className="w-full h-full"/>
                     
@@ -175,6 +168,21 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                     </span>
                     </div>
                 }
+                
+                <div className='block'>
+                        <Input
+                        style={{display: 'block'}}
+                        multiple={false}
+                        onChange={(e) => {
+                            if (!e?.target?.files || !e.target.files[0]) {
+                            return;
+                            }
+                            form.setValue('avatarUrl', e?.target?.files[0]);
+                            setImageUrlFromFile(e?.target?.files[0]);
+                            setInputType("file");
+                        }} type='file' />
+                                
+                </div>
             </div>   
                
                <DialogFooter>
