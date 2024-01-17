@@ -10,6 +10,7 @@ import { isValidURLImage } from "../lib/utils";
 import { Trash2 } from "lucide-react";
 import { FaUser } from "react-icons/fa";
 import { updateUser } from "../lib/auth";
+import { useNavigate } from "react-router-dom";
 
 const profileEditForm = z.object({
     name: z.string().min(3, { message: "Name should be at least 3 characters long" }),
@@ -35,7 +36,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
       },
       mode: "onTouched",
     });
-  
+    const navigate = useNavigate();
     async function onSubmit(values: TProfileEditForm){
         try {
             const formData = new FormData();
@@ -54,13 +55,9 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
             }
 
             const res = await updateUser(values);
-            if (res.status >= 200 && res.status < 300)
-            {
-                toast.success('Profile updated successfully');
-            }
-            else {
-                toast.error('Something went wrong');
-            }
+            console.log(res.message)
+            toast.success('Profile updated successfully');
+            navigate(0)
         } catch (e: any) {
             toast.error(e?.message || 'Something went wrong');
         };
@@ -193,9 +190,8 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                <DialogFooter>
                         <button 
                         type="submit"
-                        disabled={!form.formState.isValid} 
+                        disabled={!form.formState.isValid || form.formState.isSubmitting || !form.formState.isDirty} 
                         className="bg-indigo-600 bg-opacity-70 disabled:bg-gray-400 transition-all hover:bg-indigo-500 mt-4 hover:bg-opacity-100 text-white px-4 py-2 rounded-md">Save</button>
-
                 </DialogFooter>
         </form>
     )
