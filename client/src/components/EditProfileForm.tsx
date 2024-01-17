@@ -43,10 +43,10 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
             {
                 if (inputType === 'file') {
                     formData.append('file', values?.avatarUrl);
-                    formData.append('upload_preset', 'upload_needed'); // TODO: Update upload preset
+                    formData.append('upload_preset', 'gwuh0xnp');
                     const imageUploaded = await axios.post(
-                    'https://api.cloudinary.com/v1_1/something', // TODO: Update cloudinary upload URL
-                    formData
+                        'https://api.cloudinary.com/v1_1/dhnkvzuxk/image/upload',
+                        formData
                     );
                     values.avatarUrl = imageUploaded.data.secure_url;
                 
@@ -54,7 +54,13 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
             }
 
             const res = await updateUser(values);
-            toast.success('Profile updated successfully');
+            if (res.status >= 200 && res.status < 300)
+            {
+                toast.success('Profile updated successfully');
+            }
+            else {
+                toast.error('Something went wrong');
+            }
         } catch (e: any) {
             toast.error(e?.message || 'Something went wrong');
         };
