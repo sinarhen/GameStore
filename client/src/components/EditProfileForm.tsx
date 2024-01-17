@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./Dialog";
 import Input from "./Input";
 import * as z from "zod";
@@ -7,6 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { isValidURLImage } from "../lib/utils";
+import { Trash2 } from "lucide-react";
+import { FaUser } from "react-icons/fa";
 
 const profileEditForm = z.object({
     name: z.string().min(3, { message: "Name should be at least 3 characters long" }),
@@ -72,26 +74,36 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
         setTempSrcUrlForFile(reader.result as string);
       };
     }, [setTempSrcUrlForFile]);
+
+    const [isMounted, setIsMounted] = useState(false);
+    useEffect(() => {
+        setIsMounted(true);
+        }, []);
+
+    if (!isMounted) {
+        return null;
+    }
+     
     return (
         <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
             <Input {...form.register('name')} label="Username" error={form.formState.errors.name?.message} />  
             <Input {...form.register('email')} label="Email"  error={form.formState.errors.email?.message} />  
-{/* 
+
             <Dialog open={openImageUrlDialog} onOpenChange={() => {
                   toogleImageUrlDialog();
                   if (!form.getValues('avatarUrl')) {
                     form.resetField('avatarUrl');
                   }
                 } }>
-                  <DialogContent >
+                  <DialogContent className="bg-neutral-800">
                     <DialogHeader>
                       <DialogTitle>
                         Paste URL 
                       </DialogTitle>
                       <DialogDescription>
-                        Paste URL of image of your car below
+                        Paste URL of your profile avatar here.
                       </DialogDescription>
-                        <Input {...form.register('avatarUrl')} label="Profile avatar" error={form.formState.errors.avatarUrl?.message} value={imageUrlDialogTempInput} onChange={(e) => setImageUrlDialogTempInput(e.target.value)}/>  
+                        <Input {...form.register('avatarUrl')} label="Profile avatar" error={form?.formState?.errors?.avatarUrl?.message?.toString()} value={imageUrlDialogTempInput} onChange={(e) => setImageUrlDialogTempInput(e.target.value)}/>  
                       
                       <DialogFooter>
                         <DialogClose asChild>
@@ -115,17 +127,62 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
 
                   </DialogContent>
 
-                </Dialog>
-               */}
+            </Dialog>
+
+            <div>
+                <div className='block'>
+                        <Input
+                        style={{display: 'block'}}
+                        multiple={false}
+                        onChange={(e) => {
+                            if (!e?.target?.files || !e.target.files[0]) {
+                            return;
+                            }
+                            form.setValue('avatarUrl', e?.target?.files[0]);
+                            setImageUrlFromFile(e?.target?.files[0]);
+                            setInputType("file");
+                        }} type='file' />
+                                
+                </div>
+                <span className='cursor-pointer right-0 ml-2 text-xs text-gray-400' onClick={toogleImageUrlDialog}>
+                Paste url
+                </span>
+
+                {
+                    <div className='w-full relative bg-gray-200 overflow-hidden rounded-lg'>
+                        <div className="w-full aspect-square">
+                        {tempSrcUrlForFile || form.getValues().avatarUrl?.value ? (
+                            <img src={tempSrcUrlForFile ?? form.getValues().avatarUrl?.value} className="object-cover w-full h-full bg-center"/>
+                        ) : (
+                            <FaUser className="w-full h-full"/>
+                    
+                        )}
+                            
+                        </div>
+                        
+                    <span className='text-xs flex items-center justify-center absolute right-2 top-3 hover:bg-red-500 bg-white/30 transition-colors cursor-pointer backdrop-blur-sm w-9 h-9 rounded-lg border border-black' onClick={() => {
+                        form.setValue('avatarUrl', '');
+                        if (inputType === 'file')
+                        {
+                        setTempSrcUrlForFile(null);
+                        
+                        } else if (inputType === 'url') {
+                        setInputType('file');
+                        }
+                    }}>
+
+                        <Trash2 className='w-1/2 h-1/2'/>                 
+                    </span>
+                    </div>
+                }
+            </div>   
                
                <DialogFooter>
-                    <DialogClose>
                         <button 
                         type="submit"
                         disabled={!form.formState.isValid} 
                         className="bg-indigo-600 bg-opacity-70 disabled:bg-gray-400 transition-all hover:bg-indigo-500 mt-4 hover:bg-opacity-100 text-white px-4 py-2 rounded-md">Save</button>
 
-                    </DialogClose>
                 </DialogFooter>
         </form>
     )
