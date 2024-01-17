@@ -4,7 +4,6 @@ import { useCurrentUser } from '../hooks/useCurrentUser';
 
 const Navbar = () => {
     const { user } = useCurrentUser();
-    console.log(user)
     return (
         <>
         <nav className="bg-neutral-800 z-50 fixed w-full">

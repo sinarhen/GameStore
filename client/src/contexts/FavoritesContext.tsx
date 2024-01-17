@@ -15,9 +15,11 @@ export const FavoritesProvider = ({ children }: {
     // Replace with the correct API endpoint to get all favorites
     getFavorites().then((favorites) => {
       setFavorites(favorites);
-    });
+    }).catch((error) => {
+      console.error(error);
+    }).finally(() => {
 
-  }, []);
+    })}, []);
 
   return (
     <FavoritesContext.Provider value={[favorites, setFavorites]}>

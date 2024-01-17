@@ -1,6 +1,7 @@
 import { useContext, useCallback } from 'react';
 import axios from 'axios';
 import { FavoritesContext } from '../contexts/FavoritesContext';
+import { toggleFavs } from '../lib/favorites';
 
 export const useFavorites = () => {
   const context = useContext(FavoritesContext);
@@ -16,7 +17,7 @@ export const useFavorites = () => {
     const method = isFavorite ? 'delete' : 'post';
 
     try {
-      await axios[method](`/favorites/${productId}`);
+      toggleFavs(productId, method).catch(err => console.log(err));
       setFavorites((prevFavorites: string[]) => {
         if (isFavorite) {
           return prevFavorites.filter(id => id !== productId);
@@ -31,3 +32,4 @@ export const useFavorites = () => {
 
   return { favorites, toggleFavorite };
 };
+

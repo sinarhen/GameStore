@@ -3,8 +3,7 @@ import Product from "../models/Product.js";
 
 export const getAllFavoritesByUserId = async (req, res) => {
     try {
-        const favorites = await Favorites.find({ userId });
-
+        const favorites = await Favorites.find({ userId: req.userId });
         res.status(200).json(favorites);
     } catch (error) {
         res.status(500).json({ message: error.message });
