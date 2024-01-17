@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 
 export function isValidURLImage(url: string) {
     // Regular expression for a valid image URL
@@ -10,3 +11,11 @@ export function isValidURLImage(url: string) {
     return urlRegex.test(url) && imageRegex.test(url.toLowerCase());
   }
   
+
+  
+export const getHeaders = (headerName: string) => {
+    const cookie = Cookies.get(headerName);
+    return {
+      [headerName]: `Bearer ${cookie}`,
+    };
+  };

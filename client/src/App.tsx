@@ -13,37 +13,40 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./contexts/AuthContext";
-
+import { FavoritesProvider } from "./contexts/FavoritesContext";
 
 function App() {
   return (
     <AuthProvider>
-      <div className="w-full 
-      mandatory-enabled overflow-y-scroll  
-      h-full text-white bg-neutral-900">
-        <Router>
-          <Navbar />
-          <div className="
-            container
-            overflow-x-visible
-            mx-auto 
-            h-full
-            xl:px-36 px-4 sm:px-6 lg:px-8">
+      <FavoritesProvider>
+        <div className="w-full 
+        mandatory-enabled overflow-y-scroll  
+        h-full text-white bg-neutral-900">
+          <Router>
+            <Navbar />
+            <div className="
+              container
+              overflow-x-visible
+              mx-auto 
+              h-full
+              xl:px-36 px-4 sm:px-6 lg:px-8">
 
-              <Routes>
-                <Route path='/' element={<Home />} />
-                <Route path='/products' element={<Products/>} />
-                <Route path='/categories' element={<Categories />} />
-                <Route path='/me' element={<MyAccount />} />
-                <Route path='/favorites' element={<Favorites />} />
-                <Route path='/orders' element={<Orders />} />
-                <Route path='/register' element={<Register />} />
-                <Route path='/login' element={<Login />} />
-              </Routes>
-              
-          </div>
-        </Router>
-      </div>
+                <Routes>
+                  <Route path='/' element={<Home />} />
+                  <Route path='/products' element={<Products/>} />
+                  <Route path='/categories' element={<Categories />} />
+                  <Route path='/me' element={<MyAccount />} />
+                  <Route path='/favorites' element={<Favorites />} />
+                  <Route path='/orders' element={<Orders />} />
+                  <Route path='/register' element={<Register />} />
+                  <Route path='/login' element={<Login />} />
+                </Routes>
+                
+            </div>
+          </Router>
+        </div>
+      </FavoritesProvider>
+      
       <Toaster position="bottom-right" />
     </AuthProvider>
       );
