@@ -1,15 +1,35 @@
+import { useEffect, useState } from 'react';
 import { CiHeart } from "react-icons/ci";
+import { FaHeart } from "react-icons/fa";
 
-export default function Favorite({productId}: {
-    productId: string;
-}){
+import axios from 'axios';
+
+export default function Favorite({productId}: { productId: string; }) {
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    useEffect(() => {
+        // Replace with the correct API endpoint and method
+        axios.get(`/favorites/${productId}`)
+            .then(response => setIsFavorite(response.data.isFavorite))
+            .catch(error => console.error(error));
+    }, [productId]);
+
     const toggleFavorites = () => {
-        // TODO: Add to favorites if not in favorites, remove from favorites if in favorites
-    
-        console.log("Add to favorites");
+        const method = isFavorite ? 'delete' : 'post';
+        // Replace with the correct API endpoint
+        axios[method](`/favorites/${productId}`)
+            .then(response => setIsFavorite(!isFavorite))
+            .catch(error => console.error(error));
     }
 
     return (
-        <CiHeart fill="red" onClick={toggleFavorites} className="text-red-500 text-2xl" />
+        <>
+            {isFavorite ? ( 
+                <FaHeart  onClick={toggleFavorites} color='red' className=" text-4xl" />) : (
+                    <CiHeart onClick={toggleFavorites} color='red' className=" text-4xl" />
+                )
+            }
+        
+        </>
     )
-}  
+}

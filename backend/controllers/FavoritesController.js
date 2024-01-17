@@ -1,18 +1,8 @@
 import Favorites from "../models/Favorites.js";
 import Product from "../models/Product.js";
-import jwt from 'jsonwebtoken';
 
 export const getAllFavoritesByUserId = async (req, res) => {
     try {
-        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
-
-        if (!token) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
-
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        const userId = decodedToken._id;
-
         const favorites = await Favorites.find({ userId });
 
         res.status(200).json(favorites);
@@ -25,14 +15,7 @@ export const addFavorite = async (req, res) => {
     const { productId } = req.params;
 
     try {
-        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
 
-        if (!token) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
-
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        const userId = decodedToken._id;
 
         const product = await Product.findById(productId);
 
@@ -56,14 +39,6 @@ export const addFavorite = async (req, res) => {
 export const deleteFavorite = async (req, res) => {
     try {
         const { productId } = req.params;
-        const token = req.headers.authorization.replace(/Bearer\s?/, '');
-
-        if (!token) {
-            return res.status(401).json({ message: 'Unauthorized' });
-        }
-
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        const userId = decodedToken._id;
 
         const favorite = await Favorites.findOne({ userId, productId });
         if (!favorite) {
