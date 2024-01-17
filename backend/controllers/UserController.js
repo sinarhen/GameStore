@@ -177,43 +177,46 @@ export const changePassword = async (req, res) => {
         });
     }
 }
-
-export const changeEmail = async (req, res) => {
+export const updateUser = async (req, res) => {
     try {
-        const email = req.body.email;
-        const newEmail = req.body.newEmail;
-        const password = req.body.password;
+        const { email, password, newName, newEmail, newAvatarUrl } = req.body;
 
         const user = await UserModel.findOne({ email });
         if (!user) {
             return res.status(404).json({
                 message: 'User not found',
-            })
+            });
         }
 
-        const passwordValid = await bcrypt.compare(
-            password,
-            user.passwordHash
-        );
+        const passwordValid = await bcrypt.compare(password, user.passwordHash);
         if (!passwordValid) {
             return res.status(401).json({
                 message: 'Invalid credentials',
-            })
+            });
         }
 
-        user.email = newEmail;
+        if (newName) {
+            user.name = newName;
+        }
+
+        if (newEmail) {
+            user.email = newEmail;
+        }
+
+        if (newAvatarUrl) {
+            user.avatarUrl = newAvatarUrl;
+        }
 
         await user.save();
 
-        res.json({ message: 'Email changed successfully' });
-    }
-    catch (err) {
+        res.json({ message: 'User updated successfully' });
+    } catch (err) {
         console.log(err);
         res.status(500).json({
-            message: 'Failed to change email',
-        })
+            message: 'Failed to update user',
+        });
     }
-}
+};
 
 // delete user endpoint 
 export const deleteUser = async (req, res) => {

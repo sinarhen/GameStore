@@ -48,11 +48,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
         values.avatarUrl = imageUploaded.data.secure_url;
       }
 
-      const res = {}; // =await updateProfile(initialValues.id, values);
-        // if (res?.error) {
-        //     toast.error(res.error.message || 'Something went wrong');
-        //     return;
-        // }
+      const res = await axios.put('/auth', values);
       toast.success('Profile updated successfully');
       window.location.reload();
     } catch (e: any) {
