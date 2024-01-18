@@ -21,7 +21,7 @@ export const addToOrder = async (req, res) => {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        if (!order || order.status !== 'pending') {
+        if (!order || order.status === 'canceled' || order.status === 'ready' || order.status === 'processing') {
             order = new Order({ userId: decodedToken._id, status: 'pending' });
         }
 
@@ -88,6 +88,11 @@ export const getAllOrdersByUserId = async (req, res) => {
         }
 
         const orders = await Order.find({ userId: decodedToken._id });
+
+        if (!orders) {
+            return res.status(404).json({ message: 'Orders not found' });
+        }
+
         res.status(200).json(orders);
     } catch (error) {
         res.status(500).json({ message: error.message });
