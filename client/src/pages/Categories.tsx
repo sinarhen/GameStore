@@ -1,8 +1,8 @@
-export default function Favorites()
+export default function Categories()
 {
     return(
-        <div className='favorites'>
-            <h1>Favorites</h1>
+        <div className='categories'>
+            <h1>Categories</h1>
         </div>
     )
 }
