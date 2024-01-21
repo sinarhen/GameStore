@@ -4,18 +4,13 @@ import { HTMLAttributes, useEffect, useRef, useState } from 'react';
 import Header from '../components/Header';
 import Section from '../components/Section';
 import AnimatedSeparator from '../components/AnimatedSeparator';
+
+
 const appearDuration = 0.7;
 
 
 
 export default function Home() {
-
-    // const [currentSection, setCurrentSection] = useState<'categories' | 'products' | "welcome">('categories'); // ['categories', 'products', 'orders', 'favorites', 'myaccount', 'login', 'register'
-    // const categoriesSectionRef = useRef<HTMLDivElement>(null);
-
-    // function scrollToCategories() {
-    //     categoriesSectionRef.current?.scrollIntoView({behavior: 'smooth'});
-    // }
 
 
     return (
@@ -39,7 +34,7 @@ export default function Home() {
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel eos sapiente minus rerum nulla officia deserunt at, distinctio a id qui, est ratione esse. Et reprehenderit accusamus illum odio molestiae.
 
                 </motion.p>
-                <AnimatedSeparator  />
+                <AnimatedSeparator  delay={appearDuration + 1}/>
             </Section>
             
             <Section className='h-full'>

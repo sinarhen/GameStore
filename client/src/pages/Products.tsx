@@ -12,6 +12,10 @@ import AnimatedSeparator from "../components/AnimatedSeparator";
 import Pagination from "../components/Pagination";
 
 
+
+const appearDuration = 0.7;
+const delay = 0.3;
+
 export default function Products(){
     const [products, setProducts] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
@@ -59,9 +63,9 @@ export default function Products(){
 
     return(
         <>
-            <div className="pt-20 w-full h-full">
-                <Header animateableText="Products." appearDuration={0.7} />
-                <AnimatedSeparator appearDuration={0.7}/>
+            <div className="w-full h-full">
+                <Header animateableText="Products." appearDuration={appearDuration} />
+                <AnimatedSeparator delay={appearDuration + delay}/>
                 {/* Filterby, orderby, pagination  */}
                 <Filters products={products} onProductsChange={setProducts}/>
                 
@@ -73,7 +77,7 @@ export default function Products(){
                                       animate={{ opacity: 1 }}
                                       className="w-full h-full"
                                       exit={{ opacity: 0 }}
-                                      transition={{ delay: index * 0.05, duration: 1}}
+                                      transition={{ delay: appearDuration+ index * 0.05, duration: appearDuration}}
                                     >
                                         <ProductCard product={product}/>
 

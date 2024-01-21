@@ -29,7 +29,7 @@ function App() {
               overflow-x-visible
               mx-auto 
               h-full
-              xl:px-36 px-4 sm:px-6 lg:px-8">
+              xl:px-36 px-4 sm:px-6 lg:px-8 pt-24">
 
                 <Routes>
                   <Route path='/' element={<Home />} />

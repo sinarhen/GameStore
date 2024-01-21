@@ -7,15 +7,14 @@ import { FaUser } from "react-icons/fa";
 import { useFavorites } from "../hooks/useFavorites";
 import Section from "../components/Section";
 import MyFavorites from "../components/MyFavorites";
-import { motion } from "framer-motion";
+import MyOrders from "../components/MyOrders";
 
 export default function MyAccount() {
     const { user } = useCurrentUser();
     const { favorites } = useFavorites();
-    console.log(favorites)
     return (
         <>
-        <Section>
+        <Section className="pt-24">
             <div className='flex gap-x-4 w-full '>
                 <div className="h-60 min-w-60 flex items-center justify-center  w-60 rounded-3xl bg-neutral-800">
                     {user?.avatarUrl ? (
@@ -46,16 +45,7 @@ export default function MyAccount() {
         <Section className="h-full">
             <Header animateableText="Orders" appearDuration={0.2} />
             <AnimatedSeparator appearDuration={0.3}/>
-            
-                <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ delay: 3, duration: 1}}
-                className="mt-4"
-            >
-                <p className="text-3xl text-zinc-600">You have no orders yet.</p>
-            </motion.div>
+            <MyOrders orders={[]}/>
         </Section>
             </>
     )
