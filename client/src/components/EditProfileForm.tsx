@@ -87,7 +87,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
     }
      
     return (
-        <form className="space-y-4 h-[300px] overflow-y-auto" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="space-y-4 h-[300px] overflow-y-scroll" onSubmit={form.handleSubmit(onSubmit)}>
             <Input {...form.register('name')} label="Username" error={form.formState.errors.name?.message} />  
             <Input {...form.register('email')} label="Email"  error={form.formState.errors.email?.message} />  
 
