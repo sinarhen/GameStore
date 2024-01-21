@@ -11,8 +11,8 @@ export default function Favorite({product}: { product: ProductCardType; }) {
     return (
         <>
             {favorite?._id ? ( 
-                <FaHeart  onClick={() => toggleFavorite(product)} color='red' className=" text-4xl" />) : (
-                    <CiHeart onClick={() => toggleFavorite(product)} color='red' className=" text-4xl" />
+                <FaHeart  onClick={() => toggleFavorite(product)} color='red' className="cursor-pointer text-4xl" />) : (
+                    <CiHeart onClick={() => toggleFavorite(product)} color='red' className="cursor-pointer text-4xl" />
                 )
             }
         

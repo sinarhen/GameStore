@@ -8,7 +8,7 @@ const Section: React.FC<HTMLAttributes<HTMLDivElement>> = ({children, ...props})
     
     return (
         <section
-            className={twMerge("pt-20 w-full snap-start", props.className)}>
+            className={twMerge("w-full snap-start", props.className)}>
             {children} 
         </section>
     )

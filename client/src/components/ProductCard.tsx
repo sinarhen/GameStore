@@ -1,6 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { ProductCardType } from '../lib/types';
 import Favorite from './Favorite';
+import { formatter } from "../lib/utils"
+import Button from './Button';
 
 export default function ProductCard({ product, ...props }: { props?: any; product: ProductCardType; }) {
     // const imageUrl = "https://media.slovoidilo.ua/media/cache/person_thumb_exx/uploads/persons/origin/Po/Poroshenko-Petr-Alekseevich_origin.png"; 
@@ -8,11 +10,6 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
     console.log(imageUrl)
     
     const navigate = useNavigate();
-    // Create a new Intl.NumberFormat instance
-    const formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'UAH',
-    });
 
     return (
         <div className="max-w-md h-fit transition-all hover:translate-x-0.5 hover:-translate-y-0.5 group hover:bg bg-neutral-800 cursor-pointer mx-auto rounded-md overflow-hidden shadow-lg hover:shadow-xl">
@@ -29,9 +26,9 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
                 <div className="flex items-center justify-between">
                     {/* Use the formatter to format the price */}
                     <span className="font-bold  text-sm">{formatter.format(product.price)}</span>
-                    <button className="bg-indigo-600 text-sm transition-colors hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded">
+                    <Button>
                         Buy
-            </button>
+                    </Button>
                 </div>
             </div>
         </div>

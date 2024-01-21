@@ -11,6 +11,7 @@ import Filters from "../components/Filters";
 import AnimatedSeparator from "../components/AnimatedSeparator";
 import Pagination from "../components/Pagination";
 import { getAllProducts } from "../lib/products";
+import Loading from "../components/Loading";
 
 
 
@@ -43,13 +44,7 @@ export default function Products(){
     }, [])   
 
     if (loading){
-        return (
-            <div className="w-full h-full">
-                <div className="flex justify-center items-center w-full h-full">
-                    <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2"></div>
-                </div>
-            </div>
-        )
+        return Loading();
     }
     if (!products){
         return NotFound({helperText: "Please try again later.", withRefresh: true});

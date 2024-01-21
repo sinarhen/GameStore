@@ -19,3 +19,8 @@ export const getHeaders = (headerName: string) => {
       [headerName]: `Bearer ${cookie}`,
     };
   };
+
+export const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'UAH',
+});

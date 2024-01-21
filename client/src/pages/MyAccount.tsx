@@ -36,13 +36,13 @@ export default function MyAccount() {
             </div>
             
         </Section>
-        <Section className="h-4/5">
+        <Section className="h-4/5 pt-24">
                 <Header animateableText="Favorites" appearDuration={0.2} />
                 <AnimatedSeparator appearDuration={0.3}/>
                 <MyFavorites favorites={favorites}/>
         
         </Section>
-        <Section className="h-full">
+        <Section className="h-full pt-48">
             <Header animateableText="Orders" appearDuration={0.2} />
             <AnimatedSeparator appearDuration={0.3}/>
             <MyOrders orders={[]}/>
