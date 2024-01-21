@@ -17,13 +17,12 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
                 <img className="w-full" src={imageUrl} alt="Product Image" />
                 
                 <div className="absolute top-2 cursor-pointer left-2">
-                    <Favorite productId={product._id}/>
+                    <Favorite product={product}/>
                 </div>
             </div>
             <div className="p-4">
                 <h3 className="text-lg font-medium mb-2">{product.name}</h3>
-                <p className="text-gray-600 text-sm mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis vitae ante
-                    vel eros fermentum faucibus sit amet euismod lorem.</p>
+                <p className="text-gray-600 text-sm mb-4 truncate">{product.description}</p>
                 <div className="flex items-center justify-between">
                     {/* Use the formatter to format the price */}
                     <span className="font-bold  text-sm">{formatter.format(product.price)}</span>

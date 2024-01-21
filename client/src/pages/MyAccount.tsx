@@ -45,8 +45,8 @@ export default function MyAccount() {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ delay: index * 0.3, duration: 1}}
-                            className="snap-start"
-                            style={{scrollSnapAlign: 'start', flex: '0 0 auto', width: '25%'}}
+                            className="snap-start w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 2xl:w-1/7"
+                            style={{scrollSnapAlign: 'start', flex: '0 0 auto'}}
                         >
                             <ProductCard key={favorite._id} product={favorite}/>
                         </motion.div>

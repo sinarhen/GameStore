@@ -3,8 +3,9 @@ import Product from "../models/Product.js";
 
 export const getAllFavoritesByUserId = async (req, res) => {
     try {
-        const favorites = await Favorites.find({ userId: req.userId });
-        res.status(200).json(favorites);
+        const favorites = await Favorites.find({ userId: req.userId }).populate('productId');
+        const products = favorites.map(favorite => favorite.productId);
+        res.status(200).json(products);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -39,12 +40,12 @@ export const deleteFavorite = async (req, res) => {
     try {
         const { productId } = req.params;
 
-        const favorite = await Favorites.findOne({ userId, productId });
+        const favorite = await Favorites.findOne({ userId: req.userId, productId });
         if (!favorite) {
             return res.status(404).json({ message: 'Favorite not found' });
         }
-
-        await Favorites.deleteOne({ userId, productId });
+        console.log("[DELETE] ", favorite)
+        await Favorites.deleteOne({ userId: req.userId, productId });
 
         res.status(200).json({ message: 'Favorite deleted successfully' });
     } catch (error) {

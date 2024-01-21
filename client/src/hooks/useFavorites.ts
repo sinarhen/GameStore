@@ -1,6 +1,7 @@
-import { useContext, useCallback } from 'react';
+import { useContext, useCallback, useEffect } from 'react';
 import { FavoritesContext } from '../contexts/FavoritesContext';
 import { addToFavorites, removeFromFavorites } from '../lib/favorites';
+import { ProductCardType } from '../lib/types';
 
 export const useFavorites = () => {
   const context = useContext(FavoritesContext);
@@ -11,28 +12,30 @@ export const useFavorites = () => {
 
   const [favorites, setFavorites] = context;
 
-  const toggleFavorite = useCallback(async (productId: string) => {
-    const isFavorite = (favorites as string[]).includes(productId);
+  const toggleFavorite = useCallback(async (product: ProductCardType) => {
+    const isFavorite = (favorites as ProductCardType[]).find((favorite: ProductCardType) => favorite._id === product._id);
     const method = isFavorite ? 'delete' : 'post';
 
     try {
       if (method === 'post') {
-        addToFavorites(productId);
+        addToFavorites(product._id);
       } else {
-        removeFromFavorites(productId);
+        removeFromFavorites(product._id);
       }
       
-      setFavorites((prevFavorites: string[]) => {
+      setFavorites((prevFavorites: ProductCardType[]) => {
         if (isFavorite) {
-          return prevFavorites.filter(id => id !== productId);
+          return prevFavorites.filter(favorite => favorite._id !== product._id);
         } else {
-          return [...prevFavorites, productId];
+          return [...prevFavorites, product];
         }
       });
     } catch (error) {
       console.error(error);
     }
   }, [favorites, setFavorites]);
+  console.log("Favorites: ", favorites)
+
 
   return { favorites, toggleFavorite };
 };
