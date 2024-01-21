@@ -48,7 +48,7 @@ export default function Products(){
         )
     }
     if (!products){
-        return NotFound();
+        return NotFound({helperText: "Please try again later.", withRefresh: true});
     }
 
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -65,14 +65,15 @@ export default function Products(){
                 {/* Filterby, orderby, pagination  */}
                 <Filters products={products} onProductsChange={setProducts}/>
                 
-                <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:grid-cols-4  gap-4 w-full h-full">
+                <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:grid-cols-4  gap-4 w-full">
                     {currentItems && currentItems.map((product: ProductCardType, index: number) => (
                                       <motion.div
                                       key={product._id + index}
                                       initial={{ opacity: 0 }}
                                       animate={{ opacity: 1 }}
+                                      className="w-full h-full"
                                       exit={{ opacity: 0 }}
-                                      transition={{ delay: index * 0.3, duration: 1}}
+                                      transition={{ delay: index * 0.05, duration: 1}}
                                     >
                                         <ProductCard product={product}/>
 

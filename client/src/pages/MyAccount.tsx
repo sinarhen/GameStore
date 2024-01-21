@@ -7,6 +7,8 @@ import { FaUser } from "react-icons/fa";
 import { useFavorites } from "../hooks/useFavorites";
 import ProductCard from "../components/ProductCard";
 import { motion } from "framer-motion";
+import NotFound from '../components/NotFound';
+import Section from "../components/Section";
 
 export default function MyAccount() {
     const { user } = useCurrentUser();
@@ -14,7 +16,8 @@ export default function MyAccount() {
     console.log(favorites)
     return (
         <>
-            <div className='pt-24 flex gap-x-4 w-full '>
+        <Section>
+            <div className='flex gap-x-4 w-full '>
                 <div className="h-60 min-w-60 flex items-center justify-center  w-60 rounded-3xl bg-neutral-800">
                     {user?.avatarUrl ? (
                         <img className="w-full h-full object-cover bg-center rounded-3xl" src={user?.avatarUrl} alt={"avatar"}/>
@@ -33,9 +36,11 @@ export default function MyAccount() {
                     }}/>
                 </div>
             </div>
-            <div className="h-full w-full mt-24">
-                <Header animateableText="Favorites" appearDuration={0.7} />
-                <AnimatedSeparator appearDuration={0.7}/>
+            
+        </Section>
+        <Section className="h-full">
+                <Header animateableText="Favorites" appearDuration={0.2} />
+                <AnimatedSeparator appearDuration={0.3}/>
                 {favorites.length ? (
                     <div className="flex gap-x-4 mt-10 overflow-x-scroll snap snap-x" style={{scrollSnapType: 'x mandatory', scrollBehavior: 'smooth'}}>
                     {favorites.map((favorite: any, index: number) => (
@@ -44,7 +49,7 @@ export default function MyAccount() {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ delay: index * 0.3, duration: 1}}
+                            transition={{ delay: 0.7 + index * 0.1, duration: 1}}
                             className="snap-start w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 2xl:w-1/7"
                             style={{scrollSnapAlign: 'start', flex: '0 0 auto'}}
                         >
@@ -54,9 +59,20 @@ export default function MyAccount() {
                 </div>
                         
                 ): (
-                 <></>   
+                 <>
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            transition={{ delay: 3, duration: 1}}
+                            className="mt-4"
+                        >
+                            <NotFound helperText="Try to add something to favorites first."/>
+                        </motion.div>
+                 </>   
                 )}
-            </div>
-        </>
+        
+        </Section>
+            </>
     )
 }

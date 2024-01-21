@@ -1,10 +1,11 @@
 import { ProductCardType } from '../lib/types';
-import { CiHeart } from "react-icons/ci";
 import Favorite from './Favorite';
 
 export default function ProductCard({ product, ...props }: { props?: any; product: ProductCardType; }) {
-    const imageUrl = "https://media.slovoidilo.ua/media/cache/person_thumb_exx/uploads/persons/origin/Po/Poroshenko-Petr-Alekseevich_origin.png"; 
-
+    // const imageUrl = "https://media.slovoidilo.ua/media/cache/person_thumb_exx/uploads/persons/origin/Po/Poroshenko-Petr-Alekseevich_origin.png"; 
+    const imageUrl = product.imageUrl ?? "https://media.slovoidilo.ua/media/cache/person_thumb_exx/uploads/persons/origin/Po/Poroshenko-Petr-Alekseevich_origin.png";
+    console.log(imageUrl)
+    
     // Create a new Intl.NumberFormat instance
     const formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -21,7 +22,7 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
                 </div>
             </div>
             <div className="p-4">
-                <h3 className="text-lg font-medium mb-2">{product.name}</h3>
+                <h3 className="text-lg font-medium mb-2 truncate">{product.name}</h3>
                 <p className="text-gray-600 text-sm mb-4 truncate">{product.description}</p>
                 <div className="flex items-center justify-between">
                     {/* Use the formatter to format the price */}

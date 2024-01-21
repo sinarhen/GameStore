@@ -21,7 +21,7 @@ export default function Home() {
     return (
         <div className='w-full h-full'>
             
-            <Section>
+            <Section className='h-full'>
                 <Banner imageUrl='https://c4.wallpaperflare.com/wallpaper/335/955/620/apple-inc-black-minimalism-logo-wallpaper-preview.jpg'/>
                 
                 <div
@@ -42,7 +42,7 @@ export default function Home() {
                 <AnimatedSeparator  />
             </Section>
             
-            <Section>
+            <Section className='h-full'>
                 <Header appearDuration={appearDuration} animateableText='Categories' />
 
                 <AnimatedSeparator  />

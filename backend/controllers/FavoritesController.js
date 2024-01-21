@@ -44,7 +44,6 @@ export const deleteFavorite = async (req, res) => {
         if (!favorite) {
             return res.status(404).json({ message: 'Favorite not found' });
         }
-        console.log("[DELETE] ", favorite)
         await Favorites.deleteOne({ userId: req.userId, productId });
 
         res.status(200).json({ message: 'Favorite deleted successfully' });

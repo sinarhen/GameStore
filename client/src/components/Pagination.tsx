@@ -15,7 +15,7 @@ const Pagination: React.FC<PaginationProps> = ({ itemsPerPage, totalItems, pagin
     }
 
     return (
-        <nav>
+        <nav className='mt-4'>
             <ul className='flex justify-center space-x-2'>
                 {pageNumbers.map(number => (
                     <li key={number} className={`py-2 px-3 ${currentPage === number ? 'text-indigo-600 ' : ' text-white'}`}>

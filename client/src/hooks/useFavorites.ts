@@ -2,6 +2,7 @@ import { useContext, useCallback, useEffect } from 'react';
 import { FavoritesContext } from '../contexts/FavoritesContext';
 import { addToFavorites, removeFromFavorites } from '../lib/favorites';
 import { ProductCardType } from '../lib/types';
+import toast from 'react-hot-toast';
 
 export const useFavorites = () => {
   const context = useContext(FavoritesContext);
@@ -32,6 +33,7 @@ export const useFavorites = () => {
       });
     } catch (error) {
       console.error(error);
+      toast.error('Something went wrong');
     }
   }, [favorites, setFavorites]);
   console.log("Favorites: ", favorites)
