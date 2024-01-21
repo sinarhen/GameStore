@@ -12,6 +12,9 @@ import { useEffect, useState } from "react";
 import { getUserOrdersById } from "../lib/order";
 import { Order, OrderProduct, ProductCardType } from "../lib/types";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./Dialog";
+import { Trash2 } from "lucide-react";
+import OrderDialog from "./OrderDialog";
+import { statusColor } from "../lib/utils";
 
 export default function MyOrders() {
 
@@ -25,56 +28,16 @@ export default function MyOrders() {
       console.log(err);
     })
   }, []);
-   const statusColor = () => {
-    switch (orders[0].status) {
-      case "Pending":
-        return "text-yellow-500";
-      case "Completed":
-        return "text-green-500";
-      case "Cancelled":
-        return "text-red-500";
-      default:
-        return "text-yellow-500";
-    }
-  }
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogProducts, setDialogProducts] = useState<{
     products: OrderProduct[],
-    orderId: string
+    orderId: string,
+    status: string
   
   }| null>(null);
     return (
     <>
-      <Dialog open={dialogOpen} onOpenChange={() => setDialogOpen(false)}>
-        <DialogContent className="bg-neutral-800 text-white">
-          <DialogHeader>
-            <DialogTitle>Products for order {dialogProducts?.orderId}</DialogTitle>
-            <DialogDescription>
-              Products below are the products that you have ordered.
-            </DialogDescription>
-          </DialogHeader>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Product Name</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Quantity</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {dialogProducts?.products.map((orderedProduct: OrderProduct) => {
-                return (
-                  <TableRow key={orderedProduct._id}>
-                    <TableCell>{orderedProduct.productId.name}</TableCell>
-                    <TableCell>{orderedProduct.productId.price}</TableCell>
-                    <TableCell>{orderedProduct.quantity}</TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-        </DialogContent>
-      </Dialog>
+      <OrderDialog status={dialogProducts?.status} open={dialogOpen} setOpen={setDialogOpen} products={dialogProducts}/>
       <Table className="mt-10 w-full h-full">
         <TableCaption>A list of your recent orders.</TableCaption>
         <TableHeader>
@@ -93,6 +56,7 @@ export default function MyOrders() {
                 onClick={() => {
                   setDialogOpen(true);
                   setDialogProducts({
+                    status: order.status,
                     orderId: order._id,
                     products: order.products
                   });
@@ -100,7 +64,7 @@ export default function MyOrders() {
                 className="text-center hover:underline cursor-pointer">
                   click to inspect
               </TableCell>
-              <TableCell className={statusColor() + " text-center"}>{order.status}</TableCell>
+              <TableCell className={statusColor(order.status) + " text-center"}>{order.status}</TableCell>
               <TableCell className="text-right w-full">1500$</TableCell>
             </TableRow>
           ))}
