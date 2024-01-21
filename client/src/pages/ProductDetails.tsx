@@ -11,13 +11,15 @@ import { motion } from 'framer-motion';
 import AnimatedSeparator from "../components/AnimatedSeparator";
 import Input from "../components/Input";
 import Button from "../components/Button";
+import { addToOrder } from "../lib/order";
 
 
 export default function ProductDetails(){
     const [product, setProduct] = useState<ProductCardType | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-
+    const [error, setError] = useState<string | null>(null);
     const [inputValue, setInputValue] = useState<number>(1);
+
     const appearDuration = 0.7;
     const params = useParams();
     const productId = params.productId;
@@ -40,7 +42,6 @@ export default function ProductDetails(){
     }, [productId])
 
 
-    const [error, setError] = useState<string | null>(null);
     
     useEffect(() => {
         if (error){
@@ -73,6 +74,24 @@ export default function ProductDetails(){
         {
             toast.error("You must add at least 1 item to your order");
             return;
+        }
+        try {
+            setLoading(true);
+            if (!product?._id)
+            {
+                throw new Error("Unexpected internal error")
+            }
+            addToOrder(product?._id, inputValue).then(() => {
+                toast.success("Added to cart");
+            
+            })
+
+        } catch (error)
+        {
+            toast.error("Something went wrong");
+            console.error(error)
+        } finally {
+            setLoading(false)
         }
         
 
@@ -147,8 +166,8 @@ export default function ProductDetails(){
                     transition={{delay: appearDuration + 1, duration: appearDuration}}
                 >
                     <div className="flex items-center justify-center">
-                        <Input className="text-sm" autoComplete="off" type="number" value={inputValue} defaultValue={1} onChange={(e) => setValidatedInputValue(e.target.valueAsNumber)} name="quantity"   id="quantity" placeholder="number" />
-                        <Button className="ml-4">Add to cart</Button>
+                        <Input className="text-sm" autoComplete="off" type="number" value={inputValue} onChange={(e) => setValidatedInputValue(e.target.valueAsNumber)} name="quantity"   id="quantity" placeholder="number" />
+                        <Button onClick={onSubmit} className="ml-4">Add to cart</Button>
                     </div>
                     
                     {inputValue >= 1 ? (

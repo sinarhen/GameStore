@@ -42,10 +42,10 @@ export default function MyAccount() {
                 <MyFavorites favorites={favorites}/>
         
         </Section>
-        <Section className="h-full pt-48">
+        <Section className="h-full pt-96 sm:pt-48">
             <Header animateableText="Orders" appearDuration={0.2} />
             <AnimatedSeparator appearDuration={0.3}/>
-            <MyOrders orders={[]}/>
+            <MyOrders />
         </Section>
             </>
     )

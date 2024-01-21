@@ -36,7 +36,6 @@ export const useFavorites = () => {
       toast.error('Something went wrong');
     }
   }, [favorites, setFavorites]);
-  console.log("Favorites: ", favorites)
 
 
   return { favorites, toggleFavorite };

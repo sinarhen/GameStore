@@ -1,5 +1,8 @@
 import Cookies from "js-cookie";
 import { headerName } from "./constants";
+import { type ClassValue, clsx } from "clsx";
+import { twMerge } from "tailwind-merge";
+
 
 export function isValidURLImage(url: string) {
     // Regular expression for a valid image URL
@@ -25,3 +28,8 @@ export const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'UAH',
 });
+
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}

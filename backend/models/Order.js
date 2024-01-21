@@ -11,10 +11,6 @@ const orderSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: "Product",
         },
-        price: Number,
-        name: String,
-        description: String,
-        imageUrl: String,
         quantity: {
             type: Number,
             default: 1
@@ -22,10 +18,14 @@ const orderSchema = new mongoose.Schema({
     }],
     status: {
         type: String,
-        enum: ["pending", "processing", "ready", "canceled"],
+        enum: ["pending", "processing", "ready", "cancelled"],
         default: "pending"
-    }
-    }, 
+    },
+    totalPrice: {
+        type: Number,
+        default: 0
+    },
+}, 
     {
     timestamps: true
     },

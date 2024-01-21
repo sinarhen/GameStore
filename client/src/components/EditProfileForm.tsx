@@ -164,7 +164,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                         }
                     }}>
 
-                        <Trash2 className='w-1/2 h-1/2'/>                 
+                        <Trash2 className='w-1/2 text-black h-1/2'/>                 
                     </span>
                     </div>
                 }

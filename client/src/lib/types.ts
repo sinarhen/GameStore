@@ -24,3 +24,17 @@ export type User = {
     __v: number;
     updatedAt: Date;
 }
+
+export type Order = {
+    _id: string;
+    products: ProductCardType[];
+    userId: string;
+    createdAt: Date;
+    updatedAt: Date;
+    status: string;
+}
+
+export type OrderProduct = {
+    productId: string; 
+    quantity: number;
+}

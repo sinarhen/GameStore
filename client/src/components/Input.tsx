@@ -11,10 +11,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     ({ wrapperClassName, label, error, ...props }, ref) =>  {
         return (
             <div className={wrapperClassName}>
-                <label htmlFor={props.name} className="block text-sm font-medium leading-5 text-white">
-                    {label}
-                </label>
-                <div className="mt-1">
+                {label && 
+                    <label htmlFor={props.name} className="block text-sm mb-1 font-medium leading-5 text-white">
+                        {label}
+                    </label>
+                }
+                <div>
                     <input
                         {...props}
                         ref={ref}

@@ -7,7 +7,6 @@ import Button from './Button';
 export default function ProductCard({ product, ...props }: { props?: any; product: ProductCardType; }) {
     // const imageUrl = "https://media.slovoidilo.ua/media/cache/person_thumb_exx/uploads/persons/origin/Po/Poroshenko-Petr-Alekseevich_origin.png"; 
     const imageUrl = product.imageUrl ?? "https://media.slovoidilo.ua/media/cache/person_thumb_exx/uploads/persons/origin/Po/Poroshenko-Petr-Alekseevich_origin.png";
-    console.log(imageUrl)
     
     const navigate = useNavigate();
 

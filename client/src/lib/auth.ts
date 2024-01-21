@@ -1,9 +1,7 @@
-import axios from 'axios';
 import Cookies from 'js-cookie';
-import { getHeadersWithCookiesByHeaderName } from './utils';
+import http from './fetcher'; 
 import { headerName } from './constants';
-
-
+import toast from 'react-hot-toast';
 
 const fetchUser = async () => {
   const cookie = Cookies.get(headerName);
@@ -12,11 +10,10 @@ const fetchUser = async () => {
     return null;
   }
   try {
-    const response = await axios.get('/auth/me', {
-      headers: getHeadersWithCookiesByHeaderName(),
-    });
+    const response = await http.get('/auth/me', true);
     return response.data;
   } catch (error) {
+    toast.error('Internal error with authentication. Please try again', { duration: 5000, id: 'fetchUser'  });
     console.error(error);
   }
 };
@@ -39,13 +36,11 @@ const updateUser = async ({
   avatarUrl?: string;
 }) => {
   try {
-    const response = await axios.put('/auth/update', {
+    const response = await http.put('/auth/update', {
       name,
       email,
       avatarUrl,
-    }, {
-      headers: getHeadersWithCookiesByHeaderName(),
-    });
+    }, true);
     return response.data;
   } catch (error) {
     console.error(error);

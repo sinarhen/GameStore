@@ -15,7 +15,7 @@ export const FavoritesProvider = ({ children }: {
   useEffect(() => {
     // Replace with the correct API endpoint to get all favorites
     getFavorites().then((favorites) => {
-      setFavorites(favorites);
+      setFavorites(favorites.data);
     }).catch((error) => {
       console.error(error);
     }).finally(() => {

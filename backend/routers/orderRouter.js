@@ -5,7 +5,7 @@ import checkAdmin from '../utils/checkAdmin.js';
 
 const router = express.Router();
 
-router.get('/', getAllOrdersByUserId);
+router.get('/', checkAuth, getAllOrdersByUserId);
 router.get('/:orderId', checkAuth, getOrderById);
 router.post('/:productId', checkAuth, addToOrder);
 router.delete('/:productId', checkAuth, deleteOrder);
