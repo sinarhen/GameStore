@@ -188,7 +188,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                <DialogFooter>
                         <button 
                         type="submit"
-                        disabled={!form.formState.isValid || form.formState.isSubmitting || !form.formState.isDirty} 
+                        disabled={!form.formState.isValid || form.formState.isSubmitting } 
                         className="bg-indigo-600 bg-opacity-70 disabled:bg-gray-400 transition-all hover:bg-indigo-500 mt-4 hover:bg-opacity-100 text-white px-4 py-2 rounded-md">Save</button>
                 </DialogFooter>
         </form>

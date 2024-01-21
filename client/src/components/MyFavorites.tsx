@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { ProductCardType } from "../lib/types";
 import ProductCard from "./ProductCard";
-import NotFound from "./NotFound";
 
 export default function MyFavorites({favorites}: {
     favorites: ProductCardType[]
@@ -14,7 +13,7 @@ export default function MyFavorites({favorites}: {
             transition={{ delay: 3, duration: 1}}
             className="mt-4"
         >
-            <NotFound helperText="Try to add something to favorites first."/>
+            <p className="text-3xl text-zinc-600">You have no favorites yet.</p>
         </motion.div>
     )
     return (
