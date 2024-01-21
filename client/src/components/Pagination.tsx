@@ -19,7 +19,7 @@ const Pagination: React.FC<PaginationProps> = ({ itemsPerPage, totalItems, pagin
             <ul className='flex justify-center space-x-2'>
                 {pageNumbers.map(number => (
                     <li key={number} className={`py-2 px-3 ${currentPage === number ? 'text-indigo-600 ' : ' text-white'}`}>
-                        <a onClick={() => paginate(number)} href='!#' className='page-link'>
+                        <a onClick={() => paginate(number)} className='page-link cursor-pointer'>
                             {number}
                         </a>
                     </li>
