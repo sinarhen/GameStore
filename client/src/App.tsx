@@ -14,6 +14,7 @@ import Login from "./pages/Login";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./contexts/AuthContext";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
+import ProductDetails from "./pages/ProductDetails";
 
 function App() {
   return (
@@ -40,6 +41,9 @@ function App() {
                   <Route path='/orders' element={<Orders />} />
                   <Route path='/register' element={<Register />} />
                   <Route path='/login' element={<Login />} />
+                  <Route path='/products/:productId' element={<ProductDetails />} />
+                  <Route path='*' element={<h1>Page does not exist</h1>} />
+                  
                 </Routes>
                 
             </div>

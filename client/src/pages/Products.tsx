@@ -10,6 +10,7 @@ import { ProductCardType } from "../lib/types";
 import Filters from "../components/Filters";
 import AnimatedSeparator from "../components/AnimatedSeparator";
 import Pagination from "../components/Pagination";
+import { getAllProducts } from "../lib/products";
 
 
 
@@ -23,10 +24,8 @@ export default function Products(){
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [itemsPerPage, setItemsPerPage] = useState<number>(10);
     
-    
-    
     useEffect(() => {
-        axios.get("/products")
+        getAllProducts()
         .then((response) => {
             if (!response.data.length)
             {
@@ -36,6 +35,7 @@ export default function Products(){
             setProducts(response.data);
         })
         .catch((error) => {
+            console.log(error);
             toast.error("Something went wrong", {id: "products"});
         }).finally(() => {
             setLoading(false);
