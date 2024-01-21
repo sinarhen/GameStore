@@ -17,12 +17,16 @@ export const addToOrder = async (req, res) => {
             order = new Order({ userId: req.userId, status: 'pending', totalPrice: product.price * quantity });
         }
 
-        const newProduct = {
-            productId: productId,
-            quantity,
-        };
-
-        order.products.push(newProduct);
+        const index = order.products.findIndex((p) => p.productId.toString() === productId);
+        if (index === -1) {
+            const newProduct = {
+                productId: productId,
+                quantity,
+            };
+            order.products.push(newProduct);
+        } else {
+            order.products[index].quantity += quantity;
+        }
 
         await order.save();
 
@@ -70,7 +74,7 @@ export const deleteOrder = async (req, res) => {
 export const getAllOrdersByUserId = async (req, res) => {
     try {
 
-        const orders = await Order.find({ userId: req.userId });
+        const orders = await Order.find({ userId: req.userId }).populate('products.productId');
 
         if (!orders) {
             return res.status(404).json({ message: 'Orders not found' });

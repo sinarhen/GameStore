@@ -10,7 +10,7 @@ import {
 } from "./Table";
 import { useEffect, useState } from "react";
 import { getUserOrdersById } from "../lib/order";
-import { Order, ProductCardType } from "../lib/types";
+import { Order, OrderProduct, ProductCardType } from "../lib/types";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./Dialog";
 
 export default function MyOrders() {
@@ -38,18 +38,41 @@ export default function MyOrders() {
     }
   }
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [dialogProducts, setDialogProducts] = useState<ProductCardType[]>([]);
+  const [dialogProducts, setDialogProducts] = useState<{
+    products: OrderProduct[],
+    orderId: string
+  
+  }| null>(null);
     return (
     <>
       <Dialog open={dialogOpen} onOpenChange={() => setDialogOpen(false)}>
         <DialogContent className="bg-neutral-800 text-white">
           <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
+            <DialogTitle>Products for order {dialogProducts?.orderId}</DialogTitle>
             <DialogDescription>
-              This action cannot be undone. This will permanently delete your account
-              and remove your data from our servers.
+              Products below are the products that you have ordered.
             </DialogDescription>
           </DialogHeader>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Product Name</TableHead>
+                <TableHead>Price</TableHead>
+                <TableHead>Quantity</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {dialogProducts?.products.map((orderedProduct: OrderProduct) => {
+                return (
+                  <TableRow key={orderedProduct._id}>
+                    <TableCell>{orderedProduct.productId.name}</TableCell>
+                    <TableCell>{orderedProduct.productId.price}</TableCell>
+                    <TableCell>{orderedProduct.quantity}</TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
         </DialogContent>
       </Dialog>
       <Table className="mt-10 w-full h-full">
@@ -69,7 +92,10 @@ export default function MyOrders() {
               <TableCell
                 onClick={() => {
                   setDialogOpen(true);
-                  setDialogProducts(order.products);
+                  setDialogProducts({
+                    orderId: order._id,
+                    products: order.products
+                  });
                 }} 
                 className="text-center hover:underline cursor-pointer">
                   click to inspect
