@@ -55,7 +55,6 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
             }
 
             const res = await updateUser(values);
-            console.log(res.message)
             toast.success('Profile updated successfully');
             navigate(0)
         } catch (e: any) {
@@ -119,7 +118,6 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                             className="bg-indigo-600 bg-opacity-70 transition-all hover:bg-indigo-500 mt-4 hover:bg-opacity-100 text-white px-4 py-2 rounded-md" 
                             disabled={!isValidURLImage(imageUrlDialogTempInput)}
                             onClick={() => {
-                                console.log("saving url image: ", imageUrlDialogTempInput);
                               form.setValue("avatarUrl", imageUrlDialogTempInput);
                               setImageUrlDialogTempInput("");
                               setInputType("url");

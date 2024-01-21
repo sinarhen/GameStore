@@ -8,7 +8,7 @@ import { headerName } from './constants';
 const fetchUser = async () => {
   const cookie = Cookies.get(headerName);
   if (!cookie) {
-    console.log('No cookie found');
+    console.error('No cookie found. User is not logged in.');
     return null;
   }
   try {

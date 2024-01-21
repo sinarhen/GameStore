@@ -12,21 +12,21 @@ export async function getFavorites() {
 }
 
 
-
-
-const toggleFavs = async (productId: string, method: string) => {
+const addToFavorites = async (productId: string) => {
   const headers = getHeaders(headerName)
-  let response;
-  console.log("toggleFavs", method, productId)
-  if (method === 'post') {
-    console.log("post with headers", headers)
-    response = await axios.post(`/favorites/${productId}`, { 
-      headers 
+  return await axios.post(`/favorites/${productId}`, {}, { 
+      headers: headers
     });
-  } else if (method === 'delete') {
-    response = await axios.delete(`/favorites/${productId}`, { headers });
-  }
-  return response?.data;
 }
 
-export {toggleFavs}
+const removeFromFavorites = async (productId: string) => {
+  const headers = getHeaders(headerName)
+  return await axios.delete(`/favorites/${productId}`, { 
+      headers: headers
+    });
+}
+
+
+
+
+export {addToFavorites, removeFromFavorites}

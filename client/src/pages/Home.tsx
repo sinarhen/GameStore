@@ -17,14 +17,6 @@ export default function Home() {
     //     categoriesSectionRef.current?.scrollIntoView({behavior: 'smooth'});
     // }
 
-    const scrollUp = () => {
-        window.scrollBy(0, -100);
-    }
-    
-    const scrollDown = () => {
-        console.log("scrollingdown")
-        window.scrollBy(0, 100);
-    }
 
     return (
         <div className='w-full h-full'>

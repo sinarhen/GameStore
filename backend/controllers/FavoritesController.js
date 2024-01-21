@@ -23,7 +23,7 @@ export const addFavorite = async (req, res) => {
         }
 
         const favorite = new Favorites({
-            userId,
+            userId: req.userId,
             productId
         });
 
