@@ -42,7 +42,10 @@ export const deleteOrder = async (req, res) => {
         const { productId } = req.params;
 
         let order = await Order.findOne({ userId: req.userId }).populate('products.productId');
-        const index = order.products.findIndex((p) => p.productId.toString() === productId);
+        const index = order.products.findIndex((p) => {
+            return p._id.toString() === productId
+        
+        });
         
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });

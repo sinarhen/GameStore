@@ -37,7 +37,7 @@ export default function MyOrders() {
   }| null>(null);
     return (
     <>
-      <OrderDialog status={dialogProducts?.status} open={dialogOpen} setOpen={setDialogOpen} products={dialogProducts}/>
+      <OrderDialog setProducts={setDialogProducts} status={dialogProducts?.status} open={dialogOpen} setOpen={setDialogOpen} products={dialogProducts}/>
       <Table className="mt-10 w-full h-full">
         <TableCaption>A list of your recent orders.</TableCaption>
         <TableHeader>
