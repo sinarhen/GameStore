@@ -1,6 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { getHeaders } from './utils';
+import { getHeadersWithCookiesByHeaderName } from './utils';
 import { headerName } from './constants';
 
 
@@ -13,7 +13,7 @@ const fetchUser = async () => {
   }
   try {
     const response = await axios.get('/auth/me', {
-      headers: getHeaders(headerName),
+      headers: getHeadersWithCookiesByHeaderName(),
     });
     return response.data;
   } catch (error) {
@@ -44,7 +44,7 @@ const updateUser = async ({
       email,
       avatarUrl,
     }, {
-      headers: getHeaders(headerName),
+      headers: getHeadersWithCookiesByHeaderName(),
     });
     return response.data;
   } catch (error) {

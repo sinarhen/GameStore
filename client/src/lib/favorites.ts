@@ -1,9 +1,9 @@
 import axios from "axios";
-import { getHeaders } from "./utils";
+import { getHeadersWithCookiesByHeaderName } from "./utils";
 import { headerName } from "./constants";
 
 export async function getFavorites() {
-    const headers = getHeaders(headerName)
+    const headers = getHeadersWithCookiesByHeaderName()
     const response = await axios.get('/favorites', {
         headers
           
@@ -13,14 +13,14 @@ export async function getFavorites() {
 
 
 const addToFavorites = async (productId: string) => {
-  const headers = getHeaders(headerName)
+  const headers = getHeadersWithCookiesByHeaderName()
   return await axios.post(`/favorites/${productId}`, {}, { 
       headers: headers
     });
 }
 
 const removeFromFavorites = async (productId: string) => {
-  const headers = getHeaders(headerName)
+  const headers = getHeadersWithCookiesByHeaderName()
   return await axios.delete(`/favorites/${productId}`, { 
       headers: headers
     });

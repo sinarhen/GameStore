@@ -101,8 +101,13 @@ export const getAllOrdersByUserId = async (req, res) => {
 
 export const getOrderById = async (req, res) => {
     try {
+
         const { orderId } = req.params;
+        
         const order = await Order.findById(orderId);
+        if (req.userId !== order.userId && req.userId !== process.env.ADMIN_ID) {
+            return res.status(401).json({ message: 'You cannot get this order' });
+        }
         res.status(200).json(order);
     } catch (error) {
         res.status(500).json({ message: error.message });

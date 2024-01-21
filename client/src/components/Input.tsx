@@ -18,7 +18,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
                     <input
                         {...props}
                         ref={ref}
-                        className={twMerge("w-20 py-2 rounded px-2 bg-neutral-800 text-white", error ? "ring-2 ring-red-500" : "", props.className)}
+                        className={twMerge("w-full text-sm py-2 rounded px-2 bg-neutral-800 text-white", error ? "ring-2 ring-red-500" : "", props.className)}
                     />
                     {error && <p className="text-red-600 text-xs ">{error}</p>}
                 </div>

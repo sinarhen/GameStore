@@ -88,8 +88,8 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
      
     return (
         <form className="space-y-4 overflow-y-auto" onSubmit={form.handleSubmit(onSubmit)}>
-            <Input {...form.register('name')} label="Username" error={form.formState.errors.name?.message} />  
-            <Input {...form.register('email')} label="Email"  error={form.formState.errors.email?.message} />  
+            <Input className="bg-neutral-900"  {...form.register('name')} label="Username" error={form.formState.errors.name?.message} />  
+            <Input className="bg-neutral-900" {...form.register('email')} label="Email"  error={form.formState.errors.email?.message} />  
 
             <Dialog open={openImageUrlDialog} onOpenChange={() => {
                   toogleImageUrlDialog();
@@ -171,7 +171,6 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                 
                 <div className='block'>
                         <Input
-                        style={{display: 'block'}}
                         multiple={false}
                         onChange={(e) => {
                             if (!e?.target?.files || !e.target.files[0]) {

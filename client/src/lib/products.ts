@@ -1,5 +1,5 @@
 import axios from "axios"
-import { getHeaders } from "./utils";
+import { getHeadersWithCookiesByHeaderName } from "./utils";
 import { headerName } from "./constants";
 
 async function getAllProducts () {
@@ -10,7 +10,7 @@ async function getAllProducts () {
 
 async function getProductById(id: string | undefined){
     if (!id) throw new Error('id required')
-    const headers = getHeaders(headerName)
+    const headers = getHeadersWithCookiesByHeaderName()
     const response = await axios.get('/products/' + id, {
         headers
     })

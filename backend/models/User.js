@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { roles } from '../utils/roles.js';
 
 const UserSchema = new mongoose.Schema(
   {
@@ -18,6 +19,11 @@ const UserSchema = new mongoose.Schema(
     avatarUrl: {
       type: String,
       default: null,
+    },
+    role: {
+      type: String,
+      enum: roles, // Define the possible roles here
+      default: 'user', // Default role is 'user'
     },
   },
   {

@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt';
 import UserModel from '../models/User.js';
 import { generateToken } from '../utils/jwt.js';
+import {roles} from '../utils/roles.js';
 import jwt from 'jsonwebtoken';
+
 export const register = async (req, res) => {
     try {
         const password = req.body.password;
@@ -73,6 +75,7 @@ export const register = async (req, res) => {
             email: req.body.email,
             passwordHash: hash,
             avatarUrl: req.body.avatarUrl,
+            role: roles.user,
         })
 
         const user = await doc.save();

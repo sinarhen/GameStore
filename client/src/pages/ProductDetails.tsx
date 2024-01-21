@@ -69,6 +69,13 @@ export default function ProductDetails(){
     }
 
     function onSubmit(){
+        if (!inputValue)
+        {
+            toast.error("You must add at least 1 item to your order");
+            return;
+        }
+        
+
         console.log("submit");
     }
     return (
@@ -140,7 +147,7 @@ export default function ProductDetails(){
                     transition={{delay: appearDuration + 1, duration: appearDuration}}
                 >
                     <div className="flex items-center justify-center">
-                        <Input className="text-sm" autoComplete="off" type="number" value={inputValue} defaultValue={1} onChange={(e) => setValidatedInputValue(e.target.valueAsNumber)} name="quantity" min={1}  id="quantity" placeholder="number" />
+                        <Input className="text-sm" autoComplete="off" type="number" value={inputValue} defaultValue={1} onChange={(e) => setValidatedInputValue(e.target.valueAsNumber)} name="quantity"   id="quantity" placeholder="number" />
                         <Button className="ml-4">Add to cart</Button>
                     </div>
                     
