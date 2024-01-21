@@ -6,7 +6,7 @@ import Home from "./pages/Home";
 import Products from "./pages/Products";
 import Categories from "./pages/Categories";
 import MyAccount from "./pages/MyAccount";
-import Favorites from "./pages/Categories";
+import Favorites from "./pages/Favorites";
 import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
 import Register from "./pages/Register";

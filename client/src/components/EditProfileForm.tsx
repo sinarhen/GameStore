@@ -87,7 +87,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
     }
      
     return (
-        <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="space-y-4 h-[300px] overflow-y-auto" onSubmit={form.handleSubmit(onSubmit)}>
             <Input {...form.register('name')} label="Username" error={form.formState.errors.name?.message} />  
             <Input {...form.register('email')} label="Email"  error={form.formState.errors.email?.message} />  
 
@@ -138,7 +138,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
 
             <div>
                 <span className='cursor-pointer right-0 ml-2 text-xs text-gray-400' onClick={toogleImageUrlDialog}>
-                Paste url
+                Paste url(click)
                 </span>
 
                 {

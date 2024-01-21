@@ -8,7 +8,7 @@ export async function getFavorites() {
         headers
           
     });
-    return response.data;  
+    return response.data;
 }
 
 
