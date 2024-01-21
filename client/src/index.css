@@ -18,6 +18,25 @@ body{
     overflow-y: hidden;
 }
 
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0); 
+  }
+   
+  ::-webkit-scrollbar-thumb {
+    border-radius: 15px;
+    background: #999; 
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #666; 
+  }
+  
+
 .mandatory-enabled{    
     scroll-behavior: smooth;
     scroll-snap-type: y mandatory;                                       

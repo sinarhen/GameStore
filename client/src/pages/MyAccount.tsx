@@ -42,7 +42,7 @@ export default function MyAccount() {
                 <Header animateableText="Favorites" appearDuration={0.2} />
                 <AnimatedSeparator appearDuration={0.3}/>
                 {favorites.length ? (
-                    <div className="flex gap-x-4 mt-10 overflow-x-scroll snap snap-x" style={{scrollSnapType: 'x mandatory', scrollBehavior: 'smooth'}}>
+                    <div className="flex gap-x-4 w-full mt-10 overflow-x-scroll snap snap-x" style={{scrollSnapType: 'x mandatory', scrollBehavior: 'smooth'}}>
                     {favorites.map((favorite: any, index: number) => (
                         <motion.div
                             key={favorite._id + index}
@@ -50,7 +50,7 @@ export default function MyAccount() {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ delay: 0.7 + index * 0.1, duration: 1}}
-                            className="snap-start w-1/2 sm:w-1/3 md:w-1/4 lg:w-1/5 xl:w-1/6 2xl:w-1/7"
+                            className="snap-start w-[95%] sm:w-1/2  md:w-1/3 lg:w-1/4"
                             style={{scrollSnapAlign: 'start', flex: '0 0 auto'}}
                         >
                             <ProductCard key={favorite._id} product={favorite}/>
