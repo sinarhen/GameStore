@@ -18,6 +18,8 @@ const FavoritesSchema = new mongoose.Schema(
   },
 );
 
+FavoritesSchema.index({ userId: 1, productId: 1 }, { unique: true });
+
 const Favorites = mongoose.model('Favorites', FavoritesSchema);
 
 export default Favorites;

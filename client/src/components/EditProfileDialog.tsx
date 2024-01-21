@@ -9,7 +9,7 @@ export default function EditProfileDialog({initialValues} : {initialValues: any}
             <DialogTrigger asChild>
                 <button className="bg-indigo-600 bg-opacity-70 transition-all hover:bg-indigo-500 mt-4 hover:bg-opacity-100 text-white px-4 py-2 rounded-md">Edit</button>
             </DialogTrigger>
-            <DialogContent className="bg-neutral-800 text-white sm:max-w-[425px] ">
+            <DialogContent className="bg-neutral-800 h-[95%] overflow-auto text-white sm:max-w-[425px] ">
                 <DialogHeader>
                 <DialogTitle>Edit profile</DialogTitle>
                 <DialogDescription>
