@@ -14,8 +14,11 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
 import ProductDetails from "./pages/ProductDetails";
 import Admin from "./pages/Admin";
+import { useCurrentUser } from "./hooks/useCurrentUser";
 
 function App() {
+  const { isAdmin } = useCurrentUser();
+
   return (
     <AuthProvider>
       <FavoritesProvider>
@@ -39,8 +42,8 @@ function App() {
                   <Route path='/favorites' element={<Favorites />} />
                   <Route path='/orders' element={<Orders />} />
                   <Route path='/products/:productId' element={<ProductDetails />} />
+                  {isAdmin && <Route path='/admin' element={<Admin />} />}
                   <Route path='*' element={<h1>Page does not exist</h1>} />
-                  <Route path='/admin' element={<Admin />} />
                 </Routes>
                 
             </div>

@@ -11,5 +11,7 @@ export function useCurrentUser() {
     });
   }, []);
 
-  return { user, setUser };
+  const isAdmin = user?.role === 'admin';
+
+  return { user, setUser, isAdmin };
 }

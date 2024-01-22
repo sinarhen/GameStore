@@ -4,8 +4,8 @@ import { useCurrentUser } from '../hooks/useCurrentUser';
 import AuthTriggers from './AuthTriggers';
 
 const Navbar = () => {
-    const { user } = useCurrentUser();
-    console.log(user)
+    const { user, isAdmin } = useCurrentUser();
+    console.log(user);
     return (
         <>
         <nav className="bg-neutral-800 z-50 fixed w-full">
@@ -15,7 +15,7 @@ const Navbar = () => {
                     <div className="flex">
                         <NavLink to="/" className={({isActive}) =>`hover:bg-neutral-700 transition-colors px-3 py-2 rounded-md ${!isActive ? "text-gray-300" : "text-indigo-400"}`}>Home</NavLink>
                         <NavLink to="/products" className={({isActive}) =>`hover:bg-neutral-700 transition-colors px-3 py-2 rounded-md ${!isActive ? "text-gray-300" : "text-indigo-400"}`}>Products</NavLink>
-
+                        {isAdmin && <NavLink to="/admin" className={({isActive}) =>`hover:bg-neutral-700 transition-colors px-3 py-2 rounded-md ${!isActive ? "text-gray-300" : "text-indigo-400"}`}>Admin Panel</NavLink>}
                     </div>
                     <div>
                         {user ? (
