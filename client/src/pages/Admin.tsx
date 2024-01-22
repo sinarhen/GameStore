@@ -4,18 +4,7 @@ import Button from "../components/Button";
 import React from "react";
 import { getOrder, getAllOrders } from "../lib/order";
 import toast from "react-hot-toast";
-import { Order, OrderProduct } from "../lib/types";
-import { 
-    Table, 
-    TableBody, 
-    TableCaption,
-    TableCell,
-    TableHead, 
-    TableHeader, 
-    TableRow
-} from "../components/Table";
-import { statusColor } from "../lib/utils";
-import OrderDialog from "../components/OrderDialog";
+import { Order } from "../lib/types";
 import Section from "../components/Section";
 import { PlusCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "../components/Dialog";
