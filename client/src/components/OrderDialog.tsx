@@ -27,14 +27,16 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
     const [selectedProduct, setSelectedProduct] = useState<OrderProduct | null>(null);
     const [confirmDeleteDialogOpen, setConfirmDeleteDialogOpen] = useState(false);
 
+    const [status, setStatus] = useState(order?.status || 'pending');
+
     const { user } = useCurrentUser();
     const isAdmin = user?.role === 'admin';
 
     const handleUpdateStatus = async () => {
         try {
             if (order?._id) {
-                const { data } = await updateOrderStatus(order?._id, order.status);
-                console.log(data);
+                const { data } = await updateOrderStatus(order?._id, status);
+                toast.success('Order status updated');
             }
         } catch (err) {
             console.log(err);
@@ -96,7 +98,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                 </DialogHeader>
                 <p className="mt-4">Status: {order?.status && <span className={statusColor(order?.status)}>{order.status}</span>}</p>
                     {isAdmin && <>
-                    <Select>
+                    <Select onValueChange={(e) => setStatus(e)}>
                         <SelectTrigger className="w-[180px]">
                             <SelectValue placeholder="Status" />
                         </SelectTrigger>
@@ -106,7 +108,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                             <SelectItem value="cancelled">Cancelled</SelectItem>
                         </SelectContent>
                     </Select>
-                    <Button className="w-[180px] bg-green-500 hover:bg-green-600">Update</Button>
+                    <Button onClick={handleUpdateStatus} className="w-[180px] bg-green-500 hover:bg-green-600">Update</Button>
                     </>}
                 <Table>
                 <TableHeader>
