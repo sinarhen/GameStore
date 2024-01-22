@@ -78,7 +78,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                 </DialogContent>
             </Dialog>
             <Dialog open={open} onOpenChange={() => setOpen(false)}>
-            <DialogContent className="bg-black min-w-[95%] md:min-w-[75%]  text-white">
+            <DialogContent className="min-w-[95%] md:min-w-[75%]">
                 <DialogHeader>
                 <DialogTitle>Products for order {products?.orderId}</DialogTitle>
                 <DialogDescription>

@@ -10,13 +10,16 @@ import {
     TableBody, 
     TableCaption,
     TableCell,
-    TableFooter,
     TableHead, 
     TableHeader, 
     TableRow
 } from "../components/Table";
 import { statusColor } from "../lib/utils";
 import OrderDialog from "../components/OrderDialog";
+import Section from "../components/Section";
+import { PlusCircle } from "lucide-react";
+import { Dialog, DialogContent, DialogTrigger } from "../components/Dialog";
+import CreateProductForm from "../components/CreateProductForm";
 
 export default function Admin() {
     const [id, setId] = React.useState("");
@@ -25,7 +28,7 @@ export default function Admin() {
     const [orders, setOrders] = React.useState<Order[]>([]);
     const [order, setOrder] = React.useState<Order | null>(null);
 
-    const AsyncGetAllOrders = async () => {
+    const getAllOrdersAsync = async () => {
         try {
             const orders = (await getAllOrders())?.data;
             setOrders(orders);
@@ -36,7 +39,7 @@ export default function Admin() {
     }
 
     React.useEffect(() => {
-        AsyncGetAllOrders();
+        getAllOrdersAsync();
     }, []);
 
     const getOrderAsync = async () => {
@@ -109,6 +112,28 @@ export default function Admin() {
                     ))}
                 </TableBody>
             </Table>
+
+        <Section>
+            <div className="flex mt-20 gap-x-4 items-center">
+                
+                <h1 className="">
+                    Products 
+                </h1>
+                <Dialog>
+                    <DialogTrigger>
+                        <Button className="group flex items-center gap-x-1">
+                            Create product
+                            <PlusCircle className="group-hover:rotate-90 transition-transform"/>
+                        </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                        <CreateProductForm />
+                    </DialogContent>
+                    
+                </Dialog>
+            </div>
+            
+        </Section>
             
         </>
     );

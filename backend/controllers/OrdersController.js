@@ -81,11 +81,6 @@ export const getAllOrdersByUserId = async (req, res) => {
 
         const orders = await Order.find({ userId: req.userId }).populate('userId').populate('products.productId').sort({ createdAt: -1 });
 
-        if (!orders) {
-            return res.status(404).json({ message: 'Orders not found' });
-        }
-
-
         res.status(200).json(orders);
     } catch (error) {
         res.status(500).json({ message: error.message });

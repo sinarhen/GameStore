@@ -14,7 +14,7 @@ import { createProduct } from "../lib/products";
 
 
 
-export default function EditProfileForm(){
+export default function CreateProductForm(){
 
     const [openImageUrlDialog, setOpenImageUrlDialog] = useState(false);
     const [imageUrlDialogTempInput, setImageUrlDialogTempInput] = useState('');

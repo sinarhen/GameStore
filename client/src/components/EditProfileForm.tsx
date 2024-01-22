@@ -97,7 +97,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                     form.resetField('avatarUrl');
                   }
                 } }>
-                  <DialogContent className="bg-neutral-800 text-white">
+                  <DialogContent>
                     <DialogHeader>
                       <DialogTitle>
                         Paste URL 

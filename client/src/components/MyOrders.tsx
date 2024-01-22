@@ -10,9 +10,7 @@ import {
 } from "./Table";
 import { useEffect, useState } from "react";
 import { getUserOrdersById } from "../lib/order";
-import { Order, OrderProduct, ProductCardType } from "../lib/types";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./Dialog";
-import { Trash2 } from "lucide-react";
+import { Order, OrderProduct } from "../lib/types";
 import OrderDialog from "./OrderDialog";
 import { statusColor } from "../lib/utils";
 
@@ -66,7 +64,7 @@ export default function MyOrders() {
               </TableCell>
               <TableCell className={statusColor(order.status) + " text-center"}>{order.status}</TableCell>
               <TableCell className="text-right w-full">{order.totalPrice}</TableCell>
-            </TableRow>
+          </TableRow>
           ))}
         </TableBody>
         <TableFooter className="bg-transparent">
