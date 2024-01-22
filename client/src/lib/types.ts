@@ -27,14 +27,16 @@ export type User = {
 
 export type Order = {
     _id: string;
-    products: ProductCardType[];
+    products: OrderProduct[];
     userId: string;
     createdAt: Date;
     updatedAt: Date;
     status: string;
 }
 
+
 export type OrderProduct = {
-    productId: string; 
+    _id: string;
+    productId: ProductCardType; 
     quantity: number;
 }

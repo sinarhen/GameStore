@@ -10,8 +10,11 @@ import {
 } from "./Table";
 import { useEffect, useState } from "react";
 import { getUserOrdersById } from "../lib/order";
-import { Order, ProductCardType } from "../lib/types";
+import { Order, OrderProduct, ProductCardType } from "../lib/types";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./Dialog";
+import { Trash2 } from "lucide-react";
+import OrderDialog from "./OrderDialog";
+import { statusColor } from "../lib/utils";
 
 export default function MyOrders() {
 
@@ -25,33 +28,16 @@ export default function MyOrders() {
       console.log(err);
     })
   }, []);
-   const statusColor = () => {
-    switch (orders[0].status) {
-      case "Pending":
-        return "text-yellow-500";
-      case "Completed":
-        return "text-green-500";
-      case "Cancelled":
-        return "text-red-500";
-      default:
-        return "text-yellow-500";
-    }
-  }
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [dialogProducts, setDialogProducts] = useState<ProductCardType[]>([]);
+  const [dialogProducts, setDialogProducts] = useState<{
+    products: OrderProduct[],
+    orderId: string,
+    status: string
+  
+  }| null>(null);
     return (
     <>
-      <Dialog open={dialogOpen} onOpenChange={() => setDialogOpen(false)}>
-        <DialogContent className="bg-neutral-800 text-white">
-          <DialogHeader>
-            <DialogTitle>Are you absolutely sure?</DialogTitle>
-            <DialogDescription>
-              This action cannot be undone. This will permanently delete your account
-              and remove your data from our servers.
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      <OrderDialog setProducts={setDialogProducts} status={dialogProducts?.status} open={dialogOpen} setOpen={setDialogOpen} products={dialogProducts}/>
       <Table className="mt-10 w-full h-full">
         <TableCaption>A list of your recent orders.</TableCaption>
         <TableHeader>
@@ -69,12 +55,16 @@ export default function MyOrders() {
               <TableCell
                 onClick={() => {
                   setDialogOpen(true);
-                  setDialogProducts(order.products);
+                  setDialogProducts({
+                    status: order.status,
+                    orderId: order._id,
+                    products: order.products
+                  });
                 }} 
                 className="text-center hover:underline cursor-pointer">
                   click to inspect
               </TableCell>
-              <TableCell className={statusColor() + " text-center"}>{order.status}</TableCell>
+              <TableCell className={statusColor(order.status) + " text-center"}>{order.status}</TableCell>
               <TableCell className="text-right w-full">1500$</TableCell>
             </TableRow>
           ))}

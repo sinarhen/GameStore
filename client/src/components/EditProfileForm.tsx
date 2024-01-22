@@ -171,6 +171,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                 
                 <div className='block'>
                         <Input
+                        className="bg-transparent"
                         multiple={false}
                         onChange={(e) => {
                             if (!e?.target?.files || !e.target.files[0]) {

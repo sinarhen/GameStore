@@ -33,3 +33,18 @@ export const formatter = new Intl.NumberFormat('en-US', {
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+
+
+export const statusColor = (status: string) => {
+  switch (status) {
+    case "Pending":
+      return "text-yellow-500";
+    case "Completed":
+      return "text-green-500";
+    case "Cancelled":
+      return "text-red-500";
+    default:
+      return "text-yellow-500";
+  }
+}
