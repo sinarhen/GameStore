@@ -13,6 +13,7 @@ import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./contexts/AuthContext";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
 import ProductDetails from "./pages/ProductDetails";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -39,7 +40,7 @@ function App() {
                   <Route path='/orders' element={<Orders />} />
                   <Route path='/products/:productId' element={<ProductDetails />} />
                   <Route path='*' element={<h1>Page does not exist</h1>} />
-                  
+                  <Route path='/admin' element={<Admin />} />
                 </Routes>
                 
             </div>
