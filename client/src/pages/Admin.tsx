@@ -63,7 +63,7 @@ export default function Admin() {
     const [dialogOpen, setDialogOpen] = React.useState(false);
     const [dialogProducts, setDialogProducts] = React.useState<{
         products: OrderProduct[],
-        orderId: string,
+        order: Order | null,
         status: string
     
     }| null>(null);
@@ -79,7 +79,7 @@ export default function Admin() {
                 value={id}
                 onChange={(e) => setId(e.target.value)}
             />
-            <OrderDialog setProducts={setDialogProducts} status={dialogProducts?.status} open={dialogOpen} setOpen={setDialogOpen} products={dialogProducts}/>
+            <OrderDialog order={order} setProducts={setDialogProducts} status={dialogProducts?.status} open={dialogOpen} setOpen={setDialogOpen} products={dialogProducts}/>
             <Table className="mt-10 w-full h-full">
                 <TableCaption>A list of your recent orders.</TableCaption>
                 <TableHeader>
@@ -99,7 +99,7 @@ export default function Admin() {
                                     setDialogOpen(true);
                                     setDialogProducts({
                                         status: order.status,
-                                        orderId: order._id,
+                                        order,
                                         products: order.products
                                     });
                                 }}

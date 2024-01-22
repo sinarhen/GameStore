@@ -1,5 +1,5 @@
 import { Trash2 } from "lucide-react";
-import { OrderProduct } from '../lib/types';
+import { Order, OrderProduct } from '../lib/types';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./Dialog"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "./Table"
 import { formatter, statusColor } from "../lib/utils";
@@ -8,17 +8,20 @@ import Button from "./Button";
 import { removeFromOrder } from "../lib/order";
 import toast from "react-hot-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./Select";
+import { useCurrentUser } from "../hooks/useCurrentUser";
+import { updateOrderStatus } from "../lib/order";
 
 interface OrderDialogProps {
+    order: Order | null,
     open: boolean;
     setOpen: (open: boolean) => void;
     products: {
         products: OrderProduct[],
-        orderId: string
+        order: Order | null,
     } | null;
     setProducts: (products: {
         products: OrderProduct[],
-        orderId: string,
+        order: Order | null,
         status: string
       
       }) => void;
@@ -30,16 +33,31 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
     setOpen,
     products,
     setProducts,
-    status
+    status,
+    order
 }) => {
     const [selectedProduct, setSelectedProduct] = useState<OrderProduct | null>(null);
     const [confirmDeleteDialogOpen, setConfirmDeleteDialogOpen] = useState(false);
+
+    const { user } = useCurrentUser();
+    const isAdmin = user?.role === 'admin';
+
+    const handleUpdateStatus = async () => {
+        try {
+            if (products?.order?._id) {
+                const { data } = await updateOrderStatus(products?.order?._id, status!);
+                console.log(data);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
     
     function onConfirm(){
         // ...rest of the code
         setConfirmDeleteDialogOpen(false);
 
-        if (selectedProduct?._id && products?.orderId)
+        if (selectedProduct?._id && products?.order?._id)
         {
             removeFromOrder(selectedProduct?._id).then((data) => {
                 console.log(data);
@@ -49,7 +67,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                 }
                 setProducts({
                     products: updatedProducts,
-                    orderId: products?.orderId,
+                    order,
                     status: status!
                 });
                 toast.success('Product deleted from order');
@@ -80,23 +98,25 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
             <Dialog open={open} onOpenChange={() => setOpen(false)}>
             <DialogContent className="min-w-[95%] md:min-w-[75%]">
                 <DialogHeader>
-                <DialogTitle>Products for order {products?.orderId}</DialogTitle>
+                <DialogTitle>Products for order {products?.order?._id}</DialogTitle>
                 <DialogDescription>
                     Products below are the products that you have ordered.
                 </DialogDescription>
                 </DialogHeader>
                 <p className="mt-4">Status: {status && <span className={statusColor(status)}>{status}</span>}</p>
+                    {isAdmin && <>
                     <Select>
                         <SelectTrigger className="w-[180px]">
                             <SelectValue placeholder="Status" />
                         </SelectTrigger>
                         <SelectContent className="text-white bg-black">
-                            <SelectItem value="light">Ready</SelectItem>
-                            <SelectItem value="dark">Processing</SelectItem>
-                            <SelectItem value="system">Cancelled</SelectItem>
+                            <SelectItem value="ready">Ready</SelectItem>
+                            <SelectItem value="processing">Processing</SelectItem>
+                            <SelectItem value="cancelled">Cancelled</SelectItem>
                         </SelectContent>
                     </Select>
                     <Button className="w-[180px] bg-green-500 hover:bg-green-600">Update</Button>
+                    </>}
                 <Table>
                 <TableHeader>
                     <TableRow>

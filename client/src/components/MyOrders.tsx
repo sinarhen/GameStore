@@ -29,7 +29,7 @@ export default function MyOrders() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogProducts, setDialogProducts] = useState<{
     products: OrderProduct[],
-    orderId: string,
+    order: Order | null,
     status: string
   
   }| null>(null);
@@ -55,7 +55,7 @@ export default function MyOrders() {
                   setDialogOpen(true);
                   setDialogProducts({
                     status: order.status,
-                    orderId: order._id,
+                    order,
                     products: order.products
                   });
                 }} 
