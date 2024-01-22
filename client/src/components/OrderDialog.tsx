@@ -29,8 +29,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
 
     const [status, setStatus] = useState(order?.status || 'pending');
 
-    const { user } = useCurrentUser();
-    const isAdmin = user?.role === 'admin';
+    const { isAdmin } = useCurrentUser();
 
     const handleUpdateStatus = async () => {
         try {
