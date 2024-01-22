@@ -7,6 +7,7 @@ import { useState } from "react";
 import Button from "./Button";
 import { removeFromOrder } from "../lib/order";
 import toast from "react-hot-toast";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./Select";
 
 interface OrderDialogProps {
     open: boolean;
@@ -85,6 +86,17 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                 </DialogDescription>
                 </DialogHeader>
                 <p className="mt-4">Status: {status && <span className={statusColor(status)}>{status}</span>}</p>
+                    <Select>
+                        <SelectTrigger className="w-[180px]">
+                            <SelectValue placeholder="Status" />
+                        </SelectTrigger>
+                        <SelectContent className="text-white bg-black">
+                            <SelectItem value="light">Ready</SelectItem>
+                            <SelectItem value="dark">Processing</SelectItem>
+                            <SelectItem value="system">Cancelled</SelectItem>
+                        </SelectContent>
+                    </Select>
+                    <Button className="w-[180px] bg-green-500 hover:bg-green-600">Update</Button>
                 <Table>
                 <TableHeader>
                     <TableRow>

@@ -4,6 +4,10 @@ export async function getOrder(id: string) {
   return await http.get(`/orders/${id}`, true);
 }
 
+export async function getAllOrders() {
+  return await http.get(`/orders/all`, true);
+}
+
 export async function addToOrder(productId: string, quantity: number){
   return await http.post(`/orders/${productId}`, { quantity }, true);
 }
