@@ -17,7 +17,7 @@ export default function MyFavorites({favorites}: {
         </motion.div>
     )
     return (
-        <div className="flex gap-x-4 w-full mt-10 overflow-x-scroll snap snap-x" style={{scrollSnapType: 'x mandatory', scrollBehavior: 'smooth'}}>
+        <div className="flex gap-x-4 w-full mt-10 overflow-y-visible overflow-x-scroll snap snap-x" style={{scrollSnapType: 'x mandatory', scrollBehavior: 'smooth'}}>
             {favorites.map((favorite: any, index: number) => (
                 <motion.div
                     key={favorite._id + index}

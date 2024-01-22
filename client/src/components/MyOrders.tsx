@@ -65,7 +65,7 @@ export default function MyOrders() {
                   click to inspect
               </TableCell>
               <TableCell className={statusColor(order.status) + " text-center"}>{order.status}</TableCell>
-              <TableCell className="text-right w-full">1500$</TableCell>
+              <TableCell className="text-right w-full">{order.totalPrice}</TableCell>
             </TableRow>
           ))}
         </TableBody>

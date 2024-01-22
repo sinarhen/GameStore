@@ -17,7 +17,7 @@ export default function Home() {
         <div className='w-full h-full'>
             
             <Section className='h-full pt-24'>
-                <Banner imageUrl='https://c4.wallpaperflare.com/wallpaper/335/955/620/apple-inc-black-minimalism-logo-wallpaper-preview.jpg'/>
+                <Banner imageUrl='https://4kwallpapers.com/images/wallpapers/mortal-kombat-2021-movies-sub-zero-scorpion-2560x1080-5265.jpg'/>
                 
                 <div
                     className='flex flex-col w-full'
