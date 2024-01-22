@@ -79,7 +79,7 @@ export const deleteOrder = async (req, res) => {
 export const getAllOrdersByUserId = async (req, res) => {
     try {
 
-        const orders = await Order.find({ userId: req.userId }).populate('products.productId').sort({ createdAt: -1 });
+        const orders = await Order.find({ userId: req.userId }).populate('userId').populate('products.productId').sort({ createdAt: -1 });
 
         if (!orders) {
             return res.status(404).json({ message: 'Orders not found' });
@@ -97,7 +97,7 @@ export const getOrderById = async (req, res) => {
 
         const { orderId } = req.params;
         
-        const order = await Order.findById(orderId);
+        const order = await Order.findById(orderId).populate('userId');
         console.log(req.role)
         if (req.userId !== order.userId && req.role !== roles.admin) {
             return res.status(401).json({ message: 'You cannot get this order' });

@@ -29,7 +29,7 @@ export type User = {
 export type Order = {
     _id: string;
     products: OrderProduct[];
-    userId: string;
+    userId: User;
     totalPrice: number;
     createdAt: Date;
     updatedAt: Date;
