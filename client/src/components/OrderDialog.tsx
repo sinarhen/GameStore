@@ -1,4 +1,4 @@
-import { Trash2 } from "lucide-react"
+import { Trash2 } from "lucide-react";
 import { OrderProduct } from '../lib/types';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./Dialog"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "./Table"

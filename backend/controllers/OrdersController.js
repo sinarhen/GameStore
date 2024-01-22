@@ -136,3 +136,12 @@ export const updateOrderStatus = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+export const getAllOrders = async (req, res) => {
+    try {
+        const orders = await Order.find().populate('userId');
+        res.status(200).json(orders);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
