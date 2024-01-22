@@ -38,11 +38,11 @@ export function cn(...inputs: ClassValue[]) {
 
 export const statusColor = (status: string) => {
   switch (status) {
-    case "Pending":
+    case "pending":
       return "text-yellow-500";
-    case "Completed":
+    case "ready":
       return "text-green-500";
-    case "Cancelled":
+    case "cancelled":
       return "text-red-500";
     default:
       return "text-yellow-500";
