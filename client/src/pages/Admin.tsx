@@ -13,10 +13,9 @@ import Orders from '../components/Orders';
 
 export default function Admin() {
     const [id, setId] = React.useState("");
-    const [loading, setLoading] = React.useState(true);
-    const [open, setOpen] = React.useState(false);
     const [orders, setOrders] = React.useState<Order[]>([]);
-    const [order, setOrder] = React.useState<Order | null>(null);
+    const [query, setQuery] = React.useState("");
+    const [filteredOrders, setFilteredOrders] = React.useState<Order[]>([]);
 
     const getAllOrdersAsync = async () => {
         try {
@@ -32,6 +31,10 @@ export default function Admin() {
         getAllOrdersAsync();
     }, []);
 
+    React.useEffect(() => {
+        setFilteredOrders(orders.filter((order) => order._id.includes(query)));
+    }, [query]);
+
     return (
         <>
             <h1 className="pb-4" >All Orders</h1>
@@ -39,10 +42,10 @@ export default function Admin() {
                 name="orderId"
                 type="text"
                 placeholder="Order ID"
-                value={id}
-                onChange={(e) => setId(e.target.value)}
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
             />
-            <Orders orders={orders}/>
+            <Orders orders={query ? filteredOrders : orders}/>
 
         <Section>
             <div className="flex mt-20 gap-x-4 items-center">
