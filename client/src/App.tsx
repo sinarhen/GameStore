@@ -9,8 +9,6 @@ import MyAccount from "./pages/MyAccount";
 import Favorites from "./pages/Favorites";
 import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./contexts/AuthContext";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
