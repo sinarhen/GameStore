@@ -1,7 +1,7 @@
-export default (req, res, next) => {
-    const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
+import { roles } from '../utils/roles.js';
 
-    if (token.role === 'admin') {
+export default (req, res, next) => {
+    if (req.role === roles.admin) {
         next();
     } else {
         return res.status(403).json({

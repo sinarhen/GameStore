@@ -1,22 +1,18 @@
-import axios from "axios"
-import { getHeadersWithCookiesByHeaderName } from "./utils";
-import { headerName } from "./constants";
+import http from './fetcher'
 
 async function getAllProducts () {
-    const response = await axios.get('/products')
-    return response;
+    return await http.get('/products', true);
 }
-
+async function createProduct (product: any) {
+    return await http.post('/products', product, true);
+}
 
 async function getProductById(id: string | undefined){
     if (!id) throw new Error('id required')
-    const headers = getHeadersWithCookiesByHeaderName()
-    const response = await axios.get('/products/' + id, {
-        headers
-    })
-    return response;
+    return await http.get(`/products/${id}`, true);
 }
 export {
     getAllProducts,
-    getProductById
+    getProductById,
+    createProduct
 }

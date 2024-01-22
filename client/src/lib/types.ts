@@ -42,3 +42,16 @@ export type OrderProduct = {
     productId: ProductCardType; 
     quantity: number;
 }
+
+
+import * as z from 'zod';
+export const productFormSchema = z.object({
+    name: z.string().min(3, "Name must be at least 3 characters").max(50, "Name must be less than 50 characters"),
+    description: z.string().optional(),
+    price: z.number().min(0, "Price must be at least 0").max(100000, "Price must be less than 100000"),
+    imageUrl: z.any(),
+    categoryId: z.string().uuid(),
+})
+
+
+export type TProfileEditForm = z.infer<typeof productFormSchema>;
