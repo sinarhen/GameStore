@@ -32,29 +32,9 @@ export default function Admin() {
         getAllOrdersAsync();
     }, []);
 
-    const getOrderAsync = async () => {
-        try {
-            setLoading(true)
-            setOpen(true)
-            const order = (await getOrder(id)).data
-            console.log(order)
-            setOrder(order)
-            toast.success("Order found")
-        } catch (err){
-            toast.error("Something went wrong")
-            console.error(err)
-            setOpen(false)
-
-        } finally {
-            setLoading(false);
-        }
-    }
-
-
     return (
         <>
             <h1 className="pb-4" >All Orders</h1>
-            <Button disabled={!id} className="mb-4" onClick={getOrderAsync}>Search</Button>
             <Input
                 name="orderId"
                 type="text"
