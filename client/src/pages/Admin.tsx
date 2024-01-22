@@ -20,6 +20,7 @@ import Section from "../components/Section";
 import { PlusCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogTrigger } from "../components/Dialog";
 import CreateProductForm from "../components/CreateProductForm";
+import Orders from '../components/Orders';
 
 export default function Admin() {
     const [id, setId] = React.useState("");
@@ -60,13 +61,6 @@ export default function Admin() {
         }
     }
 
-    const [dialogOpen, setDialogOpen] = React.useState(false);
-    const [dialogProducts, setDialogProducts] = React.useState<{
-        products: OrderProduct[],
-        order: Order | null,
-        status: string
-    
-    }| null>(null);
 
     return (
         <>
@@ -79,39 +73,7 @@ export default function Admin() {
                 value={id}
                 onChange={(e) => setId(e.target.value)}
             />
-            <OrderDialog order={order} setProducts={setDialogProducts} status={dialogProducts?.status} open={dialogOpen} setOpen={setDialogOpen} products={dialogProducts}/>
-            <Table className="mt-10 w-full h-full">
-                <TableCaption>A list of your recent orders.</TableCaption>
-                <TableHeader>
-                    <TableRow className="bg-neutral-800">
-                        <TableHead className="overflow-hidden">ID</TableHead>
-                        <TableHead className="text-center w-full">Products</TableHead>
-                        <TableHead className="text-center w-full">Status</TableHead>
-                        <TableHead className="text-right align-center justify-end w-full">Amount</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {orders.map((order) => (
-                        <TableRow key={order._id} className="cursor-pointer">
-                            <TableCell className="w-[10px]">{order._id}</TableCell>
-                            <TableCell
-                                onClick={() => {
-                                    setDialogOpen(true);
-                                    setDialogProducts({
-                                        status: order.status,
-                                        order,
-                                        products: order.products
-                                    });
-                                }}
-                                className="text-center hover:underline cursor-pointer">
-                                Products: {order.products.length}
-                            </TableCell>
-                            <TableCell className={statusColor(order.status) + " text-center"}>{order.status}</TableCell>
-                            <TableCell className="text-right w-full">{order.totalPrice}</TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+            <Orders orders={orders}/>
 
         <Section>
             <div className="flex mt-20 gap-x-4 items-center">

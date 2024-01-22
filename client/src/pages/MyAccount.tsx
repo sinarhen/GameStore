@@ -7,11 +7,26 @@ import { FaUser } from "react-icons/fa";
 import { useFavorites } from "../hooks/useFavorites";
 import Section from "../components/Section";
 import MyFavorites from "../components/MyFavorites";
-import MyOrders from "../components/MyOrders";
+import Orders from "../components/Orders";
+import { useEffect, useState } from "react";
+import { Order } from "../lib/types";
+import { getUserOrdersById } from "../lib/order";
 
 export default function MyAccount() {
     const { user } = useCurrentUser();
     const { favorites } = useFavorites();
+
+    const [orders, setOrders] = useState<Order[] | null>(null);
+
+    useEffect(() => {
+        getUserOrdersById().then((data) => {
+            setOrders(data.data);
+        }).catch((err) => {
+            console.log(err);
+        }).finally(() => {
+
+        });
+    }, []);
     return (
         <>
         <Section className="pt-24">
@@ -45,7 +60,8 @@ export default function MyAccount() {
         <Section className="h-full pt-96 sm:pt-48">
             <Header animateableText="Orders." appearDuration={0.2} />
             <AnimatedSeparator appearDuration={0.3}/>
-            <MyOrders />
+
+            <Orders orders={orders}/>
         </Section>
             </>
     )

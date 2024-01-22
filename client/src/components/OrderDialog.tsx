@@ -13,28 +13,16 @@ import { updateOrderStatus } from "../lib/order";
 
 interface OrderDialogProps {
     order: Order | null,
+    setOrder: (order: Order | null) => void;
     open: boolean;
     setOpen: (open: boolean) => void;
-    products: {
-        products: OrderProduct[],
-        order: Order | null,
-    } | null;
-    setProducts: (products: {
-        products: OrderProduct[],
-        order: Order | null,
-        status: string
-      
-      }) => void;
-    status?: string ;
 }
 
 const OrderDialog: React.FC<OrderDialogProps> = ({
     open,
     setOpen,
-    products,
-    setProducts,
-    status,
-    order
+    order,
+    setOrder,
 }) => {
     const [selectedProduct, setSelectedProduct] = useState<OrderProduct | null>(null);
     const [confirmDeleteDialogOpen, setConfirmDeleteDialogOpen] = useState(false);
@@ -44,8 +32,8 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
 
     const handleUpdateStatus = async () => {
         try {
-            if (products?.order?._id) {
-                const { data } = await updateOrderStatus(products?.order?._id, status!);
+            if (order?._id) {
+                const { data } = await updateOrderStatus(order?._id, order.status);
                 console.log(data);
             }
         } catch (err) {
@@ -57,19 +45,22 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
         // ...rest of the code
         setConfirmDeleteDialogOpen(false);
 
-        if (selectedProduct?._id && products?.order?._id)
+        if (selectedProduct?._id && order?._id)
         {
             removeFromOrder(selectedProduct?._id).then((data) => {
                 console.log(data);
-                const updatedProducts = products.products.filter((product) => product._id !== selectedProduct?._id);
+                const updatedProducts = order.products?.filter((product) => product._id !== selectedProduct?._id);
                 if (selectedProduct.quantity > 1) {
-                    updatedProducts.push({...selectedProduct, quantity: selectedProduct.quantity - 1});
+                    updatedProducts?.push({...selectedProduct, quantity: selectedProduct.quantity - 1});
                 }
-                setProducts({
-                    products: updatedProducts,
-                    order,
-                    status: status!
-                });
+                if (updatedProducts)
+                {
+                    setOrder({
+                        ...order,
+                        products: updatedProducts,
+                    
+                    })
+                }
                 toast.success('Product deleted from order');
     
             }).catch((err) => {
@@ -98,12 +89,12 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
             <Dialog open={open} onOpenChange={() => setOpen(false)}>
             <DialogContent className="min-w-[95%] md:min-w-[75%]">
                 <DialogHeader>
-                <DialogTitle>Products for order {products?.order?._id}</DialogTitle>
+                <DialogTitle>Products for order {order?._id}</DialogTitle>
                 <DialogDescription>
                     Products below are the products that you have ordered.
                 </DialogDescription>
                 </DialogHeader>
-                <p className="mt-4">Status: {status && <span className={statusColor(status)}>{status}</span>}</p>
+                <p className="mt-4">Status: {order?.status && <span className={statusColor(order?.status)}>{order.status}</span>}</p>
                     {isAdmin && <>
                     <Select>
                         <SelectTrigger className="w-[180px]">
@@ -129,7 +120,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {products?.products.map((orderedProduct: OrderProduct) => {
+                    {order?.products?.map((orderedProduct: OrderProduct) => {
                     return (
                         <TableRow key={orderedProduct._id}>
                         <TableCell>{orderedProduct.productId.name}</TableCell>

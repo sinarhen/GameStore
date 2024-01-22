@@ -8,34 +8,26 @@ import {
     TableHeader, 
     TableRow 
 } from "./Table";
-import { useEffect, useState } from "react";
-import { getUserOrdersById } from "../lib/order";
-import { Order, OrderProduct } from "../lib/types";
+import { useState } from "react";
+import { Order } from "../lib/types";
 import OrderDialog from "./OrderDialog";
 import { statusColor } from "../lib/utils";
+import NotFound from "./NotFound";
 
-export default function MyOrders() {
+export default function Orders({
+  orders
+}: {
+  orders: Order[] | null;
+}) {
 
-  const [orders, setOrders] = useState<Order[]>([]);
-
-  useEffect(() => {
-    getUserOrdersById().then((data) => {
-      console.log(data);
-      setOrders(data.data);
-    }).catch((err) => {
-      console.log(err);
-    })
-  }, []);
+  const [dialogOrder, setDialogOrder] = useState<Order | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [dialogProducts, setDialogProducts] = useState<{
-    products: OrderProduct[],
-    order: Order | null,
-    status: string
-  
-  }| null>(null);
+  if (!orders){
+    return <NotFound />;
+  }
     return (
     <>
-      <OrderDialog setProducts={setDialogProducts} status={dialogProducts?.status} open={dialogOpen} setOpen={setDialogOpen} products={dialogProducts}/>
+      <OrderDialog setOrder={setDialogOrder} order={dialogOrder} open={dialogOpen} setOpen={setDialogOpen}/>
       <Table className="mt-10 w-full h-full">
         <TableCaption>A list of your recent orders.</TableCaption>
         <TableHeader>
@@ -53,11 +45,7 @@ export default function MyOrders() {
               <TableCell
                 onClick={() => {
                   setDialogOpen(true);
-                  setDialogProducts({
-                    status: order.status,
-                    order,
-                    products: order.products
-                  });
+                  setDialogOrder(order);
                 }} 
                 className="text-center hover:underline cursor-pointer">
                   click to inspect
