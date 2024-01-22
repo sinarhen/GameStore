@@ -19,7 +19,7 @@ const Navbar = () => {
                     </div>
                     <div>
                         {user ? (
-                            <UserNav isAdmin={user.role !== 'admin'} avatarUrl={user.avatarUrl} username={user.name}/>
+                            <UserNav isAdmin={user.role === 'admin'} avatarUrl={user.avatarUrl} username={user.name}/>
                         ) : (
                             
                             <AuthTriggers />

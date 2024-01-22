@@ -1,5 +1,7 @@
 import Product from '../models/Product.js';
 import Order from '../models/Order.js';
+import { roles } from '../utils/roles.js';
+
 
 export const addToOrder = async (req, res) => {
     try {
@@ -96,7 +98,8 @@ export const getOrderById = async (req, res) => {
         const { orderId } = req.params;
         
         const order = await Order.findById(orderId);
-        if (req.userId !== order.userId && req.userId !== process.env.ADMIN_ID) {
+        console.log(req.role)
+        if (req.userId !== order.userId && req.role !== roles.admin) {
             return res.status(401).json({ message: 'You cannot get this order' });
         }
         res.status(200).json(order);
