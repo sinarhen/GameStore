@@ -2,19 +2,43 @@ import Input from "../components/Input";
 import Button from "../components/Button";
 
 import React from "react";
-import { getOrder } from "../lib/order";
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "../components/Dialog";
+import { getOrder, getAllOrders } from "../lib/order";
 import toast from "react-hot-toast";
-import Loading from "../components/Loading";
-import { Order } from "../lib/types";
+import { Order, OrderProduct } from "../lib/types";
+import { 
+    Table, 
+    TableBody, 
+    TableCaption,
+    TableCell,
+    TableFooter,
+    TableHead, 
+    TableHeader, 
+    TableRow
+} from "../components/Table";
 import { statusColor } from "../lib/utils";
+import OrderDialog from "../components/OrderDialog";
 
 export default function Admin() {
     const [id, setId] = React.useState("");
     const [loading, setLoading] = React.useState(true);
     const [open, setOpen] = React.useState(false);
+    const [orders, setOrders] = React.useState<Order[]>([]);
+    const [order, setOrder] = React.useState<Order | null>(null);
 
-    const [order, setOrder] = React.useState<Order | null>(null); // [order, setOrder
+    const AsyncGetAllOrders = async () => {
+        try {
+            const orders = (await getAllOrders())?.data;
+            setOrders(orders);
+            console.log( "orders" ,orders);
+        } catch (err){
+            console.error(err)
+        }
+    }
+
+    React.useEffect(() => {
+        AsyncGetAllOrders();
+    }, []);
+
     const getOrderAsync = async () => {
         try {
             setLoading(true)
@@ -33,9 +57,18 @@ export default function Admin() {
         }
     }
 
+    const [dialogOpen, setDialogOpen] = React.useState(false);
+    const [dialogProducts, setDialogProducts] = React.useState<{
+        products: OrderProduct[],
+        orderId: string,
+        status: string
+    
+    }| null>(null);
+
     return (
         <>
-            <h1 className="pb-4" >Change Order Status</h1>
+            <h1 className="pb-4" >All Orders</h1>
+            <Button disabled={!id} className="mb-4" onClick={getOrderAsync}>Search</Button>
             <Input
                 name="orderId"
                 type="text"
@@ -43,45 +76,40 @@ export default function Admin() {
                 value={id}
                 onChange={(e) => setId(e.target.value)}
             />
-            <Button disabled={!id} className="mt-4" onClick={getOrderAsync}>Search</Button>
-
-            <Dialog open={open} onOpenChange={setOpen}>
-
-                <DialogContent className="bg-black text-white">
-                    {loading ? Loading() : (
-                        <>
-                        <DialogHeader>
-                            <h1>Order Details</h1>
-                        </DialogHeader>
-                        <div className="flex flex-col gap-y-2">
-                            <div className="flex gap-x-2">
-                                <p className="font-semibold">Order ID:</p>
-                                <p>{order?._id}</p>
-                            </div>
-                            <div className="flex gap-x-2">
-                                <p className="font-semibold">Status:</p>
-                                <p className={order?.status && statusColor(order?.status)}>{order?.status}</p>
-                            </div>
-                            <div className="flex gap-x-2">
-                                <p className="font-semibold">User ID:</p>
-                                <p>{order?.userId?._id}</p>
-                            </div>
-                            <div className="flex gap-x-2">
-                                <p className="font-semibold">User Name:</p>
-                                <p>{order?.userId?.name}</p>
-                            </div>
-                            <div className="flex gap-x-2">
-                                <p className="font-semibold">User Email:</p>
-                                <p>
-                                    {order?.userId?.email}
-                                </p>
-                            </div>
-                        </div>
-                    
-                        </>
-                    ) }
-                    </DialogContent>
-            </Dialog>
+            <OrderDialog setProducts={setDialogProducts} status={dialogProducts?.status} open={dialogOpen} setOpen={setDialogOpen} products={dialogProducts}/>
+            <Table className="mt-10 w-full h-full">
+                <TableCaption>A list of your recent orders.</TableCaption>
+                <TableHeader>
+                    <TableRow className="bg-neutral-800">
+                        <TableHead className="overflow-hidden">ID</TableHead>
+                        <TableHead className="text-center w-full">Products</TableHead>
+                        <TableHead className="text-center w-full">Status</TableHead>
+                        <TableHead className="text-right align-center justify-end w-full">Amount</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {orders.map((order) => (
+                        <TableRow key={order._id} className="cursor-pointer">
+                            <TableCell className="w-[10px]">{order._id}</TableCell>
+                            <TableCell
+                                onClick={() => {
+                                    setDialogOpen(true);
+                                    setDialogProducts({
+                                        status: order.status,
+                                        orderId: order._id,
+                                        products: order.products
+                                    });
+                                }}
+                                className="text-center hover:underline cursor-pointer">
+                                Products: {order.products.length}
+                            </TableCell>
+                            <TableCell className={statusColor(order.status) + " text-center"}>{order.status}</TableCell>
+                            <TableCell className="text-right w-full">{order.totalPrice}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+            
         </>
     );
 }
