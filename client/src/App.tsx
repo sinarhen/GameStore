@@ -39,8 +39,6 @@ function App() {
                   <Route path='/me' element={<MyAccount />} />
                   <Route path='/favorites' element={<Favorites />} />
                   <Route path='/orders' element={<Orders />} />
-                  <Route path='/register' element={<Register />} />
-                  <Route path='/login' element={<Login />} />
                   <Route path='/products/:productId' element={<ProductDetails />} />
                   <Route path='*' element={<h1>Page does not exist</h1>} />
                   

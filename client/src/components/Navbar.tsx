@@ -1,9 +1,11 @@
 import { Link, NavLink } from 'react-router-dom';
 import UserNav from './UserNav';
 import { useCurrentUser } from '../hooks/useCurrentUser';
+import AuthTriggers from './AuthTriggers';
 
 const Navbar = () => {
     const { user } = useCurrentUser();
+
     return (
         <>
         <nav className="bg-neutral-800 z-50 fixed w-full">
@@ -20,15 +22,7 @@ const Navbar = () => {
                             <UserNav avatarUrl={user.avatarUrl} username={user.name}/>
                         ) : (
                             
-                            <div className='flex gap-x-2 items-center'>
-                                <Link to="/login">
-                                    <button className='bg-green-300 bg-opacity-70 transition-all hover:bg-green-700 hover:bg-opacity-100 text-white px-4 py-2 rounded-md'>Log in</button>
-                                </Link>
-                                <Link to="/register">
-                                    <button className='hover:bg-neutral-900 transition-colors text-white px-4 py-2 rounded-md'>Register</button>
-                                </Link>
-
-                            </div>
+                            <AuthTriggers />
                         )}
                         </div>
                 </div>
