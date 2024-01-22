@@ -37,13 +37,13 @@ export default function MyAccount() {
             
         </Section>
         <Section className="h-4/5 pt-24">
-                <Header animateableText="Favorites" appearDuration={0.2} />
+                <Header animateableText="Favorites." appearDuration={0.2} />
                 <AnimatedSeparator appearDuration={0.3}/>
                 <MyFavorites favorites={favorites}/>
         
         </Section>
         <Section className="h-full pt-96 sm:pt-48">
-            <Header animateableText="Orders" appearDuration={0.2} />
+            <Header animateableText="Orders." appearDuration={0.2} />
             <AnimatedSeparator appearDuration={0.3}/>
             <MyOrders />
         </Section>

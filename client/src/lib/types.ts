@@ -21,6 +21,7 @@ export type User = {
     email: string;
     name: string;
     createdAt: Date;
+    role: string;
     __v: number;
     updatedAt: Date;
 }

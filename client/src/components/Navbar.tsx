@@ -5,7 +5,7 @@ import AuthTriggers from './AuthTriggers';
 
 const Navbar = () => {
     const { user } = useCurrentUser();
-
+    console.log(user)
     return (
         <>
         <nav className="bg-neutral-800 z-50 fixed w-full">
@@ -19,7 +19,7 @@ const Navbar = () => {
                     </div>
                     <div>
                         {user ? (
-                            <UserNav avatarUrl={user.avatarUrl} username={user.name}/>
+                            <UserNav isAdmin={user.role !== 'admin'} avatarUrl={user.avatarUrl} username={user.name}/>
                         ) : (
                             
                             <AuthTriggers />

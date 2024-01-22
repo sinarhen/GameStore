@@ -80,7 +80,7 @@ export const register = async (req, res) => {
 
         const user = await doc.save();
 
-        const token = generateToken(user._id, user.name);
+        const token = generateToken(user._id, user.name, user.role);
 
         const { passwordHash, ...userData } = user._doc;
 
@@ -123,7 +123,7 @@ export const login = async (req, res) => {
             });
         }
 
-        const token = generateToken(user._id, user.name); 
+        const token = generateToken(user._id, user.name, user.role); 
 
 
         const { passwordHash, ...userData } = user._doc;
