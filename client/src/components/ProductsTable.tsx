@@ -12,6 +12,7 @@ import {
 } from "./Table";
 import { Trash2 } from "lucide-react";
 import ConfirmDialog from "./ConfirmDialog";
+import ProductDialog from "./ProductDialog";
 import toast from "react-hot-toast";
 import { FaInfo } from "react-icons/fa";
 
@@ -52,6 +53,7 @@ export default function ProductsTable({
           open={confirmOpen} 
           setOpen={setConfirmOpen} 
           />
+          <ProductDialog open={dialogOpen} setOpen={setDialogOpen} product={selectedProduct} />
         
         <Table className="mt-10 w-full h-full">
         <TableCaption>{tableCaption}</TableCaption>

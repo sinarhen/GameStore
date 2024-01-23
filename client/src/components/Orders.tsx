@@ -15,8 +15,6 @@ import OrderDialog from "./OrderDialog";
 import { formatter, statusColor } from "../lib/utils";
 import NotFound from "./NotFound";
 import { deleteOrder } from "../lib/order";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./Dialog";
-import Button from "./Button";
 import ConfirmDialog from "./ConfirmDialog";
 import toast from 'react-hot-toast';
 import { FaInfo } from "react-icons/fa";
