@@ -1,10 +1,11 @@
 import Input from "../components/Input";
 import Button from "../components/Button";
+import ProductsTable from "../components/ProductsTable";
 
 import React from "react";
-import { getOrder, getAllOrders } from "../lib/order";
-import toast from "react-hot-toast";
-import { Order } from "../lib/types";
+import { getAllOrders } from "../lib/order";
+import { getAllProducts } from "../lib/products";
+import { Order, ProductCardType } from "../lib/types";
 import Section from "../components/Section";
 import { PlusCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "../components/Dialog";
@@ -12,9 +13,10 @@ import CreateProductForm from '../components/CreateProductForm';
 import Orders from '../components/Orders';
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 
+
 export default function Admin() {
-    const [id, setId] = React.useState("");
     const [orders, setOrders] = React.useState<Order[]>([]);
+    const [products, setProducts] = React.useState<ProductCardType[] | null>(null);
     const [query, setQuery] = React.useState("");
     const [filteredOrders, setFilteredOrders] = React.useState<Order[]>([]);
 
@@ -22,14 +24,24 @@ export default function Admin() {
         try {
             const orders = (await getAllOrders())?.data;
             setOrders(orders);
-            console.log( "orders" ,orders);
         } catch (err){
-            console.error(err)
+            console.error(err);
+        }
+    }
+
+    const getAllProductsAsync = async () => {
+        try {
+            const products = (await getAllProducts())?.data;
+            setProducts(products);
+        } catch (err){
+            console.error(err);
         }
     }
 
     React.useEffect(() => {
         getAllOrdersAsync();
+        getAllProductsAsync();
+        console.log("products", products);
     }, []);
 
     React.useEffect(() => {
@@ -48,7 +60,6 @@ export default function Admin() {
                 onChange={(e: any) => setQuery(e.target.value)}
             />
             <Orders setOrders={setOrders} orders={query ? filteredOrders : orders}/>
-
         </Section>
         
         <Section className="h-full">
@@ -77,6 +88,13 @@ export default function Admin() {
                 
             </div>
             
+        </Section>
+
+        <Section>
+            <h1 className="pb-4" >All products</h1>
+            <Input name="productId" type="text" placeholder="Product ID" />
+
+            <ProductsTable products={products} setProducts={setProducts} />
         </Section>
             
         </>
