@@ -53,8 +53,7 @@ export default function ProductsTable({
           open={confirmOpen} 
           setOpen={setConfirmOpen} 
           />
-          <ProductDialog open={dialogOpen} setOpen={setDialogOpen} product={selectedProduct} />
-        
+        <ProductDialog open={dialogOpen} setOpen={setDialogOpen} product={selectedProduct} />
         <Table className="mt-10 w-full h-full">
         <TableCaption>{tableCaption}</TableCaption>
         <TableHeader>

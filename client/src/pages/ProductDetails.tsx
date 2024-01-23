@@ -107,7 +107,7 @@ export default function ProductDetails(){
                             <div className="w-full h-96 justify-center flex">
                                 <div className="w-full overflow-hidden">
 
-                                    <img alt="" className="rounded-lg h-full w-full object-cover object-center" 
+                                    <img alt="No photo" className="rounded-lg h-full w-full object-cover object-center" 
                                         src={product.imageUrl}>
                                     </img>
                                 </div>
@@ -131,31 +131,12 @@ export default function ProductDetails(){
                         <Header className="text-5xl mt-1" animateableText={product.name} appearDuration={appearDuration} />
                         <AnimatedSeparator appearDuration={appearDuration}/>
                         <motion.p 
-                            className="text-gray-400 text-md mt-4"
+                            className="text-gray-400 max-h-[400px] overflow-y-auto text-md mt-4"
                             initial={{opacity: 0}}
                             transition={{delay: appearDuration + 1, duration: appearDuration}}
                             animate={{opacity: 1, animationTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)'}}
                         >
                             {product.description}
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus labore illum atque error placeat, fugit iure laudantium dicta, blanditiis nobis, mollitia odit! Minima iusto exercitationem nesciunt voluptatem aliquam, vitae doloribus?
-                            {/* Hic exercitationem accusantium officiis repellendus repellat adipisci magni necessitatibus corrupti aperiam quos, laborum commodi consequatur dolorem vero ducimus earum possimus molestias labore laudantium dolore delectus? Tenetur a corporis in eligendi!
-                            Praesentium, in officiis! Exercitationem delectus eos illum voluptatum placeat? Hic dolore fugit, aliquid, reprehenderit inventore dolores totam illo numquam natus corporis iusto odit suscipit perspiciatis eum. Recusandae officiis molestiae consequuntur.
-                            Sunt commodi repudiandae cupiditate deleniti quidem quod ab officiis, sit impedit quibusdam omnis aut iure facilis ipsa earum at illo fuga non, tempora delectus ipsum praesentium mollitia? Voluptatem, laboriosam tenetur.
-                            Corrupti vero voluptas, minus eligendi a id hic corporis atque quas, laudantium modi neque, ipsa ab incidunt sunt. Recusandae quibusdam corrupti possimus fugit. Esse beatae illum voluptates harum nisi rerum.
-                            Temporibus deserunt laudantium officiis praesentium, in quidem laborum tempora minus doloremque. Velit accusantium sint placeat tempore, quibusdam inventore obcaecati quis perferendis, corporis natus temporibus? Odio unde maxime aspernatur rerum quam.
-                            Doloribus amet ut beatae quaerat esse, atque laboriosam temporibus consectetur eos quisquam, quas aspernatur! In cumque quam a consequatur architecto amet tenetur odit maiores fugiat dignissimos, vero consectetur enim velit.
-                            Sequi enim dolores tempora quam doloremque eaque aut harum, aliquid optio dolore nihil laboriosam fugiat veritatis ipsam minus nulla a, adipisci est vitae id voluptatum? Quis dolorem corporis maiores id?
-                            Facere dolorem unde delectus sunt, doloremque id quod vero dicta, magnam quae corrupti qui voluptates. Qui placeat veniam consequatur voluptates est optio exercitationem sunt aperiam voluptatum saepe, ullam eos modi.
-                            Ipsum asperiores sit a commodi nihil id rem, ratione aperiam. Incidunt doloribus consequuntur rerum minus provident debitis. Ipsa incidunt commodi fugiat eius repudiandae error natus Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cumque nulla ducimus blanditiis facere praesentium labore culpa ea distinctio repudiandae ipsum facilis dignissimos voluptatem, quas, quaerat nemo adipisci. Cumque, harum mollitia? Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perferendis, ab? Fugiat, placeat autem aut nisi commodi reiciendis ut error libero rem voluptatem qui, doloribus perspiciatis ex, voluptatibus quaerat. Sit, pariatur?
-                            Provident nisi quaerat sapiente consectetur incidunt ullam itaque totam in deleniti quo quia, voluptatum asperiores ad sit dolor, est non? Iure illo adipisci accusamus praesentium a nobis ea aut laboriosam?
-                            Neque alias excepturi soluta ipsam fuga atque dignissimos! Cumque, aut dignissimos asperiores iure iste corporis exercitationem, maxime repudiandae nostrum, ex provident consequuntur. Aliquam magnam sapiente, blanditiis explicabo unde temporibus sint.
-                            Culpa eos sunt officia repudiandae hic, molestiae quidem repellendus illo excepturi odio veritatis nesciunt dolor non, deserunt et minima aliquid voluptatem ipsa nemo delectus architecto. Tempora sed est dicta sint.
-                            Accusantium, esse. Accusantium quae ea, esse quidem magni quisquam perferendis pariatur ad. Qui error minima libero. Libero, exercitationem placeat dicta, reiciendis nostrum eligendi magni sint autem quaerat repellat ullam vero.
-                            Deleniti ea dolores adipisci sint. Atque quisquam odio rem inventore eum, ut hic rerum amet! Molestiae consequatur nam, a cupiditate illo quia quae distinctio eum tempora, dignissimos, qui harum sint?
-                            Voluptatibus, eveniet! Saepe, omnis placeat provident nesciunt nobis repellat ad voluptate voluptatum corrupti neque, deserunt enim magnam iusto tempore blanditiis fugit nulla reprehenderit. Ut facere velit deleniti ipsam numquam nihil.
-                            Iste aliquam animi earum dolorum placeat praesentium, cupiditate tempore. Quia quidem officiis beatae voluptatem eos corporis voluptate aspernatur et repudiandae aut pariatur hic tempore, nobis quisquam sunt sequi nostrum est?
-                            Atque sunt obcaecati ex, aut voluptatem error illo. Reprehenderit eaque consequuntur sapiente at ut, cum a neque. Consequatur tempore quae itaque voluptate at aut distinctio deserunt, eius, corrupti aliquam autem. */}
-                            Quia, modi laudantium enim dignissimos, laboriosam asperiores quo repudiandae a hic assumenda architecto unde molestiae odio, tenetur repellat eum. In eaque necessitatibus quaerat commodi aut at natus reprehenderit minus possimus. veritatis accusamus totam, minus et.
                         </motion.p>
             </Section>
             <Section className="pt-4 h-64">
@@ -166,7 +147,11 @@ export default function ProductDetails(){
                     transition={{delay: appearDuration + 1, duration: appearDuration}}
                 >
                     <div className="flex items-center justify-center">
-                        <Input className="text-sm" autoComplete="off" type="number" value={inputValue} onChange={(e) => setValidatedInputValue(e.target.valueAsNumber)} name="quantity"   id="quantity" placeholder="number" />
+                        <div>
+                            <Input className="text-sm" autoComplete="off" type="number" value={inputValue} onChange={(e) => setValidatedInputValue(e.target.valueAsNumber)} name="quantity"   id="quantity" placeholder="number" />
+
+                        </div>
+
                         <Button onClick={onSubmit} className="ml-4">Add to cart</Button>
                     </div>
                     

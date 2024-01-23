@@ -67,7 +67,7 @@ export default function Products(){
                 <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:grid-cols-4  gap-4 w-full">
                     {currentItems && currentItems.map((product: ProductCardType, index: number) => (
                                       <motion.div
-                                      key={product._id + index}
+                                      key={product?._id + index}
                                       initial={{ opacity: 0 }}
                                       animate={{ opacity: 1 }}
                                       className="w-full h-full"

@@ -7,7 +7,7 @@ import { ProductCardType } from "../lib/types";
 export default function Favorite({product}: { product: ProductCardType; }) {
     
     const {favorites, toggleFavorite} = useFavorites();
-    const favorite = favorites.find(favorite => favorite._id === product._id)
+    const favorite = favorites.find(favorite => favorite?._id === product?._id)
     return (
         <>
             {favorite?._id ? ( 
