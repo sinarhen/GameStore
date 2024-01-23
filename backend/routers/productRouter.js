@@ -9,6 +9,6 @@ router.get('/', getAllProducts);
 router.get('/:id', getProductById);
 router.post('/',  checkAuth, checkAdmin, validate('createProduct'), createProduct);
 router.put('/:id',  checkAuth, checkAdmin, updateProduct);
-router.delete('/:productId',  checkAuth, checkAdmin, validate('deleteProduct'), deleteProduct);
+router.delete('/:productId',  checkAuth, checkAdmin, deleteProduct);
 
 export default router;

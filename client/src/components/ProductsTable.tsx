@@ -1,18 +1,19 @@
 import { useState } from "react";
 import { Order, ProductCardType } from "../lib/types";
 import { statusColor } from "../lib/utils";
-// import { deleteProduct } from "../lib/products";
+import { deleteProduct } from "../lib/products";
 import { 
     Table, 
     TableBody, 
     TableCaption, 
     TableCell, 
-    TableFooter, 
     TableHead, 
     TableHeader, 
     TableRow 
 } from "./Table";
 import { Trash2 } from "lucide-react";
+import ConfirmDialog from "./ConfirmDialog";
+import toast from "react-hot-toast";
 
 export default function ProductsTable({
     products,
@@ -26,21 +27,31 @@ export default function ProductsTable({
     const [selectDialog, setSelectDialog] = useState<ProductCardType | null>(null);
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
     const [dialogOpen, setDialogOpen] = useState(false);
-
-    async function deleteProductAsync(productId: string) {
-      try {
-          // TODO: uncomment this when deleteProduct is implemented
-          // await deleteProduct(productId);
+    const [selectedProduct, setSelectedProduct] = useState<ProductCardType | null>(null);
+    async function deleteProductAsync() {
+      if (selectedProduct?._id){
+        try {
+          await deleteProduct(selectedProduct?._id);
           if (products) {
-              setProducts(products.filter((product) => product._id !== productId));
+              setProducts(products.filter((product) => product._id !== selectedProduct?._id));
+              setSelectedProduct(null);
           }
+          toast.success("Product deleted successfully");
       } catch (error) {
           console.log(error);
+          toast.error("Something went wrong");
       }
+      }
+      
     };
 
     return (
       <>
+        <ConfirmDialog 
+          onConfirm={() => selectedProduct?._id ? deleteProductAsync() : {}} 
+          open={confirmOpen} 
+          setOpen={setConfirmOpen} 
+          />
         <Table className="mt-10 w-full h-full">
         <TableCaption>{tableCaption}</TableCaption>
         <TableHeader>
@@ -58,9 +69,11 @@ export default function ProductsTable({
               <TableCell className="overflow-hidden">{product._id}</TableCell>
               <TableCell className="text-center w-full">{product.name}</TableCell>
               <TableCell className="text-center w-full">{product.categoryId.name}</TableCell>
-              <TableCell onClick={() => {setDialogOpen(true); setSelectDialog(product);}} className="text-center hover:underline cursor-pointer">View</TableCell>
+              <TableCell onClick={() => {setDialogOpen(true); setSelectedProduct(product);}} className="text-center hover:underline cursor-pointer">View</TableCell>
               <TableCell className="text-right w-full">
-                <div className="flex justify-center items-center">
+                <div 
+                  onClick={() => {setConfirmOpen(true); setSelectedProduct(product);}}
+                  className="flex justify-center items-center">
                   <Trash2 className="h-4 w-4 cursor-pointer hover:text-red-400 transition-colors" />
                 </div>
               </TableCell>

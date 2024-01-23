@@ -1,6 +1,5 @@
 import Product from '../models/Product.js'; 
 import { check, validationResult } from 'express-validator';
-
 function validate(method) {
     switch (method) {
         case 'createProduct': {
@@ -10,11 +9,6 @@ function validate(method) {
                 check('price', 'Price is required').isNumeric().isFloat({ min: 0, max: 100000}),
                 check('imageUrl', 'Image URL is required').optional().isURL(),
                 check('categoryId', 'Category ID is required').notEmpty(),
-            ];
-        }
-        case 'deleteProduct': {
-            return [
-                check('id', 'ID is required').notEmpty(),
             ];
         }
     }
@@ -94,11 +88,10 @@ async function updateProduct(req, res) {
 
     try {
         const errors = validationResult(req);
+        
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
-        }
-
-        // TODO: VALIDATE ADMIN NAME
+        }        
         const product = await Product.findByIdAndUpdate(id, {
             name,
             description,
@@ -116,13 +109,7 @@ async function updateProduct(req, res) {
 async function deleteProduct(req, res) {
     const { id } = req.params;
     
-        // TODO: VALIDATE ADMIN NAME
     try {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }
-
         const product = await Product.findByIdAndDelete(id);
         res.json(product);
     } catch (err) {

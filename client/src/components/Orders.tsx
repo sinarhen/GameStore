@@ -18,6 +18,7 @@ import { deleteOrder } from "../lib/order";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./Dialog";
 import Button from "./Button";
 import ConfirmDialog from "./ConfirmDialog";
+import toast from 'react-hot-toast';
 
 export default function Orders({
   orders,
@@ -47,18 +48,18 @@ export default function Orders({
       if (orders){
         setOrders(orders.filter((order) => order._id !== orderId));
       }
+      toast.success("Order deleted successfully")
     } catch (error) {
       console.log(error);
     }
   }
   
     return (
-      // TODO: move confirmDialog to Component
     <> 
     <ConfirmDialog 
       open={confirmOpen} 
       setOpen={setConfirmOpen}
-        
+
       onConfirm={() =>deleteOrderAsync(selectDialog?._id as string)}/>
     <OrderDialog updateOrder={updateOrder} setOrder={setSelectDialog} order={selectDialog} open={dialogOpen} setOpen={setDialogOpen}/>
       <Table className="mt-10 w-full h-full">

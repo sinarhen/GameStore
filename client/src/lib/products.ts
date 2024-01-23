@@ -18,5 +18,6 @@ async function getProductById(id: string | undefined){
 export {
     getAllProducts,
     getProductById,
-    createProduct
+    createProduct,
+    deleteProduct
 }
