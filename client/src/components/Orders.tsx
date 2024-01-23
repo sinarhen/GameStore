@@ -17,6 +17,7 @@ import NotFound from "./NotFound";
 import { deleteOrder } from "../lib/order";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./Dialog";
 import Button from "./Button";
+import ConfirmDialog from "./ConfirmDialog";
 
 export default function Orders({
   orders,
@@ -54,13 +55,14 @@ export default function Orders({
     return (
       // TODO: move confirmDialog to Component
     <> 
+    <ConfirmDialog onConfirm={() =>deleteOrderAsync(selectDialog?._id as string)}/>
     <Dialog open={confirmOpen} onOpenChange={setConfirmOpen} >
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Are you sure you want to delete this order?</DialogTitle>
           <DialogDescription>This action cannot be undone.</DialogDescription>
           <div className="mt-4 flex justify-end gap-4">
-            <Button onClick={() => {setConfirmOpen(false); deleteOrderAsync(selectDialog?._id as string)}}>Yes</Button>
+            <Button onClick={() => {setConfirmOpen(false); }}>Yes</Button>
             <Button onClick={() => setConfirmOpen(false)}>No</Button>
           </div>
         </DialogHeader>

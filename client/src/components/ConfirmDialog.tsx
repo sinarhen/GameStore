@@ -1,11 +1,12 @@
+import { useState } from "react";
 import Button from "./Button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./Dialog";
 
-export default function ConfirmDialog({confirmOpen, setConfirmOpen, onConfirm}: {
-    confirmOpen: boolean;
-    setConfirmOpen: (open: boolean) => void;
+export default function ConfirmDialog({onConfirm}: {
     onConfirm: () => void;
 }){
+    const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
+    
     return (
         <Dialog open={confirmOpen} onOpenChange={setConfirmOpen} >
             <DialogContent>
