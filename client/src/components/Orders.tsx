@@ -71,7 +71,7 @@ export default function Orders({
             <TableHead className="text-center w-full">Products</TableHead>
             <TableHead className="text-center w-full">Status</TableHead>
             <TableHead className="text-right align-center justify-end w-full">Amount</TableHead>
-            <TableHead className="text-right align-center justify-end w-full">Action</TableHead>
+            <TableHead className="text-center align-center justify-center  w-full">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -87,8 +87,8 @@ export default function Orders({
               </TableCell>
               <TableCell className={statusColor(order.status) + " text-center"}>{order.status}</TableCell>
               <TableCell className="text-right w-full">{formatter.format(order.totalPrice)}</TableCell>
-              <TableCell className="text-right w-full">
-              <div className="flex gap-x-1 justify-between items-center">
+              <TableCell className="w-full">
+              <div className="flex gap-x-1 justify-center items-center">
                   <div 
                     onClick={() => {
                       setDialogOpen(true); 

@@ -60,7 +60,7 @@ export default function ProductsTable({
             <TableHead className="overflow-hidden">Product Id</TableHead>
             <TableHead className="text-center w-full">Name</TableHead>
             <TableHead className="text-center w-full">Category Id</TableHead>
-            <TableHead className="text-right align-center justify-end w-full">Action</TableHead>
+            <TableHead className="text-center align-center justify-end w-full">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -70,7 +70,7 @@ export default function ProductsTable({
               <TableCell className="text-center w-full">{product.name}</TableCell>
               <TableCell className="text-center w-full">{product.categoryId.name}</TableCell>
               <TableCell className="text-right w-full">
-                <div className="flex gap-x-1 justify-between items-center">
+                <div className="flex gap-x-1 justify-center items-center">
                   <div 
                     onClick={() => {
                       setDialogOpen(true); 
