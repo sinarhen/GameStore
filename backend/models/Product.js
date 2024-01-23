@@ -19,8 +19,8 @@ const productSchema = new mongoose.Schema({
         required: true
     },
     categoryId: {
-        type: String, // This is the id of the category that this product belongs to
-        // ref: 'Category', // This is the name of the model that this id refers to
+        type: String,
+        ref: 'Category', 
         required: true
     }
 }, {
