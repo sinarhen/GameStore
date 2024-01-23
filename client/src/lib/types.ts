@@ -7,10 +7,9 @@ export type ProductCardType = {
     description: string;
     price: number;
     imageUrl: string;
-    category: CategoryType;
+    categoryId: CategoryType;
     createdAt: Date;
     updatedAt: Date;
-
 }
 
 export type CategoryType = {

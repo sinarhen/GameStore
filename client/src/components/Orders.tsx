@@ -67,7 +67,7 @@ export default function Orders({
       </DialogContent>
     </Dialog>
 
-      <OrderDialog updateOrder={updateOrder} setOrder={setSelectDialog} order={selectDialog} open={dialogOpen} setOpen={setDialogOpen}/>
+    <OrderDialog updateOrder={updateOrder} setOrder={setSelectDialog} order={selectDialog} open={dialogOpen} setOpen={setDialogOpen}/>
       <Table className="mt-10 w-full h-full">
         <TableCaption>{tableCaption}</TableCaption>
         <TableHeader>

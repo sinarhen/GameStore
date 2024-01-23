@@ -41,7 +41,7 @@ async function getAllProducts(req, res) {
     }
 
     try {
-        const products = await query.exec();
+        const products = await query.populate('categoryId').exec();
         res.json(products);
     } catch (err) {
         res.status(500).send(err);
