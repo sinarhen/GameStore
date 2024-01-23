@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Order, ProductCardType } from "../lib/types";
 import { statusColor } from "../lib/utils";
-import { deleteProduct } from "../lib/products";
+// import { deleteProduct } from "../lib/products";
 import { 
     Table, 
     TableBody, 
@@ -29,7 +29,8 @@ export default function ProductsTable({
 
     async function deleteProductAsync(productId: string) {
       try {
-          await deleteProduct(productId);
+          // TODO: uncomment this when deleteProduct is implemented
+          // await deleteProduct(productId);
           if (products) {
               setProducts(products.filter((product) => product._id !== productId));
           }

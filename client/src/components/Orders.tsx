@@ -29,8 +29,8 @@ export default function Orders({
   tableCaption?: string;
 }) {
   const [selectDialog, setSelectDialog] = useState<Order | null>(null);
-  const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
 
   function updateOrder(order: Order) {
     if (orders){
@@ -55,7 +55,11 @@ export default function Orders({
     return (
       // TODO: move confirmDialog to Component
     <> 
-    <ConfirmDialog onConfirm={() =>deleteOrderAsync(selectDialog?._id as string)}/>
+    <ConfirmDialog 
+      open={confirmOpen} 
+      setOpen={setConfirmOpen}
+        
+      onConfirm={() =>deleteOrderAsync(selectDialog?._id as string)}/>
     <OrderDialog updateOrder={updateOrder} setOrder={setSelectDialog} order={selectDialog} open={dialogOpen} setOpen={setDialogOpen}/>
       <Table className="mt-10 w-full h-full">
         <TableCaption>{tableCaption}</TableCaption>

@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./Select";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { updateOrderStatus } from "../lib/order";
+import ConfirmDialog from "./ConfirmDialog";
 
 interface OrderDialogProps {
     order: Order | null,
@@ -27,9 +28,8 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
     updateOrder
 }) => {
     const [selectedProduct, setSelectedProduct] = useState<OrderProduct | null>(null);
-    const [confirmDeleteDialogOpen, setConfirmDeleteDialogOpen] = useState(false);
-
     const [status, setStatus] = useState(order?.status || 'pending');
+    const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
 
     const { isAdmin } = useCurrentUser();
 
@@ -46,10 +46,8 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
         }
     };
     
+    
     function onConfirm(){
-        // ...rest of the code
-        setConfirmDeleteDialogOpen(false);
-
         if (selectedProduct?._id && order?._id)
         {
             removeFromOrder(selectedProduct?._id).then((data) => {
@@ -80,17 +78,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
     }
     return (
         <>
-            <Dialog open={confirmDeleteDialogOpen} onOpenChange={setConfirmDeleteDialogOpen}>
-                <DialogContent className="bg-black text-white">
-                    <DialogHeader>Delete product from order</DialogHeader>
-                    <DialogDescription>Are you sure you want to delete {`'${selectedProduct?.productId.name}'`}</DialogDescription>
-                    
-                    <DialogFooter className="gap-y-2">
-                        <Button onClick={() => setConfirmDeleteDialogOpen(false)} className="bg-red-500 hover:bg-red-600">Cancel</Button>
-                        <Button onClick={onConfirm} className="bg-green-500 hover:bg-green-600">Confirm</Button>
-                    </DialogFooter>
-                </DialogContent>
-            </Dialog>
+            <ConfirmDialog open={confirmOpen} setOpen={setConfirmOpen} onConfirm={onConfirm} />
             <Dialog open={open} onOpenChange={() => setOpen(false)}>
             <DialogContent className="min-w-[95%] md:min-w-[75%]">
                 <DialogHeader>
@@ -136,7 +124,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                         <TableCell 
                             onClick={() => {
                                 setSelectedProduct(orderedProduct)
-                                setConfirmDeleteDialogOpen(true);    
+                                setOpen(true);    
                             }} 
                             className="text-center cursor-pointer hover:text-red-400 transition-colors"
                         >
