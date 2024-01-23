@@ -8,7 +8,7 @@ import { Order } from "../lib/types";
 import Section from "../components/Section";
 import { PlusCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "../components/Dialog";
-import CreateProductForm from "../components/CreateProductForm";
+import CreateProductForm from '../components/CreateProductForm';
 import Orders from '../components/Orders';
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 
@@ -64,15 +64,19 @@ export default function Admin() {
                             <PlusCircle className="group-hover:rotate-90 transition-transform"/>
                         </Button>
                     </DialogTrigger>
-                    <DialogContent className="w-[700px] h-[95%] px-4">
+                    <DialogContent className="w-[95%] sm:w-[75%] md:w-[%] h-[95%] px-4">
                         <DialogHeader>
                             <DialogTitle>Create product</DialogTitle>
                             <DialogDescription className="text-sm text-muted-foreground">fill information about product</DialogDescription>
                         </DialogHeader>
-                            <CreateProductForm />
-                    </DialogContent>
+                            <div>
+
+                                <CreateProductForm />
+                            </div>
+                        </DialogContent>
                     
                 </Dialog>
+                
             </div>
             
         </Section>

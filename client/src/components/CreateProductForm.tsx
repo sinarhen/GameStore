@@ -83,15 +83,15 @@ export default function CreateProductForm(){
       return form.formState.errors[fieldName]?.message && <InputError>{String(form.formState.errors[fieldName]?.message)}</InputError>;
     }
     return (
-        <form className="gap-y-4 gap-x-3 grid grid-cols-4 overflow-y-auto overflow-x-visible px-1" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="gap-y-4 gap-x-3 grid grid-cols-4 overflow-x-visible px-1" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="md:col-span-1 col-span-4">
               <Label>Name</Label>
-              <Input className="bg-neutral-900"  {...form.register('name')} />  
+              <Input  className=""  {...form.register('name')} />  
               {renderError('name')}
             </div>
             <div className="md:col-span-3 col-span-4">
               <Label>Description</Label>
-              <Textarea className="bg-neutral-900" {...form.register('description')}  />
+              <Textarea placeholder="Description for product" className="bg-neutral-900" {...form.register('description')}  />
               {renderError('description')}
             </div>
             <div>

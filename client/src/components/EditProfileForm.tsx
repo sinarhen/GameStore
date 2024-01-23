@@ -97,12 +97,12 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
         <form className="space-y-4 overflow-y-auto" onSubmit={form.handleSubmit(onSubmit)}>
           <div>
             <Label>Username</Label>
-            <Input className="bg-neutral-900"  {...form.register('name')}  />  
+            <Input  {...form.register('name')}  />  
             {renderError('name')}
           </div>
           <div>
             <Label>Email</Label>
-            <Input className="bg-neutral-900" {...form.register('email')} />  
+            <Input {...form.register('email')} />  
             {renderError('email')}
           </div>
 
