@@ -56,19 +56,6 @@ export default function Orders({
       // TODO: move confirmDialog to Component
     <> 
     <ConfirmDialog onConfirm={() =>deleteOrderAsync(selectDialog?._id as string)}/>
-    <Dialog open={confirmOpen} onOpenChange={setConfirmOpen} >
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Are you sure you want to delete this order?</DialogTitle>
-          <DialogDescription>This action cannot be undone.</DialogDescription>
-          <div className="mt-4 flex justify-end gap-4">
-            <Button onClick={() => {setConfirmOpen(false); }}>Yes</Button>
-            <Button onClick={() => setConfirmOpen(false)}>No</Button>
-          </div>
-        </DialogHeader>
-      </DialogContent>
-    </Dialog>
-
     <OrderDialog updateOrder={updateOrder} setOrder={setSelectDialog} order={selectDialog} open={dialogOpen} setOpen={setDialogOpen}/>
       <Table className="mt-10 w-full h-full">
         <TableCaption>{tableCaption}</TableCaption>
