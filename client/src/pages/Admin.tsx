@@ -17,6 +17,10 @@ import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 export default function Admin() {
     const [orders, setOrders] = React.useState<Order[]>([]);
     const [products, setProducts] = React.useState<ProductCardType[] | null>(null);
+
+    const [filteredProducts, setFilteredProducts] = React.useState<ProductCardType[] | null>([]);
+    const [productQuery, setProductQuery] = React.useState("");
+
     const [query, setQuery] = React.useState("");
     const [filteredOrders, setFilteredOrders] = React.useState<Order[]>([]);
 
@@ -47,6 +51,12 @@ export default function Admin() {
     React.useEffect(() => {
         setFilteredOrders(orders.filter((order) => order._id.includes(query)));
     }, [query]);
+
+    React.useEffect(() => {
+        if (products) {
+            setFilteredProducts(products?.filter((product) => product._id.includes(productQuery) || product.name?.includes(productQuery)));
+        }
+    }, [productQuery]);
 
     return (
         <>
@@ -92,9 +102,15 @@ export default function Admin() {
 
         <Section>
             <h1 className="pb-4" >All products</h1>
-            <Input name="productId" type="text" placeholder="Product ID" />
+            <Input 
+                name="productId" 
+                type="text" 
+                placeholder="Product ID or name" 
+                value={productQuery}
+                onChange={(e: any) => setProductQuery(e.target.value)}
+            />
 
-            <ProductsTable products={products} setProducts={setProducts} />
+            <ProductsTable products={productQuery ? filteredProducts : products} setProducts={setProducts} />
         </Section>
             
         </>
