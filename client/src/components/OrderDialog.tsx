@@ -16,6 +16,7 @@ interface OrderDialogProps {
     setOrder: (order: Order | null) => void;
     open: boolean;
     setOpen: (open: boolean) => void;
+    updateOrder: (orders: Order) => void;
 }
 
 const OrderDialog: React.FC<OrderDialogProps> = ({
@@ -23,6 +24,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
     setOpen,
     order,
     setOrder,
+    updateOrder
 }) => {
     const [selectedProduct, setSelectedProduct] = useState<OrderProduct | null>(null);
     const [confirmDeleteDialogOpen, setConfirmDeleteDialogOpen] = useState(false);
@@ -35,6 +37,8 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
         try {
             if (order?._id) {
                 const { data } = await updateOrderStatus(order?._id, status);
+                setOrder({...order, status});
+                updateOrder({...order, status});
                 toast.success('Order status updated');
             }
         } catch (err) {

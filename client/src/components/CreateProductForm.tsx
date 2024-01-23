@@ -88,7 +88,7 @@ export default function CreateProductForm(){
                     form.resetField('imageUrl');
                   }
                 } }>
-                  <DialogContent className="bg-black text-white">
+                  <DialogContent className="">
                     <DialogHeader>
                       <DialogTitle>
                         Paste URL 

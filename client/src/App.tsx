@@ -7,7 +7,6 @@ import Products from "./pages/Products";
 import Categories from "./pages/Categories";
 import MyAccount from "./pages/MyAccount";
 import Favorites from "./pages/Favorites";
-import Orders from "./pages/Orders";
 import Navbar from "./components/Navbar";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -40,7 +39,6 @@ function App() {
                   <Route path='/categories' element={<Categories />} />
                   <Route path='/me' element={<MyAccount />} />
                   <Route path='/favorites' element={<Favorites />} />
-                  <Route path='/orders' element={<Orders />} />
                   <Route path='/products/:productId' element={<ProductDetails />} />
                   {isAdmin && <Route path='/admin' element={<Admin />} />}
                   <Route path='*' element={<h1>Page does not exist</h1>} />

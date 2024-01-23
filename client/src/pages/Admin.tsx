@@ -45,7 +45,7 @@ export default function Admin() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
             />
-            <Orders orders={query ? filteredOrders : orders}/>
+            <Orders setOrders={setOrders} orders={query ? filteredOrders : orders}/>
 
         <Section>
             <div className="flex mt-20 gap-x-4 items-center">

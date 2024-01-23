@@ -37,7 +37,7 @@ export default function Home() {
                 <AnimatedSeparator  delay={appearDuration + 1}/>
             </Section>
             
-            <Section className='h-full pt-24'>
+            <Section className='h-[100vh] pt-32'>
                 <Header appearDuration={appearDuration} animateableText='Categories' />
 
                 <AnimatedSeparator  />

@@ -15,19 +15,27 @@ import { statusColor } from "../lib/utils";
 import NotFound from "./NotFound";
 
 export default function Orders({
-  orders
+  orders,
+  setOrders
 }: {
   orders: Order[] | null;
+  setOrders: (orders: Order[]) => void;
 }) {
 
   const [dialogOrder, setDialogOrder] = useState<Order | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
+
+  function updateOrder(order: Order) {
+    if (orders){
+      setOrders(orders?.map((o) => (o._id === order._id ? order : o)));
+    }
+  }
   if (!orders){
     return <NotFound />;
   }
     return (
     <>
-      <OrderDialog setOrder={setDialogOrder} order={dialogOrder} open={dialogOpen} setOpen={setDialogOpen}/>
+      <OrderDialog updateOrder={updateOrder} setOrder={setDialogOrder} order={dialogOrder} open={dialogOpen} setOpen={setDialogOpen}/>
       <Table className="mt-10 w-full h-full">
         <TableCaption>A list of your recent orders.</TableCaption>
         <TableHeader>
@@ -40,15 +48,18 @@ export default function Orders({
         </TableHeader>
         <TableBody>
           {orders.map((order) => (
-            <TableRow  key={order._id} className="cursor-pointer">
+            <TableRow 
+              onClick={() => {
+                setDialogOpen(true);
+                setDialogOrder(order);
+              }}  
+              key={order._id} 
+              className="cursor-pointer"
+              >
               <TableCell className="w-[10px]">{order._id}</TableCell>
               <TableCell
-                onClick={() => {
-                  setDialogOpen(true);
-                  setDialogOrder(order);
-                }} 
                 className="text-center hover:underline cursor-pointer">
-                  click to inspect
+                  {order.products.length} items
               </TableCell>
               <TableCell className={statusColor(order.status) + " text-center"}>{order.status}</TableCell>
               <TableCell className="text-right w-full">{order.totalPrice}</TableCell>

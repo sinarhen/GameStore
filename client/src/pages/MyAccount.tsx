@@ -61,7 +61,7 @@ export default function MyAccount() {
             <Header animateableText="Orders." appearDuration={0.2} />
             <AnimatedSeparator appearDuration={0.3}/>
 
-            <Orders orders={orders}/>
+            <Orders setOrders={setOrders} orders={orders}/>
         </Section>
             </>
     )
