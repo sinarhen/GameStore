@@ -11,6 +11,7 @@ import {
     TableHeader, 
     TableRow 
 } from "./Table";
+import { Trash2 } from "lucide-react";
 
 export default function ProductsTable({
     products,
@@ -36,6 +37,7 @@ export default function ProductsTable({
             <TableHead className="text-center w-full">Name</TableHead>
             <TableHead className="text-center w-full">Category Id</TableHead>
             <TableHead className="text-center w-full">Action</TableHead>
+            <TableHead className="text-right align-center justify-end w-full">Delete Product</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -45,6 +47,11 @@ export default function ProductsTable({
               <TableCell className="text-center w-full">{product.name}</TableCell>
               <TableCell className="text-center w-full">{product.categoryId.name}</TableCell>
               <TableCell onClick={() => setDialogOpen(true)} className="text-center hover:underline cursor-pointer">View</TableCell>
+              <TableCell className="text-right w-full">
+                <div className="flex justify-center items-center">
+                  <Trash2 className="h-4 w-4 cursor-pointer hover:text-red-400 transition-colors" />
+                </div>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

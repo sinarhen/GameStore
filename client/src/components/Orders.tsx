@@ -12,7 +12,7 @@ import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Order } from "../lib/types";
 import OrderDialog from "./OrderDialog";
-import { statusColor } from "../lib/utils";
+import { formatter, statusColor } from "../lib/utils";
 import NotFound from "./NotFound";
 import { deleteOrder } from "../lib/order";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "./Dialog";
@@ -91,7 +91,7 @@ export default function Orders({
                   {order.products.length} items
               </TableCell>
               <TableCell className={statusColor(order.status) + " text-center"}>{order.status}</TableCell>
-              <TableCell className="text-right w-full">{order.totalPrice}</TableCell>
+              <TableCell className="text-right w-full">{formatter.format(order.totalPrice)}</TableCell>
               <TableCell className="text-right w-full">
                 <div onClick={() => {setConfirmOpen(true); setSelectDialog(order);}} className="flex justify-center items-center">
                   <Trash2 className="h-4 w-4 cursor-pointer hover:text-red-400 transition-colors" />
@@ -103,7 +103,7 @@ export default function Orders({
         <TableFooter className="bg-transparent">
           <TableRow>
             <TableCell colSpan={4}>Total</TableCell>
-            <TableCell className="text-right">${orders.reduce((acc, order) => acc + order.totalPrice, 0)}</TableCell>
+            <TableCell className="text-right">{formatter.format(orders.reduce((acc, order) => acc + order.totalPrice, 0))}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>
