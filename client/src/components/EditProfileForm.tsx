@@ -11,6 +11,8 @@ import { Trash2 } from "lucide-react";
 import { FaUser } from "react-icons/fa";
 import { updateUser } from "../lib/auth";
 import { useNavigate } from "react-router-dom";
+import { Label } from "./Label";
+import InputError from "./InputError";
 
 const profileEditForm = z.object({
     name: z.string().min(3, { message: "Name should be at least 3 characters long" }),
@@ -86,10 +88,23 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
         return null;
     }
      
+    
+    function renderError(fieldName: keyof typeof form.formState.errors) {
+      return form.formState.errors[fieldName]?.message && <InputError>{String(form.formState.errors[fieldName]?.message)}</InputError>;
+    }
+
     return (
         <form className="space-y-4 overflow-y-auto" onSubmit={form.handleSubmit(onSubmit)}>
-            <Input className="bg-neutral-900"  {...form.register('name')} label="Username" error={form.formState.errors.name?.message} />  
-            <Input className="bg-neutral-900" {...form.register('email')} label="Email"  error={form.formState.errors.email?.message} />  
+          <div>
+            <Label>Username</Label>
+            <Input className="bg-neutral-900"  {...form.register('name')}  />  
+            {renderError('name')}
+          </div>
+          <div>
+            <Label>Email</Label>
+            <Input className="bg-neutral-900" {...form.register('email')} />  
+            {renderError('email')}
+          </div>
 
             <Dialog open={openImageUrlDialog} onOpenChange={() => {
                   toogleImageUrlDialog();
@@ -105,13 +120,15 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                       <DialogDescription>
                         Paste URL of your profile avatar here.
                       </DialogDescription>
+                      <div>
+                        <Label>Profile avatar</Label>
                         <Input 
-                        {...form.register('avatarUrl')} 
-                        label="Profile avatar" 
-                        error={form?.formState?.errors?.avatarUrl?.message?.toString()} 
-                        value={imageUrlDialogTempInput} 
-                        onChange={(e) => setImageUrlDialogTempInput(e.target.value)}/>  
-                      
+                          {...form.register('avatarUrl')} 
+                          value={imageUrlDialogTempInput} 
+                          onChange={(e) => setImageUrlDialogTempInput(e.target.value)}/>  
+                          {renderError('avatarUrl')}                      
+                      </div>
+                        
                       <DialogFooter>
                         <DialogClose asChild>
                           <button

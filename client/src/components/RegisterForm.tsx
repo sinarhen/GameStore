@@ -5,6 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import axios from "axios";
 import toast from "react-hot-toast";
 import { setCookie } from "../lib/auth";
+import InputError from "./InputError";
+import { Label } from "./Label";
 
 const RegisterSchema = z.object({
     name: z.string().min(2, "Name must be at least 2 characters").max(50, "Name must be less than 50 characters"),
@@ -25,7 +27,7 @@ export default function RegisterForm({
     setVariant: (variant: 'login' | 'register') => void;
     setDialogOpen: (open: boolean) => void;
 }) {
-  const { register, handleSubmit, formState, setError } = useForm<RegisterFormData>({
+  const form = useForm<RegisterFormData>({
       defaultValues:{
         name: "",
         email: "",
@@ -34,7 +36,12 @@ export default function RegisterForm({
       },
       resolver: zodResolver(RegisterSchema)
   });
-  
+    
+  function renderError(fieldName: keyof typeof form.formState.errors) {
+    return form.formState.errors[fieldName]?.message && <InputError>{String(form.formState.errors[fieldName]?.message)}</InputError>;
+  }
+
+
   const onSubmit = async (data: RegisterFormData) => {
     try {
       const response = await axios.post('/auth/register', data);
@@ -46,7 +53,7 @@ export default function RegisterForm({
     } catch (error: any) {
       if (error.response.data.field)
       {
-        setError(error.response.data.field, {
+        form.setError(error.response.data.field, {
           type: "manual",
           message: error.response.data.message
         })
@@ -68,37 +75,38 @@ export default function RegisterForm({
         </div>
 
         <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md">
-          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
+          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+            <div>
+              <Label>Name</Label>
+              <Input 
+                {...form.register("name")} 
+              />
+              {renderError('name')}
+            </div>
+            <div>
+              <Label>Email</Label>
+              <Input 
+                {...form.register("email")}
+              />
+              {renderError('email')}
 
-            <Input 
-              label="Name"
-              error={formState.errors.name?.message}
-              {...register("name")} 
-
-
-            />
-
-            <Input 
-              {...register("email")}
-
-              label="Email address" 
-              error={formState.errors.email?.message}
-            />
-            <Input 
-              {...register("password")}
-              label="Password" 
-              type='password'
-              error={formState.errors.password?.message}
-            />
-
-            <Input 
-              {...register('repeatPassword')}
-
-              label="Repeat Password"
-              type="password" 
-              error={formState.errors.repeatPassword?.message}
-            
-            />
+            </div>
+            <div>
+              <Label>Password</Label>
+              <Input 
+                {...form.register("password")}
+                type='password'
+              />
+              {renderError('password')}
+            </div>
+            <div>
+              <Label>Repeat Password</Label>
+              <Input 
+                {...form.register("repeatPassword")}
+                type='password'
+              />
+              {renderError('repeatPassword')}
+            </div>
 
             <div>
               <button

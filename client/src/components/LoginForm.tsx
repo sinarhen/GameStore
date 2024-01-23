@@ -5,6 +5,8 @@ import Input from "./Input";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { setCookie } from "../lib/auth";
+import InputError from "./InputError";
+import { Label } from "./Label";
 
 
 const LoginSchema = z.object({
@@ -20,7 +22,7 @@ export default function LoginForm({
   setVariant: (variant: 'login' | 'register') => void;
   setDialogOpen: (open: boolean) => void;
 }) {
-  const { register, handleSubmit, formState, setError } = useForm<LoginFormData>({
+  const form = useForm<LoginFormData>({
     defaultValues:{
       email: "",
       password: ""
@@ -40,7 +42,7 @@ export default function LoginForm({
     } catch (error: any) {
       if (error.response.data.field)
       {
-        setError(error.response.data.field, {
+        form.setError(error.response.data.field, {
           type: "manual",
           message: error.response.data.message
         })
@@ -51,6 +53,10 @@ export default function LoginForm({
   };
         
   
+  function renderError(fieldName: keyof typeof form.formState.errors) {
+    return form.formState.errors[fieldName]?.message && <InputError>{String(form.formState.errors[fieldName]?.message)}</InputError>;
+  }
+
   return (
         <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-4 py-8 lg:px-6"> 
@@ -61,21 +67,25 @@ export default function LoginForm({
         </div>
 
         <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}> 
+          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}> 
             
             
+            <div>
+              <Label>Email</Label>
               <Input 
-                  {...register("email")}
+                    {...form.register("email")}
+                  />
+              {renderError('email')}  
 
-                  label="Email address" 
-                  error={formState.errors.email?.message}
-                />
-                <Input 
-                  {...register("password")}
-                  label="Password" 
-                  type='password'
-                  error={formState.errors.password?.message}
-                />
+
+            
+            </div>
+              <Label>Email</Label>
+              <Input 
+                {...form.register("password")}
+                type='password'
+              />
+              {renderError('password')}
 
             <div>
               <button

@@ -16,10 +16,12 @@ import NotFound from "./NotFound";
 
 export default function Orders({
   orders,
-  setOrders
+  setOrders,
+  tableCaption
 }: {
   orders: Order[] | null;
   setOrders: (orders: Order[]) => void;
+  tableCaption?: string;
 }) {
 
   const [dialogOrder, setDialogOrder] = useState<Order | null>(null);
@@ -37,7 +39,7 @@ export default function Orders({
     <>
       <OrderDialog updateOrder={updateOrder} setOrder={setDialogOrder} order={dialogOrder} open={dialogOpen} setOpen={setDialogOpen}/>
       <Table className="mt-10 w-full h-full">
-        <TableCaption>A list of your recent orders.</TableCaption>
+        <TableCaption>{tableCaption}</TableCaption>
         <TableHeader>
           <TableRow className="bg-neutral-800">
             <TableHead className="overflow-hidden">ID</TableHead>

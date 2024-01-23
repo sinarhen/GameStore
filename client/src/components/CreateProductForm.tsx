@@ -11,6 +11,9 @@ import { FaUser } from "react-icons/fa";
 import { isValidURLImage } from "../lib/utils";
 import { TProfileEditForm, productFormSchema } from "../lib/types";
 import { createProduct } from "../lib/products";
+import { Textarea } from "./Textarea";
+import { Label } from "./Label";
+import InputError from "./InputError";
 
 
 
@@ -75,12 +78,28 @@ export default function CreateProductForm(){
     if (!isMounted) {
         return null;
     }
-     
+
+    function renderError(fieldName: keyof typeof form.formState.errors) {
+      return form.formState.errors[fieldName]?.message && <InputError>{String(form.formState.errors[fieldName]?.message)}</InputError>;
+    }
     return (
-        <form className="space-y-4 overflow-y-auto" onSubmit={form.handleSubmit(onSubmit)}>
-            <Input className="bg-neutral-900"  {...form.register('name')} label="Username" error={form.formState.errors.name?.message} />  
-            <Input className="bg-neutral-900" {...form.register('description')} label="Email"  error={form.formState.errors.description?.message} />  
-            <Input className="bg-neutral-900" {...form.register('price')} label="Email"  error={form.formState.errors.description?.message} />  
+        <form className="gap-y-4 gap-x-3 grid grid-cols-4 overflow-y-auto overflow-x-visible px-1" onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="md:col-span-1 col-span-4">
+              <Label>Name</Label>
+              <Input className="bg-neutral-900"  {...form.register('name')} />  
+              {renderError('name')}
+            </div>
+            <div className="md:col-span-3 col-span-4">
+              <Label>Description</Label>
+              <Textarea className="bg-neutral-900" {...form.register('description')}  />
+              {renderError('description')}
+            </div>
+            <div>
+              <Label>Price</Label>
+              <Input className="bg-neutral-900" {...form.register('price')} />  
+              {renderError('price')}
+            </div>
+
 
             <Dialog open={openImageUrlDialog} onOpenChange={() => {
                   toogleImageUrlDialog();
@@ -88,21 +107,23 @@ export default function CreateProductForm(){
                     form.resetField('imageUrl');
                   }
                 } }>
-                  <DialogContent className="">
+                  <DialogContent>
                     <DialogHeader>
                       <DialogTitle>
                         Paste URL 
                       </DialogTitle>
                       <DialogDescription>
-                        Paste URL of your profile avatar here.
+                        Paste URL of product image here.
                       </DialogDescription>
+                      <div>
+                        <Label>Image URL</Label>
+                        
                         <Input 
-                        {...form.register('imageUrl')} 
-                        label="Profile avatar" 
-                        error={form?.formState?.errors?.imageUrl?.message?.toString()} 
-                        value={imageUrlDialogTempInput} 
-                        onChange={(e) => setImageUrlDialogTempInput(e.target.value)}/>  
-                      
+                          {...form.register('imageUrl')} 
+                          value={imageUrlDialogTempInput} 
+                          onChange={(e) => setImageUrlDialogTempInput(e.target.value)}/>  
+                        {renderError('imageUrl')}  
+                      </div>
                       <DialogFooter>
                         <DialogClose asChild>
                           <button
@@ -175,7 +196,11 @@ export default function CreateProductForm(){
                                 
                                 
                 </div>
-                <Input className="bg-neutral-900" {...form.register('categoryId')} label="Category"  error={form.formState.errors.description?.message} />  
+                <div>
+                  <Label>Category</Label>
+                  <Input className="bg-neutral-900" {...form.register('categoryId')} />  
+                  {renderError('categoryId')}
+                </div>
             </div>   
                
                <DialogFooter>
