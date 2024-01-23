@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Order, ProductCardType } from "../lib/types";
 import { statusColor } from "../lib/utils";
+import { deleteProduct } from "../lib/products";
 import { 
     Table, 
     TableBody, 
@@ -22,13 +23,23 @@ export default function ProductsTable({
     setProducts: React.Dispatch<React.SetStateAction<ProductCardType[] | null>>;
     tableCaption?: string;
 }) {
-    const [selectDialog, setSelectDialog] = useState<Order | null>(null);
+    const [selectDialog, setSelectDialog] = useState<ProductCardType | null>(null);
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
     const [dialogOpen, setDialogOpen] = useState(false);
 
-    console.log("products", products);
+    async function deleteProductAsync(productId: string) {
+      try {
+          await deleteProduct(productId);
+          if (products) {
+              setProducts(products.filter((product) => product._id !== productId));
+          }
+      } catch (error) {
+          console.log(error);
+      }
+    };
 
     return (
+      <>
         <Table className="mt-10 w-full h-full">
         <TableCaption>{tableCaption}</TableCaption>
         <TableHeader>
@@ -46,7 +57,7 @@ export default function ProductsTable({
               <TableCell className="overflow-hidden">{product._id}</TableCell>
               <TableCell className="text-center w-full">{product.name}</TableCell>
               <TableCell className="text-center w-full">{product.categoryId.name}</TableCell>
-              <TableCell onClick={() => setDialogOpen(true)} className="text-center hover:underline cursor-pointer">View</TableCell>
+              <TableCell onClick={() => {setDialogOpen(true); setSelectDialog(product);}} className="text-center hover:underline cursor-pointer">View</TableCell>
               <TableCell className="text-right w-full">
                 <div className="flex justify-center items-center">
                   <Trash2 className="h-4 w-4 cursor-pointer hover:text-red-400 transition-colors" />
@@ -56,5 +67,6 @@ export default function ProductsTable({
           ))}
         </TableBody>
       </Table>
+      </>
     );
 }
