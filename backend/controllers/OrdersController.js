@@ -39,7 +39,7 @@ export const addToOrder = async (req, res) => {
 };
 
 
-export const deleteOrder = async (req, res) => {
+export const deleteOrderProduct = async (req, res) => {
     try {
         const { productId } = req.params;
 
@@ -75,6 +75,23 @@ export const deleteOrder = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+export const deleteOrder = async (req, res) => {
+    try {
+        const { orderId } = req.params;
+        const order = await Order.findById(orderId);
+
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        } 
+
+        await order.deleteOne();
+
+        res.status(200).json({ message: 'Order deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
 
 export const getAllOrdersByUserId = async (req, res) => {
     try {

@@ -36,7 +36,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
     const handleUpdateStatus = async () => {
         try {
             if (order?._id) {
-                const { data } = await updateOrderStatus(order?._id, status);
+                await updateOrderStatus(order?._id, status);
                 setOrder({...order, status});
                 updateOrder({...order, status});
                 toast.success('Order status updated');

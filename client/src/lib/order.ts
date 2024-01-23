@@ -8,6 +8,10 @@ export async function getAllOrders() {
   return await http.get(`/orders/all`, true);
 }
 
+export async function deleteOrder(orderId: string){
+  return await http.delete(`/orders/${orderId}`, true);
+}
+
 export async function updateOrderStatus(orderId: string, status: string){
   return await http.put(`/orders/${orderId}`, { status }, true);
 }
