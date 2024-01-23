@@ -50,9 +50,15 @@ export type OrderProduct = {
 export const productFormSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters").max(50, "Name must be less than 50 characters"),
     description: z.string().optional(),
-    price: z.number().min(0, "Price must be at least 0").max(100000, "Price must be less than 100000"),
+    price: z.number()
+    .min(0, `price must be at least 0 UAH`)
+    .max(1000 * 1000, "price cannot be more than 100000 UAH")
+    .refine(value => !isNaN(value), {
+      message: "Amount is required and must be a number",
+    }),
+    
     imageUrl: z.any(),
-    categoryId: z.string().uuid(),
+    categoryId: z.string(),
 })
 
 

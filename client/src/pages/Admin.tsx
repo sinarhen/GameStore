@@ -69,10 +69,8 @@ export default function Admin() {
                             <DialogTitle>Create product</DialogTitle>
                             <DialogDescription className="text-sm text-muted-foreground">fill information about product</DialogDescription>
                         </DialogHeader>
-                            <div>
 
                                 <CreateProductForm />
-                            </div>
                         </DialogContent>
                     
                 </Dialog>
