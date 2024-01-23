@@ -64,7 +64,7 @@ export default function Orders({
       <Table className="mt-10 w-full h-full">
         <TableCaption>{tableCaption}</TableCaption>
         <TableHeader>
-          <TableRow className="bg-neutral-800">
+          <TableRow className="bg-neutral-800 rounded sticky top-0">
             <TableHead className="overflow-hidden">ID</TableHead>
             <TableHead className="text-center w-full">Products</TableHead>
             <TableHead className="text-center w-full">Status</TableHead>
