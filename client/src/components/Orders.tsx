@@ -102,7 +102,7 @@ export default function Orders({
         </TableBody>
         <TableFooter className="bg-transparent">
           <TableRow>
-            <TableCell colSpan={3}>Total</TableCell>
+            <TableCell colSpan={4}>Total</TableCell>
             <TableCell className="text-right">${orders.reduce((acc, order) => acc + order.totalPrice, 0)}</TableCell>
           </TableRow>
         </TableFooter>

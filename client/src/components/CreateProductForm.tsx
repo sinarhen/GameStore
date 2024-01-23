@@ -38,6 +38,7 @@ export default function CreateProductForm(){
                 if (inputType === 'file') {
                     formData.append('file', values?.imageUrl);
                     formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET as string);
+                    console.log(process.env.REACT_APP_CLOUDINARY_URL)
                     const imageUploaded = await axios.post(
                         process.env.REACT_APP_CLOUDINARY_URL as string,
                         formData
@@ -52,6 +53,7 @@ export default function CreateProductForm(){
             toast.success('Product created successfully');
             navigate(0)
         } catch (e: any) {
+            console.error(e)
             toast.error(e?.message || 'Something went wrong');
         };
   }
