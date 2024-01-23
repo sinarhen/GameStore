@@ -70,7 +70,7 @@ export default function Orders({
             <TableHead className="text-center w-full">Products</TableHead>
             <TableHead className="text-center w-full">Status</TableHead>
             <TableHead className="text-right align-center justify-end w-full">Amount</TableHead>
-            <TableHead className="text-right align-center justify-end w-full">Delete Order</TableHead>
+            <TableHead className="text-right align-center justify-end w-full">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

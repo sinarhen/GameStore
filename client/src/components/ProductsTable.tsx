@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Order, ProductCardType } from "../lib/types";
-import { statusColor } from "../lib/utils";
+import { ProductCardType } from "../lib/types";
 import { deleteProduct } from "../lib/products";
 import { 
     Table, 
@@ -14,6 +13,7 @@ import {
 import { Trash2 } from "lucide-react";
 import ConfirmDialog from "./ConfirmDialog";
 import toast from "react-hot-toast";
+import { FaInfo } from "react-icons/fa";
 
 export default function ProductsTable({
     products,
@@ -52,6 +52,7 @@ export default function ProductsTable({
           open={confirmOpen} 
           setOpen={setConfirmOpen} 
           />
+        
         <Table className="mt-10 w-full h-full">
         <TableCaption>{tableCaption}</TableCaption>
         <TableHeader>
@@ -59,8 +60,7 @@ export default function ProductsTable({
             <TableHead className="overflow-hidden">Product Id</TableHead>
             <TableHead className="text-center w-full">Name</TableHead>
             <TableHead className="text-center w-full">Category Id</TableHead>
-            <TableHead className="text-center w-full">Action</TableHead>
-            <TableHead className="text-right align-center justify-end w-full">Delete Product</TableHead>
+            <TableHead className="text-right align-center justify-end w-full">Action</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -69,12 +69,38 @@ export default function ProductsTable({
               <TableCell className="overflow-hidden">{product._id}</TableCell>
               <TableCell className="text-center w-full">{product.name}</TableCell>
               <TableCell className="text-center w-full">{product.categoryId.name}</TableCell>
-              <TableCell onClick={() => {setDialogOpen(true); setSelectedProduct(product);}} className="text-center hover:underline cursor-pointer">View</TableCell>
               <TableCell className="text-right w-full">
+                <div className="flex gap-x-1 justify-between items-center">
+                  <div 
+                    onClick={() => {
+                      setDialogOpen(true); 
+                      setSelectedProduct(product);
+                    }} 
+                    
+                    className='p-2  cursor-pointer group rounded-lg hover:bg-gray-400 transition-colors'
+                    
+                    >
+                    <FaInfo className="group-hover:text-indigo-500 w-3.5 h-3.5 transition-colors"/>
+                  </div>
+                  
+                  <div 
+                    onClick={() => {
+                      setConfirmOpen(true); 
+                      setSelectedProduct(product);
+                    }}
+                    className='p-2  cursor-pointer group rounded-lg hover:bg-red-200 transition-colors'
+                  >
+                    <Trash2 
+                    className="h-3.5 w-3.5 group-hover:text-red-500 transition-colors" />
+
+                  </div>
+                  
+                </div>
+                <div className="">
+
+                </div>
                 <div 
-                  onClick={() => {setConfirmOpen(true); setSelectedProduct(product);}}
                   className="flex justify-center items-center">
-                  <Trash2 className="h-4 w-4 cursor-pointer hover:text-red-400 transition-colors" />
                 </div>
               </TableCell>
             </TableRow>
