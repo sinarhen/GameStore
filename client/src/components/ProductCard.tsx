@@ -13,7 +13,10 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
     return (
         <div className="max-w-md h-fit transition-all hover:translate-x-0.5 hover:-translate-y-0.5 group hover:bg bg-neutral-800 cursor-pointer mx-auto rounded-md overflow-hidden shadow-lg hover:shadow-xl">
             <div className="relative">
-                <img className="w-full" src={imageUrl} alt="Product Image" />
+                <div className="aspect-square">
+                    <img className="w-full object-cover h-full" src={imageUrl} alt="Product Image" />
+
+                </div>
                 
                 <div className="absolute top-2 cursor-pointer left-2">
                     <Favorite product={product}/>
