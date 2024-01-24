@@ -69,8 +69,8 @@ export default function Admin() {
     
     return (
         <>
-        <Section className="pt-20">
-            <h1 className="pb-4" >All Orders</h1>
+        <Section className="pt-20 h-full">
+            <h1 className="pb-4">All Orders</h1>
             <Input
                 className="mb-4"
                 name="orderId"
@@ -82,32 +82,25 @@ export default function Admin() {
             <Orders setOrders={setOrders} orders={query ? filteredOrders : orders}/>
         </Section>
         
-        <Section className="mb-20">
-            <div className="flex mt-20 gap-x-4 items-center">
-                <Dialog>
-                    <DialogTrigger>
-                        <Button className="group flex items-center gap-x-1">
-                            Create product
-                            <PlusCircle className="group-hover:rotate-90 transition-transform"/>
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent className="w-[95%] sm:w-[75%] md:w-[%] h-[95%] px-4">
-                        <DialogHeader>
-                            <DialogTitle>Create product</DialogTitle>
-                            <DialogDescription className="text-sm text-muted-foreground">fill information about product</DialogDescription>
-                        </DialogHeader>
-
-                                <CreateProductForm />
-                        </DialogContent>
-                    
-                </Dialog>
-                
+        <Section className="pt-10">
+            <div className="flex justify-between">
+                <h1 className="pb-4">All products</h1>
+                            <Dialog>
+                                <DialogTrigger>
+                                    <Button className="group flex items-center gap-x-1 mb-4">
+                                        Create product
+                                        <PlusCircle className="group-hover:rotate-90 transition-transform" />
+                                    </Button>
+                                </DialogTrigger>
+                                <DialogContent className="w-[95%] sm:w-[75%] md:w-[%] h-[95%] px-4">
+                                    <DialogHeader>
+                                        <DialogTitle>Create product</DialogTitle>
+                                        <DialogDescription className="text-sm text-muted-foreground">fill information about product</DialogDescription>
+                                    </DialogHeader>
+                                    <CreateProductForm />
+                                </DialogContent>
+                            </Dialog>
             </div>
-            
-        </Section>
-
-        <Section>
-            <h1 className="pb-4" >All products</h1>
             <Input 
                 name="productId" 
                 type="text" 
