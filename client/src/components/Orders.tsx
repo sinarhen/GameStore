@@ -18,6 +18,7 @@ import { deleteOrder } from "../lib/order";
 import ConfirmDialog from "./ConfirmDialog";
 import toast from 'react-hot-toast';
 import { FaInfo } from "react-icons/fa";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 export default function Orders({
   orders,
@@ -28,6 +29,8 @@ export default function Orders({
   setOrders: (orders: Order[]) => void;
   tableCaption?: string;
 }) {
+  const { isAdmin } = useCurrentUser();
+  
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
@@ -101,7 +104,7 @@ export default function Orders({
                     <FaInfo className="group-hover:text-indigo-500 w-3.5 h-3.5 transition-colors"/>
                   </div>
                   
-                  <div 
+                  {isAdmin && <div 
                     onClick={() => {
                       setConfirmOpen(true); 
                       setSelectedOrder(order);
@@ -111,7 +114,7 @@ export default function Orders({
                     <Trash2 
                     className="h-3.5 w-3.5 group-hover:text-red-500 transition-colors" />
 
-                  </div>
+                  </div>}
                   
                 </div>
                 
