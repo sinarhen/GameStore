@@ -3,7 +3,7 @@ import { getFavorites } from '../lib/favorites';
 import { ProductCardType } from '../lib/types';
 import toast from 'react-hot-toast';
 
-type FavoritesContextType = [ProductCardType[], Dispatch<SetStateAction<ProductCardType[]>>];
+type FavoritesContextType = { favorites: ProductCardType[], setFavorites: Dispatch<SetStateAction<ProductCardType[]>> };
 
 // Create the context with the correct type
 export const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
@@ -25,7 +25,7 @@ export const FavoritesProvider = ({ children }: {
     })}, []);
 
   return (
-    <FavoritesContext.Provider value={[favorites, setFavorites]}>
+    <FavoritesContext.Provider value={{favorites, setFavorites}}>
       {children}
     </FavoritesContext.Provider>
   );
