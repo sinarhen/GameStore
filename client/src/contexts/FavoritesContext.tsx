@@ -2,6 +2,8 @@ import React, { createContext, useState, useEffect, Dispatch, SetStateAction } f
 import { getFavorites } from '../lib/favorites';
 import { ProductCardType } from '../lib/types';
 import toast from 'react-hot-toast';
+import { AxiosError } from 'axios';
+import { useCurrentUser } from '../hooks/useCurrentUser';
 
 type FavoritesContextType = { favorites: ProductCardType[], setFavorites: Dispatch<SetStateAction<ProductCardType[]>> };
 
@@ -12,17 +14,21 @@ export const FavoritesProvider = ({ children }: {
   children: React.ReactNode
 }) => {
   const [favorites, setFavorites] = useState<ProductCardType[]>([]);
+  const { user } = useCurrentUser();
 
   useEffect(() => {
-    // Replace with the correct API endpoint to get all favorites
-    getFavorites().then((favorites) => {
-      setFavorites(favorites.data);
-    }).catch((error) => {
-      toast.error("Something went wrong", { id: "favorites" });
-      console.error(error);
-    }).finally(() => {
+    if (user){
+      getFavorites().then((favorites) => {
+        setFavorites(favorites.data);
+      }).catch((error) => {
+        if (error.status === 403)
+        {
+          return;
+        }
+      }).finally(() => {
 
-    })}, []);
+      }) 
+    }}, []);
 
   return (
     <FavoritesContext.Provider value={{favorites, setFavorites}}>

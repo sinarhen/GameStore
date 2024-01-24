@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "../component
 import CreateProductForm from '../components/CreateProductForm';
 import Orders from '../components/Orders';
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 
 export default function Admin() {
@@ -23,6 +24,8 @@ export default function Admin() {
 
     const [query, setQuery] = React.useState("");
     const [filteredOrders, setFilteredOrders] = React.useState<Order[]>([]);
+
+    const { isAdmin } = useCurrentUser();
 
     const getAllOrdersAsync = async () => {
         try {
@@ -45,8 +48,7 @@ export default function Admin() {
     React.useEffect(() => {
         getAllOrdersAsync();
         getAllProductsAsync();
-        console.log("products", products);
-    }, []);
+    });
 
     React.useEffect(() => {
         setFilteredOrders(orders.filter((order) => order._id.includes(query)));

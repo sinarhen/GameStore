@@ -17,7 +17,6 @@ import { useCurrentUser } from "./hooks/useCurrentUser";
 import { AuthDialogProvider } from "./contexts/AuthDialogContext";
 
 function App() {
-  const { isAdmin } = useCurrentUser();
 
   return (
     <AuthProvider>
@@ -43,7 +42,7 @@ function App() {
                     <Route path='/me' element={<MyAccount />} />
                     <Route path='/favorites' element={<Favorites />} />
                     <Route path='/products/:productId' element={<ProductDetails />} />
-                    {isAdmin && <Route path='/admin' element={<Admin />} />}
+                    <Route path='/admin' element={<Admin />} />
                     <Route path='*' element={<h1>Page does not exist</h1>} />
                   </Routes>
                   

@@ -6,7 +6,7 @@ import toast from 'react-hot-toast';
 const fetchUser = async () => {
   const cookie = Cookies.get(headerName);
   if (!cookie) {
-    console.error('No cookie found. User is not logged in.');
+    console.log('No cookie found. User is not logged in.');
     return null;
   }
   try {
@@ -43,7 +43,7 @@ const updateUser = async ({
     }, true);
     return response.data;
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 };
 

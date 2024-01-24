@@ -76,7 +76,6 @@ export default function Products(){
             <div className="w-full h-full">
                 <Header animateableText="Products." appearDuration={appearDuration} />
                 <AnimatedSeparator delay={appearDuration + delay}/>
-                {/* Filterby, orderby, pagination  */}
                 <Filters products={products} onProductsChange={setProducts}/>
 
                 <div className="flex gap-4 w-full mb-5">

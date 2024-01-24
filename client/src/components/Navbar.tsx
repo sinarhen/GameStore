@@ -6,7 +6,6 @@ import { useAuthDialog } from '../hooks/useAuthDialog';
 const Navbar = () => {
     const { user, isAdmin } = useCurrentUser();
     const { openAuthDialog } = useAuthDialog();
-    console.log(user);
     return (
         <>
         <nav className="bg-neutral-800 z-50 fixed w-full">

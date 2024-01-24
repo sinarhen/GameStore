@@ -1,17 +1,11 @@
-import { useState, useEffect } from 'react';
-import { fetchUser } from '../lib/auth';
-import { User } from '../lib/types';
+import { useState, useEffect, useContext } from 'react';
+import AuthContext from '../contexts/AuthContext';
 
 export function useCurrentUser() {
-  const [user, setUser] = useState<User | null>(null);
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error('useCurrentUser must be used within a AuthProvider');
+  }
 
-  useEffect(() => {
-    fetchUser().then((fetchedUser: User) => {
-      setUser(fetchedUser);
-    });
-  }, []);
-
-  const isAdmin = user?.role === 'admin';
-
-  return { user, setUser, isAdmin };
+  return context;
 }

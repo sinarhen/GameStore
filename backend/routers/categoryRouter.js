@@ -5,7 +5,7 @@ import checkAdmin from '../utils/checkAdmin.js';
 
 const router = express.Router();
 
-router.get('/', checkAuth, getAllCategories);
+router.get('/', getAllCategories);
 router.post('/', checkAuth, checkAdmin, createCategory);
 router.delete('/:categoryId', checkAuth, checkAdmin, deleteCategory);
 
