@@ -60,12 +60,12 @@ export default function Filters({products, onProductsChange}: {
                             <span>Order by</span>
                             
                             <Select onValueChange={setOrderBy}>
-                                <SelectTrigger className="w-[100px]">
+                                <SelectTrigger className="w-[140px]">
                                     <SelectValue placeholder="-------" />
                                 </SelectTrigger>
                                 <SelectContent className="text-white bg-black">
-                                    <SelectItem value="asc">Pending</SelectItem>
-                                    <SelectItem value="desc">Paid</SelectItem>
+                                    <SelectItem value="asc">Ascending</SelectItem>
+                                    <SelectItem value="desc">Descending</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
