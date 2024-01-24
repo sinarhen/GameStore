@@ -2,15 +2,18 @@ import { useNavigate } from "react-router-dom"
 
 export default function NotFound({
     helperText = "Please try again later.",
-    withRefresh
+    buttonText,
+    buttonAction
 }: {
     helperText?: string;
-    withRefresh?: boolean;
+    buttonText?: string;
+    buttonAction?: () => void;
+
 })
 {
     const navigate = useNavigate();
     return (
-            <div className="w-full h-full  flex justify-center items-center ">
+            <div className="flex justify-center items-center px-4 sm:px-8 md:px-16 xl:px-32 py-4 sm:py-8 md:py-16 xl:py-32 ">
                 <div>
                 <h1 className="text-6xl text-zinc-600">
                     Items not found.
@@ -18,9 +21,9 @@ export default function NotFound({
                 <p className="text-zinc-700">
                     {helperText}
                 </p>
-                {withRefresh && (
+                {buttonText && (
 
-                    <button onClick={() => {navigate(0)}} className="underline ">
+                    <button onClick={buttonAction} className="underline ">
                     Refresh
                     </button>
                 )}

@@ -10,18 +10,13 @@ import AnimatedSeparator from "../components/AnimatedSeparator";
 import Pagination from "../components/Pagination";
 import { getAllProducts } from "../lib/products";
 import Loading from "../components/Loading";
-import Button from "../components/Button";
-import { getAllCategories } from "../lib/categories";
-import { cn } from "../lib/utils";
 
+import { appearDuration, delay, delayPerItem } from "../lib/constants";
 
-const appearDuration = 0.7;
-const delay = 0.3;
 
 export default function Products(){
     const [products, setProducts] = useState<ProductCardType[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const [categories, setCategories] = useState<CategoryType[] | null>(null);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [itemsPerPage, setItemsPerPage] = useState<number>(2);
@@ -29,17 +24,8 @@ export default function Products(){
     const [error, setError] = useState<string | null>(null);
     const [filteredProducts, setFilteredProducts] = useState<ProductCardType[] | null>(null);
   
-    useEffect(() => {
-      getAllCategories()
-        .then((response) => setCategories(response.data))
-        .catch((error) => {
-          console.log(error);
-          toast.error("Something went wrong", { id: "categories" });
-          setError("Something went wrong while fetching categories.");
-        })
-        .finally(() => setLoading(false));
-    }, []);
-  
+    const [initialRender, setInitialRender] = useState<boolean>(true);
+    
     useEffect(() => {
       getAllProducts()
         .then((response) => {
@@ -49,40 +35,34 @@ export default function Products(){
             return;
           }
           setProducts(response.data);
+          setLoading(false);
         })
         .catch((error) => {
           console.log(error);
-          toast.error("Something went wrong", { id: "products" });
-          setError("Something went wrong while fetching products.");
-        })
-        .finally(() => setLoading(false));
+          toast.error(`Something went wrong: ${error.message}`, { id: "products" });
+          setError(`Something went wrong while fetching products: ${error.message}`);
+        });
+      setInitialRender(false);
     }, []);
-  
-    useEffect(() => {
-      if (selectedCategory && products) {
-        setFilteredProducts(products.filter((product) => product.categoryId._id === selectedCategory));
-      } else {
-        setFilteredProducts(products);
-      }
-    }, [selectedCategory, products]);
-  
+    
+    
+    if (error) {
+      return <NotFound helperText={error} buttonText="Refresh" buttonAction={() => window.location.reload()} />;
+    }
+
     if (loading) {
       return <Loading />;
     }
   
-    if (error) {
-      return <NotFound helperText={error} withRefresh={true} />;
-    }
     if (!products){
-        return <NotFound helperText={error ?? "No products now"} withRefresh={true} />;
+        return <NotFound helperText={error ?? "No products now"} buttonText="Refresh" buttonAction={() => window.location.reload()} />;
     }
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = filteredProducts?.slice(indexOfFirstItem, indexOfLastItem);
-
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
+  
     return(
         <>
             <div className="w-full h-full">
@@ -94,36 +74,35 @@ export default function Products(){
                   exit={{ opacity: 0 }}
                   transition={{ delay: appearDuration + delay, duration: appearDuration}}
                 >
-                  <Filters products={products} onProductsChange={setProducts}/>
+                  <Filters setLoading={setLoading} setError={setError} products={products} onProductsChange={setFilteredProducts}/>
 
                 </motion.div>
 
-                <div className="flex gap-4 w-full mb-5">
-                    {categories?.map((category: any) => (
-                        <Button onClick={() => {setSelectedCategory(category._id); }} className={cn("rounded-3xl bg-white text-black hover:bg-gray-300", selectedCategory === category._id ? "bg-gray-300" : "")}>{category.name}</Button>
-                    ))}
-                </div>
+
                 
-                <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:grid-cols-4  gap-4 w-full">
-                    {currentItems && currentItems.map((product: ProductCardType, index: number) => (
-                        <motion.div
-                            key={product?._id + index + selectedCategory}
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            className="w-full h-full"
-                            exit={{ opacity: 0 }}
-                            transition={{ delay: appearDuration+ index * 0.05, duration: appearDuration}}
-                        >
-                            <ProductCard product={product}/>
+                {currentItems?.length ? (
+                    <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:grid-cols-4  gap-4 w-full">
+                        {currentItems.map((product: ProductCardType, index: number) => (
+                            <motion.div
+                                key={product?._id + index + selectedCategory}
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="w-full h-full"
+                                exit={{ opacity: 0 }}
+                                transition={{ delay: delay + index * delayPerItem + (initialRender ?  appearDuration : 0), duration: appearDuration}}
+                            >
+                                <ProductCard product={product}/>
 
-                        </motion.div>
+                            </motion.div>
 
-                    )
-                    )}
-                </div>
+                        )
+                        )}
+                    </div>
+                      
+                ) : <NotFound helperText="No products found"  />}
                 <Pagination 
                     itemsPerPage={itemsPerPage} 
-                    totalItems={products.length} 
+                    totalItems={filteredProducts?.length ?? products.length} 
                     paginate={paginate} 
                     currentPage={currentPage}
                 />
