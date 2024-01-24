@@ -24,50 +24,63 @@ export default function Products(){
     const [categories, setCategories] = useState<CategoryType[] | null>(null);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+    const [itemsPerPage, setItemsPerPage] = useState<number>(2);
     
+    const [error, setError] = useState<string | null>(null);
+    const [filteredProducts, setFilteredProducts] = useState<ProductCardType[] | null>(null);
+  
     useEffect(() => {
-        getAllCategories()
+      getAllCategories()
         .then((response) => setCategories(response.data))
         .catch((error) => {
-            console.log(error);
-            toast.error("Something went wrong", {id: "categories"});
-        });
+          console.log(error);
+          toast.error("Something went wrong", { id: "categories" });
+          setError("Something went wrong while fetching categories.");
+        })
+        .finally(() => setLoading(false));
     }, []);
-
+  
     useEffect(() => {
-        getAllProducts()
+      getAllProducts()
         .then((response) => {
-            if (!response.data.length)
-            {
-                toast.error("No products found");
-                return;
-            }
-            setProducts(response.data);
+          if (!response.data.length) {
+            toast.error("No products found");
+            setError("No products found.");
+            return;
+          }
+          setProducts(response.data);
         })
         .catch((error) => {
-            console.log(error);
-            toast.error("Something went wrong", {id: "products"});
-        }).finally(() => {
-            setLoading(false);
-        });
+          console.log(error);
+          toast.error("Something went wrong", { id: "products" });
+          setError("Something went wrong while fetching products.");
+        })
+        .finally(() => setLoading(false));
     }, []);
-
-    
-
-    if (loading){
-        return Loading();
+  
+    useEffect(() => {
+      if (selectedCategory && products) {
+        setFilteredProducts(products.filter((product) => product.categoryId._id === selectedCategory));
+      } else {
+        setFilteredProducts(products);
+      }
+    }, [selectedCategory, products]);
+  
+    if (loading) {
+      return <Loading />;
+    }
+  
+    if (error) {
+      return <NotFound helperText={error} withRefresh={true} />;
     }
     if (!products){
-        return NotFound({helperText: "Please try again later.", withRefresh: true});
+        return <NotFound helperText={error ?? "No products now"} withRefresh={true} />;
     }
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = products.slice(indexOfFirstItem, indexOfLastItem);
-    const filteredProducts = selectedCategory
-    ? products.filter((product) => product.categoryId._id === selectedCategory)
-    : products;
+    const currentItems = filteredProducts?.slice(indexOfFirstItem, indexOfLastItem);
+
     
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -85,7 +98,7 @@ export default function Products(){
                 </div>
                 
                 <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:grid-cols-4  gap-4 w-full">
-                    {filteredProducts && filteredProducts.map((product: ProductCardType, index: number) => (
+                    {currentItems && currentItems.map((product: ProductCardType, index: number) => (
                                       <motion.div
                                       key={product?._id + index + selectedCategory}
                                       initial={{ opacity: 0 }}
