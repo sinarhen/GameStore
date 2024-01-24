@@ -36,11 +36,11 @@ export const register = async (req, res) => {
         {
             return res.status(400).json({
                 field: 'password',
-                message: 'Password too short. Minimum 6 characters required',
+                message: 'Password too short. Minimum 2 characters required',
             });
         }
 
-        if (req.body.name.length < 6)
+        if (req.body.name.length < 2)
         {
             return res.status(400).json({
                 field: 'name',

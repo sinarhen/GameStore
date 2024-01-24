@@ -15,6 +15,7 @@ import ConfirmDialog from "./ConfirmDialog";
 import ProductDialog from "./ProductDialog";
 import toast from "react-hot-toast";
 import { FaInfo } from "react-icons/fa";
+import TableEmpty from "./TableEmpty";
 
 export default function ProductsTable({
     products,
@@ -25,7 +26,6 @@ export default function ProductsTable({
     setProducts: React.Dispatch<React.SetStateAction<ProductCardType[] | null>>;
     tableCaption?: string;
 }) {
-    const [selectDialog, setSelectDialog] = useState<ProductCardType | null>(null);
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<ProductCardType | null>(null);
@@ -106,8 +106,10 @@ export default function ProductsTable({
               </TableCell>
             </TableRow>
           ))}
+          
         </TableBody>
       </Table>
+      <TableEmpty isEmpty={products?.length ? products?.length === 0 : true}/>
       </>
     );
 }

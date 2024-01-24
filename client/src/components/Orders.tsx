@@ -19,6 +19,7 @@ import ConfirmDialog from "./ConfirmDialog";
 import toast from 'react-hot-toast';
 import { FaInfo } from "react-icons/fa";
 import { useCurrentUser } from "../hooks/useCurrentUser";
+import TableEmpty from "./TableEmpty";
 
 export default function Orders({
   orders,
@@ -55,7 +56,7 @@ export default function Orders({
       console.log(error);
     }
   }
-  
+  const isEmpty = orders?.length ? orders?.length === 0 : true;
     return (
     <> 
     <div>
@@ -122,17 +123,20 @@ export default function Orders({
           </TableRow>
           ))}
         </TableBody>
-        <TableFooter className="bg-transparent">
+        {!isEmpty && (
+          <TableFooter className="bg-transparent">
           <TableRow className="sticky bg-neutral-900 bottom-0">
             <TableCell colSpan={4}>Total</TableCell>
             <TableCell className="text-right">{formatter.format(orders.reduce((acc, order) => acc + order.totalPrice, 0))}</TableCell>
             <TableCell></TableCell>
-          
+
           </TableRow>
-        </TableFooter>
+          </TableFooter>
+        )}
       </Table>
+      <TableEmpty isEmpty={isEmpty}/>
+
       <p className="text-center text-sm mt-2 text-muted-foreground">
-        {tableCaption}
       </p>
 
     </div>

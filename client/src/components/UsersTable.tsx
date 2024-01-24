@@ -15,6 +15,7 @@ import UserDialog from "./UserDialog";
 import ConfirmDialog from "./ConfirmDialog";
 import { deleteUserForAdmin } from "../lib/users";
 import toast from "react-hot-toast";
+import TableEmpty from "./TableEmpty";
 
 export default function UsersTable({
     users,
@@ -104,6 +105,7 @@ export default function UsersTable({
                 ))}
             </TableBody>
         </Table>
+        <TableEmpty isEmpty={users?.length === 0} />
       </>  
     );
 }
