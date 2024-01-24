@@ -1,10 +1,11 @@
 import { Link, NavLink } from 'react-router-dom';
 import UserNav from './UserNav';
 import { useCurrentUser } from '../hooks/useCurrentUser';
-import AuthTriggers from './AuthTriggers';
+import { useAuthDialog } from '../hooks/useAuthDialog';
 
 const Navbar = () => {
     const { user, isAdmin } = useCurrentUser();
+    const { openAuthDialog } = useAuthDialog();
     console.log(user);
     return (
         <>
@@ -22,7 +23,21 @@ const Navbar = () => {
                             <UserNav isAdmin={user.role === 'admin'} avatarUrl={user.avatarUrl} username={user.name}/>
                         ) : (
                             
-                            <AuthTriggers />
+                            
+                            <div className='flex gap-x-2 items-center'>
+
+                                <button 
+                                onClick={() => {
+                                    openAuthDialog('login');
+                                }}
+                                className='bg-green-300 bg-opacity-70 transition-all hover:bg-green-700 hover:bg-opacity-100 text-white px-4 py-2 rounded-md'>Log in</button>
+                                <button 
+                                onClick={() => {
+                                    openAuthDialog('register');
+                                }}
+                                className='hover:bg-neutral-900 transition-colors text-white px-4 py-2 rounded-md'>Register</button>
+
+                            </div>
                         )}
                         </div>
                 </div>

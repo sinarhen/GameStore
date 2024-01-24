@@ -14,6 +14,7 @@ import { FavoritesProvider } from "./contexts/FavoritesContext";
 import ProductDetails from "./pages/ProductDetails";
 import Admin from "./pages/Admin";
 import { useCurrentUser } from "./hooks/useCurrentUser";
+import { AuthDialogProvider } from "./contexts/AuthDialogContext";
 
 function App() {
   const { isAdmin } = useCurrentUser();
@@ -21,32 +22,37 @@ function App() {
   return (
     <AuthProvider>
       <FavoritesProvider>
-        <div className="w-full 
-        mandatory-enabled overflow-y-scroll  
-        h-full text-white bg-neutral-900">
-          <Router>
-            <Navbar />
-            <div className="
-              container
-              overflow-x-visible
-              mx-auto 
-              h-full
-              xl:px-36 px-4 sm:px-6 lg:px-8 pt-24">
+        <AuthDialogProvider>
 
-                <Routes>
-                  <Route path='/' element={<Home />} />
-                  <Route path='/products' element={<Products/>} />
-                  <Route path='/categories' element={<Categories />} />
-                  <Route path='/me' element={<MyAccount />} />
-                  <Route path='/favorites' element={<Favorites />} />
-                  <Route path='/products/:productId' element={<ProductDetails />} />
-                  {isAdmin && <Route path='/admin' element={<Admin />} />}
-                  <Route path='*' element={<h1>Page does not exist</h1>} />
-                </Routes>
-                
-            </div>
-          </Router>
-        </div>
+          <div className="w-full 
+          mandatory-enabled overflow-y-scroll  
+          h-full text-white bg-neutral-900">
+            <Router>
+              <Navbar />
+              <div className="
+                container
+                overflow-x-visible
+                mx-auto 
+                h-full
+                xl:px-36 px-4 sm:px-6 lg:px-8 pt-24">
+
+                  <Routes>
+                    <Route path='/' element={<Home />} />
+                    <Route path='/products' element={<Products/>} />
+                    <Route path='/categories' element={<Categories />} />
+                    <Route path='/me' element={<MyAccount />} />
+                    <Route path='/favorites' element={<Favorites />} />
+                    <Route path='/products/:productId' element={<ProductDetails />} />
+                    {isAdmin && <Route path='/admin' element={<Admin />} />}
+                    <Route path='*' element={<h1>Page does not exist</h1>} />
+                  </Routes>
+                  
+              </div>
+            
+            </Router>
+          </div>
+
+        </AuthDialogProvider>
       </FavoritesProvider>
       
       <Toaster position="bottom-right" />

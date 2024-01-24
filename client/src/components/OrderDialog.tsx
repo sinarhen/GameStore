@@ -108,8 +108,6 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                     <TableHead>Price</TableHead>
                     <TableHead>Quantity</TableHead>
                     <TableHead>Total</TableHead>
-                    <TableHead>CreatedAt</TableHead>
-
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -120,7 +118,6 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                             <TableCell>{formatter.format(orderedProduct.productId.price)}</TableCell>
                             <TableCell>{orderedProduct.quantity}</TableCell>
                             <TableCell>{formatter.format(orderedProduct.quantity * orderedProduct.productId.price)}</TableCell>
-                            <TableCell>{orderedProduct.createdAt.toLocaleDateString()}</TableCell>
                         
                         </TableRow>
                     )

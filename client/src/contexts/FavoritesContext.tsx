@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, Dispatch, SetStateAction } from 'react';
 import { getFavorites } from '../lib/favorites';
 import { ProductCardType } from '../lib/types';
+import toast from 'react-hot-toast';
 
 type FavoritesContextType = [ProductCardType[], Dispatch<SetStateAction<ProductCardType[]>>];
 
@@ -17,6 +18,7 @@ export const FavoritesProvider = ({ children }: {
     getFavorites().then((favorites) => {
       setFavorites(favorites.data);
     }).catch((error) => {
+      toast.error("Something went wrong", { id: "favorites" });
       console.error(error);
     }).finally(() => {
 
