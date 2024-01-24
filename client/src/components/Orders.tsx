@@ -58,16 +58,16 @@ export default function Orders({
   
     return (
     <> 
+    <div>
     <ConfirmDialog 
       open={confirmOpen} 
       setOpen={setConfirmOpen}
 
       onConfirm={() =>deleteOrderAsync(selectedOrder?._id as string)}/>
     <OrderDialog updateOrder={updateOrder} setOrder={setSelectedOrder} order={selectedOrder} open={dialogOpen} setOpen={setDialogOpen}/>
-      <Table className="mt-10 w-full h-full">
-        <TableCaption>{tableCaption}</TableCaption>
+      <Table className="w-full h-full">
         <TableHeader>
-          <TableRow className="bg-neutral-800 rounded sticky top-0">
+          <TableRow className="bg-neutral-800 sticky top-0">
             <TableHead className="overflow-hidden">ID</TableHead>
             <TableHead className="text-center w-full">Products</TableHead>
             <TableHead className="text-center w-full">Status</TableHead>
@@ -123,12 +123,19 @@ export default function Orders({
           ))}
         </TableBody>
         <TableFooter className="bg-transparent">
-          <TableRow>
+          <TableRow className="sticky bg-neutral-900 bottom-0">
             <TableCell colSpan={4}>Total</TableCell>
             <TableCell className="text-right">{formatter.format(orders.reduce((acc, order) => acc + order.totalPrice, 0))}</TableCell>
+            <TableCell></TableCell>
+          
           </TableRow>
         </TableFooter>
       </Table>
-    </>
+      <p className="text-center text-sm mt-2 text-muted-foreground">
+        {tableCaption}
+      </p>
+
+    </div>
+        </>
     )
 }

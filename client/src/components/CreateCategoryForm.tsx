@@ -8,22 +8,22 @@ import { createCategory } from "../lib/categories";
 import { Label } from "./Label";
 import InputError from "./InputError";
 import Button from "./Button";
-import { TProfileEditForm, productFormSchema } from "../lib/types";
+import { TCategoryForm, categoryFormSchema } from "../lib/types";
 import { useNavigate } from "react-router-dom";
 
 
 
 export default function CreateCategoryForm(){
   
-    const form = useForm<TProfileEditForm>({
-      resolver: zodResolver(productFormSchema),
+    const form = useForm<TCategoryForm>({
+      resolver: zodResolver(categoryFormSchema),
       mode: "onTouched",
     });
     const navigate = useNavigate();
 
-    async function onSubmit() {
+    async function onSubmit(data: TCategoryForm) {
         try {
-            const res = await createCategory(form.getValues());
+            const res = await createCategory(data.name);
             console.log(res);
             navigate(0);
             toast.success('Category created successfully');
@@ -40,7 +40,7 @@ export default function CreateCategoryForm(){
 
     console.log(form.getValues());
     return (
-        <form className="gap-y-4 gap-x-3 grid grid-cols-6 overflow-y-auto overflow-x-visible px-1">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="gap-y-4 gap-x-3 grid grid-cols-6 overflow-y-auto overflow-x-visible px-1">
             <div className="md:col-span-4 col-span-6">
               <Label>Name*</Label>
               <Input placeholder="Category name..." {...form.register('name')} />  
@@ -49,7 +49,7 @@ export default function CreateCategoryForm(){
 
             <DialogFooter className="col-span-6">
                         <div>
-                          <Button type="submit" onClick={onSubmit}>
+                          <Button type="submit">
                             Save
                           </Button>
                 

@@ -100,7 +100,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                     Products below are the products that you have ordered.
                 </DialogDescription>
                 </DialogHeader>
-                <div className="flex gap-x-4">
+                <div className="flex justify-between gap-x-4">
                     <div className="flex flex-col">
                         <p className="mt-4 mb-1">Status: {order?.status && <span className={statusColor(order?.status)}>{order.status}</span>}</p>
                         {isAdmin && <>
@@ -118,7 +118,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                         </>}
                     </div>
                     <div className="flex flex-col">
-                        <p className="mt-4">Payment status: {order?.paymentStatus && <span className={statusColor(order?.paymentStatus)}>{order.paymentStatus}</span>}</p>
+                        <p className="mt-4 mb-1">Payment status: {order?.paymentStatus && <span className={statusColor(order?.paymentStatus)}>{order.paymentStatus}</span>}</p>
                         {isAdmin && <>
                         <Select onValueChange={(e) => setPaymentStatus(e)}>
                             <SelectTrigger className="w-[180px]">
