@@ -36,6 +36,7 @@ export type Order = {
     createdAt: Date;
     updatedAt: Date;
     status: string;
+    paymentStatus: string;
 }
 
 

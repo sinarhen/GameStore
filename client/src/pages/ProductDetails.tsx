@@ -60,9 +60,6 @@ export default function ProductDetails(){
         if (value < 1){
             setInputValue(1);
             setError("You must add at least 1 item to your order")
-        }else if (value > 5){
-            setInputValue(5);
-            setError("You can't add more than 5 items to your order")
         }
         else{
             setInputValue(value);
@@ -99,7 +96,6 @@ export default function ProductDetails(){
     }
     return (
         <>
-        
             <Section className="pt-24">
                 <div className="flex flex-col justify-center items-center">
                         <div>
@@ -148,10 +144,13 @@ export default function ProductDetails(){
                 >
                     <div className="flex items-center justify-center">
                         <div>
-                            <Input className="text-sm" autoComplete="off" type="number" value={inputValue} onChange={(e) => setValidatedInputValue(e.target.valueAsNumber)} name="quantity"   id="quantity" placeholder="number" />
+                            <Input className="text-sm " autoComplete="off" type="number" value={inputValue} onChange={(e) => setValidatedInputValue(e.target.valueAsNumber)} name="quantity"   id="quantity" placeholder="number" />
 
                         </div>
-
+                        
+                        <Button onClick={() => setValidatedInputValue(inputValue + 1)} className="ml-4 mr-2 px-4 py-2">+</Button>
+                        <Button onClick={() => setValidatedInputValue(inputValue - 1)} className="px-4 py-2">-</Button>
+                        
                         <Button onClick={onSubmit} className="ml-4">Add to cart</Button>
                     </div>
                     
