@@ -88,7 +88,15 @@ export default function Products(){
             <div className="w-full h-full">
                 <Header animateableText="Products." appearDuration={appearDuration} />
                 <AnimatedSeparator delay={appearDuration + delay}/>
-                <Filters products={products} onProductsChange={setProducts}/>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ delay: appearDuration + delay, duration: appearDuration}}
+                >
+                  <Filters products={products} onProductsChange={setProducts}/>
+
+                </motion.div>
 
                 <div className="flex gap-4 w-full mb-5">
                     {categories?.map((category: any) => (

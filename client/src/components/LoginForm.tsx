@@ -80,7 +80,7 @@ export default function LoginForm({
 
             
             </div>
-              <Label>Email</Label>
+              <Label>Password</Label>
               <Input 
                 {...form.register("password")}
                 type='password'
