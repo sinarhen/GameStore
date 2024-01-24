@@ -5,7 +5,7 @@ import ProductsTable from "../components/ProductsTable";
 import React from "react";
 import { getAllOrders } from "../lib/order";
 import { getAllProducts } from "../lib/products";
-import { Order, ProductCardType } from "../lib/types";
+import { Order, ProductCardType, User } from "../lib/types";
 import Section from "../components/Section";
 import { PlusCircle } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "../components/Dialog";
@@ -17,6 +17,8 @@ import Header from "../components/Header";
 import CreateCategoryForm from "../components/CreateCategoryForm";
 import CreateProductDialog from "../components/CreateProductDialog";
 import CreateCategoryDialog from "../components/CreateCategoryDialog";
+import { getAllUsers } from "../lib/users";
+import UsersTable from "../components/UsersTable";
 
 
 export default function Admin() {
@@ -28,6 +30,10 @@ export default function Admin() {
 
     const [query, setQuery] = React.useState("");
     const [filteredOrders, setFilteredOrders] = React.useState<Order[]>([]);
+
+    const [users, setUsers] = React.useState<User[]>([]);
+    const [userQuery, setUserQuery] = React.useState("");
+    const [filteredUsers, setFilteredUsers] = React.useState<User[]>([]);
 
     const { isAdmin } = useCurrentUser();
 
@@ -50,9 +56,19 @@ export default function Admin() {
         }
     }
 
+    const getAllUsersAsync = async () => {
+        try {
+            const users = (await getAllUsers())?.data;
+            setUsers(users);
+        } catch (err){
+            console.error(err);
+        }
+    }
+
     React.useEffect(() => {
         getAllOrdersAsync();
         getAllProductsAsync();
+        getAllUsersAsync();
     }, []);
 
     React.useEffect(() => {
@@ -64,6 +80,12 @@ export default function Admin() {
             setFilteredProducts(products?.filter((product) => product._id.includes(productQuery) || product.name?.includes(productQuery)));
         }
     }, [productQuery]);
+
+    React.useEffect(() => {
+        if (users) {
+            setFilteredUsers(users?.filter((user) => user._id.includes(userQuery) || user.name?.includes(userQuery) || user.email?.includes(userQuery)));
+        }
+    }, [userQuery]);
 
     
     if (!isAdmin){
@@ -109,6 +131,19 @@ export default function Admin() {
             </div>
         </Section>
             
+        <Section className="pt-20 h-full">
+            <h1 className="pb-4">All users</h1>
+            <Input
+                name="userId"
+                type="text"
+                placeholder="User ID or name or email"
+                value={userQuery}
+                className="mt-4"
+                onChange={(e: any) => setUserQuery(e.target.value)}
+            />
+
+            <UsersTable users={userQuery ? filteredUsers : users} setUsers={setUsers} />
+        </Section>
         </>
     );
 }

@@ -19,7 +19,7 @@ export type CategoryType = {
 
 export type User = {
     _id: string;
-    avatarUrl: string | null;
+    avatarUrl: string;
     email: string;
     name: string;
     createdAt: Date;
@@ -64,10 +64,10 @@ export const productFormSchema = z.object({
     categoryId: z.string(),
 })
 
-
-export type TProfileEditForm = z.infer<typeof productFormSchema>;
-
 export const categoryFormSchema = z.object({
     name: z.string().min(3, "Name must be at least 3 characters").max(50, "Name must be less than 50 characters"),
 })
 export type TCategoryForm = z.infer<typeof categoryFormSchema>;
+
+
+export type TProfileEditForm = z.infer<typeof productFormSchema>;
