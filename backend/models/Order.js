@@ -32,7 +32,4 @@ const orderSchema = new mongoose.Schema({
 );
 
 const Order = mongoose.model("Order", orderSchema);
-
-Order.populate("products.productId", "price name description imageUrl");
-
 export default Order;
