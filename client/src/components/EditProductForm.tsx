@@ -13,11 +13,14 @@ import { updateUser } from "../lib/auth";
 import { useNavigate } from "react-router-dom";
 import { Label } from "./Label";
 import InputError from "./InputError";
+import { Textarea } from "./Textarea";
+import { updateProduct } from "../lib/products";
 
 const profileEditForm = z.object({
     name: z.string().min(3, { message: "Name should be at least 3 characters long" }),
-    email: z.string().email({ message: "Please enter a valid email" }),
-    avatarUrl: z.any().optional(),
+    price: z.number().min(0, { message: "Price must be at least 0 UAH" }),
+    description: z.string().optional(),
+    productImageUrl: z.any().optional(),
 });
 
 type TProfileEditForm = z.infer<typeof profileEditForm>;
@@ -33,36 +36,16 @@ export default function EditProductForm({initialValues} : {initialValues: any}){
       resolver: zodResolver(profileEditForm),
       defaultValues: {
         name: initialValues.name,
-        email: initialValues.email,
-        avatarUrl: initialValues.avatarUrl,
+        price: initialValues.price,
+        description: initialValues.description,
+        productImageUrl: initialValues.imageUrl
       },
       mode: "onTouched",
     });
     const navigate = useNavigate();
-    async function onSubmit(values: TProfileEditForm){
-        try {
-            const formData = new FormData();
-            if (values.avatarUrl !== initialValues.avatarUrl)
-            {
-                if (inputType === 'file') {
-                    formData.append('file', values?.avatarUrl);
-                    formData.append('upload_preset', 'gwuh0xnp');
-                    const imageUploaded = await axios.post(
-                        'https://api.cloudinary.com/v1_1/dhnkvzuxk/image/upload',
-                        formData
-                    );
-                    values.avatarUrl = imageUploaded.data.secure_url;
-                
-                }
-            }
 
-            const res = await updateUser(values);
-            toast.success('Profile updated successfully');
-            navigate(0)
-        } catch (e: any) {
-            toast.error(e?.message || 'Something went wrong');
-        };
-  }
+    // TODO: make onSubmit async
+
     const toogleImageUrlDialog = () => {
       setOpenImageUrlDialog(!openImageUrlDialog);
     };
@@ -94,22 +77,28 @@ export default function EditProductForm({initialValues} : {initialValues: any}){
     }
 
     return (
-        <form className="space-y-4 overflow-y-auto" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="space-y-4 overflow-y-auto" >
           <div>
-            <Label>Username</Label>
+            <Label>Name</Label>
             <Input  {...form.register('name')}  />  
             {renderError('name')}
           </div>
           <div>
-            <Label>Email</Label>
-            <Input {...form.register('email')} />  
-            {renderError('email')}
+            <Label>Price</Label>
+            <Input {...form.register('price')} />  
+            {renderError('price')}
+          </div>
+
+          <div className="md:col-span-3 col-span-6">
+              <Label>Description</Label>
+              <Textarea placeholder="Description for product" {...form.register('description')}  />
+              {renderError('description')}
           </div>
 
             <Dialog open={openImageUrlDialog} onOpenChange={() => {
                   toogleImageUrlDialog();
-                  if (!form.getValues('avatarUrl')) {
-                    form.resetField('avatarUrl');
+                  if (!form.getValues('productImageUrl')) {
+                    form.resetField('productImageUrl');
                   }
                 } }>
                   <DialogContent>
@@ -121,12 +110,12 @@ export default function EditProductForm({initialValues} : {initialValues: any}){
                         Paste URL of your profile avatar here.
                       </DialogDescription>
                       <div>
-                        <Label>Profile avatar</Label>
+                        <Label>Product image</Label>
                         <Input 
-                          {...form.register('avatarUrl')} 
+                          {...form.register('productImageUrl')} 
                           value={imageUrlDialogTempInput} 
                           onChange={(e) => setImageUrlDialogTempInput(e.target.value)}/>  
-                          {renderError('avatarUrl')}                      
+                          {renderError('productImageUrl')}                      
                       </div>
                         
                       <DialogFooter>
@@ -135,7 +124,7 @@ export default function EditProductForm({initialValues} : {initialValues: any}){
                             className="bg-indigo-600 bg-opacity-70 transition-all hover:bg-indigo-500 mt-4 hover:bg-opacity-100 text-white px-4 py-2 rounded-md" 
                             disabled={!isValidURLImage(imageUrlDialogTempInput)}
                             onClick={() => {
-                              form.setValue("avatarUrl", imageUrlDialogTempInput);
+                              form.setValue("productImageUrl", imageUrlDialogTempInput);
                               setImageUrlDialogTempInput("");
                               setInputType("url");
                               setTempSrcUrlForFile(null);
@@ -161,8 +150,8 @@ export default function EditProductForm({initialValues} : {initialValues: any}){
                 {
                     <div className='w-full relative bg-gray-200 overflow-hidden rounded-lg'>
                         <div className="w-full h-full aspect-square">
-                        {tempSrcUrlForFile || form.getValues().avatarUrl ? (
-                            <img alt="avatar" src={tempSrcUrlForFile ?? form.getValues().avatarUrl} className="object-cover w-full h-full bg-center"/>
+                        {tempSrcUrlForFile || form.getValues().productImageUrl ? (
+                            <img alt="avatar" src={tempSrcUrlForFile ?? form.getValues().productImageUrl} className="object-cover w-full h-full bg-center"/>
                         ) : (
                             <FaUser className="w-full h-full"/>
                     
@@ -171,7 +160,7 @@ export default function EditProductForm({initialValues} : {initialValues: any}){
                         </div>
                         
                     <span className='text-xs flex items-center justify-center absolute right-2 top-3 hover:bg-red-500 bg-white/30 transition-colors cursor-pointer backdrop-blur-sm w-9 h-9 rounded-lg border border-black' onClick={() => {
-                        form.setValue('avatarUrl', '');
+                        form.setValue('productImageUrl', '');
                         if (inputType === 'file')
                         {
                         setTempSrcUrlForFile(null);
@@ -194,7 +183,7 @@ export default function EditProductForm({initialValues} : {initialValues: any}){
                             if (!e?.target?.files || !e.target.files[0]) {
                             return;
                             }
-                            form.setValue('avatarUrl', e?.target?.files[0]);
+                            form.setValue('productImageUrl', e?.target?.files[0]);
                             setImageUrlFromFile(e?.target?.files[0]);
                             setInputType("file");
                         }} type='file' />
