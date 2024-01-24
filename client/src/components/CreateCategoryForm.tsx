@@ -10,6 +10,7 @@ import InputError from "./InputError";
 import Button from "./Button";
 import { TCategoryForm, categoryFormSchema } from "../lib/types";
 import { useNavigate } from "react-router-dom";
+import { DialogClose } from "@radix-ui/react-dialog";
 
 
 
@@ -23,8 +24,7 @@ export default function CreateCategoryForm(){
 
     async function onSubmit(data: TCategoryForm) {
         try {
-            const res = await createCategory(data.name);
-            navigate(0);
+            await createCategory(data.name);
             toast.success('Category created successfully');
         } catch (e: any) {
             console.error(e)
@@ -38,7 +38,7 @@ export default function CreateCategoryForm(){
     }
 
     return (
-        <form onSubmit={form.handleSubmit(onSubmit)} className="gap-y-4 gap-x-3 grid grid-cols-6 overflow-y-auto overflow-x-visible px-1">
+        <form onSubmit={form.handleSubmit(onSubmit)}  className="gap-y-4 gap-x-3 grid grid-cols-6 overflow-y-auto overflow-x-visible px-1">
             <div className="md:col-span-4 col-span-6">
               <Label>Name*</Label>
               <Input placeholder="Category name..." {...form.register('name')} />  
@@ -46,13 +46,16 @@ export default function CreateCategoryForm(){
             </div>
 
             <DialogFooter className="col-span-6">
-                        <div>
-                          <Button type="submit">
-                            Save
-                          </Button>
-                
-                        </div>
-                </DialogFooter>
+              <DialogClose>
+                <div>
+                  <Button type="submit">
+                    Save
+                  </Button>
+        
+                </div>
+                  
+              </DialogClose>
+            </DialogFooter>
                
         </form>
     )
