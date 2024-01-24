@@ -60,9 +60,10 @@ export default function Admin() {
 
     return (
         <>
-        <Section className="h-full pt-20">
+        <Section className="pt-20">
             <h1 className="pb-4" >All Orders</h1>
             <Input
+                className="mb-4"
                 name="orderId"
                 type="text"
                 placeholder="Order ID"
@@ -72,12 +73,8 @@ export default function Admin() {
             <Orders setOrders={setOrders} orders={query ? filteredOrders : orders}/>
         </Section>
         
-        <Section className="h-full">
+        <Section className="mb-20">
             <div className="flex mt-20 gap-x-4 items-center">
-                
-                <h1 className="">
-                    Products 
-                </h1>
                 <Dialog>
                     <DialogTrigger>
                         <Button className="group flex items-center gap-x-1">
