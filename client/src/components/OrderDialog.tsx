@@ -9,7 +9,7 @@ import { removeFromOrder } from "../lib/order";
 import toast from "react-hot-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./Select";
 import { useCurrentUser } from "../hooks/useCurrentUser";
-import { updateOrderStatus } from "../lib/order";
+import { updateOrderStatus, updateOrderPaymentStatus } from "../lib/order";
 import ConfirmDialog from "./ConfirmDialog";
 
 interface OrderDialogProps {
@@ -29,6 +29,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
 }) => {
     const [selectedProduct, setSelectedProduct] = useState<OrderProduct | null>(null);
     const [status, setStatus] = useState(order?.status || 'pending');
+    const [paymentStatus, setPaymentStatus] = useState(order?.paymentStatus || 'pending');
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
 
     const { isAdmin } = useCurrentUser();
@@ -45,7 +46,19 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
             console.log(err);
         }
     };
-    
+
+    const handleUpdatePaymentStatus = async () => {
+        try {
+            if (order?._id) {
+                await updateOrderPaymentStatus(order?._id, paymentStatus);
+                setOrder({...order, paymentStatus});
+                updateOrder({...order, paymentStatus});
+                toast.success('Order payment status updated');
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
     
     function onConfirm(){
         if (selectedProduct?._id && order?._id)
@@ -87,20 +100,39 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                     Products below are the products that you have ordered.
                 </DialogDescription>
                 </DialogHeader>
-                <p className="mt-4">Status: {order?.status && <span className={statusColor(order?.status)}>{order.status}</span>}</p>
-                    {isAdmin && <>
-                    <Select onValueChange={(e) => setStatus(e)}>
-                        <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Status" />
-                        </SelectTrigger>
-                        <SelectContent className="text-white bg-black">
-                            <SelectItem value="ready">Ready</SelectItem>
-                            <SelectItem value="processing">Processing</SelectItem>
-                            <SelectItem value="cancelled">Cancelled</SelectItem>
-                        </SelectContent>
-                    </Select>
-                    <Button onClick={handleUpdateStatus} className="w-[180px] bg-green-500 hover:bg-green-600">Update</Button>
-                    </>}
+                <div className="flex gap-x-4">
+                    <div className="flex flex-col">
+                        <p className="mt-4 mb-1">Status: {order?.status && <span className={statusColor(order?.status)}>{order.status}</span>}</p>
+                        {isAdmin && <>
+                        <Select onValueChange={(e) => setStatus(e)}>
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Status" />
+                            </SelectTrigger>
+                            <SelectContent className="text-white bg-black">
+                                <SelectItem value="ready">Ready</SelectItem>
+                                <SelectItem value="processing">Processing</SelectItem>
+                                <SelectItem value="cancelled">Cancelled</SelectItem>
+                            </SelectContent>
+                        </Select>
+                        <Button onClick={handleUpdateStatus} className="w-[180px] bg-green-500 hover:bg-green-600 mt-4">Update</Button>
+                        </>}
+                    </div>
+                    <div className="flex flex-col">
+                        <p className="mt-4">Payment status: {order?.paymentStatus && <span className={statusColor(order?.paymentStatus)}>{order.paymentStatus}</span>}</p>
+                        {isAdmin && <>
+                        <Select onValueChange={(e) => setPaymentStatus(e)}>
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue placeholder="Status" />
+                            </SelectTrigger>
+                            <SelectContent className="text-white bg-black">
+                                <SelectItem value="pending">Pending</SelectItem>
+                                <SelectItem value="paid">Paid</SelectItem>
+                            </SelectContent>
+                        </Select>
+                        <Button onClick={handleUpdatePaymentStatus} className="w-[180px] bg-green-500 hover:bg-green-600 mt-4">Update</Button>
+                        </>}
+                    </div>
+                </div>
                 <Table>
                 <TableHeader>
                     <TableRow>

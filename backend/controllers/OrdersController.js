@@ -149,6 +149,31 @@ export const updateOrderStatus = async (req, res) => {
     }
 };
 
+export const updatePaymentStatus = async (req, res) => {
+    try {
+        const { orderId } = req.params;
+        const { paymentStatus } = req.body;
+
+        if (!paymentStatus) {
+            return res.status(400).json({ message: 'Missing payment status' });
+        }
+
+        const order = await Order.findById(orderId);
+
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        order.paymentStatus = paymentStatus;
+
+        await order.save();
+
+        res.status(200).json({ message: 'Payment status updated successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 export const getAllOrders = async (req, res) => {
     try {
         const orders = await Order.find().populate('userId').populate('products.productId');
