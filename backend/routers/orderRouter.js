@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/', checkAuth, getAllOrdersByUserId);
 router.get('/all', checkAuth, checkAdmin, getAllOrders);
 router.get('/:orderId', checkAuth, checkAdmin, getOrderById);
-router.post('/:productId', checkAuth, checkAdmin, addToOrder);
+router.post('/:productId', checkAuth, addToOrder);
 router.delete('/product/:productId', checkAuth, deleteOrderProduct);
 router.delete('/:orderId', checkAuth, checkAdmin, deleteOrder);
 router.put('/:orderId', checkAuth, checkAdmin, updateOrderStatus);

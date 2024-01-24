@@ -48,3 +48,7 @@ export const statusColor = (status: string) => {
       return "text-yellow-500";
   }
 }
+
+export const displayDateTime = (date: Date) => {
+  return new Intl.DateTimeFormat('ua-UA').format(date);
+}

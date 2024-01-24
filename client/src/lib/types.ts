@@ -43,6 +43,9 @@ export type OrderProduct = {
     _id: string;
     productId: ProductCardType; 
     quantity: number;
+    createdAt: Date;
+    updatedAt: Date;
+    
 }
 
 

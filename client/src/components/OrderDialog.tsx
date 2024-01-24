@@ -108,7 +108,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                     <TableHead>Price</TableHead>
                     <TableHead>Quantity</TableHead>
                     <TableHead>Total</TableHead>
-                    <TableHead className="text-center">Action</TableHead>
+                    <TableHead>CreatedAt</TableHead>
 
                     </TableRow>
                 </TableHeader>
@@ -116,23 +116,12 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                     {order?.products?.map((orderedProduct: OrderProduct) => {
                     return (
                         <TableRow key={orderedProduct._id}>
-                        <TableCell>{orderedProduct.productId.name}</TableCell>
-                        <TableCell>{formatter.format(orderedProduct.productId.price)}</TableCell>
-                        <TableCell>{orderedProduct.quantity}</TableCell>
-                        <TableCell>{formatter.format(orderedProduct.quantity * orderedProduct.productId.price)}</TableCell>
+                            <TableCell>{orderedProduct.productId.name}</TableCell>
+                            <TableCell>{formatter.format(orderedProduct.productId.price)}</TableCell>
+                            <TableCell>{orderedProduct.quantity}</TableCell>
+                            <TableCell>{formatter.format(orderedProduct.quantity * orderedProduct.productId.price)}</TableCell>
+                            <TableCell>{orderedProduct.createdAt.toLocaleDateString()}</TableCell>
                         
-                        <TableCell 
-                            onClick={() => {
-                                setSelectedProduct(orderedProduct)
-                                setOpen(true);    
-                            }} 
-                            className="text-center cursor-pointer hover:text-red-400 transition-colors"
-                        >
-                            <div className="flex justify-center items-center">
-                                <Trash2 className="h-4 w-4 cursor-pointer hover:text-red-400 transition-colors"/>
-                            
-                            </div>
-                        </TableCell>
                         </TableRow>
                     )
                     })}
