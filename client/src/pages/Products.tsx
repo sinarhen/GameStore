@@ -30,7 +30,6 @@ export default function Products(){
       getAllProducts()
         .then((response) => {
           if (!response.data.length) {
-            toast.error("No products found");
             setError("No products found.");
             return;
           }
@@ -54,7 +53,7 @@ export default function Products(){
       return <Loading />;
     }
   
-    if (!products){
+    if (!products?.length){
         return <NotFound helperText={error ?? "No products now"} buttonText="Refresh" buttonAction={() => window.location.reload()} />;
     }
 

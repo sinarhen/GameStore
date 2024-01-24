@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom"
 
 export default function NotFound({
+    title="Items not found.",
     helperText = "Please try again later.",
     buttonText,
     buttonAction
 }: {
+    title?: string;
     helperText?: string;
     buttonText?: string;
     buttonAction?: () => void;

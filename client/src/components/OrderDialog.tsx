@@ -100,7 +100,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                     Products below are the products that you have ordered.
                 </DialogDescription>
                 </DialogHeader>
-                <div className="flex justify-between gap-x-4">
+                <div className="flex gap-x-4">
                     <div className="flex flex-col">
                         <p className="mt-4 mb-1">Status: {order?.status && <span className={statusColor(order?.status)}>{order.status}</span>}</p>
                         {isAdmin && <>

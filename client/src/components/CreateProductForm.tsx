@@ -4,7 +4,6 @@ import Input from "./Input";
 import toast from "react-hot-toast";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./Dialog";
 import { Trash2 } from "lucide-react";
 import { FaUser } from "react-icons/fa";
@@ -35,10 +34,11 @@ export default function CreateProductForm(){
             if (values.imageUrl)
             {
                 if (inputType === 'file') {
-                    values.imageUrl = uploadImageToCloud(values.imageUrl);
+                  console.log("filom")
+                    values.imageUrl = await uploadImageToCloud(values.imageUrl);
+                    console.log(values.imageUrl)
                 }
             }
-
             const res = await createProduct(values);
             console.log(res)
             toast.success('Product created successfully');
@@ -77,7 +77,6 @@ export default function CreateProductForm(){
       return form.formState.errors[fieldName]?.message && <InputError>{String(form.formState.errors[fieldName]?.message)}</InputError>;
     }
 
-    console.log(form.getValues())
     return (
         <form className="gap-y-4 gap-x-3 grid grid-cols-6 overflow-y-auto overflow-x-visible px-1" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="md:col-span-4 col-span-6">

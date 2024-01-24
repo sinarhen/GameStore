@@ -7,7 +7,6 @@ function validate(method) {
                 check('name', 'Name is required').notEmpty().isLength({ min: 3 }),
                 check('description', 'Description is required').optional(),
                 check('price', 'Price is required').isNumeric().isFloat({ min: 0, max: 100000}),
-                check('imageUrl', 'Image URL is required').optional().isURL(),
             ];
         }
     }

@@ -62,10 +62,12 @@ export async function uploadImageToCloud(imageMeta: string){
   const formData = new FormData();
 
   formData.append('file', imageMeta);
+  console.log(imageMeta)
   formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET as string);
   const imageUploaded = await axios.post(
       process.env.REACT_APP_CLOUDINARY_URL as string,
       formData
   );
+  console.log(imageUploaded.data.secure_url)
   return imageUploaded.data.secure_url;
 }
