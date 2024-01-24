@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import { headerName } from "./constants";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
+import axios from "axios";
 
 
 export function isValidURLImage(url: string) {
@@ -55,4 +56,16 @@ export const statusColor = (status: string) => {
 
 export const displayDateTime = (date: Date) => {
   return new Intl.DateTimeFormat('ua-UA').format(date);
+}
+
+export async function uploadImageToCloud(imageMeta: string){
+  const formData = new FormData();
+
+  formData.append('file', imageMeta);
+  formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET as string);
+  const imageUploaded = await axios.post(
+      process.env.REACT_APP_CLOUDINARY_URL as string,
+      formData
+  );
+  return imageUploaded.data.secure_url;
 }

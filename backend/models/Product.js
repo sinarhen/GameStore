@@ -21,7 +21,6 @@ const productSchema = new mongoose.Schema({
     categoryId: {
         type: String,
         ref: 'Category', 
-        required: true
     }
 }, {
     timestamps: true

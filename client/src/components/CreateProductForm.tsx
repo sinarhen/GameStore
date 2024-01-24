@@ -8,7 +8,7 @@ import axios from "axios";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./Dialog";
 import { Trash2 } from "lucide-react";
 import { FaUser } from "react-icons/fa";
-import { isValidURLImage } from "../lib/utils";
+import { isValidURLImage, uploadImageToCloud } from "../lib/utils";
 import { TProfileEditForm, productFormSchema } from "../lib/types";
 import { createProduct } from "../lib/products";
 import { Textarea } from "./Textarea";
@@ -32,19 +32,10 @@ export default function CreateProductForm(){
     const navigate = useNavigate();
     async function onSubmit(values: TProfileEditForm){
         try {
-            const formData = new FormData();
             if (values.imageUrl)
             {
                 if (inputType === 'file') {
-                    formData.append('file', values?.imageUrl);
-                    formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET as string);
-                    console.log(process.env.REACT_APP_CLOUDINARY_URL)
-                    const imageUploaded = await axios.post(
-                        process.env.REACT_APP_CLOUDINARY_URL as string,
-                        formData
-                    );
-                    values.imageUrl = imageUploaded.data.secure_url;
-            
+                    values.imageUrl = uploadImageToCloud(values.imageUrl);
                 }
             }
 

@@ -9,7 +9,6 @@ import { Label } from "./Label";
 import InputError from "./InputError";
 import Button from "./Button";
 import { TCategoryForm, categoryFormSchema } from "../lib/types";
-import { useNavigate } from "react-router-dom";
 import { DialogClose } from "@radix-ui/react-dialog";
 
 
@@ -20,7 +19,6 @@ export default function CreateCategoryForm(){
       resolver: zodResolver(categoryFormSchema),
       mode: "onTouched",
     });
-    const navigate = useNavigate();
 
     async function onSubmit(data: TCategoryForm) {
         try {
