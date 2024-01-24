@@ -1,6 +1,5 @@
 import Banner from '../components/Banner';
-import { motion, useScroll } from 'framer-motion';
-import { HTMLAttributes, useEffect, useRef, useState } from 'react';
+import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Section from '../components/Section';
 import AnimatedSeparator from '../components/AnimatedSeparator';

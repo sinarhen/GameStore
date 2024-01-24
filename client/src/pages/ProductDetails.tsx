@@ -12,6 +12,8 @@ import AnimatedSeparator from "../components/AnimatedSeparator";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import { addToOrder } from "../lib/order";
+import { useAuthDialog } from "../hooks/useAuthDialog";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 
 export default function ProductDetails(){
@@ -19,6 +21,9 @@ export default function ProductDetails(){
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [inputValue, setInputValue] = useState<number>(1);
+
+    const { user } = useCurrentUser();
+    const { openAuthDialog } = useAuthDialog();
 
     const appearDuration = 0.7;
     const params = useParams();
@@ -49,6 +54,7 @@ export default function ProductDetails(){
         }
     }, [error])
 
+
     if (loading){
         return Loading();
     }
@@ -61,15 +67,25 @@ export default function ProductDetails(){
             setInputValue(1);
             setError("You must add at least 1 item to your order")
         }
+        if (value > 100){
+            setInputValue(100);
+            setError("You can't add more than 100 items to your order")
+        }
         else{
             setInputValue(value);
         }
     }
 
     function onSubmit(){
+
         if (!inputValue)
         {
             toast.error("You must add at least 1 item to your order");
+            return;
+        }
+        if (!user)
+        {
+            openAuthDialog('login');
             return;
         }
         try {
