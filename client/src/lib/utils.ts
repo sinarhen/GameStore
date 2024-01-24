@@ -44,6 +44,10 @@ export const statusColor = (status: string) => {
       return "text-green-500";
     case "cancelled":
       return "text-red-500";
+    case "processing":
+      return "text-blue-500";
+    case "paid":
+      return "text-green-500";
     default:
       return "text-yellow-500";
   }
