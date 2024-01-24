@@ -69,7 +69,7 @@ export default function ProductsTable({
             <TableRow key={product._id}>
               <TableCell className="overflow-hidden">{product._id}</TableCell>
               <TableCell className="text-center w-full">{product.name}</TableCell>
-              <TableCell className="text-center w-full">{product.categoryId.name}</TableCell>
+              <TableCell className="text-center w-full">{product.categoryId?.name ?? "None"}</TableCell>
               <TableCell className="text-right w-full">
                 <div className="flex gap-x-1 justify-center items-center">
                   <div 

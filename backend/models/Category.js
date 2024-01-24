@@ -17,6 +17,9 @@ const categorySchema = new mongoose.Schema({
         timestamps: true
     },
 );
-
+categorySchema.pre('remove', function(next) {
+    this.model('Product').updateMany({ categoryId: this._id }, { $unset: { categoryId: "" } }, next);
+});
 const Category = mongoose.model("Category", categorySchema);
+
 export default Category;

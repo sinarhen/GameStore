@@ -5,5 +5,7 @@ export async function getAllCategories() {
 };
 
 export async function createCategory(name: any) {
-    return await http.post('/category', name, true);
+    return await http.post('/category', {
+        name
+    }, true);
 };

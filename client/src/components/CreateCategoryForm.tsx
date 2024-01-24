@@ -24,7 +24,6 @@ export default function CreateCategoryForm(){
     async function onSubmit(data: TCategoryForm) {
         try {
             const res = await createCategory(data.name);
-            console.log(res);
             navigate(0);
             toast.success('Category created successfully');
         } catch (e: any) {
@@ -38,7 +37,6 @@ export default function CreateCategoryForm(){
       return form.formState.errors[fieldName]?.message && <InputError>{String(form.formState.errors[fieldName]?.message)}</InputError>;
     }
 
-    console.log(form.getValues());
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} className="gap-y-4 gap-x-3 grid grid-cols-6 overflow-y-auto overflow-x-visible px-1">
             <div className="md:col-span-4 col-span-6">
