@@ -33,7 +33,13 @@ async function getAllProducts(req, res) {
     }
 
     try {
-        const products = await query.populate('categoryId').exec();
+        
+        const products = await query
+        .populate({
+          path: 'categoryId',
+          match: { categoryId: { $exists: true } }
+        })
+        .exec();
         res.json(products);
     } catch (err) {
         res.status(500).send(err);
@@ -47,6 +53,10 @@ async function getProductById(req, res) {
     try {
         const product = await Product.findById(id);
         if (product) {
+            await product.populate({
+                path: 'categoryId',
+                match: { categoryId: { $exists: true } }
+            }).execPopulate();
             res.json(product);
         } else {
             res.status(404).json({ message: 'Product not found' });
@@ -71,7 +81,7 @@ async function createProduct(req, res) {
             description,
             price,
             imageUrl,
-            categoryId,
+            categoryId: categoryId || null,
         });
 
         res.json(product);
