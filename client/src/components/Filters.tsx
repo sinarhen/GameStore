@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ProductCardType } from "../lib/types";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./Select";
 
 export default function Filters({products, onProductsChange}: {
     products: ProductCardType[];
@@ -33,23 +34,40 @@ export default function Filters({products, onProductsChange}: {
         }
         return filteredProducts;
     }
+
+    function clearFilters() {
+        setFilterBy('price');
+        setOrderBy('asc');
+    };
     return (
         <>
                         <div className="flex justify-between  text-sm items-center w-full py-10">
-                        <div className="flex gap-x-2">
+                        <div className="flex items-center  gap-x-2">
                             <span>Filter by</span>
-                            <select onChange={(e) => setFilterBy(e.target.value)} className="border-2 text-black border-gray-400 rounded-md">
-                                <option value="price">Price</option>
-                                <option value="name">Name</option>
-                                <option value="date">Date</option>
-                            </select>
+                            <Select onValueChange={setFilterBy}>
+                                <SelectTrigger className="w-[100px]">
+                                    <SelectValue placeholder="---------" />
+                                </SelectTrigger>
+                                <SelectContent className="text-white bg-black">
+                                    <SelectItem value="price">Price</SelectItem>
+                                    <SelectItem value="name">Name</SelectItem>
+                                    <SelectItem value="date">Date</SelectItem>
+                                </SelectContent>
+                            </Select>
+                            
                         </div>
-                        <div className="flex gap-x-2">
+                        <div className="flex gap-x-2 items-center">
                             <span>Order by</span>
-                            <select onChange={(e) => setOrderBy(e.target.value)} className="border-2  text-black border-gray-400 rounded-md">
-                                <option value="asc">Ascending</option>
-                                <option value="desc">Descending</option>
-                            </select>
+                            
+                            <Select onValueChange={setOrderBy}>
+                                <SelectTrigger className="w-[100px]">
+                                    <SelectValue placeholder="-------" />
+                                </SelectTrigger>
+                                <SelectContent className="text-white bg-black">
+                                    <SelectItem value="asc">Pending</SelectItem>
+                                    <SelectItem value="desc">Paid</SelectItem>
+                                </SelectContent>
+                            </Select>
                         </div>
                 </div>
         </>

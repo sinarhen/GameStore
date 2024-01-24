@@ -13,6 +13,7 @@ import CreateProductForm from '../components/CreateProductForm';
 import Orders from '../components/Orders';
 import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import { useCurrentUser } from "../hooks/useCurrentUser";
+import Header from "../components/Header";
 
 
 export default function Admin() {
@@ -26,6 +27,7 @@ export default function Admin() {
     const [filteredOrders, setFilteredOrders] = React.useState<Order[]>([]);
 
     const { isAdmin } = useCurrentUser();
+
 
     const getAllOrdersAsync = async () => {
         try {
@@ -60,6 +62,11 @@ export default function Admin() {
         }
     }, [productQuery]);
 
+    
+    if (!isAdmin){
+        return <Header baseText="You are not an admin" />
+    }
+    
     return (
         <>
         <Section className="pt-20">

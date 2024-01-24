@@ -81,7 +81,6 @@ export default function Products(){
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = filteredProducts?.slice(indexOfFirstItem, indexOfLastItem);
 
-    
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
     return(
@@ -99,17 +98,17 @@ export default function Products(){
                 
                 <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:grid-cols-4  gap-4 w-full">
                     {currentItems && currentItems.map((product: ProductCardType, index: number) => (
-                                      <motion.div
-                                      key={product?._id + index + selectedCategory}
-                                      initial={{ opacity: 0 }}
-                                      animate={{ opacity: 1 }}
-                                      className="w-full h-full"
-                                      exit={{ opacity: 0 }}
-                                      transition={{ delay: appearDuration+ index * 0.05, duration: appearDuration}}
-                                    >
-                                        <ProductCard product={product}/>
+                        <motion.div
+                            key={product?._id + index + selectedCategory}
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            className="w-full h-full"
+                            exit={{ opacity: 0 }}
+                            transition={{ delay: appearDuration+ index * 0.05, duration: appearDuration}}
+                        >
+                            <ProductCard product={product}/>
 
-                                    </motion.div>
+                        </motion.div>
 
                     )
                     )}
