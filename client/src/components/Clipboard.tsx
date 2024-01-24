@@ -9,7 +9,11 @@ export default function Clipboard({text}: {
         toast.success("Copied to clipboard")
     }
     return (
-        <LuClipboardSignature onClick={onClick} className="w-4 h-4 cursor-pointer text-white hover:text-gray-400 transition-colors" />
+
+        <span>
+            <LuClipboardSignature onClick={onClick} className="w-4 h-4 cursor-pointer text-white hover:text-gray-400 transition-colors" />
+
+        </span>
 
     )
 }

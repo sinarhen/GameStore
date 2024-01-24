@@ -19,10 +19,6 @@ import { AuthDialogProvider } from "./contexts/AuthDialogContext";
 function App() {
 
   return (
-    <AuthProvider>
-      <FavoritesProvider>
-        <AuthDialogProvider>
-
           <div className="w-full 
           mandatory-enabled overflow-y-scroll  
           h-full text-white bg-neutral-900">
@@ -34,7 +30,7 @@ function App() {
                 mx-auto 
                 h-full
                 xl:px-36 px-4 sm:px-6 lg:px-8 pt-24">
-
+                  
                   <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/products' element={<Products/>} />
@@ -51,11 +47,6 @@ function App() {
             </Router>
           </div>
 
-        </AuthDialogProvider>
-      </FavoritesProvider>
-      
-      <Toaster position="bottom-right" />
-    </AuthProvider>
       );
 }
 

@@ -3,6 +3,7 @@ import { User } from "../lib/types";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./Dialog"
 import Button from "./Button";
 import Clipboard from "./Clipboard";
+import { ChevronsDown, ChevronsUp } from "lucide-react";
 
 
 interface UserDialogProps {
@@ -16,7 +17,6 @@ const UserDialog: React.FC<UserDialogProps> = ({
     setOpen,
     user
 }) => {
-
     return (
         <>
             <Dialog open={open} onOpenChange={() => setOpen(false)}>
@@ -37,9 +37,16 @@ const UserDialog: React.FC<UserDialogProps> = ({
 
                             <div className="flex justify-between items-center">
                                 <p className="text-gray-500 text-lg">Role: <span className="text-indigo-600">{user?.role}</span></p>
-                                <Button className="px-2 py-1 bg-indigo-600">
-                                    ^
-                                </Button>
+                                <div className="flex gap-x-2">
+                                    <Button className="p-1 group bg-green-600 hover:bg-green-500">
+                                        <ChevronsUp className={user?.role == 'user' ? "group-hover:animate-pulse" : ""}/>
+                                    </Button>
+                                    <Button disabled={user?.role != "admin"} className="p-1 group bg-red-600 hover:bg-red-500">
+                                        <ChevronsDown className={user?.role == "admin" ?"group-hover:animate-pulse " : ""}/>
+                                    </Button>
+                                    
+                                </div>
+                                
                             </div>
                             
                         </div>
