@@ -1,5 +1,4 @@
 import Input from "../components/Input";
-import Button from "../components/Button";
 import ProductsTable from "../components/ProductsTable";
 
 import React from "react";
@@ -7,14 +6,9 @@ import { getAllOrders } from "../lib/order";
 import { getAllProducts } from "../lib/products";
 import { Order, ProductCardType, User } from "../lib/types";
 import Section from "../components/Section";
-import { PlusCircle } from "lucide-react";
-import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "../components/Dialog";
-import CreateProductForm from '../components/CreateProductForm';
 import Orders from '../components/Orders';
-import { DialogDescription, DialogTitle } from "@radix-ui/react-dialog";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import Header from "../components/Header";
-import CreateCategoryForm from "../components/CreateCategoryForm";
 import CreateProductDialog from "../components/CreateProductDialog";
 import CreateCategoryDialog from "../components/CreateCategoryDialog";
 import { getAllUsers } from "../lib/users";
