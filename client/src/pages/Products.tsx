@@ -19,7 +19,7 @@ export default function Products(){
     const [loading, setLoading] = useState<boolean>(true);
     const [selectedCategory, setSelectedCategory] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [itemsPerPage, setItemsPerPage] = useState<number>(2);
+    const [pageSize, setPageSize] = useState<number>(10);
     
     const [error, setError] = useState<string | null>(null);
     const [filteredProducts, setFilteredProducts] = useState<ProductCardType[] | null>(null);
@@ -57,8 +57,8 @@ export default function Products(){
         return <NotFound helperText={error ?? "No products now"} buttonText="Refresh" buttonAction={() => window.location.reload()} />;
     }
 
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const indexOfLastItem = currentPage * pageSize;
+    const indexOfFirstItem = indexOfLastItem - pageSize;
     const currentItems = filteredProducts?.slice(indexOfFirstItem, indexOfLastItem);
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
   
@@ -73,7 +73,7 @@ export default function Products(){
                   exit={{ opacity: 0 }}
                   transition={{ delay: appearDuration + delay, duration: appearDuration}}
                 >
-                  <Filters setLoading={setLoading} setError={setError} products={products} onProductsChange={setFilteredProducts}/>
+                <Filters pageSize={pageSize} setPageSize={setPageSize} setLoading={setLoading} setError={setError} products={products} onProductsChange={setFilteredProducts}/>
 
                 </motion.div>
 
@@ -100,7 +100,7 @@ export default function Products(){
                       
                 ) : <NotFound helperText="No products found"  />}
                 <Pagination 
-                    itemsPerPage={itemsPerPage} 
+                    pageSize={pageSize} 
                     totalItems={filteredProducts?.length ?? products.length} 
                     paginate={paginate} 
                     currentPage={currentPage}

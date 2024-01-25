@@ -265,14 +265,14 @@ export const getMe = async (req, res) => {
 
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
         const userId = decodedToken._id;
-
         const user = await UserModel.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
+        const loginRequired = decodedToken.role != user.role;
         const { passwordHash, ...userData } = user._doc;
 
-        res.json(userData);
+        res.json({...userData, loginRequired});
     } catch (err) {
         console.log(err);
         res.status(500).json({ message: 'Failed to get user' });

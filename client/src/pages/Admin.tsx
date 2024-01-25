@@ -19,6 +19,7 @@ import CreateProductDialog from "../components/CreateProductDialog";
 import CreateCategoryDialog from "../components/CreateCategoryDialog";
 import { getAllUsers } from "../lib/users";
 import UsersTable from "../components/UsersTable";
+import toast from "react-hot-toast";
 
 
 export default function Admin() {
@@ -42,8 +43,12 @@ export default function Admin() {
         try {
             const orders = (await getAllOrders())?.data;
             setOrders(orders);
-        } catch (err){
+        } catch (err: any){
             console.error(err);
+            if (err.response.status === 403 && isAdmin)
+            {
+                toastRelogin();
+            }
         }
     }
 
@@ -51,17 +56,32 @@ export default function Admin() {
         try {
             const products = (await getAllProducts())?.data;
             setProducts(products);
-        } catch (err){
+        } catch (err: any){
             console.error(err);
+            if (err.response.status === 403 && isAdmin)
+            {
+                toastRelogin();
+            }
         }
+    }
+
+    const toastRelogin = () => {
+        toast.error("It seems you were promoted to admin. But you need to log out and log in again to see the changes.", {id: "relogin"})
     }
 
     const getAllUsersAsync = async () => {
         try {
             const users = (await getAllUsers())?.data;
             setUsers(users);
-        } catch (err){
+        } catch (err: any){
             console.error(err);
+            if (err?.response?.status)
+            {
+                if (err.response.status === 403 && isAdmin)
+                {
+                    toastRelogin();
+                }
+            }
         }
     }
 

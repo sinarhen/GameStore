@@ -1,16 +1,16 @@
 import React from 'react';
 
 type PaginationProps = {
-    itemsPerPage: number;
+    pageSize: number;
     totalItems: number;
     paginate: (pageNumber: number) => void;
     currentPage: number;
 };
 
-const Pagination: React.FC<PaginationProps> = ({ itemsPerPage, totalItems, paginate, currentPage }) => {
+const Pagination: React.FC<PaginationProps> = ({ pageSize, totalItems, paginate, currentPage }) => {
     const pageNumbers = [];
 
-    for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
+    for (let i = 1; i <= Math.ceil(totalItems / pageSize); i++) {
         pageNumbers.push(i);
     }
 

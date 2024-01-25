@@ -14,15 +14,16 @@ const sortByPrice = (a: ProductCardType, b: ProductCardType) => a.price - b.pric
 const sortByName = (a: ProductCardType, b: ProductCardType) => a.name.localeCompare(b.name);
 const sortByDate = (a: ProductCardType, b: ProductCardType) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
 
-export default function Filters({products, onProductsChange, setLoading, setError}: {
+export default function Filters({products, pageSize, onProductsChange, setLoading, setError, setPageSize}: {
     products: ProductCardType[];
+    pageSize: number;
+    setPageSize: (size: number) => void;
     onProductsChange: (
         products: ProductCardType[]
     ) => void;
     setLoading: (loading: boolean) => void;
     setError: (error: string) => void;
 }){
-    const [filterBy, setFilterBy] = useState<string>('price');
     const [orderBy, setOrderBy] = useState<string>('asc');
     const [categories, setCategories] = useState<CategoryType[] | null>(null);
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -32,7 +33,7 @@ export default function Filters({products, onProductsChange, setLoading, setErro
             const filteredProducts = sortProducts(products);
             onProductsChange(filteredProducts);
         }
-    }, [filterBy, orderBy, products]);
+    }, [pageSize, orderBy, products]);
 
     useEffect(() => {
         if (selectedCategory && products) {
@@ -42,36 +43,51 @@ export default function Filters({products, onProductsChange, setLoading, setErro
         }
       }, [selectedCategory, products]);
 
-    function sortProducts(products: ProductCardType[]) {
-        let filteredProducts = [...products];
-        if (filterBy === 'price') {
-            filteredProducts.sort(sortByPrice);
-        } else if (filterBy === 'name') {
-            filteredProducts.sort(sortByName);
-        } else if (filterBy === 'date') {
-            filteredProducts.sort(sortByDate);
+      function sortProducts(products: ProductCardType[]) {
+        let sortedProducts = [...products];
+        switch (orderBy) {
+            case 'price_asc':
+                sortedProducts.sort(sortByPrice);
+                break;
+            case 'price_desc':
+                sortedProducts.sort(sortByPrice).reverse();
+                break;
+            case 'name_asc':
+                sortedProducts.sort(sortByName);
+                break;
+            case 'name_desc':
+                sortedProducts.sort(sortByName).reverse();
+                break;
+            case 'date_asc':
+                sortedProducts.sort(sortByDate);
+                break;
+            case 'date_desc':
+                sortedProducts.sort(sortByDate).reverse();
+                break;
         }
-    
-        if (orderBy === 'desc') {
-            filteredProducts.reverse();
-        }
-        return filteredProducts;
+        return sortedProducts;
     }
 
     function clearFilters() {
-        setFilterBy('price');
         setOrderBy('asc');
+        setPageSize(10)
         setSelectedCategory(null);
     };
 
-    const filterByOptions = [
-        { label: 'Price', value: 'price' },
-        { label: 'Name', value: 'name' },
-        { label: 'Date', value: 'date' },
+    const sortByOptions = [
+        { label: 'Price (Lowest first)', value: 'price_asc' },
+        { label: 'Price (Highest first)', value: 'price_desc' },
+        { label: 'A-Z', value: 'name_asc' },
+        { label: 'Z-A', value: 'name_desc' },
+        { label: 'Recently added', value: 'date_desc' },
+        { label: 'Oldest by date', value: 'date_asc' },
     ];
-    const orderByOptions = [
-        { label: 'Ascending', value: 'asc' },
-        { label: 'Descending', value: 'desc' },
+    const pageSizeOptions = [
+        { label: '10', value: 10 },
+        { label: '20', value: 20 },
+        { label: '30', value: 30 },
+        { label: '40', value: 40 },
+        { label: '50', value: 50 },
     ];
 
     useEffect(() => {
@@ -86,33 +102,38 @@ export default function Filters({products, onProductsChange, setLoading, setErro
             setError(`Something went wrong while fetching categories: ${error.message}`);
           });
       }, []);
-      console.log(selectedCategory, filterBy, orderBy)
+
+    const isFilterApplied = (selectedCategory != null || pageSize !== 10 || orderBy !== 'price_asc' )
+    console.log(isFilterApplied)
+    console.log(selectedCategory, pageSize, orderBy)
     return (
         <>
-            <div className="flex justify-between  text-sm items-center w-full py-10">
+            <div className="flex flex-col sm:flex-row gap-y-4 justify-between  text-sm items-center w-full sm:py-10 py-4">
                 <div className="flex items-center  gap-x-2">
-                    <span>Filter</span>
-                    <Select onValueChange={setFilterBy}>
+                    <span>Items</span>
+                    <Select defaultValue="10" onValueChange={(val) => setPageSize(parseInt(val))}>
                         <SelectTrigger className="w-[100px]">
                             <SelectValue placeholder="---------" />
                         </SelectTrigger>
                         <SelectContent className="text-white bg-black">
-                            {filterByOptions.map((option) => (
-                                <SelectItem key={option.value} value={option.value}>
+                            {pageSizeOptions.map((option) => (
+                                <SelectItem key={option.value} value={`${option.value}`}>
                                     {option.label}
                                 </SelectItem>
                             ))}
+                            
                         </SelectContent>
                     </Select>
                 </div>
-                <div className="flex gap-x-2 items-center">
-                    <span>Order</span>
-                    <Select onValueChange={setOrderBy}>
-                        <SelectTrigger className="w-[140px]">
-                            <SelectValue placeholder="-------" />
+
+                <div className="flex items-center  gap-x-2">
+                    <span>Filter</span>
+                    <Select defaultValue="price_asc" onValueChange={setOrderBy}>
+                        <SelectTrigger className="w-[100px]">
+                            <SelectValue placeholder="---------" />
                         </SelectTrigger>
                         <SelectContent className="text-white bg-black">
-                            {orderByOptions.map((option) => (
+                        {sortByOptions.map((option) => (
                                 <SelectItem key={option.value} value={option.value}>
                                     {option.label}
                                 </SelectItem>
@@ -138,11 +159,11 @@ export default function Filters({products, onProductsChange, setLoading, setErro
                       </motion.div>
                     ))}
                 </div>
-                {(selectedCategory != null || filterBy !== 'price' || orderBy !== 'asc' )&& (
-                    <p onClick={clearFilters} className="flex text-sm items-center hover:bg-gray-400 sm:hover:bg-transparent rounded-full p-8 sm:bg-transparent sm:rounded-none sm:p-0 bg-gray-300 cursor-pointer text-gray-600 mt-4 absolute right-2 bottom-4 z-50 hover:underline sm:relative justify-center gap-x-2 w-max">    
+                {isFilterApplied && (
+
+                    <p onClick={clearFilters} className={"text-sm items-center hover:bg-gray-400 sm:hover:bg-transparent rounded-full p-8 sm:bg-transparent sm:rounded-none sm:p-0 bg-gray-300 cursor-pointer text-gray-600 absolute right-2 bottom-4 z-50 hover:underline sm:relative justify-center gap-x-2 w-max"}>    
                         <PiBroom className="h-4 w-4"/> <span className="hidden sm:flex">Clear</span> 
                     </p>
-
                 )}
        
             </div>
