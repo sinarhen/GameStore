@@ -69,8 +69,8 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
     }
 
     function clearFilters() {
-        setOrderBy('asc');
-        setPageSize(10)
+        setOrderBy('price_asc');
+        setPageSize(10);
         setSelectedCategory(null);
     };
 

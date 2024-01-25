@@ -32,7 +32,6 @@ export default function Admin() {
 
     const { isAdmin, user } = useCurrentUser();
 
-    console.log(user)
     const getAllOrdersAsync = async () => {
         try {
             const orders = (await getAllOrders())?.data;
@@ -86,7 +85,7 @@ export default function Admin() {
             getAllProductsAsync();
             getAllUsersAsync();
         }
-    }, []);
+    }, [user]);
 
     React.useEffect(() => {
         setFilteredOrders(orders.filter((order) => order._id.includes(query)));
