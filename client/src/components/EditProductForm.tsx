@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect, useState } from "react";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./Dialog";
 import Input from "./Input";
 import * as z from "zod";
@@ -10,7 +10,6 @@ import { isValidURLImage } from "../lib/utils";
 import { Trash2 } from "lucide-react";
 import { FaUser } from "react-icons/fa";
 import { updateUser } from "../lib/auth";
-import { useNavigate } from "react-router-dom";
 import { Label } from "./Label";
 import InputError from "./InputError";
 import { Textarea } from "./Textarea";
@@ -42,25 +41,14 @@ export default function EditProductForm({initialValues} : {initialValues: any}){
       },
       mode: "onTouched",
     });
-    const navigate = useNavigate();
-
-    // TODO: make onSubmit async
 
     const toogleImageUrlDialog = () => {
       setOpenImageUrlDialog(!openImageUrlDialog);
     };
     
-    const setImageUrlFromFile = useCallback((file: File | null | undefined): void => {
-      if (!file) {
-        return;
-      }
-  
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setTempSrcUrlForFile(reader.result as string);
-      };
-    }, [setTempSrcUrlForFile]);
+    const memorizedSetImageUrlFromFile = useCallback((file: File | null | undefined) => {
+      setImageUrlFromFile(file, setTempSrcUrlForFile);
+  }, [setTempSrcUrlForFile]);
 
     const [isMounted, setIsMounted] = useState(false);
     useEffect(() => {
@@ -184,7 +172,7 @@ export default function EditProductForm({initialValues} : {initialValues: any}){
                             return;
                             }
                             form.setValue('productImageUrl', e?.target?.files[0]);
-                            setImageUrlFromFile(e?.target?.files[0]);
+                            memorizedSetImageUrlFromFile(e.target.files[0]);
                             setInputType("file");
                         }} type='file' />
                                 
@@ -199,4 +187,8 @@ export default function EditProductForm({initialValues} : {initialValues: any}){
                 </DialogFooter>
         </form>
     )
+}
+
+function setImageUrlFromFile(file: File | null | undefined, setTempSrcUrlForFile: Dispatch<SetStateAction<string | null>>) {
+  throw new Error("Function not implemented.");
 }

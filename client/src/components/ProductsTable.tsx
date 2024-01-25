@@ -50,8 +50,6 @@ export default function ProductsTable({
     
     const openProductDialog = (product: ProductCardType) => {
       openDialog({
-          title: "Edit product",
-          description: "Make changes to your product here. Click save when you're done.",
           content: <ProductDialog product={product}/>,
       })
     }

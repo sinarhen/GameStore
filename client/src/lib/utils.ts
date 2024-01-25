@@ -71,3 +71,15 @@ export async function uploadImageToCloud(imageMeta: string){
   console.log(imageUploaded.data.secure_url)
   return imageUploaded.data.secure_url;
 }
+
+const setImageUrlFromFile = (file: File | null | undefined, setTempSrcUrlForFile: React.Dispatch<React.SetStateAction<string | null>>): void => {
+  if (!file) {
+      return;
+  }
+
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onloadend = () => {
+      setTempSrcUrlForFile(reader.result as string);
+  };
+};

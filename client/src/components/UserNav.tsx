@@ -38,9 +38,8 @@ export default function UserNav({username, avatarUrl, isAdmin} : {username?: str
                         
                         <hr className="h-[0.5px] opacity-50  bg-gray-200 bg-opacity-50"/>
                             
-                        <Link to='/me'  className='block transition-colors rounded-b-md px-4 py-2 hover:bg-gray-200 hover:bg-opacity-50 cursor-pointer'>My Account</Link>
+                        <Link to='/me'  className='block transition-colors px-4 py-2 hover:bg-gray-200 hover:bg-opacity-50 cursor-pointer'>My Account</Link>
 
-                        <hr className="h-[0.5px] opacity-50 text-gray-900"/>
                         <div onClick={handleLogout} 
                             className='px-4 py-2 hover:bg-red-200  transition-colors text-red-400 rounded-b-md hover:bg-opacity-50 cursor-pointer'>Logout</div>
                     </div>
