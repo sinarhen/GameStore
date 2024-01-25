@@ -8,13 +8,8 @@ import Categories from "./pages/Categories";
 import MyAccount from "./pages/MyAccount";
 import Favorites from "./pages/Favorites";
 import Navbar from "./components/Navbar";
-import { Toaster } from "react-hot-toast";
-import { AuthProvider } from "./contexts/AuthContext";
-import { FavoritesProvider } from "./contexts/FavoritesContext";
 import ProductDetails from "./pages/ProductDetails";
 import Admin from "./pages/Admin";
-import { useCurrentUser } from "./hooks/useCurrentUser";
-import { AuthDialogProvider } from "./contexts/AuthDialogContext";
 
 function App() {
 

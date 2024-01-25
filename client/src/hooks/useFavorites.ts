@@ -20,7 +20,7 @@ export const useFavorites = () => {
   const toggleFavorite = useCallback(async (product: ProductCardType) => {
     const isFavorite = (favorites as ProductCardType[]).find((favorite: ProductCardType) => favorite?._id === product?._id);
     const method = isFavorite ? 'delete' : 'post';
-
+    
     try {
       if (user !== null) {
       

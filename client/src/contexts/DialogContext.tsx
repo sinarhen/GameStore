@@ -3,7 +3,15 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import Button from "../components/Button";
 
 type DialogContextType = {
-    showDialog: (
+    openDialog: ({
+        title, 
+        description, 
+        content, 
+        onConfirm, 
+        onCancel,
+        confirmText,
+        cancelText
+    }: {
         title?: string, 
         description?: string, 
         content?: React.ReactNode | null, 
@@ -11,12 +19,18 @@ type DialogContextType = {
         onCancel? : () => void,
         confirmText?: string | null,
         cancelText?: string | null
-        ) => void;
-
+    
+    }) => void;
+    open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setOnConfirm: React.Dispatch<React.SetStateAction<() => void>>;
+    setOnCancel: React.Dispatch<React.SetStateAction<() => void>>;
+    setCancelText: React.Dispatch<React.SetStateAction<string | null>>;
+    setConfirmText: React.Dispatch<React.SetStateAction<string | null>>;
+
 };
 
-const DialogContext = createContext<DialogContextType | null>(null);
+export const DialogContext = createContext<DialogContextType | null>(null);
 
 export function DialogProvider({ children }: {
     children: React.ReactNode;
@@ -30,7 +44,15 @@ export function DialogProvider({ children }: {
     const [confirmText, setConfirmText] = useState<string | null>("Save");
     const [cancelText, setCancelText] = useState<string | null>("Cancel");
 
-    const showDialog = (
+    const openDialog = ({
+        title, 
+        description, 
+        content, 
+        onConfirm, 
+        onCancel,
+        confirmText,
+        cancelText
+    }: {
         title?: string, 
         description?: string, 
         content?: React.ReactNode | null, 
@@ -38,18 +60,27 @@ export function DialogProvider({ children }: {
         onCancel? : () => void,
         confirmText?: string | null,
         cancelText?: string | null
-    ) => {
+    
+    })  => {
         setTitle(title || null);
         setDescription(description || null);
         setContent(content);
         setOnConfirm(() => onConfirm ? onConfirm() : {});
-        setOnCancel(() => {onCancel ? onCancel() : {}} );
+        setOnCancel(() => onCancel ? onCancel() : {} );
         setConfirmText(confirmText || null);
         setCancelText(cancelText || null);
         setOpen(true);
     };
     return (
-        <DialogContext.Provider value={{showDialog, setOpen}}>
+        <DialogContext.Provider value={{
+            openDialog,
+            setOpen, 
+            open,
+            setOnConfirm,
+            setOnCancel,
+            setCancelText,
+            setConfirmText,
+        }}>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent>
                     {title || description ? (
@@ -60,14 +91,23 @@ export function DialogProvider({ children }: {
                     ): (<>                   
                     </>)}
                     {content && content}
-                    <DialogFooter >
-                        <div className="flex gap-x-2">
-                            <Button onClick={onConfirm} className="bg-green-600 hover:bg-green-500" >{confirmText}</Button>
-                            <Button onClick={onCancel} className="bg-red-600 hover:bg-red-500">{cancelText}</Button>
-                        
-                        </div>
+                    {
+                        confirmText || cancelText ? (
+                            <DialogFooter>
+                                <div className="flex gap-x-2">
+                                    {confirmText && (
+                                        <Button onClick={onConfirm} className="bg-green-600 hover:bg-green-500" >{confirmText}</Button>
 
-                        </DialogFooter>
+                                    )}
+                                    {cancelText && (
+                                        <Button onClick={onCancel} className="bg-red-600 hover:bg-red-500">{cancelText}</Button>
+
+                                    )}
+                                
+                                </div>
+                            </DialogFooter>
+                        ) : (<> </>)
+                    }
                 </DialogContent>
             </Dialog>
             {children}

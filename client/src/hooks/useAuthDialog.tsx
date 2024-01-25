@@ -1,12 +1,15 @@
-import { useContext } from "react";
-import { AuthDialogContext } from "../contexts/AuthDialogContext";
+import { useState } from "react";
+import { useDialog } from "./useDialog";
+import AuthDialog from "../components/AuthDialog";
 
 export const useAuthDialog = () => {
+    const { openDialog, setOpen, open } = useDialog();
+    const openAuthDialog = (variant: "login" | "register") => {
+        openDialog({
+            content: <AuthDialog open={open} setOpen={setOpen} initialVariant={variant} />,
+        });
+    };
 
-    const context = useContext(AuthDialogContext);
+    return { openAuthDialog };
 
-    if (!context) {
-        throw new Error('useAuthForm must be used within a AuthDialogProvider');
-    }
-    return context;
 };

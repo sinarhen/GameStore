@@ -6,27 +6,22 @@ import { Dialog, DialogContent } from "./Dialog";
 export default function AuthDialog({
   open,
   setOpen,
-  variant,
-  setVariant,  
+  initialVariant
+    
 }: {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  variant: "login" | "register";
-  setVariant: React.Dispatch<React.SetStateAction<"login" | "register">>;
-}) { 
+  initialVariant: "login" | "register";
+}) {
+  const [variant, setVariant] = React.useState<"login" | "register">(initialVariant);
     return (
       <>
-
-        <Dialog open={open} onOpenChange={setOpen}>
-          <DialogContent className='bg-black text-white'>
-              {variant === 'login' ? (
-              <LoginForm setDialogOpen={setOpen} setVariant={setVariant}/>      
-            ) : (
-                  <RegisterForm setVariant={setVariant} setDialogOpen={setOpen}/>
-              )}
+        {variant === 'login' ? (
+          <LoginForm setDialogOpen={setOpen} setVariant={setVariant}/>      
+        ) : (
+              <RegisterForm setVariant={setVariant} setDialogOpen={setOpen}/>
+          )}
         
-          </DialogContent>
-        </Dialog>
       </>
       
     )
