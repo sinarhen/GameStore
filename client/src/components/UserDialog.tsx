@@ -43,7 +43,7 @@ const UserDialog: React.FC<UserDialogProps> = ({
     return (
         <>
             <Dialog open={open} onOpenChange={() => setOpen(false)}>
-                <DialogContent className="min-w-[95%] md:min-w-[75%]">
+                <DialogContent className="min-w-[95%] md:min-w-[50%]">
                     <DialogHeader>
                         <DialogTitle className="">User <span className="animate-pulse text-indigo-600">{user?.name}</span> information</DialogTitle>
                     </DialogHeader>
