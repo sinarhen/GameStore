@@ -65,8 +65,8 @@ export function DialogProvider({ children }: {
         setTitle(title || null);
         setDescription(description || null);
         setContent(content);
-        setOnConfirm(() => onConfirm ? onConfirm() : {});
-        setOnCancel(() => onCancel ? onCancel() : {} );
+        setOnConfirm(() => onConfirm ? onConfirm : {});
+        setOnCancel(() => onCancel ? onCancel : {} );
         setConfirmText(confirmText || null);
         setCancelText(cancelText || null);
         setOpen(true);

@@ -9,3 +9,7 @@ export async function createCategory(name: any) {
         name
     }, true);
 };
+
+export async function deleteCategory(id: string) {
+    return await http.delete(`/category/${id}`, true);
+};
