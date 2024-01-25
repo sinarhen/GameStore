@@ -103,7 +103,7 @@ export default function UsersTable({
                                 <Trash2 className="h-3.5 w-3.5 group-hover:text-red-500 transition-colors" />
                                 </div>
 
-                            </div >
+                            </div>
                             <div 
                                 className="flex justify-center items-center">
                             </div>

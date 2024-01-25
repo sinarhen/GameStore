@@ -1,10 +1,9 @@
 import Input from "../components/Input";
 import ProductsTable from "../components/ProductsTable";
-
 import React from "react";
 import { getAllOrders } from "../lib/order";
 import { getAllProducts } from "../lib/products";
-import { Order, ProductCardType, User } from "../lib/types";
+import { CategoryType, Order, ProductCardType, User } from "../lib/types";
 import Section from "../components/Section";
 import Orders from '../components/Orders';
 import { useCurrentUser } from "../hooks/useCurrentUser";
@@ -15,25 +14,28 @@ import { getAllUsers } from "../lib/users";
 import UsersTable from "../components/UsersTable";
 import toast from "react-hot-toast";
 import { useDialog } from "../hooks/useDialog";
-import ProductDialog from "../components/ProductDialog";
+import CategoryTable from "../components/CategoryTable";
+import { getAllCategories } from "../lib/categories";
 
 
 export default function Admin() {
     const [orders, setOrders] = React.useState<Order[]>([]);
-    const [products, setProducts] = React.useState<ProductCardType[] | null>(null);
+    const [filteredOrders, setFilteredOrders] = React.useState<Order[]>([]);
+    const [query, setQuery] = React.useState("");
 
+    const [products, setProducts] = React.useState<ProductCardType[] | null>(null);
     const [filteredProducts, setFilteredProducts] = React.useState<ProductCardType[] | null>([]);
     const [productQuery, setProductQuery] = React.useState("");
 
-    const [query, setQuery] = React.useState("");
-    const [filteredOrders, setFilteredOrders] = React.useState<Order[]>([]);
-
     const [users, setUsers] = React.useState<User[]>([]);
-    const [userQuery, setUserQuery] = React.useState("");
     const [filteredUsers, setFilteredUsers] = React.useState<User[]>([]);
+    const [userQuery, setUserQuery] = React.useState("");
+
+    const [categories, setCategories] = React.useState<CategoryType[]>([]);
+    const [filteredCategories, setFilteredCategories] = React.useState<CategoryType[]>([]);
+    const [categoryQuery, setCategoryQuery] = React.useState("");
 
     const { isAdmin, user } = useCurrentUser();
-    const { openDialog } = useDialog();
 
     const getAllOrdersAsync = async () => {
         try {
@@ -76,6 +78,23 @@ export default function Admin() {
             }
         }
     }
+
+    const getAllCategoriesAsync = async () => {
+        try {
+            const categories = (await getAllCategories())?.data;
+            setCategories(categories);
+        } catch (err: any){
+            console.error(err);
+            if (err?.response?.status)
+            {
+                if (err.response.status === 403 && isAdmin)
+                {
+                    toastRelogin();
+                }
+            }
+        }
+    }
+
     function toastRelogin(){
         toast.error("It seems you were promoted to admin. But you need to log out and log in again to see the changes.", {id: "relogin"})
     }
@@ -87,6 +106,7 @@ export default function Admin() {
             getAllOrdersAsync();
             getAllProductsAsync();
             getAllUsersAsync();
+            getAllCategoriesAsync();
         }
     }, [user]);
 
@@ -105,6 +125,12 @@ export default function Admin() {
             setFilteredUsers(users?.filter((user) => user._id.includes(userQuery) || user.name?.includes(userQuery) || user.email?.includes(userQuery)));
         }
     }, [userQuery]);
+
+    React.useEffect(() => {
+        if (categories) {
+            setFilteredCategories(categories?.filter((category) => category._id.includes(categoryQuery) || category.name?.includes(categoryQuery)));
+        }
+    }, [categoryQuery]);
 
     
     if (!isAdmin){
@@ -130,24 +156,33 @@ export default function Admin() {
             <div className="flex gap-4 items-center justify-between">
                 <h1>All products</h1>
                 <CreateProductDialog />
-
             </div>
             <Input 
+                className="mt-4"
                 name="productId" 
                 type="text" 
                 placeholder="Product ID or name" 
                 value={productQuery}
-                className="mt-4"
                 onChange={(e: any) => setProductQuery(e.target.value)}
             />
 
             <ProductsTable products={productQuery ? filteredProducts : products} setProducts={setProducts} />
         </Section>
         <Section className="pt-20 h-full">
-            <div>
-                <h1 className="pb-4">All categories</h1>
+            <div className="flex gap-4 items-center justify-between">
+                <h1>All categories</h1>
                 <CreateCategoryDialog />
             </div>
+            <Input 
+                className="mt-4"
+                name="categoryId"
+                type="text"
+                placeholder="Category ID or name"
+                value={categoryQuery}
+                onChange={(e: any) => setCategoryQuery(e.target.value)}
+            />
+
+            <CategoryTable categories={categoryQuery ? filteredCategories : categories} setCategories={setCategories} />
         </Section>
             
         <Section className="pt-20 h-full">
