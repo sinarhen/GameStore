@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { isValidURLImage } from "../lib/utils";
+import { isValidURLImage, setImageUrlFromFile } from "../lib/utils";
 import { Trash2 } from "lucide-react";
 import { FaUser } from "react-icons/fa";
 import { updateUser } from "../lib/auth";
@@ -67,16 +67,8 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
       setOpenImageUrlDialog(!openImageUrlDialog);
     };
     
-    const setImageUrlFromFile = useCallback((file: File | null | undefined): void => {
-      if (!file) {
-        return;
-      }
-  
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setTempSrcUrlForFile(reader.result as string);
-      };
+    const memoizedSetImageUrlFromFile = useCallback((file: File | null | undefined) => {
+      setImageUrlFromFile(file, setTempSrcUrlForFile);
     }, [setTempSrcUrlForFile]);
 
     const [isMounted, setIsMounted] = useState(false);
@@ -195,7 +187,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                             return;
                             }
                             form.setValue('avatarUrl', e?.target?.files[0]);
-                            setImageUrlFromFile(e?.target?.files[0]);
+                            memoizedSetImageUrlFromFile(e?.target?.files[0]);
                             setInputType("file");
                         }} type='file' />
                                 

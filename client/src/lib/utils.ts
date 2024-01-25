@@ -72,7 +72,7 @@ export async function uploadImageToCloud(imageMeta: string){
   return imageUploaded.data.secure_url;
 }
 
-const setImageUrlFromFile = (file: File | null | undefined, setTempSrcUrlForFile: React.Dispatch<React.SetStateAction<string | null>>): void => {
+export const setImageUrlFromFile = (file: File | null | undefined, setTempSrcUrlForFile: React.Dispatch<React.SetStateAction<string | null>>): void => {
   if (!file) {
       return;
   }

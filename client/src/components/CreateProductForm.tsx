@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./Dialog";
 import { Trash2 } from "lucide-react";
 import { FaUser } from "react-icons/fa";
-import { isValidURLImage, uploadImageToCloud } from "../lib/utils";
+import { isValidURLImage, setImageUrlFromFile, uploadImageToCloud } from "../lib/utils";
 import { TProfileEditForm, productFormSchema } from "../lib/types";
 import { createProduct } from "../lib/products";
 import { Textarea } from "./Textarea";
@@ -51,19 +51,11 @@ export default function CreateProductForm(){
     const toogleImageUrlDialog = () => {
       setOpenImageUrlDialog(!openImageUrlDialog);
     };
-    
-    const setImageUrlFromFile = useCallback((file: File | null | undefined): void => {
-      if (!file) {
-        return;
-      }
-  
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onloadend = () => {
-        setTempSrcUrlForFile(reader.result as string);
-      };
-    }, [setTempSrcUrlForFile]);
+    const memorizedSetImageUrlFromFile = useCallback((file: File | null | undefined) => {
+      setImageUrlFromFile(file, setTempSrcUrlForFile);
+  }, [setTempSrcUrlForFile]);
 
+    
     const [isMounted, setIsMounted] = useState(false);
     useEffect(() => {
         setIsMounted(true);
@@ -201,7 +193,7 @@ export default function CreateProductForm(){
                             return;
                             }
                             form.setValue('imageUrl', e?.target?.files[0]);
-                            setImageUrlFromFile(e?.target?.files[0]);
+                            memorizedSetImageUrlFromFile(e?.target?.files[0]);
                             setInputType("file");
                         }} type='file' />                  
                 </div>
