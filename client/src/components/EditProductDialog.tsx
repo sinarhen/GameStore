@@ -1,10 +1,11 @@
+import { ProductCardType } from "../lib/types";
 import Button from "./Button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "./Dialog";
-import EditProductForm from "./EditProductForm";
+import ProductForm from "./ProductForm";
 
 
-export default function EditProductDialog({initialValues} : {initialValues: any}){
-
+export default function EditProductDialog({product} : {product: ProductCardType}){
+    
     return (
         <Dialog>
             <DialogTrigger asChild>
@@ -15,12 +16,7 @@ export default function EditProductDialog({initialValues} : {initialValues: any}
                 <DialogTitle>Edit product</DialogTitle>
                 </DialogHeader>
                   
-                <EditProductForm initialValues={{
-                    name: initialValues.name,
-                    price: initialValues.price,
-                    description: initialValues.description,
-                    imageUrl: initialValues.imageUrl
-                }}/>
+                <ProductForm initialValues={product} variant="edit"/>
                     
             </DialogContent>
         </Dialog>

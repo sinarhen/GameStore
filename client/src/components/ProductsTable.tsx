@@ -58,6 +58,8 @@ export default function ProductsTable({
           description: "Are you sure you want to delete this product?",
           content: <></>,
           onConfirm: () => deleteProductAsync(),
+          confirmText: "Yes",
+          cancelText: "No",
       })
     }
 

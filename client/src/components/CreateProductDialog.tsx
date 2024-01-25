@@ -1,6 +1,6 @@
 import { PlusCircle } from "lucide-react";
 import Button from "./Button";
-import CreateProductForm from "./CreateProductForm";
+import ProductForm from "./ProductForm";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./Dialog";
 
 export default function CreateProductDialog({}){
@@ -17,7 +17,7 @@ export default function CreateProductDialog({}){
                 <DialogTitle>Create product</DialogTitle>
                 <DialogDescription className="text-sm text-muted-foreground">fill information about product</DialogDescription>
             </DialogHeader>
-            <CreateProductForm />
+            <ProductForm variant="create"/>
         </DialogContent>
     </Dialog>
 

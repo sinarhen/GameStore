@@ -9,24 +9,25 @@ import {
 import { PlusCircle } from "lucide-react";
 import Button from "./Button";
 import CreateCategoryForm from "./CreateCategoryForm";
+import { useDialog } from "../hooks/useDialog";
 
 export default function CreateCategoryDialog({}){
+    const {openDialog} = useDialog();
+
+    function onOpenDialog(){
+        openDialog({
+            title: 'Create category',
+            description: 'fill information about category',
+            content: <CreateCategoryForm />
+        });
+    }
     return (
         
-        <Dialog>
-        <DialogTrigger>
-            <Button className="group flex items-center gap-x-1 mb-4">
-                Create category
-                <PlusCircle className="group-hover:rotate-90 transition-transform" />
-            </Button>
-        </DialogTrigger>
-        <DialogContent className="w-[95%] sm:w-[75%] md:w-[%] px-4">
-            <DialogHeader>
-                <DialogTitle>Create category</DialogTitle>
-                <DialogDescription className="text-sm text-muted-foreground">fill information about category</DialogDescription>
-            </DialogHeader>
-            <CreateCategoryForm />
-        </DialogContent>
-    </Dialog>
+        <Button 
+        onClick={onOpenDialog}
+        className="group flex items-center gap-x-1 mb-4">
+            Create category
+            <PlusCircle className="group-hover:rotate-90 transition-transform" />
+        </Button>
     )
 }

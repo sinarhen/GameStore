@@ -8,8 +8,8 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Trash2 } from "lucide-react";
 import { FaUser } from "react-icons/fa";
 import { isValidURLImage, setImageUrlFromFile, uploadImageToCloud } from "../lib/utils";
-import { CategoryType, TProductFormSchema, productFormSchema } from "../lib/types";
-import { createProduct } from "../lib/products";
+import { CategoryType, ProductCardType, TProductFormSchema, productFormSchema } from "../lib/types";
+import { createProduct, updateProduct } from "../lib/products";
 import { Textarea } from "./Textarea";
 import { Label } from "./Label";
 import InputError from "./InputError";
@@ -19,7 +19,16 @@ import Loading from "./Loading";
 
 
 
-export default function CreateProductForm(){
+export default function ProductForm({
+  initialValues,
+  variant = "create",
+}: {
+  initialValues?: ProductCardType;
+  variant: "create" | "edit";
+  products?: ProductCardType[] | null;
+  setProducts?: React.Dispatch<React.SetStateAction<ProductCardType[] | null>>;
+
+}){
 
     const [categories, setCategories] = useState<CategoryType[]>([]);
     const [openImageUrlDialog, setOpenImageUrlDialog] = useState(false);
@@ -29,23 +38,30 @@ export default function CreateProductForm(){
     const [isLoading, setIsLoading] = useState(false);
     const form = useForm<TProductFormSchema>({
       resolver: zodResolver(productFormSchema),
+      defaultValues: {
+        name: initialValues?.name,
+        price: initialValues?.price,
+        description: initialValues?.description,
+        imageUrl: initialValues?.imageUrl,
+        categoryId: initialValues?.categoryId?._id
+      },
       mode: "onTouched",
     });
-    const navigate = useNavigate();
     async function onSubmit(values: TProductFormSchema){
         try {
-            if (values.imageUrl)
+            if (values.imageUrl && inputType === 'file' && initialValues?.imageUrl !== values.imageUrl)
             {
-                if (inputType === 'file') {
-                  console.log("filom")
-                    values.imageUrl = await uploadImageToCloud(values.imageUrl);
-                    console.log(values.imageUrl)
-                }
+              values.imageUrl = await uploadImageToCloud(values.imageUrl);
+            } 
+            if (variant === 'create') {
+              const res = await createProduct(values);
+              toast.success('Product created successfully');
+
+            } else if (variant === 'edit') {
+              if (!initialValues?._id) throw new Error('No product id provided for edit');
+              await updateProduct(initialValues?._id, values);
+              toast.success('Product updated successfully');
             }
-            const res = await createProduct(values);
-            console.log(res)
-            toast.success('Product created successfully');
-            navigate(0)
         } catch (e: any) {
             console.error(e)
             toast.error(e?.message || 'Something went wrong');
@@ -65,15 +81,19 @@ export default function CreateProductForm(){
         }, []);
 
     useEffect(() => {
-      setIsLoading(true)
+
       getAllCategories().then((res) => {
-          console.log(res)
-          setCategories(res?.data);
-      }).catch((e) => {
-          console.error(e);
-          toast.error(e?.message || 'Something went wrong')
-      }).finally(() => setIsLoading(false));
-  })
+        setIsLoading(true)
+        console.log(res)
+        setCategories(res.data);
+      }).catch((err) => {
+        console.log(err);
+        toast.error(`Something went wrong: ${err.message}`, { id: "categories" });
+      }).finally(()=> {
+        setIsLoading(false);
+      })
+      
+    }, [])
     if (!isMounted) {
         return null;
     }

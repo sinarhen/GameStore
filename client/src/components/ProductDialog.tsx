@@ -8,7 +8,7 @@ import { formatter } from "../lib/utils";
 
 
 interface ProductDialogProps {
-    product: ProductCardType | null;
+    product: ProductCardType;
 }
 
 const ProductDialog: React.FC<ProductDialogProps> = ({
@@ -36,12 +36,7 @@ const ProductDialog: React.FC<ProductDialogProps> = ({
                             
                             <div className="flex justify-between items-end mt-2">
                                 <p className="text-indigo-600 text-lg">{formatter.format(product?.price!)}</p>
-                                <EditProductDialog initialValues={{
-                                    name: product?.name,
-                                    price: product?.price,
-                                    description: product?.description,
-                                    imageUrl: product?.imageUrl,
-                                }}/>
+                                <EditProductDialog product={product}/>
                             </div>
                             
                         </div>
