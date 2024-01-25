@@ -28,7 +28,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
     const [imageUrlDialogTempInput, setImageUrlDialogTempInput] = useState('');
     const [inputType, setInputType] = useState<'file' | 'url'>('file');
     const [tempSrcUrlForFile, setTempSrcUrlForFile] = useState<string | null>(null);
-  
+    
     const form = useForm<TProfileEditForm>({
       resolver: zodResolver(profileEditForm),
       defaultValues: {
@@ -38,7 +38,6 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
       },
       mode: "onTouched",
     });
-    const navigate = useNavigate();
     async function onSubmit(values: TProfileEditForm){
         try {
             const formData = new FormData();
@@ -57,8 +56,9 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
             }
 
             const res = await updateUser(values);
+            
             toast.success('Profile updated successfully');
-            navigate(0)
+            window.location.reload()
         } catch (e: any) {
             toast.error(e?.message || 'Something went wrong');
         };
