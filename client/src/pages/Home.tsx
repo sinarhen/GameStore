@@ -5,7 +5,7 @@ import Section from '../components/Section';
 import AnimatedSeparator from '../components/AnimatedSeparator';
 import Button from '../components/Button';
 import { Link } from 'react-router-dom';
-
+import { Store } from 'lucide-react';
 
 const appearDuration = 0.7;
 
@@ -44,8 +44,9 @@ export default function Home() {
                     className='w-full pt-12 flex justify-center'
                 >
                     <Link to="/products">
-                        <Button  className='rounded-3xl px-20 bg-white text-black'>
+                        <Button  className='flex hover:animate-pulse gap-x-2 items-center rounded-3xl px-20 bg-white text-black'>
                             Shop now
+                            <Store />
                         </Button>
                     </Link>
                 </motion.div>
