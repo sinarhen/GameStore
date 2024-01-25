@@ -53,7 +53,7 @@ export default function UsersTable({
             open={confirmOpen}
             setOpen={setConfirmOpen}
         />
-        <UserDialog open={dialogOpen} setOpen={setDialogOpen} user={selectedUser} />
+        <UserDialog open={dialogOpen} setOpen={setDialogOpen} user={selectedUser} setUsers={setUsers} users={users} setSelectedUser={setSelectedUser} />
         <Table className="mt-10 w-full h-full">
             <TableCaption>{tableCaption}</TableCaption>
             <TableHeader>
