@@ -14,6 +14,8 @@ import CreateCategoryDialog from "../components/CreateCategoryDialog";
 import { getAllUsers } from "../lib/users";
 import UsersTable from "../components/UsersTable";
 import toast from "react-hot-toast";
+import { useDialog } from "../hooks/useDialog";
+import ProductDialog from "../components/ProductDialog";
 
 
 export default function Admin() {
@@ -31,6 +33,7 @@ export default function Admin() {
     const [filteredUsers, setFilteredUsers] = React.useState<User[]>([]);
 
     const { isAdmin, user } = useCurrentUser();
+    const { openDialog } = useDialog();
 
     const getAllOrdersAsync = async () => {
         try {

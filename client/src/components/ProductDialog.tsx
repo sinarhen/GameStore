@@ -6,27 +6,19 @@ import EditProductDialog from "./EditProductDialog";
 import Clipboard from "./Clipboard";
 import { formatter } from "../lib/utils";
 import EditProfileDialog from './EditProfileDialog';
+import { useDialog } from "../hooks/useDialog";
 
 
 interface ProductDialogProps {
-    open: boolean;
-    setOpen: (open: boolean) => void;
     product: ProductCardType | null;
 }
 
 const ProductDialog: React.FC<ProductDialogProps> = ({
-    open,
-    setOpen,
     product,
 }) => {
-    
+
     return (
         <>
-            <Dialog open={open} onOpenChange={() => setOpen(false)}>
-            <DialogContent className="min-w-[95%] md:min-w-[75%]">
-                <DialogHeader>
-                    <DialogTitle className="">Product <span className="animate-pulse text-indigo-600">{product?.name}</span> information</DialogTitle>
-                </DialogHeader>
                 <div className="sm:flex-row flex flex-col overflow-y-scroll  gap-x-2 ">
                             <img alt="No photo" className="rounded-lg w-full sm:w-1/2 object-cover object-center" 
                                 src={product?.imageUrl}>
@@ -57,9 +49,6 @@ const ProductDialog: React.FC<ProductDialogProps> = ({
                         </div>
 
                     </div>
-            </DialogContent>
-            </Dialog>
-            
         </>
       )
 }

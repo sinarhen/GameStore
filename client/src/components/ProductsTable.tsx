@@ -16,6 +16,7 @@ import ProductDialog from "./ProductDialog";
 import toast from "react-hot-toast";
 import { FaInfo } from "react-icons/fa";
 import TableEmpty from "./TableEmpty";
+import { useDialog } from "../hooks/useDialog";
 
 export default function ProductsTable({
     products,
@@ -27,7 +28,6 @@ export default function ProductsTable({
     tableCaption?: string;
 }) {
     const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
-    const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedProduct, setSelectedProduct] = useState<ProductCardType | null>(null);
     async function deleteProductAsync() {
       if (selectedProduct?._id){
@@ -46,14 +46,27 @@ export default function ProductsTable({
       
     };
 
+    const {openDialog} = useDialog();
+    
+    const openProductDialog = (product: ProductCardType) => {
+      openDialog({
+          title: "Edit product",
+          description: "Make changes to your product here. Click save when you're done.",
+          content: <ProductDialog product={product}/>,
+      })
+    }
+    
+    const openDeleteDialog = (product: ProductCardType) => {
+      openDialog({
+          title: "Delete product",
+          description: "Are you sure you want to delete this product?",
+          content: <></>,
+          onConfirm: () => deleteProductAsync(),
+      })
+    }
+
     return (
       <>
-        <ConfirmDialog 
-          onConfirm={() => selectedProduct?._id ? deleteProductAsync() : {}} 
-          open={confirmOpen} 
-          setOpen={setConfirmOpen} 
-          />
-        <ProductDialog open={dialogOpen} setOpen={setDialogOpen} product={selectedProduct} />
         <Table className="mt-10 w-full h-full">
         <TableCaption>{tableCaption}</TableCaption>
         <TableHeader>
@@ -73,10 +86,7 @@ export default function ProductsTable({
               <TableCell className="text-right w-full">
                 <div className="flex gap-x-1 justify-center items-center">
                   <div 
-                    onClick={() => {
-                      setDialogOpen(true); 
-                      setSelectedProduct(product);
-                    }} 
+                    onClick={() => openProductDialog(product)} 
                     
                     className='p-2  cursor-pointer group rounded-lg hover:bg-gray-400 transition-colors'
                     
@@ -85,10 +95,7 @@ export default function ProductsTable({
                   </div>
                   
                   <div 
-                    onClick={() => {
-                      setConfirmOpen(true); 
-                      setSelectedProduct(product);
-                    }}
+                    onClick={() => openDeleteDialog(product)}
                     className='p-2  cursor-pointer group rounded-lg hover:bg-red-200 transition-colors'
                   >
                     <Trash2 

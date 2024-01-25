@@ -51,21 +51,18 @@ async function getProductById(req, res) {
     const { id } = req.params;
     
     try {
-        const product = await Product.findById(id);
+        let product = await Product.findById(id);
         if (product) {
-            await product.populate({
-                path: 'categoryId',
-                match: { categoryId: { $exists: true } }
-            }).execPopulate();
+            product = await product.populate("categoryId");
             res.json(product);
         } else {
             res.status(404).json({ message: 'Product not found' });
         }
     } catch (err) {
+        console.error(err)
         res.status(500).send(err);
     }
 }
-
 async function createProduct(req, res) {
     const { name, description, price, imageUrl, categoryId } = req.body;
 
