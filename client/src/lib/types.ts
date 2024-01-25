@@ -15,6 +15,9 @@ export type ProductCardType = {
 export type CategoryType = {
     _id: string;
     name: string;
+    createdAt: Date;
+    updatedAt: Date;
+    products?: ProductCardType[];
 }
 
 export type User = {

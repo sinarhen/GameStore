@@ -1,9 +1,10 @@
 import http from './fetcher'
+import { ProductCardType, TProductFormSchema } from './types';
 
 async function getAllProducts () {
     return await http.get('/products', true);
 }
-async function createProduct (product: any) {
+async function createProduct (product: TProductFormSchema) {
     return await http.post('/products', product, true);
 }
 

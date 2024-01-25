@@ -102,7 +102,7 @@ async function updateProduct(req, res) {
             description,
             price,
             imageUrl,
-            categoryId,
+            categoryId: categoryId || null,
         });
 
         res.json(product);

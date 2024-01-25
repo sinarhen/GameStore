@@ -16,12 +16,15 @@ import InputError from "./InputError";
 import Button from "./Button";
 import { getAllCategories } from "../lib/categories";
 import Loading from "./Loading";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./Select";
 
 
 
 export default function ProductForm({
   initialValues,
   variant = "create",
+  products,
+  setProducts,
 }: {
   initialValues?: ProductCardType;
   variant: "create" | "edit";
@@ -47,7 +50,18 @@ export default function ProductForm({
       },
       mode: "onTouched",
     });
-    async function onSubmit(values: TProductFormSchema){
+    
+    const addProductToProducts = useCallback((product: ProductCardType) => {
+      if (!products || !setProducts) return;
+      setProducts([...products, product]);
+    }, [products, setProducts]);
+
+    const updateProductInProducts = useCallback((product: ProductCardType) => {
+      if (!products || !setProducts) return;
+      setProducts(products.map((p) => (p._id === product._id ? product : p)));
+    }, []);
+
+    const onSubmit = useCallback(async (values: TProductFormSchema) => {
         try {
             if (values.imageUrl && inputType === 'file' && initialValues?.imageUrl !== values.imageUrl)
             {
@@ -56,25 +70,29 @@ export default function ProductForm({
             if (variant === 'create') {
               const res = await createProduct(values);
               toast.success('Product created successfully');
-
+              addProductToProducts(res.data);
             } else if (variant === 'edit') {
               if (!initialValues?._id) throw new Error('No product id provided for edit');
-              await updateProduct(initialValues?._id, values);
+              const res = await updateProduct(initialValues?._id, values);
               toast.success('Product updated successfully');
+              updateProductInProducts(res.data);
             }
         } catch (e: any) {
             console.error(e)
             toast.error(e?.message || 'Something went wrong');
         };
-  }
+    }, [variant, initialValues, inputType, addProductToProducts, updateProductInProducts]);
     const toogleImageUrlDialog = () => {
       setOpenImageUrlDialog(!openImageUrlDialog);
     };
     const memorizedSetImageUrlFromFile = useCallback((file: File | null | undefined) => {
       setImageUrlFromFile(file, setTempSrcUrlForFile);
   }, [setTempSrcUrlForFile]);
+  
+    const renderError = useCallback((fieldName: keyof typeof form.formState.errors) => {
+      return form.formState.errors[fieldName]?.message && <InputError>{String(form.formState.errors[fieldName]?.message)}</InputError>;
+    }, [form.formState.errors])
 
-    
     const [isMounted, setIsMounted] = useState(false);
     useEffect(() => {
         setIsMounted(true);
@@ -100,9 +118,7 @@ export default function ProductForm({
     if (isLoading) {
       return <Loading />;
     }
-    function renderError(fieldName: keyof typeof form.formState.errors) {
-      return form.formState.errors[fieldName]?.message && <InputError>{String(form.formState.errors[fieldName]?.message)}</InputError>;
-    }
+    console.log(form.getValues())
 
     return (
         <form className="gap-y-4 gap-x-3 grid grid-cols-6 overflow-y-auto overflow-x-visible px-1" onSubmit={form.handleSubmit(onSubmit)}>
@@ -180,7 +196,18 @@ export default function ProductForm({
             </Dialog>
             <div className="md:col-span-3 col-span-4">
                   <Label>Category</Label>
-                  <Input {...form.register('categoryId')} />  
+                  <Select {...form.register('categoryId')} value={form.getValues('categoryId')} onValueChange={(val) => form.setValue('categoryId', val)}>
+                        <SelectTrigger>
+                            <SelectValue/>
+                        </SelectTrigger>
+                        <SelectContent className="text-white bg-black">
+                        {categories?.map((option) => (
+                                <SelectItem key={option._id} value={option._id}>
+                                    {option.name}({option.products?.length ?? 0} products)
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                   {renderError('categoryId')}
             </div>
             <div className="col-span-3">
@@ -237,13 +264,16 @@ export default function ProductForm({
             </div>   
             
             <DialogFooter className="col-span-6">
-                        <div>
-                          <Button>
-                            Save
-                          </Button>
-                
-                        </div>
-                </DialogFooter>
+              <DialogClose>
+                <div>
+                            <Button>
+                              Save
+                            </Button>
+                  
+                          </div>
+                  
+              </DialogClose>
+            </DialogFooter>
                
         </form>
     )
