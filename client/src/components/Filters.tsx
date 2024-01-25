@@ -37,7 +37,7 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
 
     useEffect(() => {
         if (selectedCategory && products) {
-          onProductsChange(products.filter((product) => product.categoryId._id === selectedCategory));
+          onProductsChange(products.filter((product) => product.categoryId?._id === selectedCategory));
         } else {
           onProductsChange(products);
         }
@@ -97,15 +97,12 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
             setLoading(false);
           })
           .catch((error) => {
-            console.log(error);
             toast.error(`Something went wrong: ${error.message}`, { id: "categories" });
             setError(`Something went wrong while fetching categories: ${error.message}`);
           });
       }, []);
 
     const isFilterApplied = (selectedCategory != null || pageSize !== 10 || orderBy !== 'price_asc' )
-    console.log(isFilterApplied)
-    console.log(selectedCategory, pageSize, orderBy)
     return (
         <>
             <div className="flex flex-col sm:flex-row gap-y-4 justify-between  text-sm items-center w-full sm:py-10 py-4">

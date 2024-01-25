@@ -8,28 +8,31 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, Di
 import { Trash2 } from "lucide-react";
 import { FaUser } from "react-icons/fa";
 import { isValidURLImage, setImageUrlFromFile, uploadImageToCloud } from "../lib/utils";
-import { TProfileEditForm, productFormSchema } from "../lib/types";
+import { CategoryType, TProductFormSchema, productFormSchema } from "../lib/types";
 import { createProduct } from "../lib/products";
 import { Textarea } from "./Textarea";
 import { Label } from "./Label";
 import InputError from "./InputError";
 import Button from "./Button";
+import { getAllCategories } from "../lib/categories";
+import Loading from "./Loading";
 
 
 
 export default function CreateProductForm(){
 
+    const [categories, setCategories] = useState<CategoryType[]>([]);
     const [openImageUrlDialog, setOpenImageUrlDialog] = useState(false);
     const [imageUrlDialogTempInput, setImageUrlDialogTempInput] = useState('');
     const [inputType, setInputType] = useState<'file' | 'url'>('file');
     const [tempSrcUrlForFile, setTempSrcUrlForFile] = useState<string | null>(null);
-  
-    const form = useForm<TProfileEditForm>({
+    const [isLoading, setIsLoading] = useState(false);
+    const form = useForm<TProductFormSchema>({
       resolver: zodResolver(productFormSchema),
       mode: "onTouched",
     });
     const navigate = useNavigate();
-    async function onSubmit(values: TProfileEditForm){
+    async function onSubmit(values: TProductFormSchema){
         try {
             if (values.imageUrl)
             {
@@ -61,10 +64,22 @@ export default function CreateProductForm(){
         setIsMounted(true);
         }, []);
 
+    useEffect(() => {
+      setIsLoading(true)
+      getAllCategories().then((res) => {
+          console.log(res)
+          setCategories(res?.data);
+      }).catch((e) => {
+          console.error(e);
+          toast.error(e?.message || 'Something went wrong')
+      }).finally(() => setIsLoading(false));
+  })
     if (!isMounted) {
         return null;
     }
-
+    if (isLoading) {
+      return <Loading />;
+    }
     function renderError(fieldName: keyof typeof form.formState.errors) {
       return form.formState.errors[fieldName]?.message && <InputError>{String(form.formState.errors[fieldName]?.message)}</InputError>;
     }

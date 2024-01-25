@@ -6,10 +6,10 @@ import Button from './Button';
 
 export default function ProductCard({ product, ...props }: { props?: any; product: ProductCardType; }) {
     // const imageUrl = "https://media.slovoidilo.ua/media/cache/person_thumb_exx/uploads/persons/origin/Po/Poroshenko-Petr-Alekseevich_origin.png"; 
-    const imageUrl = product.imageUrl ?? "https://media.slovoidilo.ua/media/cache/person_thumb_exx/uploads/persons/origin/Po/Poroshenko-Petr-Alekseevich_origin.png";
+    const imageUrl = product.imageUrl;
     
     const navigate = useNavigate();
-
+    console.log(product)
     return (
         <div className="max-w-md h-fit transition-all hover:translate-x-0.5 hover:-translate-y-0.5 group hover:bg bg-neutral-800 cursor-pointer mx-auto rounded-md overflow-hidden shadow-lg hover:shadow-xl">
             <div className="relative">
@@ -23,7 +23,11 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
                 </div>
             </div>
             <div onClick={() => navigate(`/products/${product._id}`)} className="p-4">
-                <h3 className="text-lg font-medium mb-2 truncate">{product.name}</h3>
+                <div className='flex justify-between items-center'>
+                    <h1 className="text-lg font-medium mb-2 truncate">{product.name}</h1>
+                    <p className="text-sm text-indigo-600">{product?.categoryId?.name ?? "Other"}</p>
+                </div>
+
                 <p className="text-gray-600 text-sm mb-4 truncate">{product.description}</p>
                 <div className="flex items-center justify-between">
                     {/* Use the formatter to format the price */}

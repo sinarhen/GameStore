@@ -3,6 +3,8 @@ import { motion } from 'framer-motion';
 import Header from '../components/Header';
 import Section from '../components/Section';
 import AnimatedSeparator from '../components/AnimatedSeparator';
+import Button from '../components/Button';
+import { Link } from 'react-router-dom';
 
 
 const appearDuration = 0.7;
@@ -15,13 +17,13 @@ export default function Home() {
     return (
         <div className='w-full h-full'>
             
-            <Section className='h-full pt-24'>
+            <Section className='h-full'>
                 <Banner imageUrl='https://4kwallpapers.com/images/wallpapers/mortal-kombat-2021-movies-sub-zero-scorpion-2560x1080-5265.jpg'/>
                 
                 <div
                     className='flex flex-col w-full'
                 >
-                    <Header appearDuration={appearDuration} animateableText='Gamestore.' baseText='Welcome to '/>
+                    <Header appearDuration={appearDuration} animateableText='MkmShop.' baseText='Welcome to '/>
                 </div>
 
                 <motion.p
@@ -33,15 +35,28 @@ export default function Home() {
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel eos sapiente minus rerum nulla officia deserunt at, distinctio a id qui, est ratione esse. Et reprehenderit accusamus illum odio molestiae.
 
                 </motion.p>
-                <AnimatedSeparator  delay={appearDuration + 1}/>
+                <AnimatedSeparator  delay={appearDuration + 1.5}/>
+                <motion.div
+                    initial={{opacity: 0, x: -1000}}
+                    animate={{opacity: 1, x: 0, animationTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)'}}
+                    transition={{delay: appearDuration + 2, duration: appearDuration}}
+
+                    className='w-full pt-12 flex justify-center'
+                >
+                    <Link to="/products">
+                        <Button  className='rounded-3xl px-20 bg-white text-black'>
+                            Shop now
+                        </Button>
+                    </Link>
+                </motion.div>
             </Section>
             
-            <Section className='h-[100vh] pt-32'>
-                <Header appearDuration={appearDuration} animateableText='Categories' />
+                {/* <Section className='h-[100vh] pt-32'>
+                    <Header appearDuration={appearDuration} animateableText='Categories' />
 
-                <AnimatedSeparator  />
+                    <AnimatedSeparator  />
 
-            </Section>
+                </Section> */}
             
         </div>
         )
