@@ -1,6 +1,5 @@
 import Input from "../components/Input";
 import ProductsTable from "../components/ProductsTable";
-
 import React from "react";
 import { getAllOrders } from "../lib/order";
 import { getAllProducts } from "../lib/products";
@@ -37,7 +36,6 @@ export default function Admin() {
     const [categoryQuery, setCategoryQuery] = React.useState("");
 
     const { isAdmin, user } = useCurrentUser();
-    const { openDialog } = useDialog();
 
     const getAllOrdersAsync = async () => {
         try {
@@ -171,8 +169,8 @@ export default function Admin() {
             <ProductsTable products={productQuery ? filteredProducts : products} setProducts={setProducts} />
         </Section>
         <Section className="pt-20 h-full">
-            <div>
-                <h1 className="pb-4">All categories</h1>
+            <div className="flex gap-4 items-center justify-between">
+                <h1>All categories</h1>
                 <CreateCategoryDialog />
             </div>
             <Input 

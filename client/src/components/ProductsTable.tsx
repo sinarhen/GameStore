@@ -11,7 +11,6 @@ import {
     TableRow 
 } from "./Table";
 import { Trash2 } from "lucide-react";
-import ConfirmDialog from "./ConfirmDialog";
 import ProductDialog from "./ProductDialog";
 import toast from "react-hot-toast";
 import { FaInfo } from "react-icons/fa";
@@ -27,7 +26,6 @@ export default function ProductsTable({
     setProducts: React.Dispatch<React.SetStateAction<ProductCardType[] | null>>;
     tableCaption?: string;
 }) {
-    const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
     const [selectedProduct, setSelectedProduct] = useState<ProductCardType | null>(null);
     async function deleteProductAsync() {
       if (selectedProduct?._id){
