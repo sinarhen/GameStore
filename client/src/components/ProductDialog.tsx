@@ -5,8 +5,6 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from ".
 import EditProductDialog from "./EditProductDialog";
 import Clipboard from "./Clipboard";
 import { formatter } from "../lib/utils";
-import EditProfileDialog from './EditProfileDialog';
-import { useDialog } from "../hooks/useDialog";
 
 
 interface ProductDialogProps {
@@ -36,7 +34,7 @@ const ProductDialog: React.FC<ProductDialogProps> = ({
                                 </p>    
                             </div>
                             
-                            <div className="flex justify-between items-center mt-2">
+                            <div className="flex justify-between items-end mt-2">
                                 <p className="text-indigo-600 text-lg">{formatter.format(product?.price!)}</p>
                                 <EditProductDialog initialValues={{
                                     name: product?.name,

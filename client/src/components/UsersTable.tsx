@@ -10,12 +10,13 @@ import {
     TableRow 
 } from "./Table";
 import { Trash2 } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import UserDialog from "./UserDialog";
 import ConfirmDialog from "./ConfirmDialog";
 import { deleteUserForAdmin } from "../lib/users";
 import toast from "react-hot-toast";
 import TableEmpty from "./TableEmpty";
+import { useDialog } from "../hooks/useDialog";
 
 export default function UsersTable({
     users,
@@ -26,14 +27,13 @@ export default function UsersTable({
     setUsers: React.Dispatch<React.SetStateAction<User[]>>;
     tableCaption?: string;
 }) {
-    const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
-    const [dialogOpen, setDialogOpen] = useState(false);
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
-    async function deleteUserAsync() {
-        if (selectedUser?._id) {
+    const deleteUser = useCallback(async (user:User | null = null) => {
+        if (user?._id) {
             try {
-                await deleteUserForAdmin(selectedUser?._id);
+                console.log("runs")
+                await deleteUserForAdmin(user?._id);
                 if (users) {
                     setUsers(users.filter((user) => user._id !== selectedUser?._id));
                     setSelectedUser(null);
@@ -44,16 +44,29 @@ export default function UsersTable({
                 toast.error("Something went wrong");
             }
         }
-    };
+    }, [users, setUsers, selectedUser, setSelectedUser]);
+
+    const { openDialog } = useDialog();
+    
+    const openUserDialog = useCallback((user: User) => {
+        openDialog({
+            content: <UserDialog user={user} setUsers={setUsers} users={users} setSelectedUser={setSelectedUser} />,
+        });
+    }, [openDialog, setUsers, users]);
+
+    const openConfirmDialog = useCallback((user: User) => {
+        openDialog({
+            title: "Delete user",
+            description: "Are you sure you want to delete this user?",
+            onConfirm: () => () => deleteUser(user),
+            confirmText: "Yes",
+            cancelText: "No",
+        });
+    }, [openDialog, deleteUser]);
+
 
     return (
-      <>
-        <ConfirmDialog 
-            onConfirm={() => selectedUser?._id ? deleteUserAsync() : {}}
-            open={confirmOpen}
-            setOpen={setConfirmOpen}
-        />
-        <UserDialog open={dialogOpen} setOpen={setDialogOpen} user={selectedUser} setUsers={setUsers} users={users} setSelectedUser={setSelectedUser} />
+    <>
         <Table className="mt-10 w-full h-full">
             <TableCaption>{tableCaption}</TableCaption>
             <TableHeader>
@@ -75,10 +88,7 @@ export default function UsersTable({
                         <TableCell className="text-right w-full">
                             <div className="flex gap-x-1 justify-center items-center">
                                 <div
-                                    onClick={() => {
-                                        setDialogOpen(true);
-                                        setSelectedUser(user);
-                                    }}
+                                    onClick={() => openUserDialog(user)}
 
                                     className="p-2  cursor-pointer group rounded-lg hover:bg-gray-400 transition-colors"
                                 >
@@ -86,10 +96,7 @@ export default function UsersTable({
                                 </div>
 
                                 <div
-                                    onClick={() => {
-                                        setConfirmOpen(true);
-                                        setSelectedUser(user);
-                                    }}
+                                    onClick={() => openConfirmDialog(user)}
 
                                     className="p-2  cursor-pointer group rounded-lg hover:bg-red-200 transition-colors"
                                 >
