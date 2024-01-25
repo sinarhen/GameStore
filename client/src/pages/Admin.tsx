@@ -36,9 +36,9 @@ export default function Admin() {
     const [userQuery, setUserQuery] = React.useState("");
     const [filteredUsers, setFilteredUsers] = React.useState<User[]>([]);
 
-    const { isAdmin } = useCurrentUser();
+    const { isAdmin, user } = useCurrentUser();
 
-
+    console.log(user)
     const getAllOrdersAsync = async () => {
         try {
             const orders = (await getAllOrders())?.data;
@@ -65,10 +65,6 @@ export default function Admin() {
         }
     }
 
-    const toastRelogin = () => {
-        toast.error("It seems you were promoted to admin. But you need to log out and log in again to see the changes.", {id: "relogin"})
-    }
-
     const getAllUsersAsync = async () => {
         try {
             const users = (await getAllUsers())?.data;
@@ -84,11 +80,18 @@ export default function Admin() {
             }
         }
     }
+    function toastRelogin(){
+        toast.error("It seems you were promoted to admin. But you need to log out and log in again to see the changes.", {id: "relogin"})
+    }
 
     React.useEffect(() => {
-        getAllOrdersAsync();
-        getAllProductsAsync();
-        getAllUsersAsync();
+        if (isAdmin && user?.loginRequired){
+            toastRelogin();
+        } else if (isAdmin && !user?.loginRequired){
+            getAllOrdersAsync();
+            getAllProductsAsync();
+            getAllUsersAsync();
+        }
     }, []);
 
     React.useEffect(() => {

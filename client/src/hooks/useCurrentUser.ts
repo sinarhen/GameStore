@@ -6,6 +6,6 @@ export function useCurrentUser() {
   if (!context) {
     throw new Error('useCurrentUser must be used within a AuthProvider');
   }
-
+  
   return context;
 }

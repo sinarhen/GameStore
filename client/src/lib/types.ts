@@ -24,6 +24,7 @@ export type User = {
     name: string;
     createdAt: Date;
     role: string;
+    loginRequired: boolean;
     __v: number;
     updatedAt: Date;
 }
