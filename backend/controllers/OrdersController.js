@@ -9,7 +9,7 @@ export const addToOrder = async (req, res) => {
         const { quantity } = req.body;
 
         const product = await Product.findById(productId);
-        let order = await Order.findOne({ userId: req.userId });
+        let order = await Order.findOne({ userId: req.userId, status: 'pending' }).populate('products.productId');
 
         if (!product) {
             return res.status(404).json({ message: 'Product not found' });
@@ -22,7 +22,7 @@ export const addToOrder = async (req, res) => {
         const index = order.products.findIndex((p) => p.productId.toString() === productId);
         if (index === -1) {
             const newProduct = {
-                productId: productId,
+                productId,
                 quantity,
             };
             order.products.push(newProduct);
@@ -34,6 +34,7 @@ export const addToOrder = async (req, res) => {
 
         res.status(201).json({ message: 'Order added successfully' });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 };
