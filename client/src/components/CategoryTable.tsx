@@ -24,17 +24,16 @@ export default function CategoryTable({
     setCategories: React.Dispatch<React.SetStateAction<CategoryType[]>>;
     tableCaption?: string;
 }) {
-    const [selectedCategory, setSelectedCategory] = useState<CategoryType | null>(null);
 
-    async function deleteCategoryAsync() {
+    async function deleteCategoryAsync(selectedCategory: CategoryType | null = null) {
         if (selectedCategory?._id) {
             try {
                 await deleteCategory(selectedCategory?._id);
                 if (categories) {
                     setCategories(categories.filter((category) => category._id !== selectedCategory?._id));
-                    setSelectedCategory(null);
                 }
                 toast.success("Category deleted successfully");
+                closeDialog();
             } catch (error) {
                 console.log(error);
                 toast.error("Something went wrong");
@@ -42,15 +41,14 @@ export default function CategoryTable({
         }
     };
 
-    const {openDialog} = useDialog();
+    const {openDialog, closeDialog} = useDialog();
     const openDeleteDialog = (product: CategoryType) => {
         openDialog({
-            title: "Delete product",
+            title: "Delete category",
             description: "Are you sure you want to delete this product?",
-            content: <></>,
-            onConfirm: () => deleteCategoryAsync(),
-            confirmText: "Delete",
-            cancelText: "Cancel",
+            onConfirm: () => async() => await deleteCategoryAsync(product),
+            confirmText: "Yes",
+            cancelText: "No",
         })
       }
 
