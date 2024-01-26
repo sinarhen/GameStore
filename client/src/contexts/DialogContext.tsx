@@ -82,7 +82,7 @@ export function DialogProvider({ children }: {
             setConfirmText,
         }}>
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent className="rounded">
+                <DialogContent className="rounded max-w-[95%]">
                     {title || description ? (
                         <DialogHeader>
                             {title && <DialogTitle>{title}</DialogTitle>}
@@ -94,17 +94,33 @@ export function DialogProvider({ children }: {
                     {
                         confirmText || cancelText ? (
                             <DialogFooter>
-                                    
                                     <div className="flex gap-x-2">
-                                        {confirmText && (
-                                            <Button onClick={() => {onConfirm(); setOpen(false)}} className="bg-green-600 hover:bg-green-500" >{confirmText}</Button>
-
-                                        )}
-                                        {cancelText && (
-                                            <Button onClick={() => {onCancel(); setOpen(false)}} className="bg-red-600 hover:bg-red-500">{cancelText}</Button>
-
-                                        )}
-                                    
+                                    {confirmText && (
+                                    <Button 
+                                        onClick={() => {
+                                        if (onConfirm) {
+                                            onConfirm();
+                                        }
+                                        setOpen(false);
+                                        }} 
+                                        className="bg-green-600 hover:bg-green-500" 
+                                    >
+                                        {confirmText}
+                                    </Button>
+                                    )}
+                                    {cancelText && (
+                                    <Button 
+                                        onClick={() => {
+                                        if (onCancel) {
+                                            onCancel();
+                                        }
+                                        setOpen(false);
+                                        }} 
+                                        className="bg-red-600 hover:bg-red-500"
+                                    >
+                                        {cancelText}
+                                    </Button>
+                                    )}
                                     </div>    
                                 
                             </DialogFooter>

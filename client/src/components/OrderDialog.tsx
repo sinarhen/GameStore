@@ -1,5 +1,5 @@
 import { Trash2 } from "lucide-react";
-import { Order, OrderProduct } from '../lib/types';
+import { Order, OrderProduct, ProductCardType } from '../lib/types';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./Dialog"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "./Table"
 import { formatter, statusColor } from "../lib/utils";
@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { updateOrderStatus, updateOrderPaymentStatus } from "../lib/order";
 import ConfirmDialog from "./ConfirmDialog";
+import { useDialog } from "../hooks/useDialog";
 
 interface OrderDialogProps {
     order: Order | null,
@@ -27,10 +28,11 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
     setOrder,
     updateOrder
 }) => {
-    const [selectedProduct, setSelectedProduct] = useState<OrderProduct | null>(null);
     const [status, setStatus] = useState(order?.status || 'pending');
     const [paymentStatus, setPaymentStatus] = useState(order?.paymentStatus || 'pending');
-    const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
+    const [confirmOpen, setConfirmOpen] = useState(false);
+
+    const [selectedProduct, setSelectedProduct] = useState<OrderProduct | null>(null);
 
     const { isAdmin } = useCurrentUser();
 
@@ -59,6 +61,8 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
             console.log(err);
         }
     };
+
+
     
     function onConfirm(){
         if (selectedProduct?._id && order?._id)
@@ -92,14 +96,6 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
     return (
         <>
             <ConfirmDialog open={confirmOpen} setOpen={setConfirmOpen} onConfirm={onConfirm} />
-            {/* <Dialog open={open} onOpenChange={() => setOpen(false)}> */}
-            {/* <DialogContent className="min-w-[95%] md:min-w-[75%]">
-                <DialogHeader>
-                <DialogTitle>Products for order {order?._id}</DialogTitle>
-                <DialogDescription>
-                    Products below are the products that you have ordered.
-                </DialogDescription>
-                </DialogHeader> */}
                 <div className="flex gap-x-4">
                     <div className="flex flex-col">
                         <p className="mt-4 mb-1">Status: {order?.status && <span className={statusColor(order?.status)}>{order.status}</span>}</p>
@@ -155,10 +151,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                     )
                     })}
                 </TableBody>
-                </Table>
-            {/* </DialogContent>
-            </Dialog>
-             */}
+            </Table>
         </>
       )
 }

@@ -35,7 +35,6 @@ export default function Orders({
   
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
 
   function updateOrder(order: Order) {
     if (orders){
@@ -70,16 +69,19 @@ export default function Orders({
     })
   }
 
+  const onOrderDialogOpen = (order: Order) => {
+    openDialog({
+      title: "Order details",
+      description: "View order details here",
+      content: <OrderDialog updateOrder={updateOrder} setOrder={setSelectedOrder} order={order} open={dialogOpen} setOpen={setDialogOpen}/>,
+      confirmText: null,
+      cancelText: "Close"
+    })
+  }
   const isEmpty = orders?.length ? orders?.length === 0 : true;
     return (
     <> 
     <div>
-    <ConfirmDialog 
-      open={confirmOpen} 
-      setOpen={setConfirmOpen}
-
-      onConfirm={() =>deleteOrderAsync(selectedOrder?._id as string)}/>
-    <OrderDialog updateOrder={updateOrder} setOrder={setSelectedOrder} order={selectedOrder} open={dialogOpen} setOpen={setDialogOpen}/>
       <Table className="w-full h-full">
         <TableHeader>
           <TableRow className="bg-neutral-800 sticky top-0">
@@ -108,10 +110,7 @@ export default function Orders({
               <TableCell className="w-full">
               <div className="flex gap-x-1 justify-center items-center">
                   <div 
-                    onClick={() => {
-                      setDialogOpen(true); 
-                      setSelectedOrder(order);
-                    }} 
+                    onClick={() => onOrderDialogOpen(order)} 
                     
                     className='p-2  cursor-pointer group rounded-lg hover:bg-gray-400 transition-colors'
                     
@@ -120,10 +119,7 @@ export default function Orders({
                   </div>
                   
                   {isAdmin && <div 
-                    onClick={() => {
-                      setConfirmOpen(true); 
-                      setSelectedOrder(order);
-                    }}
+                    onClick={() => onConfirmOpen(order)}
                     className='p-2  cursor-pointer group rounded-lg hover:bg-red-200 transition-colors'
                   >
                     <Trash2 
