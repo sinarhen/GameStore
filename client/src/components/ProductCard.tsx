@@ -27,7 +27,7 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
                     <p className="text-sm text-indigo-600">{product?.category?.name ?? "Other"}</p>
                 </div>
 
-                <p className="text-gray-600 text-sm mb-4 truncate">{product.description}</p>
+                <p className="text-gray-600 text-sm mb-4 truncate">{!product.description ? "No description" : product.description}</p>
                 <div className="flex items-center justify-between">
                     {/* Use the formatter to format the price */}
                     <span className="font-bold  text-sm">{formatter.format(product.price)}</span>
