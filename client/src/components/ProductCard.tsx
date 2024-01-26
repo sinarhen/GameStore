@@ -1,12 +1,62 @@
 import { useNavigate } from 'react-router-dom';
-import { ProductCardType } from '../lib/types';
+import { OrderProduct, ProductCardType } from '../lib/types';
 import Favorite from './Favorite';
 import { formatter } from "../lib/utils"
 import Button from './Button';
+import { ShoppingCart } from 'lucide-react';
+import useCart from '../hooks/useCart';
+import { useDialog } from '../hooks/useDialog';
+import toast from 'react-hot-toast';
+import AmountPicker from './AmountPicker';
+import { addToOrder } from '../lib/order';
+import { useCurrentUser } from '../hooks/useCurrentUser';
+import { useAuthDialog } from '../hooks/useAuthDialog';
 
 export default function ProductCard({ product, ...props }: { props?: any; product: ProductCardType; }) {
     // const imageUrl = "https://media.slovoidilo.ua/media/cache/person_thumb_exx/uploads/persons/origin/Po/Poroshenko-Petr-Alekseevich_origin.png"; 
     const imageUrl = product.imageUrl;
+    const { openDialog, closeDialog } = useDialog();
+    const { user } = useCurrentUser();
+    const { openAuthDialog } = useAuthDialog();
+    const { addToCart } = useCart();
+    const onConfirm = async (amount: number) => {
+        try {
+            console.log(product._id)
+            const res = await addToOrder(product._id, amount);
+            const resProductId = res.data.orderProduct.productId;
+            const orderProduct: OrderProduct = {
+                _id: resProductId, // You'll need to generate an ID for this
+                productId: product,
+                quantity: amount,
+                createdAt: new Date(), // Set the current date
+                updatedAt: new Date(), // Set the current date
+            };
+            addToCart(orderProduct);
+            console.log(orderProduct)
+            toast.success(`Added ${product.name} to your cart`);
+            closeDialog();
+        } catch (error: any) {;
+            toast.error(error?.message ?? "Something went wrong");
+        } finally {
+            return;
+        }
+    }
+    const onBuy = () => {
+        if (!user){
+            toast.error("You must be logged in to add items to your cart");
+            openAuthDialog('login');
+            return;
+        }
+        openDialog({
+            title: `Buy ${product.name}`,
+            description: "Please enter how many items you want to buy",
+            content: (
+                <AmountPicker onConfirm={onConfirm} />
+            ),
+        
+        })
+    }
+
     
     const navigate = useNavigate();
     return (
@@ -31,8 +81,14 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
                 <div className="flex items-center justify-between">
                     {/* Use the formatter to format the price */}
                     <span className="font-bold  text-sm">{formatter.format(product.price)}</span>
-                    <Button>
-                        Buy
+                    <Button 
+                        onClick={(event) => {
+                            event.stopPropagation();
+                            onBuy();
+                        }}
+                        className='flex items-center gap-x-2'
+                    >
+                        Buy <ShoppingCart size={16} strokeWidth={3} />
                     </Button>
                 </div>
             </div>

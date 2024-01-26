@@ -2,7 +2,6 @@ import Product from '../models/Product.js';
 import Order from '../models/Order.js';
 import { roles } from '../utils/roles.js';
 
-
 export const addToOrder = async (req, res) => {
     try {
         const { productId } = req.params;
@@ -20,25 +19,26 @@ export const addToOrder = async (req, res) => {
         }
 
         const index = order.products.findIndex((p) => p.productId.toString() === productId);
+        let orderProduct;
         if (index === -1) {
-            const newProduct = {
+            orderProduct = {
                 productId,
                 quantity,
             };
-            order.products.push(newProduct);
+            order.products.push(orderProduct);
         } else {
-            order.products[index].quantity += quantity;
+            orderProduct = order.products[index];
+            orderProduct.quantity += quantity;
         }
 
         await order.save();
 
-        res.status(201).json({ message: 'Order added successfully' });
+        res.status(201).json({ message: 'Order added successfully', orderProduct });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: error.message });
     }
 };
-
 
 export const deleteOrderProduct = async (req, res) => {
     try {

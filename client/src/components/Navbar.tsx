@@ -26,9 +26,9 @@ const Navbar = () => {
                         {user ? (
                             <div className='flex items-center gap-x-5'>
                                 <div className='relative'>
-                                    <ShoppingBag onClick={() => setOpen(true)} className='cursor-pointer hover:text-indigo-600 transition-colors '/>
+                                    <ShoppingBag size={30} onClick={() => setOpen(true)} className='cursor-pointer hover:text-indigo-600 transition-colors '/>
                                     <div className='absolute flex items-center justify-center top-0 right-0 h-1/2 w-1/2 rounded-full bg-orange-600'>
-                                        <span className='text-xs'>{cart?.products?.length ?? 0}</span>
+                                        <span className='text-[75%]'>{cart?.products?.length ?? 0}</span>
                                     </div>
                                 </div>
                                 <UserNav isAdmin={user.role === 'admin'} avatarUrl={user.avatarUrl} username={user.name}/>

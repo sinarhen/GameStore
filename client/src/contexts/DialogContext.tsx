@@ -99,7 +99,7 @@ export function DialogProvider({ children }: {
             closeDialog
         }}>
             <Dialog open={open} onOpenChange={setOpen}>
-                <DialogContent className="rounded max-w-[95%]">
+                <DialogContent className="rounded max-w-[95%] sm:w-auto">
                     {title || description ? (
                         <DialogHeader>
                             {title && <DialogTitle>{title}</DialogTitle>}
