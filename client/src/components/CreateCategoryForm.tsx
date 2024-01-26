@@ -10,10 +10,17 @@ import InputError from "./InputError";
 import Button from "./Button";
 import { TCategoryForm, categoryFormSchema } from "../lib/types";
 import { DialogClose } from "@radix-ui/react-dialog";
+import { CategoryType } from "../lib/types";
 
 
 
-export default function CreateCategoryForm(){
+export default function CreateCategoryForm({
+  setCategories,
+  categories
+}: {
+  setCategories: (categories: CategoryType[]) => void;
+  categories: CategoryType[];
+}){
   
     const form = useForm<TCategoryForm>({
       resolver: zodResolver(categoryFormSchema),
@@ -22,7 +29,8 @@ export default function CreateCategoryForm(){
 
     async function onSubmit(data: TCategoryForm) {
         try {
-            await createCategory(data.name);
+            const newCategory = await createCategory(data.name);
+            setCategories([...categories, newCategory.data]);
             toast.success('Category created successfully');
         } catch (e: any) {
             console.error(e)

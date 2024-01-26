@@ -25,12 +25,14 @@ export default function ProductForm({
   initialValues,
   variant = "create",
   setProducts,
+  products,
+  setProductsInTable,
 }: {
   initialValues?: ProductCardType;
   variant: "create" | "edit";
   products?: ProductCardType[] | null;
   setProducts?: React.Dispatch<React.SetStateAction<ProductCardType[] | null>>;
-
+  setProductsInTable?: React.Dispatch<React.SetStateAction<ProductCardType[] | null>>;
 }){
 
     const { closeDialog } = useDialog();
@@ -84,6 +86,7 @@ export default function ProductForm({
             } 
             if (variant === 'create') {
               const res = await createProduct(values);
+              setProductsInTable?.([...(products || []), res.data]);
               toast.success('Product created successfully');
               addProductToProducts(res.data);
             } else if (variant === 'edit') {

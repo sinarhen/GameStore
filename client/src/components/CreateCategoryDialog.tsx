@@ -1,24 +1,23 @@
-import { 
-    Dialog, 
-    DialogTrigger, 
-    DialogContent, 
-    DialogHeader, 
-    DialogTitle, 
-    DialogDescription 
-} from "./Dialog";
 import { PlusCircle } from "lucide-react";
 import Button from "./Button";
 import CreateCategoryForm from "./CreateCategoryForm";
 import { useDialog } from "../hooks/useDialog";
+import { CategoryType } from "../lib/types";
 
-export default function CreateCategoryDialog({}){
+export default function CreateCategoryDialog({
+    setCategories,
+    categories
+}: {
+    setCategories: (categories: CategoryType[]) => void;
+    categories: CategoryType[];
+}){
     const {openDialog} = useDialog();
 
     function onOpenDialog(){
         openDialog({
             title: 'Create category',
             description: 'fill information about category',
-            content: <CreateCategoryForm />
+            content: <CreateCategoryForm setCategories={setCategories} categories={categories} />
         });
     }
     return (

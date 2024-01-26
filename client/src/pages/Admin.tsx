@@ -155,7 +155,7 @@ export default function Admin() {
         <Section className="pt-20 h-full">
             <div className="flex gap-4 items-center justify-between">
                 <h1>All products</h1>
-                <CreateProductDialog />
+                <CreateProductDialog setProductsInTable={setProducts} products={products} />
             </div>
             <Input 
                 className="mt-4"
@@ -171,7 +171,7 @@ export default function Admin() {
         <Section className="pt-20 h-full">
             <div className="flex gap-4 items-center justify-between">
                 <h1>All categories</h1>
-                <CreateCategoryDialog />
+                <CreateCategoryDialog setCategories={setCategories} categories={categories} />
             </div>
             <Input 
                 className="mt-4"

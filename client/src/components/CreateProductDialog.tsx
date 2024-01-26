@@ -2,14 +2,21 @@ import { PlusCircle } from "lucide-react";
 import Button from "./Button";
 import ProductForm from "./ProductForm";
 import { useDialog } from "../hooks/useDialog";
+import { ProductCardType } from "../lib/types";
 
-export default function CreateProductDialog({}){
+export default function CreateProductDialog({
+    products,
+    setProductsInTable,
+}: {
+    products: ProductCardType[] | null;
+    setProductsInTable: React.Dispatch<React.SetStateAction<ProductCardType[] | null>>
+}){
     const {openDialog, closeDialog} = useDialog()
     const onOpen = () => {
         openDialog({
             title: "Create product",
             description: "fill information about product",
-            content: <ProductForm variant="create" />,
+            content: <ProductForm variant="create" products={products} setProductsInTable={setProductsInTable} />,
         })
     }
     return (
