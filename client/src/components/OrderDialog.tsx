@@ -92,14 +92,14 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
     return (
         <>
             <ConfirmDialog open={confirmOpen} setOpen={setConfirmOpen} onConfirm={onConfirm} />
-            <Dialog open={open} onOpenChange={() => setOpen(false)}>
-            <DialogContent className="min-w-[95%] md:min-w-[75%]">
+            {/* <Dialog open={open} onOpenChange={() => setOpen(false)}> */}
+            {/* <DialogContent className="min-w-[95%] md:min-w-[75%]">
                 <DialogHeader>
                 <DialogTitle>Products for order {order?._id}</DialogTitle>
                 <DialogDescription>
                     Products below are the products that you have ordered.
                 </DialogDescription>
-                </DialogHeader>
+                </DialogHeader> */}
                 <div className="flex gap-x-4">
                     <div className="flex flex-col">
                         <p className="mt-4 mb-1">Status: {order?.status && <span className={statusColor(order?.status)}>{order.status}</span>}</p>
@@ -156,9 +156,9 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                     })}
                 </TableBody>
                 </Table>
-            </DialogContent>
+            {/* </DialogContent>
             </Dialog>
-            
+             */}
         </>
       )
 }

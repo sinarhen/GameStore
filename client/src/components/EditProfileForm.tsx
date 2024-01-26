@@ -13,6 +13,7 @@ import { updateUser } from "../lib/auth";
 import { useNavigate } from "react-router-dom";
 import { Label } from "./Label";
 import InputError from "./InputError";
+import Button from "./Button";
 
 const profileEditForm = z.object({
     name: z.string().min(3, { message: "Name should be at least 3 characters long" }),
@@ -86,13 +87,13 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
     }
 
     return (
-        <form className="space-y-4 overflow-y-auto" onSubmit={form.handleSubmit(onSubmit)}>
-          <div>
+        <form className="gap-y-4 gap-x-2 grid grid-cols-4 overflow-y-auto" onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="col-span-2">
             <Label>Username</Label>
             <Input  {...form.register('name')}  />  
             {renderError('name')}
           </div>
-          <div>
+          <div className="col-span-2">
             <Label>Email</Label>
             <Input {...form.register('email')} />  
             {renderError('email')}
@@ -145,7 +146,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
 
             </Dialog>
 
-            <div>
+            <div className="col-span-2">
                 <span className='cursor-pointer right-0 ml-2 text-xs text-gray-400' onClick={toogleImageUrlDialog}>
                 Paste url(click)
                 </span>
@@ -194,11 +195,13 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                 </div>
             </div>   
                
-               <DialogFooter>
-                        <button 
+               <DialogFooter className="col-span-4">
+                        <Button 
                         type="submit"
                         disabled={!form.formState.isValid || form.formState.isSubmitting } 
-                        className="bg-indigo-600 bg-opacity-70 disabled:bg-gray-400 transition-all hover:bg-indigo-500 mt-4 hover:bg-opacity-100 text-white px-4 py-2 rounded-md">Save</button>
+                        >
+                          Save
+                        </Button>
                 </DialogFooter>
         </form>
     )

@@ -20,6 +20,7 @@ import toast from 'react-hot-toast';
 import { FaInfo } from "react-icons/fa";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import TableEmpty from "./TableEmpty";
+import { useDialog } from "../hooks/useDialog";
 
 export default function Orders({
   orders,
@@ -41,6 +42,8 @@ export default function Orders({
       setOrders(orders?.map((o) => (o._id === order._id ? order : o)));
     }
   }
+
+  const { openDialog } = useDialog();
   if (!orders){
     return <NotFound />;
   }
@@ -56,6 +59,17 @@ export default function Orders({
       console.log(error);
     }
   }
+
+  const onConfirmOpen = (order: Order) => {
+    openDialog({
+      title: "Delete order",
+      description: "Are you sure you want to delete this order?",
+      onConfirm: () =>async () => deleteOrderAsync(order._id as string),
+      confirmText: "Yes",
+      cancelText: "No"
+    })
+  }
+
   const isEmpty = orders?.length ? orders?.length === 0 : true;
     return (
     <> 
