@@ -10,6 +10,21 @@ import { cn } from "../lib/utils";
 import { PiBroom } from "react-icons/pi";
 
 
+const sortByOptions = [
+    { label: 'Price (Lowest first)', value: 'price_asc' },
+    { label: 'Price (Highest first)', value: 'price_desc' },
+    { label: 'A-Z', value: 'name_asc' },
+    { label: 'Z-A', value: 'name_desc' },
+    { label: 'Recently added', value: 'date_desc' },
+    { label: 'Oldest by date', value: 'date_asc' },
+];
+const pageSizeOptions = [
+    { label: '10', value: 10 },
+    { label: '20', value: 20 },
+    { label: '30', value: 30 },
+    { label: '40', value: 40 },
+    { label: '50', value: 50 },
+];
 const sortByPrice = (a: ProductCardType, b: ProductCardType) => a.price - b.price;
 const sortByName = (a: ProductCardType, b: ProductCardType) => a.name.localeCompare(b.name);
 const sortByDate = (a: ProductCardType, b: ProductCardType) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
@@ -74,25 +89,11 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
         setSelectedCategory(null);
     };
 
-    const sortByOptions = [
-        { label: 'Price (Lowest first)', value: 'price_asc' },
-        { label: 'Price (Highest first)', value: 'price_desc' },
-        { label: 'A-Z', value: 'name_asc' },
-        { label: 'Z-A', value: 'name_desc' },
-        { label: 'Recently added', value: 'date_desc' },
-        { label: 'Oldest by date', value: 'date_asc' },
-    ];
-    const pageSizeOptions = [
-        { label: '10', value: 10 },
-        { label: '20', value: 20 },
-        { label: '30', value: 30 },
-        { label: '40', value: 40 },
-        { label: '50', value: 50 },
-    ];
 
     useEffect(() => {
         getAllCategories()
           .then((response) => {
+            console.log(response)
             setCategories(response.data);
             setLoading(false);
           })
@@ -151,7 +152,7 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
                         key={category._id}
                       >
 
-                        <Button onClick={() => {setSelectedCategory(category._id); }} className={cn("rounded-3xl bg-white text-black hover:bg-gray-300 border border-transparent", selectedCategory === category._id ? "bg-gray-400 border-indigo-600" : "")}>{category.name}</Button>
+                        <Button onClick={() => {setSelectedCategory(category._id); }} className={cn("rounded-3xl bg-white text-black hover:bg-gray-300 border border-transparent", selectedCategory === category._id ? "bg-gray-400 border-indigo-600" : "")}>{category.name} ({category.products?.length})</Button>
 
                       </motion.div>
                     ))}

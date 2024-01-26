@@ -23,7 +23,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from ".
 export default function ProductForm({
   initialValues,
   variant = "create",
-  products,
   setProducts,
 }: {
   initialValues?: ProductCardType;
@@ -52,14 +51,25 @@ export default function ProductForm({
     });
     
     const addProductToProducts = useCallback((product: ProductCardType) => {
-      if (!products || !setProducts) return;
-      setProducts([...products, product]);
-    }, [products, setProducts]);
-
+      if (!setProducts) return;
+      setProducts(prevProducts => {
+        if (!prevProducts) return [product];
+        return [...prevProducts, product]
+      
+      });
+    }, [setProducts]);
+    
     const updateProductInProducts = useCallback((product: ProductCardType) => {
-      if (!products || !setProducts) return;
-      setProducts(products.map((p) => (p._id === product._id ? product : p)));
-    }, []);
+      if (!setProducts) return;
+      setProducts(prevProducts => {
+        if (!prevProducts) return [{...product, categoryId: {
+          _id: product.categoryId?._id,
+          name: product.categoryId?.name,
+        } as CategoryType}];
+        return prevProducts.map((p) => (p._id === product._id ? product : p))
+      
+      });
+    }, [setProducts]);
 
     const onSubmit = useCallback(async (values: TProductFormSchema) => {
         try {
@@ -196,9 +206,9 @@ export default function ProductForm({
             </Dialog>
             <div className="md:col-span-3 col-span-4">
                   <Label>Category</Label>
-                  <Select {...form.register('categoryId')} value={form.getValues('categoryId')} onValueChange={(val) => form.setValue('categoryId', val)}>
+                  <Select value={form.getValues().categoryId} onValueChange={(val) => form.setValue('categoryId', val)}>
                         <SelectTrigger>
-                            <SelectValue/>
+                            <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="text-white bg-black">
                         {categories?.map((option) => (

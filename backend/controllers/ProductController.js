@@ -1,5 +1,7 @@
 import Product from '../models/Product.js'; 
 import { check, validationResult } from 'express-validator';
+import Category from '../models/Category.js';
+
 function validate(method) {
     switch (method) {
         case 'createProduct': {
@@ -35,10 +37,7 @@ async function getAllProducts(req, res) {
     try {
         
         const products = await query
-        .populate({
-          path: 'categoryId',
-          match: { categoryId: { $exists: true } }
-        })
+        .populate('categoryId')
         .exec();
         res.json(products);
     } catch (err) {
@@ -72,15 +71,14 @@ async function createProduct(req, res) {
             return res.status(400).json({ errors: errors.array() });
         }
         
-        // TODO: VALIDATE ADMIN NAME
         const product = await Product.create({
             name,
             description,
             price,
             imageUrl,
             categoryId: categoryId || null,
-        });
-
+        }).populate('categoryId');
+        
         res.json(product);
     } catch (err) {
         res.status(500).send(err);

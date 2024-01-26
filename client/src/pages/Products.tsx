@@ -73,7 +73,7 @@ export default function Products(){
                   exit={{ opacity: 0 }}
                   transition={{ delay: appearDuration + delay, duration: appearDuration}}
                 >
-                <Filters pageSize={pageSize} setPageSize={setPageSize} setLoading={setLoading} setError={setError} products={products} onProductsChange={setFilteredProducts}/>
+                <Filters products={products} pageSize={pageSize} setPageSize={setPageSize} setLoading={setLoading} setError={setError} onProductsChange={setFilteredProducts}/>
 
                 </motion.div>
 

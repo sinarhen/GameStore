@@ -9,7 +9,6 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
     const imageUrl = product.imageUrl;
     
     const navigate = useNavigate();
-    console.log(product)
     return (
         <div className="max-w-md h-fit transition-all hover:translate-x-0.5 hover:-translate-y-0.5 group hover:bg bg-neutral-800 cursor-pointer mx-auto rounded-md overflow-hidden shadow-lg hover:shadow-xl">
             <div className="relative">
@@ -17,13 +16,13 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
                     <img className="w-full object-cover h-full" src={imageUrl} alt="Product Image" />
 
                 </div>
-                
+            
                 <div className="absolute top-2 cursor-pointer left-2">
                     <Favorite product={product}/>
                 </div>
             </div>
             <div onClick={() => navigate(`/products/${product._id}`)} className="p-4">
-                <div className='flex justify-between items-center'>
+                <div className='flex justify-between items-start'>
                     <h1 className="text-lg font-medium mb-2 truncate">{product.name}</h1>
                     <p className="text-sm text-indigo-600">{product?.categoryId?.name ?? "Other"}</p>
                 </div>
