@@ -3,10 +3,13 @@ import UserNav from './UserNav';
 import { useCurrentUser } from '../hooks/useCurrentUser';
 import { useAuthDialog } from '../hooks/useAuthDialog';
 import Cart from './Cart';
+import useCart from '../hooks/useCart';
+import { ShoppingBag } from 'lucide-react';
 
 const Navbar = () => {
     const { user, isAdmin } = useCurrentUser();
     const { openAuthDialog } = useAuthDialog();
+    const { setOpen,cart } = useCart(); 
     return (
         <>
         <nav className="bg-neutral-800 z-50 fixed w-full">
@@ -21,8 +24,13 @@ const Navbar = () => {
                     </div>
                     <div>
                         {user ? (
-                            <div className='flex gap-x-5'>
-                                <Cart />
+                            <div className='flex items-center gap-x-5'>
+                                <div className='relative'>
+                                    <ShoppingBag onClick={() => setOpen(true)} className='cursor-pointer hover:text-indigo-600 transition-colors '/>
+                                    <div className='absolute flex items-center justify-center top-0 right-0 h-1/2 w-1/2 rounded-full bg-orange-600'>
+                                        <span className='text-xs'>{cart?.products?.length ?? 0}</span>
+                                    </div>
+                                </div>
                                 <UserNav isAdmin={user.role === 'admin'} avatarUrl={user.avatarUrl} username={user.name}/>
                             </div>
                         ) : (

@@ -8,13 +8,14 @@ import {
   SheetTitle,
 } from "./Sheet"
 import { CartContextType, Order, OrderProduct } from "../lib/types";
+import useCart from "../hooks/useCart";
 
 export default function Cart()
 {
- 
+    const { open, addToCart, removeFromCart, cart, setOpen} = useCart();
     
     return (
-        <Sheet open={open}>
+        <Sheet open={open} onOpenChange={setOpen}>
             <SheetContent className="bg-neutral-800">
                 <SheetHeader>
                     <SheetTitle className="text-white">Cart</SheetTitle>
@@ -29,9 +30,7 @@ export default function Cart()
                 ))}
                 </div>
                 <SheetFooter>
-                    <SheetClose asChild>
-                        <Button>Confirm Order</Button>
-                    </SheetClose>
+                    <Button onClick={() => setOpen(false)}>Confirm Order</Button>
                 </SheetFooter>
             </SheetContent>
         </Sheet>

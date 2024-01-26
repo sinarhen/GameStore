@@ -6,6 +6,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { FavoritesProvider } from './contexts/FavoritesContext';
 import { Toaster } from 'react-hot-toast';
 import { DialogProvider } from './contexts/DialogContext';
+import { CartProvider } from './contexts/CartContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,7 +17,9 @@ root.render(
     <AuthProvider>
       <FavoritesProvider>
         <DialogProvider>
-          <App />
+          <CartProvider>
+            <App />
+          </CartProvider>
         </DialogProvider>
       </FavoritesProvider>
     </AuthProvider>

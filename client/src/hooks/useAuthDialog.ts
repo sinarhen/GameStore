@@ -6,7 +6,7 @@ export const useAuthDialog = () => {
     const { openDialog, setOpen, open } = useDialog();
     const openAuthDialog = (variant: "login" | "register") => {
         openDialog({
-            content: <AuthDialog open={open} setOpen={setOpen} initialVariant={variant} />,
+            content: AuthDialog({ initialVariant: variant, setOpen, open }),
         });
     };
 
