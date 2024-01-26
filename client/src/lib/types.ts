@@ -7,7 +7,7 @@ export type ProductCardType = {
     description: string;
     price: number;
     imageUrl: string;
-    categoryId: CategoryType | null;
+    category: CategoryType | null;
     createdAt: Date;
     updatedAt: Date;
 }
@@ -65,7 +65,7 @@ export const productFormSchema = z.object({
     }),
     
     imageUrl: z.any(),
-    categoryId: z.string(),
+    category: z.string(),
 })
 
 export type TProductFormSchema = z.infer<typeof productFormSchema>;

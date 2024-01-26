@@ -27,9 +27,9 @@ export const createCategory = async (req, res) => {
 };
 
 export const deleteCategory = async (req, res) => {
-    const { categoryId } = req.params;
+    const { category } = req.params;
     try {
-        await CategoryModel.findByIdAndDelete(categoryId);
+        await CategoryModel.findByIdAndDelete(category);
         res.json({
             message: 'Category deleted',
         });

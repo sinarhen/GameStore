@@ -17,7 +17,6 @@ import { appearDuration, delay, delayPerItem } from "../lib/constants";
 export default function Products(){
     const [products, setProducts] = useState<ProductCardType[] | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
-    const [selectedCategory, setSelectedCategory] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [pageSize, setPageSize] = useState<number>(10);
     
@@ -83,7 +82,7 @@ export default function Products(){
                     <div className="grid md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:grid-cols-4  gap-4 w-full">
                         {currentItems.map((product: ProductCardType, index: number) => (
                             <motion.div
-                                key={product?._id + index + selectedCategory}
+                                key={product?._id + index}
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 className="w-full h-full"

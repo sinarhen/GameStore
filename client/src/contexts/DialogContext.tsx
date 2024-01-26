@@ -21,6 +21,7 @@ type DialogContextType = {
         cancelText?: string | null
     
     }) => void;
+    closeDialog: () => void;
     open: boolean;
     setOpen: React.Dispatch<React.SetStateAction<boolean>>;
     setOnConfirm: React.Dispatch<React.SetStateAction<() => void>>;
@@ -43,7 +44,16 @@ export function DialogProvider({ children }: {
     const [content, setContent] = useState<React.ReactNode | null>(() => null);
     const [confirmText, setConfirmText] = useState<string | null>("Save");
     const [cancelText, setCancelText] = useState<string | null>("Cancel");
-
+    
+    function resetDialog(){
+        setTitle(null);
+        setDescription(null);
+        setContent(null);
+        setOnConfirm(() => {});
+        setOnCancel(() => {});
+        setConfirmText(null);
+        setCancelText(null);
+    }
     const openDialog = ({
         title, 
         description, 
@@ -71,6 +81,12 @@ export function DialogProvider({ children }: {
         setCancelText(cancelText || null);
         setOpen(true);
     };
+    function closeDialog() {
+        console.log("close dialog");
+        console.log(onCancel);
+        setOpen(false);
+        resetDialog();
+    }
     return (
         <DialogContext.Provider value={{
             openDialog,
@@ -80,6 +96,7 @@ export function DialogProvider({ children }: {
             setOnCancel,
             setCancelText,
             setConfirmText,
+            closeDialog
         }}>
             <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent className="rounded max-w-[95%]">
@@ -100,8 +117,9 @@ export function DialogProvider({ children }: {
                                         onClick={() => {
                                         if (onConfirm) {
                                             onConfirm();
+                                        } else {
+                                            setOpen(false);
                                         }
-                                        setOpen(false);
                                         }} 
                                         className="bg-green-600 hover:bg-green-500" 
                                     >
@@ -114,7 +132,9 @@ export function DialogProvider({ children }: {
                                         if (onCancel) {
                                             onCancel();
                                         }
-                                        setOpen(false);
+                                        else {
+                                            setOpen(false);
+                                        }
                                         }} 
                                         className="bg-red-600 hover:bg-red-500"
                                     >

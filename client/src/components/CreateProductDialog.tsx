@@ -4,12 +4,12 @@ import ProductForm from "./ProductForm";
 import { useDialog } from "../hooks/useDialog";
 
 export default function CreateProductDialog({}){
-    const {openDialog} = useDialog()
+    const {openDialog, closeDialog} = useDialog()
     const onOpen = () => {
         openDialog({
             title: "Create product",
             description: "fill information about product",
-            content: <ProductForm variant="create"/>
+            content: <ProductForm variant="create" />,
         })
     }
     return (

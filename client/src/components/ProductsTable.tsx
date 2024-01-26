@@ -35,6 +35,7 @@ export default function ProductsTable({
               setProducts(products.filter((p) => p._id !== product._id));
           }
           toast.success("Product deleted successfully");
+          closeDialog();
       } catch (error) {
           console.log(error);
           toast.error("Something went wrong");
@@ -43,7 +44,7 @@ export default function ProductsTable({
       
     };
 
-    const {openDialog} = useDialog()
+    const {openDialog, closeDialog} = useDialog()
 
     const onOpen = (product: ProductCardType) => {
         openDialog({
@@ -82,7 +83,7 @@ export default function ProductsTable({
               <TableCell className="overflow-hidden">{product._id}</TableCell>
               <TableCell className="text-center w-full">{product.name}</TableCell>
               <TableCell className="text-center w-full">{formatter.format(product.price)}</TableCell>
-              <TableCell className="text-center w-full">{product.categoryId?.name ?? "None"}</TableCell>
+              <TableCell className="text-center w-full">{product.category?.name ?? "None"}</TableCell>
               <TableCell className="text-right w-full">
                 <div className="flex gap-x-1 justify-center items-center">
                   <div 

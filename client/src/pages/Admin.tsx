@@ -175,7 +175,7 @@ export default function Admin() {
             </div>
             <Input 
                 className="mt-4"
-                name="categoryId"
+                name="category"
                 type="text"
                 placeholder="Category ID or name"
                 value={categoryQuery}

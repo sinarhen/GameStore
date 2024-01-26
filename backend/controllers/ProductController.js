@@ -1,6 +1,5 @@
 import Product from '../models/Product.js'; 
 import { check, validationResult } from 'express-validator';
-import Category from '../models/Category.js';
 
 function validate(method) {
     switch (method) {
@@ -15,11 +14,11 @@ function validate(method) {
 }
 
 async function getAllProducts(req, res) {
-    const { categoryId, orderBy, filterBy, searchTerm } = req.query;
+    const { category, orderBy, filterBy, searchTerm } = req.query;
     let query = Product.find();
 
-    if (categoryId) {
-        query = query.where('categoryId').equals(categoryId);
+    if (category) {
+        query = query.where('category._id').equals(category);
     }
 
     if (searchTerm) {
@@ -37,7 +36,7 @@ async function getAllProducts(req, res) {
     try {
         
         const products = await query
-        .populate('categoryId')
+        .populate('category')
         .exec();
         res.json(products);
     } catch (err) {
@@ -52,7 +51,7 @@ async function getProductById(req, res) {
     try {
         let product = await Product.findById(id);
         if (product) {
-            product = await product.populate("categoryId");
+            product = await product.populate("category");
             res.json(product);
         } else {
             res.status(404).json({ message: 'Product not found' });
@@ -63,22 +62,25 @@ async function getProductById(req, res) {
     }
 }
 async function createProduct(req, res) {
-    const { name, description, price, imageUrl, categoryId } = req.body;
+    const { name, description, price, imageUrl, category } = req.body;
 
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() });
         }
-        
+        const existingProduct = await Product.findOne({ name });
+        if (existingProduct) {
+            return res.status(400).json({ field: "name", message: 'Product already exists' });
+        }
         const product = await Product.create({
             name,
             description,
             price,
             imageUrl,
-            categoryId: categoryId || null,
-        }).populate('categoryId');
-        
+            category: category || null,
+        });
+    
         res.json(product);
     } catch (err) {
         res.status(500).send(err);
@@ -87,7 +89,7 @@ async function createProduct(req, res) {
 
 async function updateProduct(req, res) {
     const { id } = req.params;
-    const { name, description, price, imageUrl, categoryId } = req.body;
+    const { name, description, price, imageUrl, category } = req.body;
 
     try {
         const errors = validationResult(req);
@@ -100,7 +102,7 @@ async function updateProduct(req, res) {
             description,
             price,
             imageUrl,
-            categoryId: categoryId || null,
+            category: category || null,
         });
 
         res.json(product);

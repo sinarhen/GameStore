@@ -139,7 +139,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {order?.products?.map((orderedProduct: OrderProduct) => {
+                    {order?.products?.length && order?.products?.map((orderedProduct: OrderProduct) => {
                     return (
                         <TableRow key={orderedProduct._id}>
                             <TableCell>{orderedProduct.productId.name}</TableCell>

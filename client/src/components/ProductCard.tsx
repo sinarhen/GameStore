@@ -24,7 +24,7 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
             <div onClick={() => navigate(`/products/${product._id}`)} className="p-4">
                 <div className='flex justify-between items-start'>
                     <h1 className="text-lg font-medium mb-2 truncate">{product.name}</h1>
-                    <p className="text-sm text-indigo-600">{product?.categoryId?.name ?? "Other"}</p>
+                    <p className="text-sm text-indigo-600">{product?.category?.name ?? "Other"}</p>
                 </div>
 
                 <p className="text-gray-600 text-sm mb-4 truncate">{product.description}</p>

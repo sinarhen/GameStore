@@ -17,6 +17,7 @@ import Button from "./Button";
 import { getAllCategories } from "../lib/categories";
 import Loading from "./Loading";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./Select";
+import { useDialog } from "../hooks/useDialog";
 
 
 
@@ -32,6 +33,9 @@ export default function ProductForm({
 
 }){
 
+    const { closeDialog } = useDialog();
+
+  
     const [categories, setCategories] = useState<CategoryType[]>([]);
     const [openImageUrlDialog, setOpenImageUrlDialog] = useState(false);
     const [imageUrlDialogTempInput, setImageUrlDialogTempInput] = useState('');
@@ -45,11 +49,11 @@ export default function ProductForm({
         price: initialValues?.price,
         description: initialValues?.description,
         imageUrl: initialValues?.imageUrl,
-        categoryId: initialValues?.categoryId?._id
+        category: initialValues?.category?._id
       },
-      mode: "onTouched",
+      mode: "onBlur",
     });
-    
+
     const addProductToProducts = useCallback((product: ProductCardType) => {
       if (!setProducts) return;
       setProducts(prevProducts => {
@@ -62,9 +66,9 @@ export default function ProductForm({
     const updateProductInProducts = useCallback((product: ProductCardType) => {
       if (!setProducts) return;
       setProducts(prevProducts => {
-        if (!prevProducts) return [{...product, categoryId: {
-          _id: product.categoryId?._id,
-          name: product.categoryId?.name,
+        if (!prevProducts) return [{...product, category: {
+          _id: product.category?._id,
+          name: product.category?.name,
         } as CategoryType}];
         return prevProducts.map((p) => (p._id === product._id ? product : p))
       
@@ -73,6 +77,7 @@ export default function ProductForm({
 
     const onSubmit = useCallback(async (values: TProductFormSchema) => {
         try {
+            setIsLoading(true);
             if (values.imageUrl && inputType === 'file' && initialValues?.imageUrl !== values.imageUrl)
             {
               values.imageUrl = await uploadImageToCloud(values.imageUrl);
@@ -86,10 +91,24 @@ export default function ProductForm({
               const res = await updateProduct(initialValues?._id, values);
               toast.success('Product updated successfully');
               updateProductInProducts(res.data);
-            }
+            } 
+            closeDialog();
         } catch (e: any) {
             console.error(e)
-            toast.error(e?.message || 'Something went wrong');
+            if (e?.response?.data?.message) {
+                toast.error(e?.response?.data?.message);
+            }else {
+              toast.error(e?.message || 'Something went wrong');
+            }
+            if (e?.response?.data?.field){
+                form.setError(e.response.data.field, {
+                    type: "manual",
+                    message: e.response.data.message,
+                });
+            }
+        } finally {
+            setIsLoading(false);
+        
         };
     }, [variant, initialValues, inputType, addProductToProducts, updateProductInProducts]);
     const toogleImageUrlDialog = () => {
@@ -125,11 +144,11 @@ export default function ProductForm({
     if (!isMounted) {
         return null;
     }
-    if (isLoading) {
+    if (isLoading || form.formState.isLoading) {
       return <Loading />;
     }
-    console.log(form.getValues())
-
+    console.log(form.formState.isSubmitting, !form.formState.isValid, form.formState.isDirty)
+    console.log(form.formState.errors)
     return (
         <form className="gap-y-4 gap-x-3 grid grid-cols-6 overflow-y-auto overflow-x-visible px-1" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="md:col-span-4 col-span-6">
@@ -206,7 +225,7 @@ export default function ProductForm({
             </Dialog>
             <div className="md:col-span-3 col-span-4">
                   <Label>Category</Label>
-                  <Select value={form.getValues().categoryId} onValueChange={(val) => form.setValue('categoryId', val)}>
+                  <Select value={form.getValues().category} onValueChange={(val) => form.setValue('category', val)}>
                         <SelectTrigger>
                             <SelectValue />
                         </SelectTrigger>
@@ -218,7 +237,7 @@ export default function ProductForm({
                             ))}
                         </SelectContent>
                     </Select>
-                  {renderError('categoryId')}
+                  {renderError('category')}
             </div>
             <div className="col-span-3">
                 <span className='cursor-pointer right-0 ml-2 text-xs text-gray-400' onClick={toogleImageUrlDialog}>
@@ -274,15 +293,24 @@ export default function ProductForm({
             </div>   
             
             <DialogFooter className="col-span-6">
-              <DialogClose>
-                <div>
-                            <Button>
-                              Save
-                            </Button>
+              <div className="flex justify-end gap-x-2">
+                <Button 
+                  className="bg-green-600 hover:bg-green-500"
+                  type="submit"
+                  disabled={form.formState.isSubmitting || !form.formState.isValid || !form.formState.isDirty}
                   
-                          </div>
+                >
+                  Save
+                </Button>
+                <Button 
+                  className="bg-red-600 hover:bg-red-500"
+                  onClick={closeDialog}
+                >
+                  Cancel
+                </Button>
+      
+              </div>
                   
-              </DialogClose>
             </DialogFooter>
                
         </form>
