@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import UserNav from './UserNav';
 import { useCurrentUser } from '../hooks/useCurrentUser';
 import { useAuthDialog } from '../hooks/useAuthDialog';
-import Drawer from '../pages/Drawer';
+import Cart from './Cart';
 
 const Navbar = () => {
     const { user, isAdmin } = useCurrentUser();
@@ -22,7 +22,7 @@ const Navbar = () => {
                     <div>
                         {user ? (
                             <div className='flex gap-x-5'>
-                                <Drawer />
+                                <Cart />
                                 <UserNav isAdmin={user.role === 'admin'} avatarUrl={user.avatarUrl} username={user.name}/>
                             </div>
                         ) : (

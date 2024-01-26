@@ -77,3 +77,12 @@ export type TCategoryForm = z.infer<typeof categoryFormSchema>;
 
 
 export type TProfileEditForm = z.infer<typeof productFormSchema>;
+
+export type CartContextType = {
+    open: boolean
+    setOpen: (open: boolean) => void
+    cart: Order
+    setCart: (cart: Order) => void
+    addToCart: (product: OrderProduct) => void
+    removeFromCart: (product: OrderProduct) => void
+}
