@@ -13,21 +13,21 @@ interface UserDialogProps {
     user: User | null;
     setUsers: (users: User[]) => void;
     users: User[] | null;
-    setSelectedUser: (user: User | null) => void;
 }
 
 const UserDialog: React.FC<UserDialogProps> = ({
     user,
     setUsers,
     users,
-    setSelectedUser
 }) => {
+
+    const [role, setRole] = React.useState<string | null>(user?.role ?? null);
     async function handleUpdateUserRole(role: string) {
         try {
             if (!user) return;
             await updateUserRole(user._id, role);
             toast.success(`User role updated to ${role}`);
-            setSelectedUser({...user, role});
+            setRole(role);
             if (users) {
                 setUsers(users.map((u) => (u._id === user._id ? { ...user, role } : u)));
             }
@@ -55,12 +55,12 @@ const UserDialog: React.FC<UserDialogProps> = ({
                 </div>
 
                 <div className="flex justify-between items-center">
-                    <p className="text-gray-500 text-lg">Role: <span className="text-indigo-600">{user?.role}</span></p>
+                    <p className="text-gray-500 text-lg">Role: <span className="text-indigo-600">{role}</span></p>
                     <div className="flex gap-x-2">
-                        <Button onClick={() => handleUpdateUserRole("admin")} disabled={user?.role !== 'user'} className="p-1 group bg-green-600 hover:bg-green-500">
+                        <Button onClick={() => handleUpdateUserRole("admin")} disabled={role !== 'user'} className="p-1 group bg-green-600 hover:bg-green-500">
                             <ChevronsUp className={user?.role === 'user' ? "group-hover:animate-pulse" : ""}/>
                         </Button>
-                        <Button onClick={() => handleUpdateUserRole("user")} disabled={user?.role !== "admin"} className="p-1 group bg-red-600 hover:bg-red-500">
+                        <Button onClick={() => handleUpdateUserRole("user")} disabled={role !== "admin"} className="p-1 group bg-red-600 hover:bg-red-500">
                             <ChevronsDown className={user?.role === "admin" ?"group-hover:animate-pulse " : ""}/>
                         </Button>
                         

@@ -27,30 +27,32 @@ export default function UsersTable({
     setUsers: React.Dispatch<React.SetStateAction<User[]>>;
     tableCaption?: string;
 }) {
-    const [selectedUser, setSelectedUser] = useState<User | null>(null);
+
+    const removeUserFromUsers = useCallback((selectedUser: User) => {
+        if (users) {
+            setUsers(users.filter((user) => user._id !== selectedUser?._id));
+        }
+    }, [users, setUsers]);
 
     const deleteUser = useCallback(async (user:User | null = null) => {
         if (user?._id) {
             try {
                 console.log("runs")
                 await deleteUserForAdmin(user?._id);
-                if (users) {
-                    setUsers(users.filter((user) => user._id !== selectedUser?._id));
-                    setSelectedUser(null);
-                }
+                removeUserFromUsers(user);
                 toast.success("User deleted successfully");
             } catch (error) {
                 console.log(error);
                 toast.error("Something went wrong");
             }
         }
-    }, [users, setUsers, selectedUser, setSelectedUser]);
+    }, [users, setUsers]);
 
-    const { openDialog } = useDialog();
+    const { openDialog, closeDialog } = useDialog();
     
     const openUserDialog = useCallback((user: User) => {
         openDialog({
-            content: <UserDialog user={user} setUsers={setUsers} users={users} setSelectedUser={setSelectedUser} />,
+            content: <UserDialog user={user} setUsers={setUsers} users={users} />,
         });
     }, [openDialog, setUsers, users]);
 
