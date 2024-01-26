@@ -297,7 +297,7 @@ export default function ProductForm({
                 <Button 
                   className="bg-green-600 hover:bg-green-500"
                   type="submit"
-                  disabled={form.formState.isSubmitting || !form.formState.isValid || !form.formState.isDirty}
+                  disabled={!form.formState.isDirty}
                   
                 >
                   Save
