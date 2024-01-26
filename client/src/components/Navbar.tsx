@@ -2,6 +2,7 @@ import { Link, NavLink } from 'react-router-dom';
 import UserNav from './UserNav';
 import { useCurrentUser } from '../hooks/useCurrentUser';
 import { useAuthDialog } from '../hooks/useAuthDialog';
+import Drawer from '../pages/Drawer';
 
 const Navbar = () => {
     const { user, isAdmin } = useCurrentUser();
@@ -16,10 +17,14 @@ const Navbar = () => {
                         <NavLink to="/" className={({isActive}) =>`hover:bg-neutral-700 transition-colors px-3 py-2 rounded-md ${!isActive ? "text-gray-300" : "text-indigo-400"}`}>Home</NavLink>
                         <NavLink to="/products" className={({isActive}) =>`hover:bg-neutral-700 transition-colors px-3 py-2 rounded-md ${!isActive ? "text-gray-300" : "text-indigo-400"}`}>Products</NavLink>
                         {isAdmin && <NavLink to="/admin" className={({isActive}) =>`hover:bg-neutral-700 transition-colors px-3 py-2 rounded-md ${!isActive ? "text-gray-300" : "text-indigo-400"}`}>Admin Panel</NavLink>}
+                        
                     </div>
                     <div>
                         {user ? (
-                            <UserNav isAdmin={user.role === 'admin'} avatarUrl={user.avatarUrl} username={user.name}/>
+                            <div className='flex gap-x-5'>
+                                <Drawer />
+                                <UserNav isAdmin={user.role === 'admin'} avatarUrl={user.avatarUrl} username={user.name}/>
+                            </div>
                         ) : (
                             
                             

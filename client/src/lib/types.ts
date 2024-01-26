@@ -50,7 +50,7 @@ export type OrderProduct = {
     quantity: number;
     createdAt: Date;
     updatedAt: Date;
-    
+
 }
 
 
