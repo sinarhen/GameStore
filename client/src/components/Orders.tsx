@@ -42,7 +42,7 @@ export default function Orders({
     }
   }
 
-  const { openDialog } = useDialog();
+  const { openDialog, closeDialog } = useDialog();
   if (!orders){
     return <NotFound />;
   }
@@ -53,7 +53,8 @@ export default function Orders({
       if (orders){
         setOrders(orders.filter((order) => order._id !== orderId));
       }
-      toast.success("Order deleted successfully")
+      toast.success("Order deleted successfully");
+      closeDialog();
     } catch (error) {
       console.log(error);
     }
