@@ -1,5 +1,15 @@
 import express from 'express';
-import { addToOrder, deleteOrderProduct, getAllOrders, getAllOrdersByUserId, getOrderById, updateOrderStatus, deleteOrder, updatePaymentStatus } from "../controllers/OrdersController.js";
+import { 
+    addToOrder, 
+    deleteOrderProduct, 
+    getAllOrders, 
+    getAllOrdersByUserId, 
+    getOrderById, 
+    updateOrderStatus, 
+    deleteOrder, 
+    updatePaymentStatus, 
+    deleteProductFromOrder 
+} from "../controllers/OrdersController.js";
 import checkAuth from '../utils/checkAuth.js';
 import checkAdmin from '../utils/checkAdmin.js';
 
@@ -13,5 +23,6 @@ router.delete('/product/:productId', checkAuth, deleteOrderProduct);
 router.delete('/:orderId', checkAuth, checkAdmin, deleteOrder);
 router.put('/:orderId', checkAuth, checkAdmin, updateOrderStatus);
 router.put('/payment/:orderId', checkAuth, checkAdmin, updatePaymentStatus);
+router.delete('/:orderId/:productId', checkAuth, deleteProductFromOrder);
 
 export default router;

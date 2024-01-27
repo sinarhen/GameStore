@@ -31,3 +31,7 @@ export async function removeFromOrder(productId: string){
 export async function getUserOrdersById(){
   return await http.get(`/orders`, true);
 }
+
+export async function deleteProductFromOrder(orderId: string, productId: string){
+  return await http.delete(`/orders/${orderId}/${productId}`, true);
+}
