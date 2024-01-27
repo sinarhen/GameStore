@@ -50,7 +50,6 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
     }, [pageSize, orderBy, products]);
 
     useEffect(() => {
-        console.log(selectedCategory)
         if (selectedCategory && products) {
             console.log(products)
           onProductsChange(products.filter((product) => product.category?._id === selectedCategory));
