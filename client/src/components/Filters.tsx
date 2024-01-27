@@ -150,7 +150,7 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
                         transition={{ delay: index* delayPerItem + appearDuration + delay, duration: appearDuration}}
                         key={category._id}
                       >
-                        <Button onClick={() => {setSelectedCategory(category._id); }} className={cn("rounded-3xl bg-white text-black hover:bg-gray-300 border border-transparent", selectedCategory === category._id ? "bg-gray-400 border-indigo-600" : "")}>{category.name} ({category.products?.length})</Button>
+                        <Button onClick={() => {setSelectedCategory(category._id); }} className={cn("rounded-3xl bg-white text-black hover:bg-gray-300 border border-transparent", selectedCategory === category._id ? "bg-gray-400 border-indigo-600" : "")}>{category.name}</Button>
                       </motion.div>
                     ))}
                     
