@@ -17,7 +17,7 @@ export function CartProvider({ children }: {
     const addToCart = (product: OrderProduct) => {
         const newProducts = cart?.products ? [...cart?.products, product] : [product];
         if (newProducts && cart){
-            setCart({...cart, products: newProducts});
+            setCart(() => ({ ...cart, products: newProducts}));
         }
     }
     const removeFromCart = (product: OrderProduct) => {
