@@ -26,15 +26,12 @@ export const addToOrder = async (req, res) => {
                 productId: product,
                 quantity,
             };
-            console.log(orderProduct)
             order.products.push(orderProduct);
         } else {
             orderProduct = order.products[index];
             orderProduct.quantity += quantity;
-            console.log(orderProduct)
         }
-
-        console.log(orderProduct)
+        
         await order.save();
 
         res.status(201).json({ message: 'Order added successfully', orderProduct });
