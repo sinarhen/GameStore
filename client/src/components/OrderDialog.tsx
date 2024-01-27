@@ -108,6 +108,8 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                                 <SelectItem value="ready">Ready</SelectItem>
                                 <SelectItem value="processing">Processing</SelectItem>
                                 <SelectItem value="cancelled">Cancelled</SelectItem>
+                                <SelectItem value="confirmed">Confirmed</SelectItem>
+                                <SelectItem value="pending">Pending</SelectItem>
                             </SelectContent>
                         </Select>
                         <Button onClick={handleUpdateStatus} className="w-[180px] bg-green-500 hover:bg-green-600 mt-4">Update</Button>
