@@ -184,3 +184,22 @@ export const getAllOrders = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
+export const deleteProductFromOrder = async (req, res) => {
+    try {
+        const { orderId, productId } = req.params;
+        const order = await Order.findById(orderId);
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+        const index = order.products.findIndex((p) => p.productId.toString() === productId);
+        if (index === -1) {
+            return res.status(404).json({ message: 'Product not found in order' });
+        }
+        order.products.splice(index, 1);
+        await order.save();
+        res.status(200).json({ message: 'Product deleted from order successfully' });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
