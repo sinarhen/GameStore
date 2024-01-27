@@ -30,7 +30,9 @@ export function CartProvider({ children }: {
         async function getOrder() {
             try {
                 const order = await getUserOrdersById();
-                setCart(order.data);
+                if (order.data[0].status === "pending") {
+                    setCart(order.data[0]);
+                }
             } catch (error) {
                 console.log(error);
             }
