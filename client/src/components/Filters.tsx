@@ -158,7 +158,7 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
                 </div>
                 {isFilterApplied && (
 
-                    <p onClick={clearFilters} className={"text-sm items-center hover:bg-gray-400 sm:hover:bg-transparent rounded-full p-8 sm:bg-transparent sm:rounded-none sm:p-0 bg-gray-300 cursor-pointer text-gray-600 absolute right-2 bottom-4 z-50 hover:underline sm:relative justify-center gap-x-2 w-max"}>    
+                    <p onClick={clearFilters} className={"text-sm items-center hover:bg-gray-400 sm:hover:bg-transparent rounded-full p-8 sm:bg-transparent sm:rounded-none sm:p-0 bg-gray-300 cursor-pointer text-gray-600 absolute right-2 bottom-4 z-40 hover:underline sm:relative justify-center gap-x-2 w-max"}>    
                         <PiBroom className="h-4 w-4"/> <span className="hidden sm:flex">Clear</span> 
                     </p>
                 )}

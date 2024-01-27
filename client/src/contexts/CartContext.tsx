@@ -16,8 +16,12 @@ export function CartProvider({ children }: {
     
     const addToCart = (product: OrderProduct) => {
         const newProducts = cart?.products ? [...cart?.products, product] : [product];
-        if (newProducts && cart){
+        console.log()
+        if (cart){
+            console.log("set")
             setCart({...cart, products: newProducts});
+        } else {
+            console.log("unset")
         }
     }
     const removeFromCart = (product: OrderProduct) => {

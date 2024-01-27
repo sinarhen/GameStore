@@ -28,7 +28,7 @@ export default function Cart()
                     <div className="justify-center items-center flex  flex-col gap-y-4 py-4 text-white">
                     {cart?.products?.map((orderProduct) => (
                         <>
-                        <div onClick={() => {navigate('/products/' + orderProduct.productId._id); setOpen(false)}} className="flex py-1 group cursor-pointer hover:text-indigo-600 w-full justify-between gap-4">
+                        <div onClick={() => {navigate('/products/' + orderProduct.productId._id); setOpen(false)}} className="flex py-1 transition-colors group cursor-pointer hover:text-indigo-600 w-full justify-between gap-4">
                             <div className="flex gap-x-2">
                                 <div  className="aspect-square h-20 w-20 rounded overflow-hidden border border-transparent group-hover:border-indigo-600 transition-colors cursor-pointer">
                                     <img src={orderProduct.productId.imageUrl} className="bg-cover object-cover"/>
@@ -37,7 +37,7 @@ export default function Cart()
                                     <p className="align-start">{orderProduct?.productId?.name} x {orderProduct.quantity}</p>
                                     <p className="text-xs text-gray-700">{orderProduct.productId.description}</p>
                                     
-                                </div>
+                            </div>
                             </div>
                             <div className="mt-1">
                                 <p className="text-xs ">{formatter.format(orderProduct.productId.price * orderProduct.quantity)}</p>

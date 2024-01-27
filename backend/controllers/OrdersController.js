@@ -21,14 +21,17 @@ export const addToOrder = async (req, res) => {
         const index = order.products.findIndex((p) => p.productId._id.toString() === productId);
         let orderProduct;
         if (index === -1) {
+            
             orderProduct = {
-                productId,
+                productId: product,
                 quantity,
             };
+            console.log(orderProduct)
             order.products.push(orderProduct);
         } else {
             orderProduct = order.products[index];
             orderProduct.quantity += quantity;
+            console.log(orderProduct)
         }
 
         console.log(orderProduct)
