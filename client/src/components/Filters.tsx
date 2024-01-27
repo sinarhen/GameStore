@@ -94,7 +94,6 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
     useEffect(() => {
         getAllCategories()
           .then((response) => {
-            console.log(response)
             setCategories(response.data);
             setLoading(false);
           })

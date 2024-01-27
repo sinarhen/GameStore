@@ -39,9 +39,12 @@ export default function Cart()
                     </>
 
                 ): (
+                    
                     <div className="flex flex-col h-full items-center justify-evenly">
                         <div>
-                            <h1 className="text-lg">Cart is empty.</h1>
+                            <SheetHeader>
+                                <SheetTitle>Cart is empty</SheetTitle>
+                            </SheetHeader>
                             <p className="text-sm text-gray-400">Add items to your cart to see them here.</p>
                             <Button onClick={() => setOpen(false)}>Close</Button>
                         </div>

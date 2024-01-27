@@ -22,9 +22,10 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
     const onConfirm = async (amount: number) => {
         try {
             const res = await addToOrder(product._id, amount);
-            const resProductId = res.data.orderProduct.productId;
+            const resOrderProduct = res.data;
+            console.log(resOrderProduct)
             const orderProduct: OrderProduct = {
-                _id: resProductId, // You'll need to generate an ID for this
+                _id: resOrderProduct.orderProduct.productId, 
                 productId: product,
                 quantity: amount,
                 createdAt: new Date(), // Set the current date
