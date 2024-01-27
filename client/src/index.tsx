@@ -17,9 +17,7 @@ root.render(
     <AuthProvider>
       <FavoritesProvider>
         <DialogProvider>
-          <CartProvider>
             <App />
-          </CartProvider>
         </DialogProvider>
       </FavoritesProvider>
     </AuthProvider>

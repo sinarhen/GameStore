@@ -8,7 +8,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "./Sheet"
-import { CartContextType, Order, OrderProduct } from '../lib/types';
 import useCart from "../hooks/useCart";
 import { useNavigate } from "react-router-dom";
 import { formatter } from '../lib/utils';
@@ -16,6 +15,7 @@ import { formatter } from '../lib/utils';
 export default function Cart()
 {
     const { open, removeFromCart, cart, setOpen} = useCart();
+    const navigate = useNavigate();
     return (
         <Sheet open={open} onOpenChange={setOpen}>
             <SheetContent className="bg-black text-white">
@@ -28,9 +28,9 @@ export default function Cart()
                     <div className="justify-center items-center flex  flex-col gap-y-4 py-4 text-white">
                     {cart?.products?.map((orderProduct) => (
                         <>
-                        <div className="flex py-1 group cursor-pointer hover:text-indigo-600 w-full justify-between gap-4">
+                        <div onClick={() => {navigate('/products/' + orderProduct.productId._id); setOpen(false)}} className="flex py-1 group cursor-pointer hover:text-indigo-600 w-full justify-between gap-4">
                             <div className="flex gap-x-2">
-                                <div onClick={() => window.location.replace(`/products/${orderProduct.productId._id}`)} className="aspect-square h-20 w-20 rounded overflow-hidden border border-transparent group-hover:border-indigo-600 transition-colors cursor-pointer">
+                                <div  className="aspect-square h-20 w-20 rounded overflow-hidden border border-transparent group-hover:border-indigo-600 transition-colors cursor-pointer">
                                     <img src={orderProduct.productId.imageUrl} className="bg-cover object-cover"/>
                                 </div>
                                 <div>
