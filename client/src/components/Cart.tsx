@@ -30,7 +30,7 @@ export default function Cart()
                         <>
                         <div onClick={() => {navigate('/products/' + orderProduct.productId._id); setOpen(false)}} className="flex py-1 transition-colors group cursor-pointer hover:text-indigo-600 w-full justify-between gap-4">
                             <div className="flex gap-x-2">
-                                <div  className="aspect-square h-20 w-20 rounded overflow-hidden border border-transparent group-hover:border-indigo-600 transition-colors cursor-pointer">
+                                <div  className="aspect-square opacity-80 h-20 w-20 rounded overflow-hidden border border-transparent group-hover:opacity-100 group-hover:border-indigo-600 transition-all cursor-pointer">
                                     <img src={orderProduct.productId.imageUrl} className="bg-cover object-cover"/>
                                 </div>
                                 <div>

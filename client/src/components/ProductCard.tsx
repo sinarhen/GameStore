@@ -58,8 +58,8 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
         })
     }
 
-    
     const navigate = useNavigate();
+
     return (
         <div className="max-w-md h-fit transition-all hover:translate-x-0.5 hover:-translate-y-0.5 group hover:bg bg-neutral-800 cursor-pointer mx-auto rounded-md overflow-hidden shadow-lg hover:shadow-xl">
             <div className="relative">
