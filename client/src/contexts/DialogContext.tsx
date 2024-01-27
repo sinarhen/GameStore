@@ -57,8 +57,6 @@ export function DialogProvider({ children }: {
         setOpen(true);
     };
     function closeDialog() {
-        console.log("close dialog");
-        console.log(onCancel);
         setOpen(false);
         resetDialog();
     }

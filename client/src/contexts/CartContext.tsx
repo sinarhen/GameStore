@@ -17,21 +17,23 @@ export function CartProvider({ children }: {
 
     
     const addToCart = (product: OrderProduct) => {
-        const newProducts = cart?.products ? [...cart?.products, product] : [product];
-        console.log()
         if (cart){
-            console.log("set")
-            setCart({...cart, products: newProducts});
+            const existingProduct = cart?.products.find(item => item?.productId._id === product?.productId._id);
+            if (existingProduct){
+                existingProduct.quantity += product.quantity;
+                setCart({...cart, products: cart?.products});
+            } else {
+                setCart({...cart, products: [...cart?.products, product]});
+            }
         } else {
             setCart({
-                products: newProducts,
+                products: [product],
                 status: "pending",
                 userId: user,
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 paymentStatus: "pending",
             })
-            console.log("unset")
         }
     }
     const removeFromCart = (product: OrderProduct) => {
