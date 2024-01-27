@@ -39,13 +39,12 @@ export default function Cart()
                                         <p className="text-xs text-gray-700">{orderProduct.productId.description}</p>
                                         
                                 </div>
-                                <div>
-                                    <p className="align-start">{orderProduct?.productId?.name} x {orderProduct.quantity}</p>
-                                    <p className="text-xs text-gray-700">{orderProduct.productId.description}</p>
                                 </div>
-                            </div>
-                            <div className="mt-1">
-                                <p className="text-xs ">{formatter.format(orderProduct.productId.price * orderProduct.quantity)}</p>
+                                <div className="mt-1">
+                                    <p className="text-xs ">{formatter.format(orderProduct.productId.price * orderProduct.quantity)}</p>
+
+
+                                </div>
                             </div>
                             </>
                         ))}
@@ -61,7 +60,7 @@ export default function Cart()
                     <div className="flex flex-col h-full items-center justify-evenly">
                         <div>
                             <SheetHeader>
-                                <SheetTitle className="text-white">Cart is</SheetTitle>
+                                <SheetTitle>Cart is</SheetTitle>
                             </SheetHeader>
                             <p className="text-sm text-gray-400">Add items to your cart to see them here.</p>
                             <Button onClick={() => setOpen(false)}>Close</Button>
