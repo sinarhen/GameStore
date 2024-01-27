@@ -49,6 +49,8 @@ export const statusColor = (status: string) => {
       return "text-blue-500";
     case "paid":
       return "text-green-500";
+    case "confirmed":
+      return "text-green-500";
     default:
       return "text-yellow-500";
   }

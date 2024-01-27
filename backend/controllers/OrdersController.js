@@ -14,7 +14,7 @@ export const addToOrder = async (req, res) => {
             return res.status(404).json({ message: 'Product not found' });
         }
 
-        if (!order || order.status === 'cancelled' || order.status === 'ready' || order.status === 'processing') {
+        if (!order || order.status === 'cancelled' || order.status === 'ready' || order.status === 'processing' || order.status === 'confirmed') {
             order = new Order({ userId: req.userId, status: 'pending', totalPrice: product.price * quantity });
         }
 
@@ -136,7 +136,7 @@ export const updateOrderStatus = async (req, res) => {
             return res.status(404).json({ message: 'Order not found' });
         }
 
-       if (status === "pending" || status === "processing" || status === "ready" || status === "cancelled") {
+       if (status === "pending" || status === "processing" || status === "ready" || status === "cancelled" || status === "confirmed") {
             order.status = status;
             await order.save();
         } else {
