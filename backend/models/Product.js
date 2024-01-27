@@ -20,7 +20,8 @@ const productSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        ref: 'Category', 
+        ref: 'Category',
+        default: null, 
     }
 }, {
     timestamps: true

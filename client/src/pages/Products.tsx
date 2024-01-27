@@ -27,23 +27,24 @@ export default function Products(){
     
     useEffect(() => {
       getAllProducts()
-        .then((response) => {
-          if (!response.data.length) {
-            setError("No products found.");
-            return;
-          }
-          setProducts(response.data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.log(error);
-          toast.error(`Something went wrong: ${error.message}`, { id: "products" });
-          setError(`Something went wrong while fetching products: ${error.message}`);
-        });
+          .then((response) => {
+              if (!response.data.length) {
+                  setError("No products found.");
+                  return;
+              }
+              setProducts(response.data);
+              setLoading(false);
+          })
+          .catch((error) => {
+              console.log(error);
+              toast.error(`Something went wrong: ${error.message}`, { id: "products" });
+              setError(`Something went wrong while fetching products: ${error.message}`);
+          });
+  }, []);
+    
+    useEffect(() => {
       setInitialRender(false);
     }, []);
-    
-    
     if (error) {
       return <NotFound helperText={error} buttonText="Refresh" buttonAction={() => window.location.reload()} />;
     }

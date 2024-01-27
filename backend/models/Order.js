@@ -26,10 +26,6 @@ const orderSchema = new mongoose.Schema({
         enum: ["pending", "paid"],
         default: "pending"
     },
-    totalPrice: {
-        type: Number,
-        default: 0
-    },
 }, 
     {
     timestamps: true

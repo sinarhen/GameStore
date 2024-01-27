@@ -9,7 +9,6 @@ import { appearDuration, delay, delayPerItem } from "../lib/constants";
 import { cn } from "../lib/utils";
 import { PiBroom } from "react-icons/pi";
 
-
 const sortByOptions = [
     { label: 'Price (Lowest first)', value: 'price_asc' },
     { label: 'Price (Highest first)', value: 'price_desc' },
@@ -153,11 +152,11 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
                         transition={{ delay: index* delayPerItem + appearDuration + delay, duration: appearDuration}}
                         key={category._id}
                       >
-
                         <Button onClick={() => {setSelectedCategory(category._id); }} className={cn("rounded-3xl bg-white text-black hover:bg-gray-300 border border-transparent", selectedCategory === category._id ? "bg-gray-400 border-indigo-600" : "")}>{category.name} ({category.products?.length})</Button>
-
                       </motion.div>
                     ))}
+                    
+
                 </div>
                 {isFilterApplied && (
 
