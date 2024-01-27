@@ -111,7 +111,8 @@ export default function Admin() {
     }, [user]);
 
     React.useEffect(() => {
-        setFilteredOrders(orders.filter((order) => order._id.includes(query)));
+        
+        setFilteredOrders(orders.filter((order) => order?._id ? order?._id.includes(query) : false));
     }, [query]);
 
     React.useEffect(() => {

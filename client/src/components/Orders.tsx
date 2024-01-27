@@ -107,7 +107,7 @@ export default function Orders({
               </TableCell>
               <TableCell className={statusColor(order.status) + " text-center"}>{order.status}</TableCell>
               <TableCell className={statusColor(order.paymentStatus) + " text-center"}>{order.paymentStatus}</TableCell>
-              <TableCell className="text-right w-full">{formatter.format(order.totalPrice)}</TableCell>
+              <TableCell className="text-right w-full">{formatter.format(order.products.length)}</TableCell>
               <TableCell className="w-full">
               <div className="flex gap-x-1 justify-center items-center">
                   <div 
@@ -138,7 +138,7 @@ export default function Orders({
           <TableFooter className="bg-transparent">
           <TableRow className="sticky bg-neutral-900 bottom-0">
             <TableCell colSpan={4}>Total</TableCell>
-            <TableCell className="text-right">{formatter.format(orders.reduce((acc, order) => acc + order.totalPrice, 0))}</TableCell>
+            <TableCell className="text-right">{formatter.format(orders.reduce((acc, order) => acc + order.products.length, 0))}</TableCell>
             <TableCell></TableCell>
 
           </TableRow>

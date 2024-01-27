@@ -33,10 +33,9 @@ export type User = {
 }
 
 export type Order = {
-    _id: string;
+    _id?: string;
     products: OrderProduct[];
     userId: User;
-    totalPrice: number;
     createdAt: Date;
     updatedAt: Date;
     status: string;
@@ -86,3 +85,34 @@ export type CartContextType = {
     addToCart: (product: OrderProduct) => void
     removeFromCart: (product: OrderProduct) => void
 }
+
+
+export type DialogContextType = {
+    openDialog: ({
+        title, 
+        description, 
+        content, 
+        onConfirm, 
+        onCancel,
+        confirmText,
+        cancelText
+    }: {
+        title?: string, 
+        description?: string, 
+        content?: React.ReactNode | null, 
+        onConfirm?: () => void, 
+        onCancel? : () => void,
+        confirmText?: string | null,
+        cancelText?: string | null
+
+    
+    }) => void;
+    closeDialog: () => void;
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setOnConfirm: React.Dispatch<React.SetStateAction<() => void>>;
+    setOnCancel: React.Dispatch<React.SetStateAction<() => void>>;
+    setCancelText: React.Dispatch<React.SetStateAction<string | null>>;
+    setConfirmText: React.Dispatch<React.SetStateAction<string | null>>;
+
+};

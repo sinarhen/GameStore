@@ -25,32 +25,34 @@ export default function Cart()
                         <SheetTitle className="text-white">Cart</SheetTitle>
                         <SheetDescription>{cart?.products?.length} items</SheetDescription>
                     </SheetHeader>
-                    <div className="justify-center items-center flex  flex-col gap-y-4 py-4 text-white">
-                    {cart?.products?.map((orderProduct) => (
-                        <>
-                        <div onClick={() => {navigate('/products/' + orderProduct.productId._id); setOpen(false)}} className="flex py-1 transition-colors group cursor-pointer hover:text-indigo-600 w-full justify-between gap-4">
-                            <div className="flex gap-x-2">
-                                <div  className="aspect-square opacity-80 h-20 w-20 rounded overflow-hidden border border-transparent group-hover:opacity-100 group-hover:border-indigo-600 transition-all cursor-pointer">
-                                    <img src={orderProduct.productId.imageUrl} className="bg-cover object-cover"/>
+                    <div className="justify-between items-center flex max-h-full flex-col   text-white">
+                        <div className="w-full overflow-y-scroll flex flex-col pt-4">
+                        {cart?.products?.map((orderProduct) => (
+                            <>
+                            <div onClick={() => {navigate('/products/' + orderProduct.productId._id); setOpen(false)}} className="flex py-1 transition-colors group cursor-pointer hover:text-indigo-600 w-full justify-between gap-4">
+                                <div className="flex gap-x-2">
+                                    <div  className="aspect-square opacity-80 h-20 w-20 rounded overflow-hidden border border-transparent group-hover:opacity-100 group-hover:border-indigo-600 transition-all cursor-pointer">
+                                        <img src={orderProduct.productId.imageUrl} className="bg-cover object-cover"/>
+                                    </div>
+                                    <div>
+                                        <p className="align-start">{orderProduct?.productId?.name} x {orderProduct.quantity}</p>
+                                        <p className="text-xs text-gray-700">{orderProduct.productId.description}</p>
+                                        
                                 </div>
-                                <div>
-                                    <p className="align-start">{orderProduct?.productId?.name} x {orderProduct.quantity}</p>
-                                    <p className="text-xs text-gray-700">{orderProduct.productId.description}</p>
-                                    
-                            </div>
-                            </div>
-                            <div className="mt-1">
-                                <p className="text-xs ">{formatter.format(orderProduct.productId.price * orderProduct.quantity)}</p>
+                                </div>
+                                <div className="mt-1">
+                                    <p className="text-xs ">{formatter.format(orderProduct.productId.price * orderProduct.quantity)}</p>
 
 
+                                </div>
                             </div>
+                            </>
+                        ))}
+                            
                         </div>
-                        </>
-                    ))}
-                    </div>
-                    <SheetFooter>
+
                         <Button onClick={() => setOpen(false)}>Confirm Order</Button>
-                    </SheetFooter>
+                    </div>
                     </>
 
                 ): (

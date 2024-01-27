@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react"
 import { CartContextType, Order, OrderProduct } from '../lib/types';
 import Cart from "../components/Cart";
 import { getUserOrdersById } from "../lib/order";
+import { useCurrentUser } from "../hooks/useCurrentUser";
 
 
 
@@ -13,6 +14,7 @@ export function CartProvider({ children }: {
     const [open, setOpen] = useState(false);
     const [cart, setCart] = useState<Order>();
     
+
     
     const addToCart = (product: OrderProduct) => {
         const newProducts = cart?.products ? [...cart?.products, product] : [product];
@@ -21,6 +23,14 @@ export function CartProvider({ children }: {
             console.log("set")
             setCart({...cart, products: newProducts});
         } else {
+            setCart({
+                products: newProducts,
+                status: "pending",
+                userId: user,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                paymentStatus: "pending",
+            })
             console.log("unset")
         }
     }
@@ -30,12 +40,25 @@ export function CartProvider({ children }: {
             setCart({...cart, products: newProducts});
         }
     }
+    
+    const { user } = useCurrentUser();
+
     useEffect(() => {
         async function getOrder() {
             try {
                 const order = await getUserOrdersById();
                 if (order.data[0].status === "pending") {
                     setCart(order.data[0]);
+                } else {
+                    setCart({
+                        products: [],
+                        status: "pending",
+                        userId: user,
+                        createdAt: new Date(),
+                        updatedAt: new Date(),
+                        paymentStatus: "pending",
+
+                    } as unknown as Order)
                 }
             } catch (error) {
                 console.log(error);

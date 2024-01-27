@@ -1,35 +1,10 @@
 import { createContext, useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../components/Dialog";
 import Button from "../components/Button";
+import Loading from "../components/Loading";
+import { DialogContextType } from "../lib/types";
 
-type DialogContextType = {
-    openDialog: ({
-        title, 
-        description, 
-        content, 
-        onConfirm, 
-        onCancel,
-        confirmText,
-        cancelText
-    }: {
-        title?: string, 
-        description?: string, 
-        content?: React.ReactNode | null, 
-        onConfirm?: () => void, 
-        onCancel? : () => void,
-        confirmText?: string | null,
-        cancelText?: string | null
-    
-    }) => void;
-    closeDialog: () => void;
-    open: boolean;
-    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-    setOnConfirm: React.Dispatch<React.SetStateAction<() => void>>;
-    setOnCancel: React.Dispatch<React.SetStateAction<() => void>>;
-    setCancelText: React.Dispatch<React.SetStateAction<string | null>>;
-    setConfirmText: React.Dispatch<React.SetStateAction<string | null>>;
 
-};
 
 export const DialogContext = createContext<DialogContextType | null>(null);
 
@@ -87,6 +62,9 @@ export function DialogProvider({ children }: {
         setOpen(false);
         resetDialog();
     }
+
+    const [isLoading, setIsLoading] = useState(false);
+
     return (
         <DialogContext.Provider value={{
             openDialog,
@@ -107,6 +85,13 @@ export function DialogProvider({ children }: {
                         </DialogHeader>
                     ): (<>                   
                     </>)}
+                    {isLoading && (
+                        <div className="absolute flex h-full w-full items-center justify-center bg-black bg-opacity-70 ">
+                            <Loading />
+
+                        </div>
+                        
+                    )}
                     {content && content}
                     {
                         confirmText || cancelText ? (
@@ -116,7 +101,9 @@ export function DialogProvider({ children }: {
                                     <Button 
                                         onClick={() => {
                                         if (onConfirm) {
+                                            setIsLoading(true)
                                             onConfirm();
+                                            setIsLoading(false);
                                         } else {
                                             setOpen(false);
                                         }
