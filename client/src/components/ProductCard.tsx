@@ -21,7 +21,6 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
     const { addToCart } = useCart();
     const onConfirm = async (amount: number) => {
         try {
-            console.log(product._id)
             const res = await addToOrder(product._id, amount);
             const resProductId = res.data.orderProduct.productId;
             const orderProduct: OrderProduct = {
@@ -31,6 +30,7 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
                 createdAt: new Date(), // Set the current date
                 updatedAt: new Date(), // Set the current date
             };
+            
             addToCart(orderProduct);
             console.log(orderProduct)
             toast.success(`Added ${product.name} to your cart`);

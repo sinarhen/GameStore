@@ -18,7 +18,7 @@ export const addToOrder = async (req, res) => {
             order = new Order({ userId: req.userId, status: 'pending', totalPrice: product.price * quantity });
         }
 
-        const index = order.products.findIndex((p) => p.productId.toString() === productId);
+        const index = order.products.findIndex((p) => p.productId._id.toString() === productId);
         let orderProduct;
         if (index === -1) {
             orderProduct = {
@@ -31,6 +31,7 @@ export const addToOrder = async (req, res) => {
             orderProduct.quantity += quantity;
         }
 
+        console.log(orderProduct)
         await order.save();
 
         res.status(201).json({ message: 'Order added successfully', orderProduct });

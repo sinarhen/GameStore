@@ -12,8 +12,7 @@ import useCart from "../hooks/useCart";
 
 export default function Cart()
 {
-    const { open, addToCart, removeFromCart, cart, setOpen} = useCart();
-    console.log("cart", cart);
+    const { open, removeFromCart, cart, setOpen} = useCart();
     
     return (
         <Sheet open={open} onOpenChange={setOpen}>
