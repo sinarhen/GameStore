@@ -3,13 +3,15 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
+  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
 } from "./Sheet"
-import { CartContextType, Order, OrderProduct } from "../lib/types";
+import { CartContextType, Order, OrderProduct } from '../lib/types';
 import useCart from "../hooks/useCart";
 import { useNavigate } from "react-router-dom";
+import { formatter } from '../lib/utils';
 
 export default function Cart()
 {
@@ -21,19 +23,27 @@ export default function Cart()
                     <>
                     <SheetHeader>
                         <SheetTitle className="text-white">Cart</SheetTitle>
+                        <SheetDescription>{cart?.products?.length} items</SheetDescription>
                     </SheetHeader>
-                    <div className="justify-center items-center flex flex-col gap-y-4 py-4 text-white">
+                    <div className="justify-center items-center flex  flex-col gap-y-4 py-4 text-white">
                     {cart?.products?.map((orderProduct) => (
                         <>
-                        <div className="flex py-1 group cursor-pointer hover:text-indigo-600 w-full items-center justify-between gap-4">
+                        <div className="flex py-1 group cursor-pointer hover:text-indigo-600 w-full justify-between gap-4">
                             <div className="flex gap-x-2">
                                 <div onClick={() => window.location.replace(`/products/${orderProduct.productId._id}`)} className="aspect-square h-20 w-20 rounded overflow-hidden border border-transparent group-hover:border-indigo-600 transition-colors cursor-pointer">
                                     <img src={orderProduct.productId.imageUrl} className="bg-cover object-cover"/>
                                 </div>
-                                <p className="align-start">{orderProduct?.productId?.name}</p>
-                                
+                                <div>
+                                    <p className="align-start">{orderProduct?.productId?.name} x {orderProduct.quantity}</p>
+                                    <p className="text-xs text-gray-700">{orderProduct.productId.description}</p>
+                                    
+                                </div>
                             </div>
-                            <p className="">${orderProduct?.productId?.price}</p>
+                            <div className="mt-1">
+                                <p className="text-xs ">{formatter.format(orderProduct.productId.price * orderProduct.quantity)}</p>
+
+
+                            </div>
                         </div>
                         </>
                     ))}
