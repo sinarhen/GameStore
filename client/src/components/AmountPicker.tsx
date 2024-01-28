@@ -2,10 +2,6 @@ import { useEffect, useState } from "react";
 import Input from "./Input";
 import Button from "./Button";
 import toast from "react-hot-toast";
-import { useDialog } from "../hooks/useDialog";
-import { addToOrder } from "../lib/order";
-import { ProductCardType, OrderProduct } from "../lib/types";
-import useCart from "../hooks/useCart";
 
 export default function AmountPicker({
     onConfirm

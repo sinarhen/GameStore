@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useState } from "react"
-import { CartContextType, Order, OrderProduct } from '../lib/types';
+import { CartContextType, Order, OrderProduct, ProductCardType } from '../lib/types';
 import Cart from "../components/Cart";
-import { getUserOrdersById } from "../lib/order";
+import { addToOrder, getUserOrdersById } from "../lib/order";
 import { useCurrentUser } from "../hooks/useCurrentUser";
+import toast from "react-hot-toast";
 
 
 
@@ -16,25 +17,34 @@ export function CartProvider({ children }: {
     
 
     
-    const addToCart = (product: OrderProduct) => {
+    const addToCart = async (product: ProductCardType, amount: number) => {
+        const res = await addToOrder(product._id, amount);
+        const resOrderProduct = res.data;
+        const orderProduct: OrderProduct = {
+            _id: resOrderProduct.orderProduct.productId, 
+            productId: product,
+            quantity: amount,
+            createdAt: new Date(), // Set the current date
+            updatedAt: new Date(), // Set the current date
+        };
         if (cart){
-            const existingProduct = cart?.products.find(item => item?.productId._id === product?.productId._id);
+            const existingProduct = cart?.products.find(item => item?.productId._id === orderProduct?.productId._id);
             if (existingProduct){
-                existingProduct.quantity += product.quantity;
+                existingProduct.quantity += orderProduct.quantity;
                 setCart({...cart, products: cart?.products});
             } else {
-                setCart({...cart, products: [...cart?.products, product]});
+                setCart({...cart, products: [...cart?.products, orderProduct]});
             }
         } else {
             setCart({
-                products: [product],
+                products: [orderProduct],
                 status: "pending",
                 userId: user,
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 paymentStatus: "pending",
             })
-        }
+        }        
     }
     const removeFromCart = (product: OrderProduct) => {
         const newProducts = cart?.products.filter(item => item?._id !== product?._id);

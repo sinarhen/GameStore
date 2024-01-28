@@ -21,25 +21,11 @@ export default function ProductCard({ product, ...props }: { props?: any; produc
     const { addToCart } = useCart();
     const onConfirm = async (amount: number) => {
         try {
-            const res = await addToOrder(product._id, amount);
-            const resOrderProduct = res.data;
-            console.log(resOrderProduct)
-            const orderProduct: OrderProduct = {
-                _id: resOrderProduct.orderProduct.productId, 
-                productId: product,
-                quantity: amount,
-                createdAt: new Date(), // Set the current date
-                updatedAt: new Date(), // Set the current date
-            };
-            
-            addToCart(orderProduct);
-            console.log(orderProduct)
-            toast.success(`Added ${product.name} to your cart`);
+            await addToCart(product, amount);
+            toast.success('Added to cart')
             closeDialog();
-        } catch (error: any) {;
+        } catch (error: any) {
             toast.error(error?.message ?? "Something went wrong");
-        } finally {
-            return;
         }
     }
     const onBuy = () => {
