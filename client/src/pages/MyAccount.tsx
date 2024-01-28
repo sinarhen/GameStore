@@ -15,6 +15,7 @@ import EditProfileForm from "../components/EditProfileForm";
 import { PencilLine } from "lucide-react";
 import Clipboard from "../components/Clipboard";
 import { motion } from "framer-motion";
+import Button from "../components/Button";
 
 export default function MyAccount() {
     const { user } = useCurrentUser();
@@ -43,7 +44,7 @@ export default function MyAccount() {
     return (
         <>
         <Section className="pt-24">
-            <div className='flex flex-col sm:flex-row gap-x-4 w-full '>
+            <div className='flex flex-col sm:flex-row items-center sm:items-start gap-x-4 w-full '>
                 <div className="h-60 min-w-60 flex items-center justify-center  w-60 rounded-3xl bg-neutral-800">
                     {user?.avatarUrl ? (
                         <img className="w-full h-full object-cover bg-center rounded-3xl" src={user?.avatarUrl} alt={"avatar"}/>
@@ -52,17 +53,16 @@ export default function MyAccount() {
                     
                     )}
                 </div>
-                <div className="h-full overflow-x-hidden">
-                    <p className="text-zinc-600 flex  items-center">
+                <div className="h-full mt-2 overflow-x-hidden">
+                    <p className="text-zinc-600 flex justify-center sm:justify-start  items-center">
                         {user?.email} 
                         <Clipboard className="h-3 w-3 ml-2 text-zinc-400" text={user?.email}/>
                     </p>
                     <h1 className="text-7xl flex truncate w-full">
                         {user?.name}
-                    
                     </h1>
-                    <span className="hover:text-indigo-600 flex text-md mt-2 transition-colors cursor-pointer" onClick={openProfileDialog}>Edit <PencilLine /></span>
-
+                    <span className="hover:text-indigo-600 hidden sm:flex text-md mt-2 transition-colors cursor-pointer" onClick={openProfileDialog}>Edit <PencilLine /></span>
+                    <Button className="sm:hidden mt-4 py-4 text-xl w-full" onClick={openProfileDialog}>Edit profile</Button>
                 </div>
             </div>
             
@@ -73,7 +73,7 @@ export default function MyAccount() {
                 <MyFavorites/>
         
         </Section>
-        <Section className="h-full pt-96 sm:pt-48">
+        <Section className="h-full pt-96 sm:pt-72">
             <Header animateableText="Orders." appearDuration={0.2} />
             <AnimatedSeparator appearDuration={0.3}/>
             {orders?.length ? (
@@ -87,7 +87,7 @@ export default function MyAccount() {
                 transition={{ delay: 3, duration: 1}}
                 className="mt-4"
             >
-                <p className="text-3xl text-zinc-600">You have no favorites yet.</p>
+                <p className="text-3xl text-zinc-600">You have no orders yet.</p>
             </motion.div>
             )}
         </Section>
