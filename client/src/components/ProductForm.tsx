@@ -134,10 +134,8 @@ export default function ProductForm({
 
       getAllCategories().then((res) => {
         setIsLoading(true)
-        console.log(res)
         setCategories(res.data);
       }).catch((err) => {
-        console.log(err);
         toast.error(`Something went wrong: ${err.message}`, { id: "categories" });
       }).finally(()=> {
         setIsLoading(false);
@@ -228,7 +226,7 @@ export default function ProductForm({
             </Dialog>
             <div className="md:col-span-3 col-span-4">
                   <Label>Category</Label>
-                  <Select value={form.getValues().category} onValueChange={(val) => form.setValue('category', val)}>
+                  <Select {...form.register('category')} onValueChange={(val) => form.setValue('category', val)}>
                         <SelectTrigger>
                             <SelectValue />
                         </SelectTrigger>
