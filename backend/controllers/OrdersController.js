@@ -44,12 +44,10 @@ export const addToOrder = async (req, res) => {
 export const deleteOrderProduct = async (req, res) => {
     try {
         const { productId } = req.params;
+        const { quantity } = req.body;
 
         let order = await Order.findOne({ userId: req.userId }).populate('products.productId');
-        const index = order.products.findIndex((p) => {
-            return p._id.toString() === productId
-        
-        });
+        const index = order.products.findIndex((p) => p.productId._id.toString() === productId);
         
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
@@ -60,7 +58,17 @@ export const deleteOrderProduct = async (req, res) => {
         const productQuantity = order.products[index].quantity;
         const productPrice = order.products[index].productId.price;
 
-        if (productQuantity === 1) {
+        if (quantity > productQuantity || quantity < 1) {
+            return res.status(400).json({ message: 'Quantity exceeds the available quantity' });
+        }
+
+        if (quantity) {
+            if (quantity === productQuantity) {
+                order.products.splice(index, 1);
+            } else {
+                order.products[index].quantity = Math.max(0, productQuantity - quantity);
+            }
+        } else if (productQuantity === 1) {
             order.products.splice(index, 1);
         } else {
             order.products[index].quantity = Math.max(1, order.products[index].quantity - 1);
@@ -70,10 +78,16 @@ export const deleteOrderProduct = async (req, res) => {
         order.totalPrice -= productPrice;
         if (order.totalPrice < 0) order.totalPrice = 0;
 
+        if (order.products.length === 0) {
+            await order.deleteOne();
+            return res.status(200).json({ message: 'Order deleted successfully' });
+        };
+
         await order.save();
 
         res.status(200).json({ message: 'Product deleted from order successfully' });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 };
