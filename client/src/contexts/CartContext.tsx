@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { CartContextType, Order, OrderProduct, ProductCardType } from '../lib/types';
 import Cart from "../components/Cart";
 import { addToOrder, getUserOrdersById } from "../lib/order";
@@ -14,10 +14,9 @@ export function CartProvider({ children }: {
 }) {
     const [open, setOpen] = useState(false);
     const [cart, setCart] = useState<Order>();
+    const { user } = useCurrentUser();
     
-
-    
-    const addToCart = async (product: ProductCardType, amount: number) => {
+    const addToCart = useCallback(async (product: ProductCardType, amount: number) => {
         const res = await addToOrder(product._id, amount);
         const resOrderProduct = res.data;
         const orderProduct: OrderProduct = {
@@ -27,25 +26,17 @@ export function CartProvider({ children }: {
             createdAt: new Date(), // Set the current date
             updatedAt: new Date(), // Set the current date
         };
-        if (cart){
-            const existingProduct = cart?.products.find(item => item?.productId._id === orderProduct?.productId._id);
-            if (existingProduct){
-                existingProduct.quantity += orderProduct.quantity;
-                setCart({...cart, products: cart?.products});
-            } else {
-                setCart({...cart, products: [...cart?.products, orderProduct]});
-            }
-        } else {
-            setCart({
-                products: [orderProduct],
-                status: "pending",
-                userId: user,
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                paymentStatus: "pending",
-            })
-        }        
-    }
+            setCart(prevCart => {
+                const existingProduct = prevCart?.products.find(item => item?.productId._id === orderProduct?.productId._id);
+                if (existingProduct){
+                    existingProduct.quantity += orderProduct.quantity;
+                    return {...prevCart, products: prevCart?.products} as Order;
+                } else {
+                    return {...prevCart, products: [...(prevCart?.products || []), orderProduct]} as Order;
+                }
+            });
+                       
+    }, [cart, user])
     const removeFromCart = (product: OrderProduct) => {
         const newProducts = cart?.products.filter(item => item?._id !== product?._id);
         if (newProducts && cart){
@@ -53,7 +44,6 @@ export function CartProvider({ children }: {
         }
     }
     
-    const { user } = useCurrentUser();
 
     useEffect(() => {
         async function getOrder() {
@@ -73,7 +63,7 @@ export function CartProvider({ children }: {
                     } as unknown as Order)
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         };
 
