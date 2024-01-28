@@ -107,7 +107,7 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
         <>
             <div className="flex flex-col sm:flex-row gap-y-4 justify-between  text-sm items-center w-full sm:py-10 py-4">
                 <div className="flex items-center  gap-x-2">
-                    <span>Items</span>
+                    <span>Кількість</span>
                     <Select defaultValue="10" onValueChange={(val) => setPageSize(parseInt(val))}>
                         <SelectTrigger className="w-[100px]">
                             <SelectValue placeholder="---------" />
@@ -124,7 +124,7 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
                 </div>
 
                 <div className="flex items-center  gap-x-2">
-                    <span>Filter</span>
+                    <span>Фільтрація</span>
                     <Select defaultValue="price_asc" onValueChange={setOrderBy}>
                         <SelectTrigger className="w-[100px]">
                             <SelectValue placeholder="---------" />
@@ -159,7 +159,7 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
                 {isFilterApplied && (
 
                     <p onClick={clearFilters} className={"text-sm items-center hover:bg-gray-400 sm:hover:bg-transparent rounded-full p-8 sm:bg-transparent sm:rounded-none sm:p-0 bg-gray-300 cursor-pointer text-gray-600 absolute right-2 bottom-4 z-40 hover:underline sm:relative justify-center gap-x-2 w-max"}>    
-                        <PiBroom className="h-4 w-4"/> <span className="hidden sm:flex">Clear</span> 
+                        <PiBroom className="h-4 w-4"/> <span className="hidden sm:flex">Очистити</span> 
                     </p>
                 )}
        

@@ -61,7 +61,7 @@ export default function Products(){
     return(
         <>
             <div className="w-full h-full">
-                <Header animateableText="Products." appearDuration={appearDuration} />
+                <Header animateableText="Продукти." appearDuration={appearDuration} />
                 <AnimatedSeparator delay={appearDuration + delay}/>
                 <motion.div
                   initial={{ opacity: 0 }}
