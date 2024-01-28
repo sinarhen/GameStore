@@ -3,12 +3,11 @@ import {useForm} from "react-hook-form";
 import Input from "./Input";
 import toast from "react-hot-toast";
 import {useCallback, useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
 import {Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from "./Dialog";
 import {Trash2} from "lucide-react";
 import {FaUser} from "react-icons/fa";
 import {isValidURLImage, setImageUrlFromFile, uploadImageToCloud} from "../lib/utils";
-import {CategoryType, ProductCardType, TProductFormSchema, productFormSchema} from "../lib/types";
+import {CategoryType, ProductCardType, productFormSchema, TProductFormSchema} from "../lib/types";
 import {createProduct, updateProduct} from "../lib/products";
 import {Textarea} from "./Textarea";
 import {Label} from "./Label";
@@ -113,7 +112,6 @@ export default function ProductForm({
       setIsLoading(false);
 
     }
-    ;
   }, [variant, initialValues, inputType, addProductToProducts, updateProductInProducts]);
   const toogleImageUrlDialog = () => {
     setOpenImageUrlDialog(!openImageUrlDialog);

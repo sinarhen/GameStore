@@ -1,18 +1,16 @@
 import {Check, Minus, Plus, Trash2} from "lucide-react";
 import {useNavigate} from "react-router-dom";
-import {Order, OrderProduct} from "../lib/types";
+import { OrderProduct } from "../lib/types";
 import {cn, formatter} from "../lib/utils";
 import Button from "./Button";
 import useCart from "../hooks/useCart";
-import React, {useEffect} from "react";
+import React from "react";
 import toast from "react-hot-toast";
 
 export default function CartItem({
                                    item,
-                                   orderId,
                                  }: {
   item: OrderProduct;
-  orderId: string | undefined;
 }) {
   const navigate = useNavigate();
   const {setOpen, removeFromCart, updateProductQuantity} = useCart();
@@ -30,7 +28,7 @@ export default function CartItem({
       return;
     }
     setInputValue(val);
-  };
+  }
 
 
   return (

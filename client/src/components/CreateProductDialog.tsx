@@ -11,7 +11,7 @@ export default function CreateProductDialog({
   products: ProductCardType[] | null;
   setProductsInTable: React.Dispatch<React.SetStateAction<ProductCardType[] | null>>
 }) {
-  const {openDialog, closeDialog} = useDialog()
+  const {openDialog} = useDialog()
   const onOpen = () => {
     openDialog({
       title: "Create product",

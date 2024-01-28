@@ -1,13 +1,4 @@
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow
-} from "./Table";
+import {Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow} from "./Table";
 import {Trash2} from "lucide-react";
 import {useState} from "react";
 import {Order} from "../lib/types";
@@ -15,7 +6,6 @@ import OrderDialog from "./OrderDialog";
 import {formatter, statusColor, translateStatus} from "../lib/utils";
 import NotFound from "./NotFound";
 import {deleteOrder} from "../lib/order";
-import ConfirmDialog from "./ConfirmDialog";
 import toast from 'react-hot-toast';
 import {FaInfo} from "react-icons/fa";
 import {useCurrentUser} from "../hooks/useCurrentUser";
@@ -33,7 +23,6 @@ export default function Orders({
 }) {
   const {isAdmin} = useCurrentUser();
 
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
   function updateOrder(order: Order) {
@@ -74,7 +63,7 @@ export default function Orders({
     openDialog({
       title: "Деталі замовлення",
       description: "Переглянути деталі замовлення тут",
-      content: <OrderDialog updateOrder={updateOrder} setOrder={setSelectedOrder} order={order} open={dialogOpen}
+      content: <OrderDialog updateOrder={updateOrder}  order={order} open={dialogOpen}
                             setOpen={setDialogOpen}/>,
       confirmText: null,
       cancelText: "Закрити"

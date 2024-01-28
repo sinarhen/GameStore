@@ -1,18 +1,9 @@
 import {FaInfo} from "react-icons/fa";
 import {User} from "../lib/types";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from "./Table";
+import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "./Table";
 import {Trash2} from "lucide-react";
-import {useCallback, useState} from "react";
+import {useCallback} from "react";
 import UserDialog from "./UserDialog";
-import ConfirmDialog from "./ConfirmDialog";
 import {deleteUserForAdmin} from "../lib/users";
 import toast from "react-hot-toast";
 import TableEmpty from "./TableEmpty";
@@ -48,7 +39,7 @@ export default function UsersTable({
     }
   }, [users, setUsers]);
 
-  const {openDialog, closeDialog} = useDialog();
+  const {openDialog} = useDialog();
 
   const openUserDialog = useCallback((user: User) => {
     openDialog({

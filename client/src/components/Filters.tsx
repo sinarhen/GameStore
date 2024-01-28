@@ -86,8 +86,7 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
     setOrderBy('price_asc');
     setPageSize(10);
     setSelectedCategory(null);
-  };
-
+  }
 
   useEffect(() => {
     getAllCategories()

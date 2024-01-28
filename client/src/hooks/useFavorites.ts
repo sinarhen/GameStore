@@ -1,4 +1,4 @@
-import {useContext, useCallback, useEffect} from 'react';
+import {useCallback, useContext} from 'react';
 import {FavoritesContext} from '../contexts/FavoritesContext';
 import {addToFavorites, removeFromFavorites} from '../lib/favorites';
 import {ProductCardType} from '../lib/types';

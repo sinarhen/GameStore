@@ -1,31 +1,23 @@
-import {Trash2} from "lucide-react";
-import {Order, OrderProduct, ProductCardType} from '../lib/types';
-import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from "./Dialog"
-import {Table, TableHeader, TableRow, TableHead, TableBody, TableCell} from "./Table"
+import {Order, OrderProduct} from '../lib/types';
+import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./Table"
 import {formatter, statusColor, translateStatus} from "../lib/utils";
-import {useState} from "react";
+import React, {useState} from "react";
 import Button from "./Button";
-import {changeProductQuantityInOrder} from "../lib/order";
+import {updateOrderStatus} from "../lib/order";
 import toast from "react-hot-toast";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./Select";
 import {useCurrentUser} from "../hooks/useCurrentUser";
-import {updateOrderStatus} from "../lib/order";
 import ConfirmDialog from "./ConfirmDialog";
-import {useDialog} from "../hooks/useDialog";
 
 interface OrderDialogProps {
   order: Order | null,
-  setOrder: (order: Order | null) => void;
   open: boolean;
   setOpen: (open: boolean) => void;
   updateOrder: (orders: Order) => void;
 }
 
 const OrderDialog: React.FC<OrderDialogProps> = ({
-                                                   open,
-                                                   setOpen,
                                                    order,
-                                                   setOrder,
                                                  }) => {
   const [status, setStatus] = useState(order?.status || 'pending');
   const [confirmOpen, setConfirmOpen] = useState(false);
@@ -36,7 +28,6 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
     try {
       if (order?._id) {
         await updateOrderStatus(order?._id, status);
-        setOrder({...order, status});
         toast.success('Order status updated');
       }
     } catch (err) {

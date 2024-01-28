@@ -1,4 +1,4 @@
-import {motion, useMotionValue, useTransform, animate} from "framer-motion";
+import {animate, motion, useMotionValue, useTransform} from "framer-motion";
 import {useEffect, useState} from "react";
 import CursorBlinker from "./CursorBlinker";
 

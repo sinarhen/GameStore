@@ -2,15 +2,13 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
 import Input from "./Input";
 import toast from "react-hot-toast";
-import {useEffect, useState} from "react";
 import {DialogFooter} from "./Dialog";
 import {createCategory} from "../lib/categories";
 import {Label} from "./Label";
 import InputError from "./InputError";
 import Button from "./Button";
-import {TCategoryForm, categoryFormSchema} from "../lib/types";
+import {categoryFormSchema, CategoryType, TCategoryForm} from "../lib/types";
 import {DialogClose} from "@radix-ui/react-dialog";
-import {CategoryType} from "../lib/types";
 
 
 export default function CreateCategoryForm({
@@ -35,8 +33,7 @@ export default function CreateCategoryForm({
       console.error(e)
       toast.error(e?.message || 'Something went wrong');
     }
-    ;
-  };
+  }
 
 
   function renderError(fieldName: keyof typeof form.formState.errors) {

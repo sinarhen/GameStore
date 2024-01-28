@@ -1,5 +1,5 @@
 import express from 'express';
-import {getAllUsers, deleteUserForAdmin, updateUserRole} from '../controllers/AllUsersController.js';
+import {deleteUserForAdmin, getAllUsers, updateUserRole} from '../controllers/AllUsersController.js';
 import checkAuth from '../utils/checkAuth.js';
 import checkAdmin from '../utils/checkAdmin.js';
 

@@ -11,7 +11,6 @@ import {motion} from 'framer-motion';
 import AnimatedSeparator from "../components/AnimatedSeparator";
 import Input from "../components/Input";
 import Button from "../components/Button";
-import {addToOrder} from "../lib/order";
 import {useAuthDialog} from "../hooks/useAuthDialog";
 import {useCurrentUser} from "../hooks/useCurrentUser";
 import useCart from "../hooks/useCart";

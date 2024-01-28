@@ -12,12 +12,11 @@ export default function NotFound({
   buttonAction?: () => void;
 
 }) {
-  const navigate = useNavigate();
   return (
     <div className="flex justify-center items-center px-4 sm:px-8 md:px-16 xl:px-32 py-4 sm:py-8 md:py-16 xl:py-32 ">
       <div>
         <h1 className="text-6xl text-zinc-600">
-          Items not found.
+          {title}
         </h1>
         <p className="text-zinc-700">
           {helperText}

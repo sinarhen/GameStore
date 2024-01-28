@@ -1,15 +1,6 @@
-import {useState} from "react";
 import {ProductCardType} from "../lib/types";
 import {deleteProduct} from "../lib/products";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from "./Table";
+import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "./Table";
 import {PencilLine, Trash2} from "lucide-react";
 import toast from "react-hot-toast";
 import TableEmpty from "./TableEmpty";
@@ -42,7 +33,7 @@ export default function ProductsTable({
       }
     }
 
-  };
+  }
 
   const {openDialog, closeDialog} = useDialog()
 

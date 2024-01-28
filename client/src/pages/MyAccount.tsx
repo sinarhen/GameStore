@@ -18,7 +18,6 @@ import Button from "../components/Button";
 
 export default function MyAccount() {
   const {user} = useCurrentUser();
-  const {favorites} = useFavorites();
   const {openDialog} = useDialog();
 
   const [orders, setOrders] = useState<Order[] | null>(null);

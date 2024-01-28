@@ -1,8 +1,6 @@
-import React, {createContext, useState, useEffect, Dispatch, SetStateAction} from 'react';
+import React, {createContext, Dispatch, SetStateAction, useEffect, useState} from 'react';
 import {getFavorites} from '../lib/favorites';
 import {ProductCardType} from '../lib/types';
-import toast from 'react-hot-toast';
-import {AxiosError} from 'axios';
 import {useCurrentUser} from '../hooks/useCurrentUser';
 
 type FavoritesContextType = { favorites: ProductCardType[], setFavorites: Dispatch<SetStateAction<ProductCardType[]>> };

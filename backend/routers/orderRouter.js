@@ -1,13 +1,13 @@
 import express from 'express';
 import {
     addToOrder,
+    deleteOrder,
+    deleteProductFromOrder,
     getAllOrders,
     getAllOrdersByUserId,
     getOrderById,
-    deleteOrder,
     updateOrder,
-    updateOrderProductQuantity,
-    deleteProductFromOrder
+    updateOrderProductQuantity
 } from "../controllers/OrdersController.js";
 import checkAuth from '../utils/checkAuth.js';
 import checkAdmin from '../utils/checkAdmin.js';

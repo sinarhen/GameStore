@@ -1,6 +1,5 @@
 import React from "react";
 import {User} from "../lib/types";
-import {Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle} from "./Dialog"
 import Button from "./Button";
 import Clipboard from "./Clipboard";
 import {ChevronsDown, ChevronsUp} from "lucide-react";
@@ -35,7 +34,7 @@ const UserDialog: React.FC<UserDialogProps> = ({
     } catch (error) {
       toast.error("Something went wrong");
     }
-  };
+  }
 
   return (
     <>

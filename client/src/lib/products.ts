@@ -1,5 +1,5 @@
 import http from './fetcher'
-import {ProductCardType, TProductFormSchema} from './types';
+import {TProductFormSchema} from './types';
 
 async function getAllProducts() {
   return await http.get('/products', true);

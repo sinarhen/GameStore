@@ -1,4 +1,4 @@
-import {register, login, updateUser, changePassword, deleteUser, getMe} from "../controllers/UserController.js";
+import {changePassword, deleteUser, getMe, login, register, updateUser} from "../controllers/UserController.js";
 import express from 'express';
 import checkAuth from "../utils/checkAuth.js";
 

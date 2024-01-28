@@ -1,10 +1,8 @@
 import React from "react";
 import LoginForm from "./LoginForm";
 import RegisterForm from "./RegisterForm";
-import {Dialog, DialogContent} from "./Dialog";
 
 export default function AuthDialog({
-                                     open,
                                      setOpen,
                                      initialVariant
 

@@ -1,10 +1,10 @@
 import express from 'express';
 import {
+    createProduct,
+    deleteProduct,
     getAllProducts,
     getProductById,
-    createProduct,
     updateProduct,
-    deleteProduct,
     validate
 } from '../controllers/ProductController.js';
 import checkAdmin from '../utils/checkAdmin.js';

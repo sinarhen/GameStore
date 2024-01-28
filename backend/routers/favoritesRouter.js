@@ -1,5 +1,5 @@
 import express from 'express';
-import {getAllFavoritesByUserId, addFavorite, deleteFavorite} from "../controllers/FavoritesController.js";
+import {addFavorite, deleteFavorite, getAllFavoritesByUserId} from "../controllers/FavoritesController.js";
 import checkAuth from '../utils/checkAuth.js';
 
 const router = express.Router();

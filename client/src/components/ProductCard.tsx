@@ -1,5 +1,5 @@
 import {useNavigate} from 'react-router-dom';
-import {OrderProduct, ProductCardType} from '../lib/types';
+import {ProductCardType} from '../lib/types';
 import Favorite from './Favorite';
 import {formatter} from "../lib/utils"
 import Button from './Button';
@@ -8,11 +8,10 @@ import useCart from '../hooks/useCart';
 import {useDialog} from '../hooks/useDialog';
 import toast from 'react-hot-toast';
 import AmountPicker from './AmountPicker';
-import {addToOrder} from '../lib/order';
 import {useCurrentUser} from '../hooks/useCurrentUser';
 import {useAuthDialog} from '../hooks/useAuthDialog';
 
-export default function ProductCard({product, ...props}: { props?: any; product: ProductCardType; }) {
+export default function ProductCard({product}: { props?: any; product: ProductCardType; }) {
   // const imageUrl = "https://media.slovoidilo.ua/media/cache/person_thumb_exx/uploads/persons/origin/Po/Poroshenko-Petr-Alekseevich_origin.png";
   const imageUrl = product.imageUrl;
   const {openDialog, closeDialog} = useDialog();

@@ -13,7 +13,6 @@ import CreateCategoryDialog from "../components/CreateCategoryDialog";
 import {getAllUsers} from "../lib/users";
 import UsersTable from "../components/UsersTable";
 import toast from "react-hot-toast";
-import {useDialog} from "../hooks/useDialog";
 import CategoryTable from "../components/CategoryTable";
 import {getAllCategories} from "../lib/categories";
 

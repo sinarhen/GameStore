@@ -10,7 +10,6 @@ import {isValidURLImage, setImageUrlFromFile} from "../lib/utils";
 import {Trash2} from "lucide-react";
 import {FaUser} from "react-icons/fa";
 import {updateUser} from "../lib/auth";
-import {useNavigate} from "react-router-dom";
 import {Label} from "./Label";
 import InputError from "./InputError";
 import Button from "./Button";
@@ -55,15 +54,13 @@ export default function EditProfileForm({initialValues}: { initialValues: any })
 
         }
       }
-
-      const res = await updateUser(values);
+      await updateUser(values);
 
       toast.success('Profile updated successfully');
       window.location.reload()
     } catch (e: any) {
       toast.error(e?.message || 'Something went wrong');
     }
-    ;
   }
 
   const toogleImageUrlDialog = () => {

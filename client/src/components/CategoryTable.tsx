@@ -1,18 +1,9 @@
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from "./Table";
+import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "./Table";
 import {CategoryType} from "../lib/types";
 import {Trash2} from "lucide-react";
 import TableEmpty from "./TableEmpty";
 import {useDialog} from "../hooks/useDialog";
 import {deleteCategory} from "../lib/categories";
-import {useState} from "react";
 import toast from "react-hot-toast";
 
 export default function CategoryTable({
@@ -39,7 +30,7 @@ export default function CategoryTable({
         toast.error("Something went wrong");
       }
     }
-  };
+  }
 
   const {openDialog, closeDialog} = useDialog();
   const openDeleteDialog = (product: CategoryType) => {

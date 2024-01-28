@@ -1,13 +1,5 @@
 import Button from "./Button"
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-} from "./Sheet"
+import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle,} from "./Sheet"
 import useCart from "../hooks/useCart";
 import {useNavigate} from "react-router-dom";
 import Input from "./Input";
@@ -16,8 +8,7 @@ import {useDialog} from "../hooks/useDialog";
 import Loading from "./Loading";
 
 export default function Cart() {
-  const {open, isLoading, removeFromCart, cart, setOpen, setCart} = useCart();
-  const navigate = useNavigate();
+  const {open, isLoading,  cart, setOpen} = useCart();
   const {openDialog} = useDialog();
 
   const openConfirmDialog = () => {
@@ -44,7 +35,7 @@ export default function Cart() {
             <div className="justify-between items-center flex max-h-full flex-col   text-white">
               <div className="w-full overflow-y-scroll flex flex-col pt-4">
                 {cart?.products?.map((orderProduct) => (
-                  <CartItem item={orderProduct} orderId={cart._id}/>
+                  <CartItem item={orderProduct} />
                 ))}
 
               </div>

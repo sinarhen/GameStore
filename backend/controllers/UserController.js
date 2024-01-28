@@ -264,7 +264,7 @@ export const getMe = async (req, res) => {
         if (!user) {
             return res.status(404).json({message: 'User not found'});
         }
-        const loginRequired = decodedToken.role != user.role;
+        const loginRequired = decodedToken.role !== user.role;
         const {passwordHash, ...userData} = user._doc;
 
         res.json({...userData, loginRequired});

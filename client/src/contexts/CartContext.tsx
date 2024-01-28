@@ -1,4 +1,4 @@
-import {createContext, useEffect, useState, useCallback} from 'react';
+import {createContext, useCallback, useEffect, useState} from 'react';
 import {CartContextType, Order, OrderProduct, ProductCardType} from '../lib/types';
 import Cart from "../components/Cart";
 import {addToOrder, changeProductQuantityInOrder, deleteProductFromOrder, getUserOrdersById} from "../lib/order";
@@ -13,7 +13,7 @@ export function CartProvider({children}: {
 }) {
   const [open, setOpen] = useState(false);
   const [cart, setCart] = useState<Order>();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
 
   const {user} = useCurrentUser();
 
@@ -55,7 +55,7 @@ export function CartProvider({children}: {
   const updateProductQuantity = async (product: OrderProduct, amount: number) => {
     try {
       if (cart?._id) {
-        const res = await changeProductQuantityInOrder(cart?._id, product.productId._id, amount);
+        await changeProductQuantityInOrder(cart?._id, product.productId._id, amount);
         setCart(prevCart => {
             const existingProduct = prevCart?.products.find(item => item?.productId._id === product?.productId._id);
             if (existingProduct) {
@@ -101,7 +101,7 @@ export function CartProvider({children}: {
       } catch (error) {
         console.error(error);
       }
-    };
+    }
 
     getOrder();
   }, [user]);
