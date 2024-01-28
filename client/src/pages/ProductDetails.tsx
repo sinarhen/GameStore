@@ -14,6 +14,7 @@ import Button from "../components/Button";
 import { addToOrder } from "../lib/order";
 import { useAuthDialog } from "../hooks/useAuthDialog";
 import { useCurrentUser } from "../hooks/useCurrentUser";
+import useCart from "../hooks/useCart";
 
 
 export default function ProductDetails(){
@@ -24,6 +25,7 @@ export default function ProductDetails(){
 
     const { user } = useCurrentUser();
     const { openAuthDialog } = useAuthDialog();
+    const { addToCart } = useCart();
 
     const appearDuration = 0.7;
     const params = useParams();
@@ -76,6 +78,8 @@ export default function ProductDetails(){
         }
     }
 
+    
+
     function onSubmit(){
 
         if (!inputValue)
@@ -94,10 +98,8 @@ export default function ProductDetails(){
             {
                 throw new Error("Unexpected internal error")
             }
-            addToOrder(product?._id, inputValue).then(() => {
-                toast.success("Added to cart");
-            
-            })
+            addToCart(product, inputValue)
+            toast.success(`Added to cart ${inputValue} ${product.name}`);
 
         } catch (error)
         {

@@ -79,6 +79,7 @@ export function CartProvider({ children }: {
     
 
     useEffect(() => {
+        if (!user) return;
         async function getOrder() {
             try {
                 const order = await getUserOrdersById();
@@ -101,7 +102,7 @@ export function CartProvider({ children }: {
         };
 
         getOrder();
-    }, []);
+    }, [user]);
     return (
         <CartContext.Provider value={{
             open,

@@ -10,8 +10,6 @@ import {
 } from "./Sheet"
 import useCart from "../hooks/useCart";
 import { useNavigate } from "react-router-dom";
-import { formatter } from '../lib/utils';
-import { Minus, Plus, Trash, Trash2 } from "lucide-react";
 import Input from "./Input";
 import CartItem from "./CartItem";
 import { useDialog } from "../hooks/useDialog";
