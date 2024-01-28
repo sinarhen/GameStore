@@ -102,7 +102,7 @@ export default function Orders({
                 setDialogOpen(true);
                 setSelectedOrder(order);
               }}
-                className="text-center hover:underline cursor-pointer">
+                className="text-center">
                   {order.products.length} items
               </TableCell>
               <TableCell className={statusColor(order.status) + " text-center"}>{order.status}</TableCell>
