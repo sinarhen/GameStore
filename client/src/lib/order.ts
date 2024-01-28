@@ -24,8 +24,8 @@ export async function addToOrder(productId: string, quantity: number){
   return await http.post(`/orders/${productId}`, { quantity }, true);
 }
 
-export async function removeFromOrder(productId: string){
-  return await http.delete(`/orders/${productId}`, true);
+export async function removeFromOrder(productId: string, quantity?: number){
+  return await http.put(`/orders/${productId}`, { quantity }, true);
 }
 
 export async function getUserOrdersById(){
