@@ -148,8 +148,6 @@ export default function ProductForm({
     if (isLoading || form.formState.isLoading) {
       return <Loading />;
     }
-    console.log(form.formState.isSubmitting, !form.formState.isValid, form.formState.isDirty)
-    console.log(form.formState.errors)
     return (
         <form className="gap-y-4 gap-x-3 grid grid-cols-6 overflow-y-auto overflow-x-visible px-1" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="md:col-span-4 col-span-6">

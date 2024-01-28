@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import { CartContextType, Order, OrderProduct, ProductCardType } from '../lib/types';
 import Cart from "../components/Cart";
-import { addToOrder, getUserOrdersById } from "../lib/order";
+import { addToOrder, deleteProductFromOrder, getUserOrdersById } from "../lib/order";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import toast from "react-hot-toast";
 
@@ -37,7 +37,9 @@ export function CartProvider({ children }: {
             });
                        
     }, [cart, user])
-    const removeFromCart = (product: OrderProduct) => {
+    const removeFromCart = async (product: OrderProduct) => {
+        await deleteProductFromOrder(cart?._id, product.productId._id);
+        
         const newProducts = cart?.products.filter(item => item?._id !== product?._id);
         if (newProducts && cart){
             setCart({...cart, products: newProducts});

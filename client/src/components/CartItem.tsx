@@ -11,14 +11,12 @@ import { deleteProductFromOrder } from "../lib/order";
 export default function CartItem({
     item, 
     orderId,
-    setCart
 }: {
     item: OrderProduct;
     orderId: string | undefined;
-    setCart: (cart: Order) => void
 }){
     const navigate = useNavigate();
-    const { setOpen } = useCart();
+    const { setOpen, removeFromCart } = useCart();
     const [inputValue, setInputValue] = React.useState(0);
     
     function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
@@ -33,18 +31,6 @@ export default function CartItem({
         }
         setInputValue(e.target.valueAsNumber);
     };
-
-    function handleRemove() {
-        try {
-            deleteProductFromOrder(orderId, item.productId._id);
-            // setCart((prev) => ({ ...prev, products: prev.products.filter((product) => product.productId._id !== item.productId._id) }));
-            toast.success("Product removed from cart");
-        } catch (error) {
-            toast.error("Something went wrong");
-            console.log(error);
-        }
-    };
-
     return(
         <div 
         className="flex py-1 transition-colors group/cart cursor-pointer  w-full justify-between gap-4">
