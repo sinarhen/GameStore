@@ -51,17 +51,23 @@ export function CartProvider({ children }: {
 
     const updateProductQuantity = async (product: OrderProduct, amount: number) => {
         try {
-            const res = await changeProductQuantityInOrder(product.productId._id, amount);
-            setCart(prevCart => {
-                const existingProduct = prevCart?.products.find(item => item?.productId._id === product?.productId._id);
-                if (existingProduct){
-                    existingProduct.quantity = amount;
-                    return {...prevCart, products: prevCart?.products} as Order;
-                } else {
-                    return {...prevCart, products: [...(prevCart?.products || []), product]} as Order;
+            if (cart?._id)
+            {
+                const res = await changeProductQuantityInOrder(cart?._id, product.productId._id, amount);
+                setCart(prevCart => {
+                    const existingProduct = prevCart?.products.find(item => item?.productId._id === product?.productId._id);
+                    if (existingProduct){
+                        existingProduct.quantity = amount;
+                        return {...prevCart, products: prevCart?.products} as Order;
+                    } else {
+                        return {...prevCart, products: [...(prevCart?.products || []), product]} as Order;
+                    }
                 }
+                );
+            } else {
+                console.log("Cart is undefined")
             }
-            );
+            
 
         } catch (error: any){
             console.error(error);

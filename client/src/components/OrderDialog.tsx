@@ -64,38 +64,40 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
 
 
     
-    function onConfirm(){
-        if (selectedProduct?._id && order?._id)
-        {
-            changeProductQuantityInOrder(selectedProduct?._id).then((data) => {
-                console.log(data);
-                const updatedProducts = order.products?.filter((product) => product._id !== selectedProduct?._id);
-                if (selectedProduct.quantity > 1) {
-                    updatedProducts?.push({...selectedProduct, quantity: selectedProduct.quantity - 1});
-                }
-                if (updatedProducts)
-                {
-                    setOrder({
-                        ...order,
-                        products: updatedProducts,
+    // function onConfirm(){
+    //     if (selectedProduct?._id && order?._id)
+    //     {
+    //         changeProductQuantityInOrder(selectedProduct?._id).then((data) => {
+    //             console.log(data);
+    //             const updatedProducts = order.products?.filter((product) => product._id !== selectedProduct?._id);
+    //             if (selectedProduct.quantity > 1) {
+    //                 updatedProducts?.push({...selectedProduct, quantity: selectedProduct.quantity - 1});
+    //             }
+    //             if (updatedProducts)
+    //             {
+    //                 setOrder({
+    //                     ...order,
+    //                     products: updatedProducts,
                     
-                    })
-                }
-                toast.success('Product deleted from order');
+    //                 })
+    //             }
+    //             toast.success('Product deleted from order');
     
-            }).catch((err) => {
-                console.log(err);
-                toast.error('Error deleting product from order');
-            }
-            );
-            return;
-        }
-        toast.error('Error deleting product from order');
+    //         }).catch((err) => {
+    //             console.log(err);
+    //             toast.error('Error deleting product from order');
+    //         }
+    //         );
+    //         return;
+    //     }
+    //     toast.error('Error deleting product from order');
     
-    }
+    // }
     return (
         <>
-            <ConfirmDialog open={confirmOpen} setOpen={setConfirmOpen} onConfirm={onConfirm} />
+            <ConfirmDialog open={confirmOpen} setOpen={setConfirmOpen} onConfirm={() => {
+                // onConfirm();
+            }} />
                 <div className="flex gap-x-4">
                     <div className="flex flex-col">
                         <p className="mt-4 mb-1">Status: {order?.status && <span className={statusColor(order?.status)}>{order.status}</span>}</p>
