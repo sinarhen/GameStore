@@ -13,8 +13,8 @@ export const getAllCategories = async (req, res) => {
 };
 
 export const createCategory = async (req, res) => {
-    const { name } = req.body;
-    const newCategory = new CategoryModel({ name });
+    const {name} = req.body;
+    const newCategory = new CategoryModel({name});
     try {
         await newCategory.save();
         res.status(201).json(newCategory);
@@ -27,7 +27,7 @@ export const createCategory = async (req, res) => {
 };
 
 export const deleteCategory = async (req, res) => {
-    const { category } = req.params;
+    const {category} = req.params;
     try {
         await CategoryModel.findByIdAndDelete(category);
         res.json({

@@ -1,12 +1,12 @@
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import { useEffect, useState } from "react";
+import {motion, useMotionValue, useTransform, animate} from "framer-motion";
+import {useEffect, useState} from "react";
 import CursorBlinker from "./CursorBlinker";
 
 export default function TextAnim({duration, baseText, className, delay}: {
-    baseText: string;
-    delay?: number;
-    className?: string;
-    duration?: number;
+  baseText: string;
+  delay?: number;
+  className?: string;
+  duration?: number;
 }) {
   const count = useMotionValue(0);
   const rounded = useTransform(count, (latest) => Math.round(latest));
@@ -24,9 +24,9 @@ export default function TextAnim({duration, baseText, className, delay}: {
       ease: "easeInOut",
       onComplete: () => {
         setTimeout(() => {
-          setShowBlinker(false);
-        }
-        , 500);
+            setShowBlinker(false);
+          }
+          , 500);
       }
     });
     return controls.stop;
@@ -35,15 +35,15 @@ export default function TextAnim({duration, baseText, className, delay}: {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowBlinker(true);
-    }, (delay ? delay-0.7 : 0) * 1000);
+    }, (delay ? delay - 0.7 : 0) * 1000);
     return () => clearTimeout(timer);
   }, [delay]);
 
   return (
     <span className={className}>
-      {" "}   
+      {" "}
       <motion.span className="w-fit mt-2 ">{displayText}</motion.span>
-      {showBlinker && <CursorBlinker />}
+      {showBlinker && <CursorBlinker/>}
     </span>
   );
 }

@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllCategories, createCategory, deleteCategory } from '../controllers/CategoryController.js';
+import {getAllCategories, createCategory, deleteCategory} from '../controllers/CategoryController.js';
 import checkAuth from '../utils/checkAuth.js';
 import checkAdmin from '../utils/checkAdmin.js';
 

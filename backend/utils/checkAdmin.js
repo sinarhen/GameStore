@@ -1,4 +1,4 @@
-import { roles } from '../utils/roles.js';
+import {roles} from '../utils/roles.js';
 
 export default (req, res, next) => {
     if (req.role === roles.admin) {

@@ -6,42 +6,42 @@ export const getAllUsers = async (req, res) => {
         res.json(users);
     } catch (err) {
         console.log(err);
-        res.status(500).json({ message: 'Failed to get users' });
+        res.status(500).json({message: 'Failed to get users'});
     }
 };
 
 export const deleteUserForAdmin = async (req, res) => {
     try {
-        const { userId } = req.params;
+        const {userId} = req.params;
         const user = await UserModel.findById(userId);
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({message: 'User not found'});
         }
         await UserModel.findByIdAndDelete(userId);
-        res.json({ message: 'User deleted successfully' });
+        res.json({message: 'User deleted successfully'});
     } catch (err) {
         console.log(err);
-        res.status(500).json({ message: 'Failed to delete user' });
+        res.status(500).json({message: 'Failed to delete user'});
     }
 };
 
 export const updateUserRole = async (req, res) => {
     try {
         const userId = req.params.userId;
-        const { role } = req.body;
+        const {role} = req.body;
         const user = await UserModel.findById(userId);
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({message: 'User not found'});
         } else if (!role) {
-            return res.status(400).json({ message: 'Missing role' });
+            return res.status(400).json({message: 'Missing role'});
         } else if (role !== 'admin' && role !== 'user') {
-            return res.status(400).json({ message: 'Invalid role' });
+            return res.status(400).json({message: 'Invalid role'});
         }
         user.role = role;
         await user.save();
-        res.json({ message: 'User status updated successfully' });
+        res.json({message: 'User status updated successfully'});
     } catch (err) {
         console.log(err);
-        res.status(500).json({ message: 'Failed to update user status' });
+        res.status(500).json({message: 'Failed to update user status'});
     }
 };

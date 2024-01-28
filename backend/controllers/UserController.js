@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import UserModel from '../models/User.js';
-import { generateToken } from '../utils/jwt.js';
+import {generateToken} from '../utils/jwt.js';
 import {roles} from '../utils/roles.js';
 import jwt from 'jsonwebtoken';
 
@@ -10,8 +10,7 @@ export const register = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
 
-        if (!req.body.name)
-        {
+        if (!req.body.name) {
             return res.status(400).json({
                 field: 'name',
                 message: 'Missing name',
@@ -32,16 +31,14 @@ export const register = async (req, res) => {
             });
         }
 
-        if (req.body.password.length < 6)
-        {
+        if (req.body.password.length < 6) {
             return res.status(400).json({
                 field: 'password',
                 message: 'Password too short. Minimum 2 characters required',
             });
         }
 
-        if (req.body.name.length < 2)
-        {
+        if (req.body.name.length < 2) {
             return res.status(400).json({
                 field: 'name',
                 message: 'Name too short. Minimum 6 characters required',
@@ -69,7 +66,6 @@ export const register = async (req, res) => {
         }
 
 
-
         const doc = new UserModel({
             name: req.body.name,
             email: req.body.email,
@@ -82,7 +78,7 @@ export const register = async (req, res) => {
 
         const token = generateToken(user._id, user.name, user.role);
 
-        const { passwordHash, ...userData } = user._doc;
+        const {passwordHash, ...userData} = user._doc;
 
         res.json({
             ...userData,
@@ -123,10 +119,10 @@ export const login = async (req, res) => {
             });
         }
 
-        const token = generateToken(user._id, user.name, user.role); 
+        const token = generateToken(user._id, user.name, user.role);
 
 
-        const { passwordHash, ...userData } = user._doc;
+        const {passwordHash, ...userData} = user._doc;
 
         res.json({
             ...userData,
@@ -148,13 +144,13 @@ export const changePassword = async (req, res) => {
         const oldPassword = req.body.oldPassword;
         const newPassword = req.body.newPassword;
 
-        const user = await UserModel.findOne({ email });
+        const user = await UserModel.findOne({email});
         if (!user) {
             return res.status(404).json({
                 message: 'User not found',
             });
         }
-        
+
         const passwordValid = await bcrypt.compare(
             oldPassword,
             user.passwordHash
@@ -172,7 +168,7 @@ export const changePassword = async (req, res) => {
 
         await user.save();
 
-        res.json({ message: 'Password changed successfully' });
+        res.json({message: 'Password changed successfully'});
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -182,7 +178,7 @@ export const changePassword = async (req, res) => {
 }
 export const updateUser = async (req, res) => {
     try {
-        const { email, name, avatarUrl } = req.body;
+        const {email, name, avatarUrl} = req.body;
 
         const user = await UserModel.findById(req.userId);
         if (!user) {
@@ -202,10 +198,10 @@ export const updateUser = async (req, res) => {
         if (avatarUrl) {
             user.avatarUrl = avatarUrl;
         }
-            
+
         await user.save();
 
-        res.json({ message: 'User updated successfully' });
+        res.json({message: 'User updated successfully'});
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -220,18 +216,17 @@ export const deleteUser = async (req, res) => {
         const email = req.body.email;
         const password = req.body.password;
         const confirmPassword = req.body.confirmPassword;
-        
-        if (!email || !password) return res.status(400).json({ message: 'Missing email or password' });
-        if (!confirmPassword) return res.status(400).json({ message: 'Missing confirm password' });
-        if (password !== confirmPassword) return res.status(400).json({ message: 'Passwords do not match' });
 
-        const user = await UserModel.findOne({ email });
+        if (!email || !password) return res.status(400).json({message: 'Missing email or password'});
+        if (!confirmPassword) return res.status(400).json({message: 'Missing confirm password'});
+        if (password !== confirmPassword) return res.status(400).json({message: 'Passwords do not match'});
+
+        const user = await UserModel.findOne({email});
         if (!user) {
             return res.status(404).json({
                 message: 'User not found',
             });
         }
-
 
 
         const passwordValid = await bcrypt.compare(
@@ -244,9 +239,9 @@ export const deleteUser = async (req, res) => {
             });
         }
 
-        await UserModel.deleteOne({ email });
+        await UserModel.deleteOne({email});
 
-        res.json({ message: 'User deleted successfully' });
+        res.json({message: 'User deleted successfully'});
     } catch (err) {
         console.log(err);
         res.status(500).json({
@@ -260,21 +255,21 @@ export const getMe = async (req, res) => {
         const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
 
         if (!token) {
-            return res.status(401).json({ message: 'Unauthorized' });
+            return res.status(401).json({message: 'Unauthorized'});
         }
 
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
         const userId = decodedToken._id;
         const user = await UserModel.findById(userId);
         if (!user) {
-            return res.status(404).json({ message: 'User not found' });
+            return res.status(404).json({message: 'User not found'});
         }
         const loginRequired = decodedToken.role != user.role;
-        const { passwordHash, ...userData } = user._doc;
+        const {passwordHash, ...userData} = user._doc;
 
         res.json({...userData, loginRequired});
     } catch (err) {
         console.log(err);
-        res.status(500).json({ message: 'Failed to get user' });
+        res.status(500).json({message: 'Failed to get user'});
     }
 }

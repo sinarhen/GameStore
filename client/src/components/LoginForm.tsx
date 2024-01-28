@@ -1,12 +1,12 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {useForm} from "react-hook-form";
 import * as z from 'zod';
 import Input from "./Input";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { setCookie } from "../lib/auth";
+import {setCookie} from "../lib/auth";
 import InputError from "./InputError";
-import { Label } from "./Label";
+import {Label} from "./Label";
 
 
 const LoginSchema = z.object({
@@ -16,19 +16,19 @@ const LoginSchema = z.object({
 
 type LoginFormData = z.infer<typeof LoginSchema>;
 export default function LoginForm({
-  setVariant,
-  setDialogOpen
-}: {
+                                    setVariant,
+                                    setDialogOpen
+                                  }: {
   setVariant: (variant: 'login' | 'register') => void;
   setDialogOpen: (open: boolean) => void;
 }) {
   const form = useForm<LoginFormData>({
-    defaultValues:{
+    defaultValues: {
       email: "",
       password: ""
     },
     resolver: zodResolver(LoginSchema)
-});
+  });
 
   const onSubmit = async (data: LoginFormData) => {
     try {
@@ -37,11 +37,10 @@ export default function LoginForm({
       setDialogOpen(false)
       window.location.reload();
       toast.success("Logged in successfully")
-      
+
 
     } catch (error: any) {
-      if (error.response.data.field)
-      {
+      if (error.response.data.field) {
         form.setError(error.response.data.field, {
           type: "manual",
           message: error.response.data.message
@@ -51,41 +50,41 @@ export default function LoginForm({
       }
     }
   };
-        
-  
+
+
   function renderError(fieldName: keyof typeof form.formState.errors) {
-    return form.formState.errors[fieldName]?.message && <InputError>{String(form.formState.errors[fieldName]?.message)}</InputError>;
+    return form.formState.errors[fieldName]?.message &&
+        <InputError>{String(form.formState.errors[fieldName]?.message)}</InputError>;
   }
 
   return (
-        <>
-      <div className="flex min-h-full flex-1 flex-col justify-center px-4 py-8 lg:px-6"> 
+    <>
+      <div className="flex min-h-full flex-1 flex-col justify-center px-4 py-8 lg:px-6">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-6 text-center text-lg font-bold leading-6 tracking-tight text-white"> 
+          <h2 className="mt-6 text-center text-lg font-bold leading-6 tracking-tight text-white">
             Вхід
           </h2>
         </div>
 
         <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}> 
-            
-            
+          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+
+
             <div>
               <Label>Email</Label>
-              <Input 
-                    {...form.register("email")}
-                  />
-              {renderError('email')}  
-
-
-            
-            </div>
-              <Label>Password</Label>
-              <Input 
-                {...form.register("password")}
-                type='password'
+              <Input
+                {...form.register("email")}
               />
-              {renderError('password')}
+              {renderError('email')}
+
+
+            </div>
+            <Label>Password</Label>
+            <Input
+              {...form.register("password")}
+              type='password'
+            />
+            {renderError('password')}
 
             <div>
               <button
@@ -96,14 +95,15 @@ export default function LoginForm({
             </div>
           </form>
 
-          <p className="mt-6 text-center text-sm text-white"> 
-          Не маєте облікового запису?
-            <button onClick={() => setVariant('register')} className="font-semibold leading-5 text-indigo-400 hover:text-indigo-300"> 
-                Зареєструватися
+          <p className="mt-6 text-center text-sm text-white">
+            Не маєте облікового запису?
+            <button onClick={() => setVariant('register')}
+                    className="font-semibold leading-5 text-indigo-400 hover:text-indigo-300">
+              Зареєструватися
             </button>
           </p>
         </div>
       </div>
     </>
-    );
+  );
 }

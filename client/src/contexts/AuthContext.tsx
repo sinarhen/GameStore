@@ -1,12 +1,12 @@
-import { createContext, useEffect, useState } from "react"; // import the custom hook
-import { useCurrentUser } from "../hooks/useCurrentUser";
-import { User } from "../lib/types";
-import { fetchUser } from "../lib/auth";
+import {createContext, useEffect, useState} from "react"; // import the custom hook
+import {useCurrentUser} from "../hooks/useCurrentUser";
+import {User} from "../lib/types";
+import {fetchUser} from "../lib/auth";
 
 const AuthContext = createContext<any>(null);
 
-export function AuthProvider({ children }: {
-    children: React.ReactNode;
+export function AuthProvider({children}: {
+  children: React.ReactNode;
 }) {
   const [error, setError] = useState<string | null>(null);
   const [user, setUser] = useState<User>();
@@ -15,16 +15,16 @@ export function AuthProvider({ children }: {
     fetchUser().then((fetchedUser: User) => {
       setUser(fetchedUser);
     })
-    .catch((error) => {
-      console.log(error);
-    })
-    .finally(() => {
-      setIsLoading(false);
-    });
+      .catch((error) => {
+        console.log(error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
   const isAdmin = user?.role === "admin";
   return (
-    <AuthContext.Provider value={{ user, isAdmin, isLoading, error }}>
+    <AuthContext.Provider value={{user, isAdmin, isLoading, error}}>
       {children}
     </AuthContext.Provider>
   );

@@ -21,21 +21,21 @@ const productSchema = new mongoose.Schema({
     category: {
         type: String,
         ref: 'Category',
-        default: null, 
+        default: null,
     }
 }, {
     timestamps: true
 });
 
 // Add the pre remove hook
-productSchema.pre('remove', async function(next) {
+productSchema.pre('remove', async function (next) {
     try {
         // Remove all favorites that reference the product
-        await Favorites.deleteMany({ productId: this._id });
+        await Favorites.deleteMany({productId: this._id});
         // Remove the product from all orders that contain it
         await Order.updateMany(
-            { "products.product": this._id },
-            { $pull: { products: { product: this._id } } }
+            {"products.product": this._id},
+            {$pull: {products: {product: this._id}}}
         );
         next();
     } catch (err) {

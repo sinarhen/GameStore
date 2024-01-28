@@ -1,20 +1,20 @@
-import Product from '../models/Product.js'; 
-import { check, validationResult } from 'express-validator';
+import Product from '../models/Product.js';
+import {check, validationResult} from 'express-validator';
 
 function validate(method) {
     switch (method) {
         case 'createProduct': {
             return [
-                check('name', 'Name is required').notEmpty().isLength({ min: 3 }),
+                check('name', 'Name is required').notEmpty().isLength({min: 3}),
                 check('description', 'Description is required').optional(),
-                check('price', 'Price is required').isNumeric().isFloat({ min: 0, max: 100000}),
+                check('price', 'Price is required').isNumeric().isFloat({min: 0, max: 100000}),
             ];
         }
     }
 }
 
 async function getAllProducts(req, res) {
-    const { category, orderBy, filterBy, searchTerm } = req.query;
+    const {category, orderBy, filterBy, searchTerm} = req.query;
     let query = Product.find();
 
     if (category) {
@@ -34,10 +34,10 @@ async function getAllProducts(req, res) {
     }
 
     try {
-        
+
         const products = await query
-        .populate('category')
-        .exec();
+            .populate('category')
+            .exec();
         res.json(products);
     } catch (err) {
         res.status(500).send(err);
@@ -46,32 +46,33 @@ async function getAllProducts(req, res) {
 
 // Get product by id
 async function getProductById(req, res) {
-    const { id } = req.params;
-    
+    const {id} = req.params;
+
     try {
         let product = await Product.findById(id);
         if (product) {
             product = await product.populate("category");
             res.json(product);
         } else {
-            res.status(404).json({ message: 'Product not found' });
+            res.status(404).json({message: 'Product not found'});
         }
     } catch (err) {
         console.error(err)
         res.status(500).send(err);
     }
 }
+
 async function createProduct(req, res) {
-    const { name, description, price, imageUrl, category } = req.body;
+    const {name, description, price, imageUrl, category} = req.body;
 
     try {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
+            return res.status(400).json({errors: errors.array()});
         }
-        const existingProduct = await Product.findOne({ name });
+        const existingProduct = await Product.findOne({name});
         if (existingProduct) {
-            return res.status(400).json({ field: "name", message: 'Product already exists' });
+            return res.status(400).json({field: "name", message: 'Product already exists'});
         }
         const product = await Product.create({
             name,
@@ -80,7 +81,7 @@ async function createProduct(req, res) {
             imageUrl,
             category: category || null,
         });
-    
+
         res.json(product);
     } catch (err) {
         res.status(500).send(err);
@@ -88,15 +89,15 @@ async function createProduct(req, res) {
 }
 
 async function updateProduct(req, res) {
-    const { id } = req.params;
-    const { name, description, price, imageUrl, category } = req.body;
+    const {id} = req.params;
+    const {name, description, price, imageUrl, category} = req.body;
 
     try {
         const errors = validationResult(req);
-        
+
         if (!errors.isEmpty()) {
-            return res.status(400).json({ errors: errors.array() });
-        }        
+            return res.status(400).json({errors: errors.array()});
+        }
         const product = await Product.findByIdAndUpdate(id, {
             name,
             description,
@@ -112,14 +113,14 @@ async function updateProduct(req, res) {
 }
 
 async function deleteProduct(req, res) {
-    const { id } = req.params;
+    const {id} = req.params;
     try {
         const product = await Product.findByIdAndDelete(id);
 
         if (product) {
             res.json(product);
         } else {
-            res.status(404).json({ message: 'Product not found' });   
+            res.status(404).json({message: 'Product not found'});
         }
     } catch (err) {
         res.status(500).send(err);

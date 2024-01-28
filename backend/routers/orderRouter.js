@@ -1,11 +1,11 @@
 import express from 'express';
-import { 
-    addToOrder, 
-    getAllOrders, 
-    getAllOrdersByUserId, 
-    getOrderById, 
+import {
+    addToOrder,
+    getAllOrders,
+    getAllOrdersByUserId,
+    getOrderById,
     deleteOrder,
-    updateOrder, 
+    updateOrder,
     updateOrderProductQuantity,
     deleteProductFromOrder
 } from "../controllers/OrdersController.js";

@@ -1,6 +1,7 @@
-import http from "./fetcher"; 
+import http from "./fetcher";
+
 export async function getFavorites() {
-    return await http.get('/favorites', true);
+  return await http.get('/favorites', true);
 }
 
 const addToFavorites = async (productId: string) => {

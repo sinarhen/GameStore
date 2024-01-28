@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie';
-import http from './fetcher'; 
-import { headerName } from './constants';
+import http from './fetcher';
+import {headerName} from './constants';
 import toast from 'react-hot-toast';
 
 const fetchUser = async () => {
@@ -13,13 +13,13 @@ const fetchUser = async () => {
     const response = await http.get('/auth/me', true);
     return response.data;
   } catch (error) {
-    toast.error('Internal error with authentication. Please try again', { duration: 5000, id: 'fetchUser'  });
+    toast.error('Internal error with authentication. Please try again', {duration: 5000, id: 'fetchUser'});
     console.error(error);
   }
 };
 
 const setCookie = (token: string) => {
-  Cookies.set(headerName, token, { expires: 30 });
+  Cookies.set(headerName, token, {expires: 30});
 };
 
 const removeCookie = () => {
@@ -27,10 +27,10 @@ const removeCookie = () => {
 };
 
 const updateUser = async ({
-  name,
-  email,
-  avatarUrl,
-}: {
+                            name,
+                            email,
+                            avatarUrl,
+                          }: {
   name?: string;
   email?: string;
   avatarUrl?: string;
