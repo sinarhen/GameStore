@@ -6,7 +6,6 @@ import Button from "./Button";
 import useCart from "../hooks/useCart";
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
-import { addToOrder, deleteProductFromOrder } from "../lib/order";
 
 export default function CartItem({
     item, 
@@ -19,53 +18,34 @@ export default function CartItem({
     const { setOpen, removeFromCart } = useCart();
     const [inputValue, setInputValue] = React.useState(0);
     
-    function handleInput(e: React.ChangeEvent<HTMLInputElement>) {
-        if (e.target.valueAsNumber > 100){
+    function handleInput(val: number){
+        console.log(val) 
+        if (val > 100){
             setInputValue(100);
             toast.error("You can't buy more than 100 items at once");
             return;
-        } if (e.target.valueAsNumber > item.quantity){
-            setInputValue(item.quantity);
-            toast.error("You can't remove more items than there are in stock");
+        } if (val < -item.quantity){
+            setInputValue(val + 1);
+            toast.error("You can't remove more items than you have in your cart");
             return;
         }
-        setInputValue(e.target.valueAsNumber);
+        setInputValue(val);
     };
 
-    function handleRemove() {
-        try {
-            deleteProductFromOrder(orderId, item.productId._id);
-            // setCart((prev) => ({ ...prev, products: prev.products.filter((product) => product.productId._id !== item.productId._id) }));
-            toast.success("Product removed from cart");
-        } catch (error) {
-            toast.error("Something went wrong");
-            console.log(error);
-        }
-    };
-
-    function handleAdd() {
-        try {
-            addToOrder(item.productId._id, inputValue);
-            // setCart((prev) => ({ ...prev, products: [...prev.products, { productId: item.productId, quantity: inputValue }] }));
-            toast.success("Product added to cart");
-        } catch (error) {
-            toast.error("Something went wrong");
-            console.log(error);
-        }
-    };
-
-    return(
+ 
+    return (
         <div 
         className="flex py-1 transition-colors group/cart cursor-pointer  w-full justify-between gap-4">
         <div className="flex gap-x-2">
             <div onClick={(e) => {
-                e.stopPropagation();
+                removeFromCart(item);
+                toast.success("Deleted item from your cart")
             }}  className="aspect-square relative min-w-20 h-20 w-20 rounded overflow-hidden border border-transparent  group-hover/cart:border-indigo-600 transition-all cursor-pointer">
                 <span
                 className="opacity-0 group/image flex items-center justify-center group-hover/cart:opacity-80 transition-all w-full h-full bg-black absolute">
                     
-                        <Check onClick={() => {handleAdd();}} className={cn("text-green-600 absolute group-hover/image:text-opacity-100 group-hover/image:scale-125 text-opacity-75 transition-all h-1/2 w-1/2 opacity-0", inputValue !== 0 ? "opacity-100" : "")}/>
-                        <Trash2 onClick={() => {handleRemove();}} className={cn("text-red-600 absolute text-opacity-75 h-1/2 group-hover/image:text-opacity-100 group-hover/image:scale-125 transition-all w-1/2 opacity-0", inputValue === 0 ? "opacity-100" : "")} />
+                        <Check onClick={() => {}} className={cn("text-green-600 absolute group-hover/image:text-opacity-100 group-hover/image:scale-125 text-opacity-75 transition-all h-1/2 w-1/2 opacity-0", inputValue !== 0 ? "opacity-100" : "")}/>
+                        <Trash2 onClick={() => {}} className={cn("text-red-600 absolute text-opacity-75 h-1/2 group-hover/image:text-opacity-100 group-hover/image:scale-125 transition-all w-1/2 opacity-0", inputValue === 0 ? "opacity-100" : "")} />
                 
                 </span>
                 <img src={item.productId.imageUrl} className="bg-cover object-cover"/>
@@ -85,8 +65,8 @@ export default function CartItem({
                 <span onClick={() => setInputValue(0)} className="text-xs text-red-200 hover:underline">clear</span>
                 <div className="gap-x-0.5 flex">
                     
-                    <Button onClick={() => setInputValue(inputValue + 1)} className="px-1 py-1 bg-green-700 hover:bg-green-600"><Plus strokeWidth={4} className="h-3 w-3"/></Button>
-                    <Button onClick={() => setInputValue(inputValue - 1)} className="px-1 py-1 bg-red-700 hover:bg-red-600"><Minus strokeWidth={4} className="h-3 w-3"/></Button>
+                    <Button onClick={() => handleInput(inputValue + 1)} className="px-1 py-1 bg-green-700 hover:bg-green-600"><Plus strokeWidth={4} className="h-3 w-3"/></Button>
+                    <Button onClick={() => handleInput(inputValue - 1)} className="px-1 py-1 bg-red-700 hover:bg-red-600"><Minus strokeWidth={4} className="h-3 w-3"/></Button>
                 
                 </div>
             </div>
@@ -94,3 +74,4 @@ export default function CartItem({
     </div>
     )
 }
+

@@ -42,7 +42,7 @@ export default function Cart()
                     <div className="justify-between items-center flex max-h-full flex-col   text-white">
                         <div className="w-full overflow-y-scroll flex flex-col pt-4">
                         {cart?.products?.map((orderProduct) => (
-                            <CartItem item={orderProduct} orderId={cart._id} setCart={setCart} />
+                            <CartItem item={orderProduct} orderId={cart._id} />
                         ))}
                             
                         </div>
