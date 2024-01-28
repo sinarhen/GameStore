@@ -15,7 +15,7 @@ export const addToOrder = async (req, res) => {
         }
 
         if (!order || order.status === 'cancelled' || order.status === 'ready' || order.status === 'processing' || order.status === 'confirmed') {
-            order = new Order({ userId: req.userId, status: 'pending', totalPrice: product.price * quantity });
+            order = new Order({ userId: req.userId, status: 'pending' });
         }
 
         const index = order.products.findIndex((p) => p.productId._id.toString() === productId);
@@ -41,10 +41,10 @@ export const addToOrder = async (req, res) => {
     }
 };
 
+
 export const deleteOrderProduct = async (req, res) => {
     try {
         const { productId } = req.params;
-        const { quantity } = req.body;
 
         let order = await Order.findOne({ userId: req.userId }).populate('products.productId');
         const index = order.products.findIndex((p) => p.productId._id.toString() === productId);
@@ -55,28 +55,12 @@ export const deleteOrderProduct = async (req, res) => {
             return res.status(404).json({ message: 'Product not found in the order' });
         }
 
-        const productQuantity = order.products[index].quantity;
         const productPrice = order.products[index].productId.price;
 
-        if (quantity > productQuantity || quantity < 1) {
-            return res.status(400).json({ message: 'Quantity exceeds the available quantity' });
-        }
-
-        if (quantity) {
-            if (quantity === productQuantity) {
-                order.products.splice(index, 1);
-            } else {
-                order.products[index].quantity = Math.max(0, productQuantity - quantity);
-            }
-        } else if (productQuantity === 1) {
-            order.products.splice(index, 1);
-        } else {
-            order.products[index].quantity = Math.max(1, order.products[index].quantity - 1);
-        }
+        // Remove the product from the order
+        order.products.splice(index, 1);
 
         // Update total price
-        order.totalPrice -= productPrice;
-        if (order.totalPrice < 0) order.totalPrice = 0;
 
         if (order.products.length === 0) {
             await order.deleteOne();
@@ -136,59 +120,34 @@ export const getOrderById = async (req, res) => {
     }
 };
 
-export const updateOrderStatus = async (req, res) => {
+
+export const updateOrder = async (req, res) => {
     try {
         const { orderId } = req.params;
-        const { status } = req.body;
+        const { status, paymentStatus } = req.body;
 
-        if (!status) {
-            return res.status(400).json({ message: 'Missing status' });
-        }
-
-        const order = await Order.findById(orderId);
+        let order = await Order.findById(orderId);
 
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
         }
 
-       if (status === "pending" || status === "processing" || status === "ready" || status === "cancelled" || status === "confirmed") {
+        if (status) {
             order.status = status;
-            await order.save();
-        } else {
-            return res.status(400).json({ message: 'Invalid status' });
         }
 
-
-        res.status(200).json({ message: 'Order status updated successfully' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
-
-export const updatePaymentStatus = async (req, res) => {
-    try {
-        const { orderId } = req.params;
-        const { paymentStatus } = req.body;
-
-        if (!paymentStatus) {
-            return res.status(400).json({ message: 'Missing payment status' });
+        if (paymentStatus) {
+            order.paymentStatus = paymentStatus;
         }
-
-        const order = await Order.findById(orderId);
-
-        if (!order) {
-            return res.status(404).json({ message: 'Order not found' });
-        }
-
-        order.paymentStatus = paymentStatus;
 
         await order.save();
 
-        res.status(200).json({ message: 'Payment status updated successfully' });
+        res.status(200).json({ message: 'Order updated successfully' });
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
-}
+};
 
 export const getAllOrders = async (req, res) => {
     try {
@@ -220,6 +179,36 @@ export const deleteProductFromOrder = async (req, res) => {
         await order.save();
         res.status(200).json({ message: 'Product deleted from order successfully' });
     } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+export const updateOrderProductQuantity = async (req, res) => {
+    try {
+        const { orderId, productId } = req.params;
+        const { quantity } = req.body;
+
+        let order = await Order.findById(orderId).populate('products.productId');
+        const index = order.products.findIndex((p) => p.productId._id.toString() === productId);
+
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        } else if (index === -1) {
+            return res.status(404).json({ message: 'Product not found in the order' });
+        } else if (quantity < 1) {
+            return res.status(400).json({ message: 'Quantity must be at least 1' });
+        }
+
+        const productPrice = order.products[index].productId.price;
+
+        order.products[index].quantity = quantity;
+
+
+        await order.save();
+
+        res.status(200).json({ message: 'Product quantity updated successfully' });
+    } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 };

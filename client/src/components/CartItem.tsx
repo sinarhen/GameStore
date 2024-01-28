@@ -15,11 +15,10 @@ export default function CartItem({
     orderId: string | undefined;
 }){
     const navigate = useNavigate();
-    const { setOpen, removeFromCart } = useCart();
+    const { setOpen, removeFromCart, updateProductQuantity } = useCart();
     const [inputValue, setInputValue] = React.useState(0);
     
     function handleInput(val: number){
-        console.log(val) 
         if (val > 100){
             setInputValue(100);
             toast.error("You can't buy more than 100 items at once");
@@ -38,8 +37,23 @@ export default function CartItem({
         className="flex py-1 transition-colors group/cart cursor-pointer  w-full justify-between gap-4">
         <div className="flex gap-x-2">
             <div onClick={(e) => {
-                removeFromCart(item);
-                toast.success("Deleted item from your cart")
+                try {
+                 
+                    if (inputValue === 0 || inputValue === -item.quantity)
+                    {
+                        removeFromCart(item);
+                        toast.success("Deleted item from your cart")
+                    }
+                    else {
+                        updateProductQuantity(item, item.quantity + inputValue);
+                        toast.success(`Changed quantity succesfully`)
+                    }   
+                } catch (error) {
+                    toast.error("Something went wrong")
+                    console.error(error);
+                } finally {
+                    setInputValue(0);
+                }
             }}  className="aspect-square relative min-w-20 h-20 w-20 rounded overflow-hidden border border-transparent  group-hover/cart:border-indigo-600 transition-all cursor-pointer">
                 <span
                 className="opacity-0 group/image flex items-center justify-center group-hover/cart:opacity-80 transition-all w-full h-full bg-black absolute">
@@ -62,7 +76,7 @@ export default function CartItem({
             <p className="text-xs ">{formatter.format(item.productId.price * item.quantity)}</p>
         
             <div className="h-full  group-hover/cart:opacity-100 flex flex-col items-end justify-end opacity-0 transition-opacity ">
-                <span onClick={() => setInputValue(0)} className="text-xs text-red-200 hover:underline">clear</span>
+                {inputValue !== 0 && <span onClick={() => setInputValue(0)} className="text-xs text-red-200 hover:underline">clear</span>}
                 <div className="gap-x-0.5 flex">
                     
                     <Button onClick={() => handleInput(inputValue + 1)} className="px-1 py-1 bg-green-700 hover:bg-green-600"><Plus strokeWidth={4} className="h-3 w-3"/></Button>

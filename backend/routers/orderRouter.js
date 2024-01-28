@@ -5,10 +5,10 @@ import {
     getAllOrders, 
     getAllOrdersByUserId, 
     getOrderById, 
-    updateOrderStatus, 
-    deleteOrder, 
-    updatePaymentStatus, 
-    deleteProductFromOrder 
+    deleteOrder,
+    updateOrder, 
+    updateOrderProductQuantity,
+    deleteProductFromOrder
 } from "../controllers/OrdersController.js";
 import checkAuth from '../utils/checkAuth.js';
 import checkAdmin from '../utils/checkAdmin.js';
@@ -21,8 +21,8 @@ router.get('/:orderId', checkAuth, checkAdmin, getOrderById);
 router.post('/:productId', checkAuth, addToOrder);
 router.put('/:productId', checkAuth, deleteOrderProduct);
 router.delete('/:orderId', checkAuth, checkAdmin, deleteOrder);
-router.put('/:orderId', checkAuth, checkAdmin, updateOrderStatus);
-router.put('/payment/:orderId', checkAuth, checkAdmin, updatePaymentStatus);
+router.put('/:orderId', checkAuth, checkAdmin, updateOrder);
+router.put('/:orderId/:productId', checkAuth, updateOrderProductQuantity);
 router.delete('/:orderId/:productId', checkAuth, deleteProductFromOrder);
 
 export default router;

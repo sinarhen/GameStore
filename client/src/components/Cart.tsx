@@ -15,10 +15,11 @@ import { Minus, Plus, Trash, Trash2 } from "lucide-react";
 import Input from "./Input";
 import CartItem from "./CartItem";
 import { useDialog } from "../hooks/useDialog";
+import Loading from "./Loading";
 
 export default function Cart()
 {
-    const { open, removeFromCart, cart, setOpen, setCart} = useCart();
+    const { open, isLoading, removeFromCart, cart, setOpen, setCart} = useCart();
     const navigate = useNavigate();
     const { openDialog } = useDialog();
 
@@ -28,6 +29,9 @@ export default function Cart()
             description: "Щоб підтвердити замовлення введіть логін та пароль від аккаунта Mortal-Kombat",
             content: <><Input placeholder="Логін" /><Input placeholder="Пароль" /><Button className="bg-green-600 hover:bg-green-500">Підтвердити</Button></>
         })
+    }
+    if (isLoading){
+        return <Loading />
     }
 
     return (

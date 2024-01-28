@@ -83,7 +83,9 @@ export type CartContextType = {
     cart: Order
     setCart: (cart: Order) => void
     addToCart: (product: ProductCardType, amount: number) => Promise<void>
-    removeFromCart: (product: OrderProduct) => void
+    removeFromCart: (product: OrderProduct, amount?: number) => void
+    isLoading: boolean
+    updateProductQuantity: (product: OrderProduct, amount: number) => void
 }
 
 

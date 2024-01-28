@@ -17,15 +17,15 @@ export async function updateOrderStatus(orderId: string, status: string){
 }
 
 export async function updateOrderPaymentStatus(orderId: string, status: string){
-  return await http.put(`/orders/payment/${orderId}`, { paymentStatus: status }, true);
+  return await http.put(`/orders/${orderId}`, { paymentStatus: status }, true);
 }
 
 export async function addToOrder(productId: string, quantity: number){
   return await http.post(`/orders/${productId}`, { quantity }, true);
 }
 
-export async function removeFromOrder(productId: string, quantity?: number){
-  return await http.put(`/orders/${productId}`, { quantity }, true);
+export async function changeProductQuantityInOrder(orderId: string, productId: string, quantity?: number){
+  return await http.put(`/orders/${orderId}/${productId}`, { quantity }, true);
 }
 
 export async function getUserOrdersById(){

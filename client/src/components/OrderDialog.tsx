@@ -5,7 +5,7 @@ import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from ".
 import { formatter, statusColor } from "../lib/utils";
 import { useState } from "react";
 import Button from "./Button";
-import { removeFromOrder } from "../lib/order";
+import { changeProductQuantityInOrder } from "../lib/order";
 import toast from "react-hot-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./Select";
 import { useCurrentUser } from "../hooks/useCurrentUser";
@@ -67,7 +67,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
     function onConfirm(){
         if (selectedProduct?._id && order?._id)
         {
-            removeFromOrder(selectedProduct?._id).then((data) => {
+            changeProductQuantityInOrder(selectedProduct?._id).then((data) => {
                 console.log(data);
                 const updatedProducts = order.products?.filter((product) => product._id !== selectedProduct?._id);
                 if (selectedProduct.quantity > 1) {

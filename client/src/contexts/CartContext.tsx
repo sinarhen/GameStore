@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState, useCallback } from 'react';
 import { CartContextType, Order, OrderProduct, ProductCardType } from '../lib/types';
 import Cart from "../components/Cart";
-import { addToOrder, deleteProductFromOrder, getUserOrdersById } from "../lib/order";
+import { addToOrder, changeProductQuantityInOrder, deleteProductFromOrder, getUserOrdersById } from "../lib/order";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import toast from "react-hot-toast";
 
@@ -13,6 +13,8 @@ export function CartProvider({ children }: {
 }) {
     const [open, setOpen] = useState(false);
     const [cart, setCart] = useState<Order>();
+    const [isLoading, setIsLoading] = useState(false);
+    
     const { user } = useCurrentUser();
     
     const addToCart = useCallback(async (product: ProductCardType, amount: number) => {
@@ -46,6 +48,28 @@ export function CartProvider({ children }: {
             setCart({...cart, products: newProducts} as Order);
         }
     }
+
+    const updateProductQuantity = async (product: OrderProduct, amount: number) => {
+        try {
+            const res = await changeProductQuantityInOrder(product.productId._id, amount);
+            setCart(prevCart => {
+                const existingProduct = prevCart?.products.find(item => item?.productId._id === product?.productId._id);
+                if (existingProduct){
+                    existingProduct.quantity = amount;
+                    return {...prevCart, products: prevCart?.products} as Order;
+                } else {
+                    return {...prevCart, products: [...(prevCart?.products || []), product]} as Order;
+                }
+            }
+            );
+
+        } catch (error: any){
+            console.error(error);
+            toast.error("Something went wrong: " + error?.message ?? "unknown error", {id: "updateProductQuantityInCart"});
+        }
+    
+        
+    }
     
 
     useEffect(() => {
@@ -63,7 +87,7 @@ export function CartProvider({ children }: {
                         updatedAt: new Date(),
                         paymentStatus: "pending",
 
-                    } as unknown as Order)
+                    } as Order)
                 }
             } catch (error) {
                 console.error(error);
@@ -79,7 +103,9 @@ export function CartProvider({ children }: {
             cart: cart ?? {} as Order,
             setCart,
             addToCart,
-            removeFromCart
+            removeFromCart,
+            updateProductQuantity,
+            isLoading
         }}>
             <Cart />
             {children}
