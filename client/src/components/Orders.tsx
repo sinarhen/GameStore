@@ -12,7 +12,7 @@ import { Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Order } from "../lib/types";
 import OrderDialog from "./OrderDialog";
-import { formatter, statusColor } from "../lib/utils";
+import { formatter, statusColor, translateStatus } from "../lib/utils";
 import NotFound from "./NotFound";
 import { deleteOrder } from "../lib/order";
 import ConfirmDialog from "./ConfirmDialog";
@@ -72,11 +72,11 @@ export default function Orders({
 
   const onOrderDialogOpen = (order: Order) => {
     openDialog({
-      title: "Order details",
-      description: "View order details here",
+      title: "Деталі замовлення",
+      description: "Переглянути деталі замовлення тут",
       content: <OrderDialog updateOrder={updateOrder} setOrder={setSelectedOrder} order={order} open={dialogOpen} setOpen={setDialogOpen}/>,
       confirmText: null,
-      cancelText: "Close"
+      cancelText: "Закрити"
     })
   }
   const isEmpty = orders?.length ? orders?.length === 0 : true;
@@ -87,11 +87,11 @@ export default function Orders({
         <TableHeader>
           <TableRow className="bg-neutral-800 sticky top-0">
             <TableHead className="overflow-hidden">ID</TableHead>
-            <TableHead className="text-center w-full">Products</TableHead>
-            <TableHead className="text-center w-full">Status</TableHead>
-            <TableHead className="text-right w-full">Payment status</TableHead>
-            <TableHead className="text-right align-center justify-end w-full">Amount</TableHead>
-            <TableHead className="text-center align-center justify-center  w-full">Action</TableHead>
+            <TableHead className="text-center w-full">Продукти</TableHead>
+            <TableHead className="text-center w-full">Статус</TableHead>
+            <TableHead className="text-right w-full">Статус платежу</TableHead>
+            <TableHead className="text-right align-center justify-end w-full">Сума</TableHead>
+            <TableHead className="text-center align-center justify-center  w-full"></TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -103,10 +103,10 @@ export default function Orders({
                 setSelectedOrder(order);
               }}
                 className="text-center">
-                  {order.products.length} items
+                  {order.products.length} товар
               </TableCell>
-              <TableCell className={statusColor(order.status) + " text-center"}>{order.status}</TableCell>
-              <TableCell className={statusColor(order.paymentStatus) + " text-center"}>{order.paymentStatus}</TableCell>
+              <TableCell className={statusColor(order.status) + " text-center"}>{translateStatus(order.status)}</TableCell>
+              <TableCell className={statusColor(order.paymentStatus) + " text-center"}>{translateStatus(order.paymentStatus)}</TableCell>
               <TableCell className="text-right w-full">{formatter.format(order.products.reduce((total, product) => total + product.productId.price * product.quantity, 0))}</TableCell>
               <TableCell className="w-full">
               <div className="flex gap-x-1 justify-center items-center">
@@ -137,7 +137,7 @@ export default function Orders({
         {!isEmpty && (
           <TableFooter className="bg-transparent">
           <TableRow className="sticky bg-neutral-900 bottom-0">
-            <TableCell colSpan={4}>Total</TableCell>
+            <TableCell colSpan={4}>Сума</TableCell>
             <TableCell className="text-right">{formatter.format(orders.reduce((total, order) => total + order.products.reduce((total, product) => total + product.productId.price * product.quantity, 0), 0))}</TableCell>
             <TableCell></TableCell>
 

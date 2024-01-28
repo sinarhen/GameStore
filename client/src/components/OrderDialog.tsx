@@ -2,7 +2,7 @@ import { Trash2 } from "lucide-react";
 import { Order, OrderProduct, ProductCardType } from '../lib/types';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "./Dialog"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "./Table"
-import { formatter, statusColor } from "../lib/utils";
+import { formatter, statusColor, translateStatus } from "../lib/utils";
 import { useState } from "react";
 import Button from "./Button";
 import { changeProductQuantityInOrder } from "../lib/order";
@@ -100,7 +100,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
             }} />
                 <div className="flex gap-x-4">
                     <div className="flex flex-col">
-                        <p className="mt-4 mb-1">Status: {order?.status && <span className={statusColor(order?.status)}>{order.status}</span>}</p>
+                        <p className="mt-4 mb-1">Статус: {order?.status && <span className={statusColor(order?.status)}>{translateStatus(order.status)}</span>}</p>
                         {isAdmin && <>
                         <Select onValueChange={(e) => setStatus(e)}>
                             <SelectTrigger className="w-[180px]">
@@ -118,7 +118,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                         </>}
                     </div>
                     <div className="flex flex-col">
-                        <p className="mt-4 mb-1">Payment status: {order?.paymentStatus && <span className={statusColor(order?.paymentStatus)}>{order.paymentStatus}</span>}</p>
+                        <p className="mt-4 mb-1">Статус платежу: {order?.paymentStatus && <span className={statusColor(order?.paymentStatus)}>{translateStatus(order.paymentStatus)}</span>}</p>
                         {isAdmin && <>
                         <Select onValueChange={(e) => setPaymentStatus(e)}>
                             <SelectTrigger className="w-[180px]">
@@ -136,10 +136,10 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                 <Table>
                 <TableHeader>
                     <TableRow>
-                    <TableHead>Product Name</TableHead>
-                    <TableHead>Price</TableHead>
-                    <TableHead>Quantity</TableHead>
-                    <TableHead>Total</TableHead>
+                    <TableHead>Ім'я продукту</TableHead>
+                    <TableHead>Ціна</TableHead>
+                    <TableHead>Кількість</TableHead>
+                    <TableHead>Сума</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>

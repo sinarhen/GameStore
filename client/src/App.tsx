@@ -4,9 +4,7 @@ import "./App.css";
 
 import Home from "./pages/Home";
 import Products from "./pages/Products";
-import Categories from "./pages/Categories";
 import MyAccount from "./pages/MyAccount";
-import Favorites from "./pages/Favorites";
 import Navbar from "./components/Navbar";
 import ProductDetails from "./pages/ProductDetails";
 import Admin from "./pages/Admin";
@@ -30,12 +28,10 @@ function App() {
                     <Routes>
                       <Route path='/' element={<Home />} />
                       <Route path='/products' element={<Products/>} />
-                      <Route path='/categories' element={<Categories />} />
                       <Route path='/me' element={<MyAccount />} />
-                      <Route path='/favorites' element={<Favorites />} />
                       <Route path='/products/:productId' element={<ProductDetails />} />
                       <Route path='/admin' element={<Admin />} />
-                      <Route path='*' element={<h1>Page does not exist</h1>} />
+                      <Route path='*' element={<h1>Такої сторінки не існує</h1>} />
                     </Routes>
                 </div>  
               </CartProvider>

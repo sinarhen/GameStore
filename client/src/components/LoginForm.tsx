@@ -62,7 +62,7 @@ export default function LoginForm({
       <div className="flex min-h-full flex-1 flex-col justify-center px-4 py-8 lg:px-6"> 
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-6 text-center text-lg font-bold leading-6 tracking-tight text-white"> 
-            Sign in to your account
+            Вхід
           </h2>
         </div>
 
@@ -97,9 +97,9 @@ export default function LoginForm({
           </form>
 
           <p className="mt-6 text-center text-sm text-white"> 
-            Don't have an account? 
+          Не маєте облікового запису?
             <button onClick={() => setVariant('register')} className="font-semibold leading-5 text-indigo-400 hover:text-indigo-300"> 
-                Registration
+                Зареєструватися
             </button>
           </p>
         </div>
