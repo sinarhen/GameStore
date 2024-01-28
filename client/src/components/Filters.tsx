@@ -139,7 +139,7 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
                     </Select>
                 </div>
             </div>
-            <div className="flex flex-col sm:flex-row mb-5 justify-between items-center">
+            <div className="flex sm:flex-row mb-5 justify-between items-center">
 
                 <div className="flex gap-4 items-center w-full ">
                     {categories?.map((category: any, index) => (

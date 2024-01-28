@@ -23,7 +23,6 @@ export default function Products(){
     const [error, setError] = useState<string | null>(null);
     const [filteredProducts, setFilteredProducts] = useState<ProductCardType[] | null>(null);
   
-    const [initialRender, setInitialRender] = useState<boolean>(true);
     
     useEffect(() => {
       getAllProducts()
@@ -42,9 +41,6 @@ export default function Products(){
           });
   }, []);
     
-    useEffect(() => {
-      setInitialRender(false);
-    }, []);
     if (error) {
       return <NotFound helperText={error} buttonText="Refresh" buttonAction={() => window.location.reload()} />;
     }
@@ -88,7 +84,7 @@ export default function Products(){
                                 animate={{ opacity: 1 }}
                                 className="w-full h-full"
                                 exit={{ opacity: 0 }}
-                                transition={{ delay: delay + index * delayPerItem + (initialRender ?  appearDuration : 0), duration: appearDuration}}
+                                transition={{ delay: delay + index * delayPerItem + appearDuration, duration: appearDuration}}
                             >
                                 <ProductCard product={product}/>
 

@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { ProductCardType } from "../lib/types";
 import ProductCard from "./ProductCard";
+import { useFavorites } from "../hooks/useFavorites";
 
-export default function MyFavorites({favorites}: {
-    favorites: ProductCardType[]
-}){
+export default function MyFavorites(){
+    const { favorites } = useFavorites();
+    
     if (!favorites.length) return (
         <motion.div
             initial={{ opacity: 0 }}
