@@ -9,7 +9,7 @@ import { changeProductQuantityInOrder } from "../lib/order";
 import toast from "react-hot-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./Select";
 import { useCurrentUser } from "../hooks/useCurrentUser";
-import { updateOrderStatus, updateOrderPaymentStatus } from "../lib/order";
+import { updateOrderStatus } from "../lib/order";
 import ConfirmDialog from "./ConfirmDialog";
 import { useDialog } from "../hooks/useDialog";
 
@@ -26,44 +26,25 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
     setOpen,
     order,
     setOrder,
-    updateOrder
 }) => {
     const [status, setStatus] = useState(order?.status || 'pending');
-    const [paymentStatus, setPaymentStatus] = useState(order?.paymentStatus || 'pending');
     const [confirmOpen, setConfirmOpen] = useState(false);
-
-    const [selectedProduct, setSelectedProduct] = useState<OrderProduct | null>(null);
-
     const { isAdmin } = useCurrentUser();
 
     const handleUpdateStatus = async () => {
+        console.log("Clicked")
         try {
             if (order?._id) {
                 await updateOrderStatus(order?._id, status);
                 setOrder({...order, status});
-                updateOrder({...order, status});
                 toast.success('Order status updated');
             }
         } catch (err) {
             console.log(err);
+            toast.error('Error updating order status. check console');
         }
     };
 
-    const handleUpdatePaymentStatus = async () => {
-        try {
-            if (order?._id) {
-                await updateOrderPaymentStatus(order?._id, paymentStatus);
-                setOrder({...order, paymentStatus});
-                updateOrder({...order, paymentStatus});
-                toast.success('Order payment status updated');
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-
-    
     // function onConfirm(){
     //     if (selectedProduct?._id && order?._id)
     //     {
@@ -115,21 +96,6 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                             </SelectContent>
                         </Select>
                         <Button onClick={handleUpdateStatus} className="w-[180px] bg-green-500 hover:bg-green-600 mt-4">Update</Button>
-                        </>}
-                    </div>
-                    <div className="flex flex-col">
-                        <p className="mt-4 mb-1">Статус платежу: {order?.paymentStatus && <span className={statusColor(order?.paymentStatus)}>{translateStatus(order.paymentStatus)}</span>}</p>
-                        {isAdmin && <>
-                        <Select onValueChange={(e) => setPaymentStatus(e)}>
-                            <SelectTrigger className="w-[180px]">
-                                <SelectValue placeholder="Status" />
-                            </SelectTrigger>
-                            <SelectContent className="text-white bg-black">
-                                <SelectItem value="pending">Pending</SelectItem>
-                                <SelectItem value="paid">Paid</SelectItem>
-                            </SelectContent>
-                        </Select>
-                        <Button onClick={handleUpdatePaymentStatus} className="w-[180px] bg-green-500 hover:bg-green-600 mt-4">Update</Button>
                         </>}
                     </div>
                 </div>

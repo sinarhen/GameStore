@@ -89,7 +89,6 @@ export default function Orders({
             <TableHead className="overflow-hidden">ID</TableHead>
             <TableHead className="text-center w-full">Продукти</TableHead>
             <TableHead className="text-center w-full">Статус</TableHead>
-            <TableHead className="text-right w-full">Статус платежу</TableHead>
             <TableHead className="text-right align-center justify-end w-full">Сума</TableHead>
             <TableHead className="text-center align-center justify-center  w-full"></TableHead>
           </TableRow>
@@ -106,7 +105,6 @@ export default function Orders({
                   {order.products.length} товар
               </TableCell>
               <TableCell className={statusColor(order.status) + " text-center"}>{translateStatus(order.status)}</TableCell>
-              <TableCell className={statusColor(order.paymentStatus) + " text-center"}>{translateStatus(order.paymentStatus)}</TableCell>
               <TableCell className="text-right w-full">{formatter.format(order.products.reduce((total, product) => total + product.productId.price * product.quantity, 0))}</TableCell>
               <TableCell className="w-full">
               <div className="flex gap-x-1 justify-center items-center">
@@ -137,7 +135,7 @@ export default function Orders({
         {!isEmpty && (
           <TableFooter className="bg-transparent">
           <TableRow className="sticky bg-neutral-900 bottom-0">
-            <TableCell colSpan={4}>Сума</TableCell>
+            <TableCell colSpan={3}>Сума</TableCell>
             <TableCell className="text-right">{formatter.format(orders.reduce((total, order) => total + order.products.reduce((total, product) => total + product.productId.price * product.quantity, 0), 0))}</TableCell>
             <TableCell></TableCell>
 

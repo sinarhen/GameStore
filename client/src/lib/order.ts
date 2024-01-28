@@ -1,4 +1,4 @@
-import http from './fetcher'; // Assuming http is the module where you've defined your methods
+import http from './fetcher'; 
 
 export async function getOrder(id: string) {
   return await http.get(`/orders/${id}`, true);
@@ -16,10 +16,6 @@ export async function updateOrderStatus(orderId: string, status: string){
   return await http.put(`/orders/${orderId}`, { status }, true);
 }
 
-export async function updateOrderPaymentStatus(orderId: string, status: string){
-  return await http.put(`/orders/${orderId}`, { paymentStatus: status }, true);
-}
-
 export async function addToOrder(productId: string, quantity: number){
   return await http.post(`/orders/${productId}`, { quantity }, true);
 }
@@ -32,6 +28,6 @@ export async function getUserOrdersById(){
   return await http.get(`/orders`, true);
 }
 
-export async function deleteProductFromOrder(orderId: string | undefined, productId: string){
+export async function deleteProductFromOrder(orderId: string, productId: string){
   return await http.delete(`/orders/${orderId}/${productId}`, true);
 }

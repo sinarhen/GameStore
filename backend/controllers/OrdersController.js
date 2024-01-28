@@ -42,36 +42,27 @@ export const addToOrder = async (req, res) => {
 };
 
 
-export const deleteOrderProduct = async (req, res) => {
+export const deleteProductFromOrder = async (req, res) => {
     try {
-        const { productId } = req.params;
-
-        let order = await Order.findOne({ userId: req.userId }).populate('products.productId');
-        const index = order.products.findIndex((p) => p.productId._id.toString() === productId);
-        
+        const { orderId, productId } = req.params;
+        const order = await Order.findById(orderId);
         if (!order) {
             return res.status(404).json({ message: 'Order not found' });
-        } else if (index === -1) {
-            return res.status(404).json({ message: 'Product not found in the order' });
         }
-
-        const productPrice = order.products[index].productId.price;
-
-        // Remove the product from the order
+        const index = order.products.findIndex((p) => p.productId.toString() === productId);
+        if (index === -1) {
+            return res.status(404).json({ message: 'Product not found in order' });
+        }
         order.products.splice(index, 1);
-
-        // Update total price
 
         if (order.products.length === 0) {
             await order.deleteOne();
             return res.status(200).json({ message: 'Order deleted successfully' });
-        };
+        }
 
         await order.save();
-
         res.status(200).json({ message: 'Product deleted from order successfully' });
     } catch (error) {
-        console.log(error);
         res.status(500).json({ message: error.message });
     }
 };
@@ -123,8 +114,9 @@ export const getOrderById = async (req, res) => {
 
 export const updateOrder = async (req, res) => {
     try {
+        console.log("updateOrder")
         const { orderId } = req.params;
-        const { status, paymentStatus } = req.body;
+        const { status } = req.body;
 
         let order = await Order.findById(orderId);
 
@@ -134,10 +126,6 @@ export const updateOrder = async (req, res) => {
 
         if (status) {
             order.status = status;
-        }
-
-        if (paymentStatus) {
-            order.paymentStatus = paymentStatus;
         }
 
         await order.save();
@@ -158,36 +146,12 @@ export const getAllOrders = async (req, res) => {
     }
 };
 
-export const deleteProductFromOrder = async (req, res) => {
-    try {
-        const { orderId, productId } = req.params;
-        const order = await Order.findById(orderId);
-        if (!order) {
-            return res.status(404).json({ message: 'Order not found' });
-        }
-        const index = order.products.findIndex((p) => p.productId.toString() === productId);
-        if (index === -1) {
-            return res.status(404).json({ message: 'Product not found in order' });
-        }
-        order.products.splice(index, 1);
-
-        if (order.products.length === 0) {
-            await order.deleteOne();
-            return res.status(200).json({ message: 'Order deleted successfully' });
-        }
-
-        await order.save();
-        res.status(200).json({ message: 'Product deleted from order successfully' });
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
-};
 
 export const updateOrderProductQuantity = async (req, res) => {
     try {
+        console.log("updateOrderProductQuantity")
         const { orderId, productId } = req.params;
         const { quantity } = req.body;
-
         let order = await Order.findById(orderId).populate('products.productId');
         const index = order.products.findIndex((p) => p.productId._id.toString() === productId);
 

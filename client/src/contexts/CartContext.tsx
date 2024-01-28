@@ -41,6 +41,11 @@ export function CartProvider({ children }: {
 
 
     const removeFromCart = async (product: OrderProduct) => {
+        if (!cart?._id)
+        {
+            console.log("Cart is undefined")
+            return;
+        }
         await deleteProductFromOrder(cart?._id, product.productId._id);
         const newProducts = cart?.products.filter(item => item?._id !== product?._id);
         if (newProducts)
@@ -92,7 +97,6 @@ export function CartProvider({ children }: {
                         userId: user,
                         createdAt: new Date(),
                         updatedAt: new Date(),
-                        paymentStatus: "pending",
 
                     } as Order)
                 }
