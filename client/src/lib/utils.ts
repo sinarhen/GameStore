@@ -57,6 +57,25 @@ export const statusColor = (status: string) => {
   }
 }
 
+export const translateStatus = (status: string) => {
+  switch (status) {
+    case "pending":
+      return "В очікуванні";
+    case "ready":
+      return "Готово";
+    case "cancelled":
+      return "Скасовано";
+    case "processing":
+      return "В обробці";
+    case "paid":
+      return "Оплачено";
+    case "confirmed":
+      return "Підтверджено";
+    default:
+      return "В очікуванні";
+  }
+}
+
 export const displayDateTime = (date: Date) => {
   return new Intl.DateTimeFormat('ua-UA').format(date);
 }

@@ -26,8 +26,8 @@ export default function MyAccount() {
 
     const openProfileDialog = () => {
         openDialog({
-            title: "Edit profile",
-            description: "Make changes to your profile here. Click save when you're done.",
+            title: "Редагування профілю",
+            description: "Внесіть зміни до свого профілю тут. Натисніть Зберегти, коли закінчите.",
             content: <EditProfileForm initialValues={user}/>,
         })
     }
@@ -61,20 +61,20 @@ export default function MyAccount() {
                     <h1 className="text-7xl flex truncate w-full">
                         {user?.name}
                     </h1>
-                    <span className="hover:text-indigo-600 hidden sm:flex text-md mt-2 transition-colors cursor-pointer" onClick={openProfileDialog}>Edit <PencilLine /></span>
-                    <Button className="sm:hidden mt-4 py-4 text-xl w-full" onClick={openProfileDialog}>Edit profile</Button>
+                    <span className="hover:text-indigo-600 hidden sm:flex text-md mt-2 transition-colors cursor-pointer" onClick={openProfileDialog}>Редагування профілю<PencilLine /></span>
+                    <Button className="sm:hidden mt-4 py-4 text-xl w-full" onClick={openProfileDialog}>Редагування профілю</Button>
                 </div>
             </div>
             
         </Section>
         <Section className="h-4/5 pt-24">
-                <Header animateableText="Favorites." appearDuration={0.2} />
+                <Header animateableText="Обрані." appearDuration={0.2} />
                 <AnimatedSeparator appearDuration={0.3}/>
                 <MyFavorites/>
         
         </Section>
         <Section className="h-full pt-96 sm:pt-72">
-            <Header animateableText="Orders." appearDuration={0.2} />
+            <Header animateableText="Замовлення." appearDuration={0.2} />
             <AnimatedSeparator appearDuration={0.3}/>
             {orders?.length ? (
                 <Orders setOrders={setOrders} orders={orders}/>
@@ -87,7 +87,7 @@ export default function MyAccount() {
                 transition={{ delay: 3, duration: 1}}
                 className="mt-4"
             >
-                <p className="text-3xl text-zinc-600">You have no orders yet.</p>
+                <p className="text-3xl text-zinc-600">У вас ще немає замовлень.</p>
             </motion.div>
             )}
         </Section>

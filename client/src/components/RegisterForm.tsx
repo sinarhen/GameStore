@@ -70,7 +70,7 @@ export default function RegisterForm({
       <div className="flex min-h-full flex-1 flex-col justify-center px-4 py-8 lg:px-6">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <h2 className="mt-6 text-center text-lg font-bold leading-6 tracking-tight text-white">
-            Register for an account
+            Реєстрація
           </h2>
         </div>
 
@@ -119,9 +119,9 @@ export default function RegisterForm({
           </form>
 
           <p className="mt-6 text-center text-sm text-white"> 
-            Already have an account? 
+            Вже зареєстровані? 
             <button onClick={() => setVariant("login")} className="font-semibold leading-5 text-indigo-400 hover:text-indigo-300"> 
-                Login
+                Увійти
             </button>
           </p>
         </div>

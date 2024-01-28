@@ -89,12 +89,12 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
     return (
         <form className="gap-y-4 gap-x-2 grid grid-cols-4 overflow-y-auto" onSubmit={form.handleSubmit(onSubmit)}>
           <div className="col-span-2">
-            <Label>Username</Label>
+            <Label>Ім'я</Label>
             <Input  {...form.register('name')}  />  
             {renderError('name')}
           </div>
           <div className="col-span-2">
-            <Label>Email</Label>
+            <Label>Електронна пошта</Label>
             <Input {...form.register('email')} />  
             {renderError('email')}
           </div>
@@ -108,13 +108,13 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                   <DialogContent>
                     <DialogHeader>
                       <DialogTitle>
-                        Paste URL 
+                        Вставте URL
                       </DialogTitle>
                       <DialogDescription>
-                        Paste URL of your profile avatar here.
+                        Вставте URL-адресу аватарки вашого профілю сюди.
                       </DialogDescription>
                       <div>
-                        <Label>Profile avatar</Label>
+                        <Label>Аватар профілю</Label>
                         <Input 
                           {...form.register('avatarUrl')} 
                           value={imageUrlDialogTempInput} 
@@ -134,7 +134,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
                               setTempSrcUrlForFile(null);
                             }}
                           > 
-                            Save
+                            Зберегти
                           </button>
                         
                         </DialogClose>
@@ -148,7 +148,7 @@ export default function EditProfileForm({initialValues} : {initialValues: any}){
 
             <div className="col-span-2">
                 <span className='cursor-pointer right-0 ml-2 text-xs text-gray-400' onClick={toogleImageUrlDialog}>
-                Paste url(click)
+                    Вставте URL(Натисніть)
                 </span>
 
                 {

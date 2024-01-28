@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { ProductCardType } from "../lib/types";
 import ProductCard from "./ProductCard";
 import { useFavorites } from "../hooks/useFavorites";
 
@@ -14,7 +13,7 @@ export default function MyFavorites(){
             transition={{ delay: 3, duration: 1}}
             className="mt-4"
         >
-            <p className="text-3xl text-zinc-600">You have no favorites yet.</p>
+            <p className="text-3xl text-zinc-600">У вас ще немає обраних товарів.</p>
         </motion.div>
     )
     return (
