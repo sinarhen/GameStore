@@ -6,7 +6,7 @@ import Button from "./Button";
 import useCart from "../hooks/useCart";
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
-import { deleteProductFromOrder } from "../lib/order";
+import { addToOrder, deleteProductFromOrder } from "../lib/order";
 
 export default function CartItem({
     item, 
@@ -31,19 +31,41 @@ export default function CartItem({
         }
         setInputValue(e.target.valueAsNumber);
     };
+
+    function handleRemove() {
+        try {
+            deleteProductFromOrder(orderId, item.productId._id);
+            // setCart((prev) => ({ ...prev, products: prev.products.filter((product) => product.productId._id !== item.productId._id) }));
+            toast.success("Product removed from cart");
+        } catch (error) {
+            toast.error("Something went wrong");
+            console.log(error);
+        }
+    };
+
+    function handleAdd() {
+        try {
+            addToOrder(item.productId._id, inputValue);
+            // setCart((prev) => ({ ...prev, products: [...prev.products, { productId: item.productId, quantity: inputValue }] }));
+            toast.success("Product added to cart");
+        } catch (error) {
+            toast.error("Something went wrong");
+            console.log(error);
+        }
+    };
+
     return(
         <div 
         className="flex py-1 transition-colors group/cart cursor-pointer  w-full justify-between gap-4">
         <div className="flex gap-x-2">
             <div onClick={(e) => {
                 e.stopPropagation();
-                handleRemove();
             }}  className="aspect-square relative min-w-20 h-20 w-20 rounded overflow-hidden border border-transparent  group-hover/cart:border-indigo-600 transition-all cursor-pointer">
                 <span
                 className="opacity-0 group/image flex items-center justify-center group-hover/cart:opacity-80 transition-all w-full h-full bg-black absolute">
                     
-                        <Check className={cn("text-green-600 absolute group-hover/image:text-opacity-100 group-hover/image:scale-125 text-opacity-75 transition-all h-1/2 w-1/2 opacity-0", inputValue !== 0 ? "opacity-100" : "")}/>
-                        <Trash2 className={cn("text-red-600 absolute text-opacity-75 h-1/2 group-hover/image:text-opacity-100 group-hover/image:scale-125 transition-all w-1/2 opacity-0", inputValue === 0 ? "opacity-100" : "")} />
+                        <Check onClick={() => {handleAdd();}} className={cn("text-green-600 absolute group-hover/image:text-opacity-100 group-hover/image:scale-125 text-opacity-75 transition-all h-1/2 w-1/2 opacity-0", inputValue !== 0 ? "opacity-100" : "")}/>
+                        <Trash2 onClick={() => {handleRemove();}} className={cn("text-red-600 absolute text-opacity-75 h-1/2 group-hover/image:text-opacity-100 group-hover/image:scale-125 transition-all w-1/2 opacity-0", inputValue === 0 ? "opacity-100" : "")} />
                 
                 </span>
                 <img src={item.productId.imageUrl} className="bg-cover object-cover"/>
