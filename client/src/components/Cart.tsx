@@ -14,11 +14,22 @@ import { formatter } from '../lib/utils';
 import { Minus, Plus, Trash, Trash2 } from "lucide-react";
 import Input from "./Input";
 import CartItem from "./CartItem";
+import { useDialog } from "../hooks/useDialog";
 
 export default function Cart()
 {
-    const { open, removeFromCart, cart, setOpen} = useCart();
+    const { open, removeFromCart, cart, setOpen, setCart} = useCart();
     const navigate = useNavigate();
+    const { openDialog } = useDialog();
+
+    const openConfirmDialog = () => {
+        openDialog({
+            title: "Підтвердіть замовлення",
+            description: "Щоб підтвердити замовлення введіть логін та пароль від аккаунта Mortal-Kombat",
+            content: <><Input placeholder="Логін" /><Input placeholder="Пароль" /><Button className="bg-green-600 hover:bg-green-500">Підтвердити</Button></>
+        })
+    }
+
     return (
         <Sheet open={open} onOpenChange={setOpen}>
             <SheetContent className="bg-black text-white">
@@ -31,12 +42,12 @@ export default function Cart()
                     <div className="justify-between items-center flex max-h-full flex-col   text-white">
                         <div className="w-full overflow-y-scroll flex flex-col pt-4">
                         {cart?.products?.map((orderProduct) => (
-                            <CartItem item={orderProduct}/>
+                            <CartItem item={orderProduct} orderId={cart._id} setCart={setCart} />
                         ))}
                             
                         </div>
 
-                        <Button onClick={() => setOpen(false)}>Confirm Order</Button>
+                        <Button onClick={() => {setOpen(false); openConfirmDialog()}}>Confirm Order</Button>
                     </div>
                     </>
 

@@ -211,6 +211,12 @@ export const deleteProductFromOrder = async (req, res) => {
             return res.status(404).json({ message: 'Product not found in order' });
         }
         order.products.splice(index, 1);
+
+        if (order.products.length === 0) {
+            await order.deleteOne();
+            return res.status(200).json({ message: 'Order deleted successfully' });
+        }
+
         await order.save();
         res.status(200).json({ message: 'Product deleted from order successfully' });
     } catch (error) {

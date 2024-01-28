@@ -1,14 +1,21 @@
 import { Check, Minus, Plus, Trash2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { OrderProduct } from "../lib/types";
+import { Order, OrderProduct } from "../lib/types";
 import { cn, formatter } from "../lib/utils";
 import Button from "./Button";
 import useCart from "../hooks/useCart";
 import React, { useEffect } from "react";
 import toast from "react-hot-toast";
+import { deleteProductFromOrder } from "../lib/order";
 
-export default function CartItem({item}: {
+export default function CartItem({
+    item, 
+    orderId,
+    setCart
+}: {
     item: OrderProduct;
+    orderId: string | undefined;
+    setCart: (cart: Order) => void
 }){
     const navigate = useNavigate();
     const { setOpen } = useCart();
@@ -25,7 +32,18 @@ export default function CartItem({item}: {
             return;
         }
         setInputValue(e.target.valueAsNumber);
-    }
+    };
+
+    function handleRemove() {
+        try {
+            deleteProductFromOrder(orderId, item.productId._id);
+            // setCart((prev) => ({ ...prev, products: prev.products.filter((product) => product.productId._id !== item.productId._id) }));
+            toast.success("Product removed from cart");
+        } catch (error) {
+            toast.error("Something went wrong");
+            console.log(error);
+        }
+    };
 
     return(
         <div 
@@ -33,7 +51,7 @@ export default function CartItem({item}: {
         <div className="flex gap-x-2">
             <div onClick={(e) => {
                 e.stopPropagation();
-                // removeFromCart(item.productId._id);
+                handleRemove();
             }}  className="aspect-square relative min-w-20 h-20 w-20 rounded overflow-hidden border border-transparent  group-hover/cart:border-indigo-600 transition-all cursor-pointer">
                 <span
                 className="opacity-0 group/image flex items-center justify-center group-hover/cart:opacity-80 transition-all w-full h-full bg-black absolute">
