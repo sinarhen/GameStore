@@ -34,7 +34,7 @@ export const addToOrder = async (req, res) => {
 
         await order.save();
 
-        res.status(201).json({message: 'Order added successfully', orderProduct});
+        res.status(201).json({message: 'Order added successfully', orderProduct, orderId: order._id});
     } catch (error) {
         console.log(error);
         res.status(500).json({message: error.message});

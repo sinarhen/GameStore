@@ -20,6 +20,7 @@ export function CartProvider({children}: {
   const addToCart = useCallback(async (product: ProductCardType, amount: number) => {
     const res = await addToOrder(product._id, amount);
     const resOrderProduct = res.data;
+    const resOrderId = res.data.OrderId;
     const orderProduct: OrderProduct = {
       _id: resOrderProduct.orderProduct.productId,
       productId: product,
@@ -31,12 +32,11 @@ export function CartProvider({children}: {
       const existingProduct = prevCart?.products.find(item => item?.productId._id === orderProduct?.productId._id);
       if (existingProduct) {
         existingProduct.quantity += orderProduct.quantity;
-        return {...prevCart, products: prevCart?.products} as Order;
+        return {...prevCart, _id: resOrderId, products: prevCart?.products} as Order;
       } else {
-        return {...prevCart, products: [...(prevCart?.products || []), orderProduct]} as Order;
+        return {...prevCart, _id: resOrderId, products: [...(prevCart?.products || []), orderProduct]} as Order;
       }
     });
-    console.log(cart)
   }, [])
 
 
@@ -111,7 +111,7 @@ export function CartProvider({children}: {
   }, [user]);
 
   useEffect(() => {
-    console.log("cart i ")
+    console.log("cart is: ", cart)
   }, [cart])
   return (
     <CartContext.Provider value={{
