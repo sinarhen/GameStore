@@ -2,11 +2,10 @@ import mongoose from "mongoose";
 import { modelNames, statusNames } from "../utils/constants.js";
 
 const orderSchema = new mongoose.Schema({
-        account: {
+        user: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: modelNames.account,
-            required: false,
-            default: null,
+            red: modelNames.user,
+            required: true,
         },
         products: [{
             product: {

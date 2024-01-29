@@ -6,7 +6,6 @@ export const roles = {
 
 export const modelNames = {
     user: 'User',
-    account: 'Account',
     product: 'Product',
     order: 'Order',
     favorite: 'Favorite',

@@ -29,29 +29,28 @@ export default function CartItem({
     }
     setInputValue(val);
   }
-
+  const onClick = () => {
+    try {
+      if (inputValue === 0 || inputValue === -item.quantity) {
+        removeFromCart(item);
+        toast.success("Deleted item from your cart")
+      } else {
+        updateProductQuantity(item, item.quantity + inputValue);
+        toast.success(`Changed quantity succesfully`)
+      }
+    } catch (error) {
+      toast.error("Щось пішло не так")
+      console.error(error);
+    } finally {
+      setInputValue(0);
+    }
+  }
 
   return (
     <div
       className="flex py-1 transition-colors group/cart cursor-pointer  w-full justify-between gap-4">
       <div className="flex gap-x-2">
-        <div onClick={(e) => {
-          try {
-
-            if (inputValue === 0 || inputValue === -item.quantity) {
-              removeFromCart(item);
-              toast.success("Deleted item from your cart")
-            } else {
-              updateProductQuantity(item, item.quantity + inputValue);
-              toast.success(`Changed quantity succesfully`)
-            }
-          } catch (error) {
-            toast.error("Щось пішло не так")
-            console.error(error);
-          } finally {
-            setInputValue(0);
-          }
-        }}
+        <div onClick={onClick}
              className="aspect-square relative min-w-20 h-20 w-20 rounded overflow-hidden border border-transparent  group-hover/cart:border-indigo-600 transition-all cursor-pointer">
                 <span
                   className="opacity-0 group/image flex items-center justify-center group-hover/cart:opacity-80 transition-all w-full h-full bg-black absolute">

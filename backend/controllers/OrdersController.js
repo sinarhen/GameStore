@@ -6,8 +6,6 @@ export const addToOrder = async (req, res) => {
     try {
         const {productId} = req.params;
         const {quantity} = req.body;
-        console.log(productId)
-        console.log(req.params)
         const product = await Product.findById(productId);
         let order = await Order.findOne({user: req.userId, status: 'pending'}).populate('products.product');
 
@@ -32,7 +30,6 @@ export const addToOrder = async (req, res) => {
             orderProduct = order.products[index];
             orderProduct.quantity += quantity;
         }
-
         await order.save();
 
         res.status(201).json({message: 'Order added successfully', orderProduct, orderId: order._id});
@@ -87,9 +84,7 @@ export const deleteOrder = async (req, res) => {
 
 export const getAllOrdersByUserId = async (req, res) => {
     try {
-
-        const orders = await Order.find({user: req.userId}).populate('user').populate('products.product').sort({createdAt: -1});
-
+        const orders = await Order.find({user: req.userId}).populate('user').populate('products.product').sort({updatedAt: -1});
         res.status(200).json(orders);
     } catch (error) {
         res.status(500).json({message: error.message});
@@ -103,7 +98,7 @@ export const getOrderById = async (req, res) => {
 
         const order = await Order.findById(orderId).populate('user');
         console.log(req.role)
-        if (req.userId !== order.user && req.role !== roles.admin) {
+        if (req.userId !== order.user._id && req.role !== roles.admin) {
             return res.status(401).json({message: 'You cannot get this order'});
         }
         res.status(200).json(order);
