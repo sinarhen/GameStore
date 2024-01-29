@@ -1,6 +1,6 @@
 import Product from '../models/Product.js';
 import Order from '../models/Order.js';
-import {roles} from '../utils/constants.js';
+import {roles, statusNames} from '../utils/constants.js';
 
 export const addToOrder = async (req, res) => {
     try {
@@ -107,10 +107,44 @@ export const getOrderById = async (req, res) => {
     }
 };
 
+export const confirmOrder = async (req, res) => {
+    try {
+        const {orderId} = req.params;
+        const order = await Order.findById(orderId).populate('user').populate('products.product');
+
+        if (!order) {
+            return res.status(404).json({message: 'Order not found'});
+        }
+        if (order.user._id.toString() !== req.userId && req.role !== roles.admin) {
+            return res.status(401).json({message: 'You cannot confirm this order'});
+        }
+
+        if (order.status !== statusNames.pending) {
+            return res.status(400).json({message: 'Order cannot be confirmed'});
+        }
+        const {login, password} = req.body;
+
+        if (!login)
+            return res.status(400).json({message: 'Login is required'});
+        if (!password)
+            return res.status(400).json({message: 'Password is required'});
+
+        order.login = login;
+        order.password = password;
+
+        order.status = statusNames.processing;
+
+        await order.save();
+
+        res.status(200).json({message: 'Order confirmed successfully'});
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({message: error.message});
+    }
+}
 
 export const updateOrder = async (req, res) => {
     try {
-        console.log("updateOrder")
         const {orderId} = req.params;
         const {status} = req.body;
 

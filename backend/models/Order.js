@@ -2,6 +2,14 @@ import mongoose from "mongoose";
 import { modelNames, statusNames } from "../utils/constants.js";
 
 const orderSchema = new mongoose.Schema({
+        login: {
+            type: String,
+            required: false,
+        },
+        password: {
+            type: String,
+            required: false,
+        },
         user: {
             type: mongoose.Schema.Types.ObjectId,
             red: modelNames.user,

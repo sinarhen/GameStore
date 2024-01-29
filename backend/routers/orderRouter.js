@@ -1,6 +1,6 @@
 import express from 'express';
 import {
-    addToOrder,
+    addToOrder, confirmOrder,
     deleteOrder,
     deleteProductFromOrder,
     getAllOrders,
@@ -20,6 +20,7 @@ router.get('/:orderId', checkAuth, checkAdmin, getOrderById);
 router.post('/:productId', checkAuth, addToOrder);
 router.delete('/:orderId', checkAuth, checkAdmin, deleteOrder);
 router.put('/:orderId', checkAuth, checkAdmin, updateOrder);
+router.put('/:orderId/confirm', checkAuth, confirmOrder);
 router.put('/:orderId/:productId', checkAuth, updateOrderProductQuantity);
 router.delete('/:orderId/:productId', checkAuth, deleteProductFromOrder);
 

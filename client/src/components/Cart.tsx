@@ -1,25 +1,21 @@
 import Button from "./Button"
 import {Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle,} from "./Sheet"
 import useCart from "../hooks/useCart";
-import {useNavigate} from "react-router-dom";
-import Input from "./Input";
 import CartItem from "./CartItem";
 import {useDialog} from "../hooks/useDialog";
 import Loading from "./Loading";
+import ConfirmOrderForm from "./ConfirmOrderForm";
 
 export default function Cart() {
-  const {open, isLoading,  cart, setOpen} = useCart();
+  const {open, isLoading,  cart, resetCart, setOpen} = useCart();
   const {openDialog} = useDialog();
+
 
   const openConfirmDialog = () => {
     openDialog({
       title: "Підтвердіть замовлення",
       description: "Щоб підтвердити замовлення введіть логін та пароль від аккаунта Mortal-Kombat",
-      content: <>
-        <Input placeholder="Логін"/>
-        <Input placeholder="Пароль"/>
-        <Button
-        className="bg-green-600 hover:bg-green-500">Підтвердити</Button></>
+      content: <ConfirmOrderForm resetCart={resetCart} cart={cart}/>
     })
   }
   if (isLoading) {
@@ -33,12 +29,12 @@ export default function Cart() {
           <>
             <SheetHeader>
               <SheetTitle className="text-white">Корзина</SheetTitle>
-              <SheetDescription>{cart?.products?.length} Предметів</SheetDescription>
+              <SheetDescription>{cart?.products?.length}</SheetDescription>
             </SheetHeader>
             <div className="justify-between items-center flex max-h-full flex-col   text-white">
               <div className="w-full overflow-y-scroll flex flex-col pt-4">
                 {cart?.products?.map((orderProduct) => (
-                  <CartItem item={orderProduct} />
+                  <CartItem key={orderProduct._id} item={orderProduct} />
                 ))}
 
               </div>

@@ -80,6 +80,7 @@ export type CartContextType = {
   open: boolean
   setOpen: (open: boolean) => void
   cart: Order
+  resetCart: () => void
   setCart: (cart: Order) => void
   addToCart: (product: ProductCardType, amount: number) => Promise<void>
   removeFromCart: (product: OrderProduct, amount?: number) => void

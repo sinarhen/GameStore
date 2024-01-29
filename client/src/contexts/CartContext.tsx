@@ -1,4 +1,4 @@
-import {createContext, useCallback, useEffect, useState} from 'react';
+import React, {createContext, useCallback, useEffect, useState} from 'react';
 import {CartContextType, Order, OrderProduct, ProductCardType} from '../lib/types';
 import Cart from "../components/Cart";
 import {addToOrder, changeProductQuantityInOrder, deleteProductFromOrder, getUserOrdersById} from "../lib/order";
@@ -14,8 +14,36 @@ export function CartProvider({children}: {
   const [open, setOpen] = useState(false);
   const [cart, setCart] = useState<Order>();
   const [isLoading] = useState(false);
-
   const {user} = useCurrentUser();
+
+  const resetCart = useCallback(() => {
+    setCart({
+      products: [],
+      status: "pending",
+      user: user,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    } as Order)
+  }, [user])
+
+  const initializeCart = useCallback(async () => {
+    try {
+      const order = await getUserOrdersById();
+      const lastOrder = order?.data[0];
+      if (order.data.length && lastOrder?.status === "pending") {
+        setCart(lastOrder);
+      } else {
+        resetCart();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }, [resetCart]);
+
+  useEffect(() => {
+    if (!user) return;
+    initializeCart();
+  }, [user, initializeCart]);
 
   const addToCart = useCallback(async (product: ProductCardType, amount: number) => {
     const res = await addToOrder(product._id, amount);
@@ -79,39 +107,11 @@ export function CartProvider({children}: {
 
   }
 
-
-  useEffect(() => {
-    if (!user) return;
-
-    async function getOrder() {
-      try {
-        const order = await getUserOrdersById();
-
-        if (order.data.length || order?.data[0]?.status === "pending") {
-          setCart(order.data[0]);
-        } else {
-          setCart({
-            products: [],
-            status: "pending",
-            user: user,
-            createdAt: new Date(),
-            updatedAt: new Date(),
-
-          } as Order)
-
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    getOrder();
-  }, [user]);
-
   return (
     <CartContext.Provider value={{
       open,
       setOpen,
+      resetCart,
       cart: cart ?? {} as Order,
       setCart,
       addToCart,
