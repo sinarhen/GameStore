@@ -4,12 +4,12 @@ export async function getFavorites() {
   return await http.get('/favorites', true);
 }
 
-const addToFavorites = async (productId: string) => {
-  return await http.post(`/favorites/${productId}`, {}, true);
+const addToFavorites = async (product: string) => {
+  return await http.post(`/favorites/${product}`, {}, true);
 }
 
-const removeFromFavorites = async (productId: string) => {
-  return await http.delete(`/favorites/${productId}`, true);
+const removeFromFavorites = async (product: string) => {
+  return await http.delete(`/favorites/${product}`, true);
 }
 
 export {addToFavorites, removeFromFavorites}

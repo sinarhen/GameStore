@@ -31,7 +31,7 @@ const productSchema = new mongoose.Schema({
 productSchema.pre('remove', async function (next) {
     try {
         // Remove all favorites that reference the product
-        await Favorites.deleteMany({productId: this._id});
+        await Favorites.deleteMany({product: this._id});
         // Remove the product from all orders that contain it
         await Order.updateMany(
             {"products.product": this._id},

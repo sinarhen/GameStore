@@ -108,10 +108,10 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
           {order?.products?.length && order?.products?.map((orderedProduct: OrderProduct) => {
             return (
               <TableRow key={orderedProduct._id}>
-                <TableCell>{orderedProduct.productId.name}</TableCell>
-                <TableCell>{formatter.format(orderedProduct.productId.price)}</TableCell>
+                <TableCell>{orderedProduct.product.name}</TableCell>
+                <TableCell>{formatter.format(orderedProduct.product.price)}</TableCell>
                 <TableCell>{orderedProduct.quantity}</TableCell>
-                <TableCell>{formatter.format(orderedProduct.quantity * orderedProduct.productId.price)}</TableCell>
+                <TableCell>{formatter.format(orderedProduct.quantity * orderedProduct.product.price)}</TableCell>
 
               </TableRow>
             )

@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import { modelNames } from "../utils/constants.js";
+
 
 const categorySchema = new mongoose.Schema({
         name: {
@@ -6,20 +8,19 @@ const categorySchema = new mongoose.Schema({
             required: true,
         },
         products: [{
-            productId: {
+            product: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Product",
+                ref: modelNames.product,
             }
         }],
     },
     {
-        collection: "categories",
         timestamps: true
     },
 );
 categorySchema.pre('remove', function (next) {
-    this.model('Product').updateMany({category: this._id}, {$unset: {category: ""}}, next);
+    this.model(modelNames.product).updateMany({category: this._id}, {$unset: {category: ""}}, next);
 });
-const Category = mongoose.model("Category", categorySchema);
+const Category = mongoose.model(modelNames.category, categorySchema);
 
 export default Category;

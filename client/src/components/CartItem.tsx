@@ -65,23 +65,23 @@ export default function CartItem({
                                 className={cn("text-red-600 absolute text-opacity-75 h-1/2 group-hover/image:text-opacity-100 group-hover/image:scale-125 transition-all w-1/2 opacity-0", inputValue === 0 ? "opacity-100" : "")}/>
                 
                 </span>
-          <img src={item.productId.imageUrl} className="bg-cover object-cover"/>
+          <img src={item.product.imageUrl} className="bg-cover object-cover"/>
         </div>
         <div className="flex flex-col justify-between">
           <div onClick={() => {
-            navigate('/products/' + item.productId._id);
+            navigate('/products/' + item.product._id);
             setOpen(false)
           }} className="group-hover/cart:text-indigo-600 transition-colors">
-            <p className="align-start">{item?.productId?.name} <span
+            <p className="align-start">{item?.product?.name} <span
               className="text-gray-400 text-xs flex items-center">x{item.quantity} {inputValue !== 0 ? (inputValue > 0 ? `+${inputValue}` : inputValue) : ""}</span>
             </p>
-            <p className="text-xs text-gray-700">{item.productId.description}</p>
+            <p className="text-xs text-gray-700">{item.product.description}</p>
           </div>
         </div>
 
       </div>
       <div className="mt-1 flex flex-col justify-between group-hover/cart:text-indigo-600 transition-colors">
-        <p className="text-xs ">{formatter.format(item.productId.price * item.quantity)}</p>
+        <p className="text-xs ">{formatter.format(item.product.price * item.quantity)}</p>
 
         <div
           className="h-full  group-hover/cart:opacity-100 flex flex-col items-end justify-end opacity-0 transition-opacity ">

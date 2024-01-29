@@ -5,8 +5,8 @@ import checkAuth from '../utils/checkAuth.js';
 const router = express.Router();
 
 router.get('/', checkAuth, getAllFavoritesByUserId);
-router.post('/:productId', checkAuth, addFavorite);
-router.delete('/:productId', checkAuth, deleteFavorite);
+router.post('/:product', checkAuth, addFavorite);
+router.delete('/:product', checkAuth, deleteFavorite);
 
 
 export default router;

@@ -153,7 +153,7 @@ export default function Admin() {
         </div>
         <Input
           className="mt-4"
-          name="productId"
+          name="product"
           type="text"
           placeholder="Product ID or name"
           value={productQuery}

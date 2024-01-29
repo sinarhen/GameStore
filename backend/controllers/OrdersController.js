@@ -1,14 +1,14 @@
 import Product from '../models/Product.js';
 import Order from '../models/Order.js';
-import {roles} from '../utils/roles.js';
+import {roles} from '../utils/constants.js';
 
 export const addToOrder = async (req, res) => {
     try {
-        const {productId} = req.params;
+        const {product} = req.params;
         const {quantity} = req.body;
 
-        const product = await Product.findById(productId);
-        let order = await Order.findOne({userId: req.userId, status: 'pending'}).populate('products.productId');
+        const product = await Product.findById(product);
+        let order = await Order.findOne({userId: req.userId, status: 'pending'}).populate('products.product');
 
         if (!product) {
             return res.status(404).json({message: 'Product not found'});
@@ -18,12 +18,12 @@ export const addToOrder = async (req, res) => {
             order = new Order({userId: req.userId, status: 'pending'});
         }
 
-        const index = order.products.findIndex((p) => p.productId._id.toString() === productId);
+        const index = order.products.findIndex((p) => p.product._id.toString() === product);
         let orderProduct;
         if (index === -1) {
 
             orderProduct = {
-                productId: product,
+                product: product,
                 quantity,
             };
             order.products.push(orderProduct);
@@ -44,12 +44,12 @@ export const addToOrder = async (req, res) => {
 
 export const deleteProductFromOrder = async (req, res) => {
     try {
-        const {orderId, productId} = req.params;
+        const {orderId, product} = req.params;
         const order = await Order.findById(orderId);
         if (!order) {
             return res.status(404).json({message: 'Order not found'});
         }
-        const index = order.products.findIndex((p) => p.productId.toString() === productId);
+        const index = order.products.findIndex((p) => p.product.toString() === product);
         if (index === -1) {
             return res.status(404).json({message: 'Product not found in order'});
         }
@@ -87,7 +87,7 @@ export const deleteOrder = async (req, res) => {
 export const getAllOrdersByUserId = async (req, res) => {
     try {
 
-        const orders = await Order.find({userId: req.userId}).populate('userId').populate('products.productId').sort({createdAt: -1});
+        const orders = await Order.find({userId: req.userId}).populate('userId').populate('products.product').sort({createdAt: -1});
 
         res.status(200).json(orders);
     } catch (error) {
@@ -139,7 +139,7 @@ export const updateOrder = async (req, res) => {
 
 export const getAllOrders = async (req, res) => {
     try {
-        const orders = await Order.find().populate('userId').populate('products.productId');
+        const orders = await Order.find().populate('userId').populate('products.product');
         res.status(200).json(orders);
     } catch (error) {
         res.status(500).json({message: error.message});
@@ -150,10 +150,10 @@ export const getAllOrders = async (req, res) => {
 export const updateOrderProductQuantity = async (req, res) => {
     try {
         console.log("updateOrderProductQuantity")
-        const {orderId, productId} = req.params;
+        const {orderId, product} = req.params;
         const {quantity} = req.body;
-        let order = await Order.findById(orderId).populate('products.productId');
-        const index = order.products.findIndex((p) => p.productId._id.toString() === productId);
+        let order = await Order.findById(orderId).populate('products.product');
+        const index = order.products.findIndex((p) => p.product._id.toString() === product);
 
         if (!order) {
             return res.status(404).json({message: 'Order not found'});
@@ -163,7 +163,7 @@ export const updateOrderProductQuantity = async (req, res) => {
             return res.status(400).json({message: 'Quantity must be at least 1'});
         }
 
-        const productPrice = order.products[index].productId.price;
+        const productPrice = order.products[index].product.price;
 
         order.products[index].quantity = quantity;
 

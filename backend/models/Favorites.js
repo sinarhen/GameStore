@@ -7,7 +7,7 @@ const FavoritesSchema = new mongoose.Schema(
             ref: 'User',
             required: true,
         },
-        productId: {
+        product: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Product',
             required: true,
@@ -18,7 +18,7 @@ const FavoritesSchema = new mongoose.Schema(
     },
 );
 
-FavoritesSchema.index({userId: 1, productId: 1}, {unique: true});
+FavoritesSchema.index({userId: 1, product: 1}, {unique: true});
 
 const Favorites = mongoose.model('Favorites', FavoritesSchema);
 

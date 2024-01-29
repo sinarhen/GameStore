@@ -96,7 +96,7 @@ export default function Orders({
                 <TableCell
                   className={statusColor(order.status) + " text-center"}>{translateStatus(order.status)}</TableCell>
                 <TableCell
-                  className="text-right w-full">{formatter.format(order.products.reduce((total, product) => total + product.productId.price * product.quantity, 0))}</TableCell>
+                  className="text-right w-full">{formatter.format(order.products.reduce((total, product) => total + product.product.price * product.quantity, 0))}</TableCell>
                 <TableCell className="w-full">
                   <div className="flex gap-x-1 justify-center items-center">
                     <div
@@ -130,7 +130,7 @@ export default function Orders({
               <TableRow className="sticky bg-neutral-900 bottom-0">
                 <TableCell colSpan={3}>Сума</TableCell>
                 <TableCell
-                  className="text-right">{formatter.format(orders.reduce((total, order) => total + order.products.reduce((total, product) => total + product.productId.price * product.quantity, 0), 0))}</TableCell>
+                  className="text-right">{formatter.format(orders.reduce((total, order) => total + order.products.reduce((total, product) => total + product.product.price * product.quantity, 0), 0))}</TableCell>
                 <TableCell></TableCell>
 
               </TableRow>

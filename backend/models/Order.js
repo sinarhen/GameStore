@@ -1,15 +1,17 @@
 import mongoose from "mongoose";
+import { modelNames, statusNames } from "../utils/constants.js";
 
 const orderSchema = new mongoose.Schema({
-        userId: {
+        account: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
-            required: true
+            ref: modelNames.account,
+            required: false,
+            default: null,
         },
         products: [{
-            productId: {
+            product: {
                 type: mongoose.Schema.Types.ObjectId,
-                ref: "Product",
+                ref: modelNames.product,
             },
             quantity: {
                 type: Number,
@@ -18,7 +20,7 @@ const orderSchema = new mongoose.Schema({
         }],
         status: {
             type: String,
-            enum: ["pending", "processing", "ready", "cancelled", "confirmed", "paid"],
+            enum: Object.keys(statusNames),
             default: "pending"
         },
     },
@@ -27,5 +29,5 @@ const orderSchema = new mongoose.Schema({
     },
 );
 
-const Order = mongoose.model("Order", orderSchema);
+const Order = mongoose.model(modelNames.order, orderSchema);
 export default Order;

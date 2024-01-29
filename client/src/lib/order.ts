@@ -16,18 +16,18 @@ export async function updateOrderStatus(orderId: string, status: string) {
   return await http.put(`/orders/${orderId}`, {status}, true);
 }
 
-export async function addToOrder(productId: string, quantity: number) {
-  return await http.post(`/orders/${productId}`, {quantity}, true);
+export async function addToOrder(product: string, quantity: number) {
+  return await http.post(`/orders/${product}`, {quantity}, true);
 }
 
-export async function changeProductQuantityInOrder(orderId: string, productId: string, quantity?: number) {
-  return await http.put(`/orders/${orderId}/${productId}`, {quantity}, true);
+export async function changeProductQuantityInOrder(orderId: string, product: string, quantity?: number) {
+  return await http.put(`/orders/${orderId}/${product}`, {quantity}, true);
 }
 
 export async function getUserOrdersById() {
   return await http.get(`/orders`, true);
 }
 
-export async function deleteProductFromOrder(orderId: string, productId: string) {
-  return await http.delete(`/orders/${orderId}/${productId}`, true);
+export async function deleteProductFromOrder(orderId: string, product: string) {
+  return await http.delete(`/orders/${orderId}/${product}`, true);
 }

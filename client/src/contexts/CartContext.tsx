@@ -22,14 +22,14 @@ export function CartProvider({children}: {
     const resOrderProduct = res.data;
     const resOrderId = res.data.orderId;
     const orderProduct: OrderProduct = {
-      _id: resOrderProduct.orderProduct.productId,
-      productId: product,
+      _id: resOrderProduct.orderProduct.product,
+      product: product,
       quantity: amount,
       createdAt: new Date(),
       updatedAt: new Date(),
     };
     setCart(prevCart => {
-      const existingProduct = prevCart?.products.find(item => item?.productId._id === orderProduct?.productId._id);
+      const existingProduct = prevCart?.products.find(item => item?.product._id === orderProduct?.product._id);
       if (existingProduct) {
         existingProduct.quantity += orderProduct.quantity;
         return {...prevCart, _id: resOrderId, products: prevCart?.products} as Order;
@@ -45,7 +45,7 @@ export function CartProvider({children}: {
       console.log("Cart is undefined")
       return;
     }
-    await deleteProductFromOrder(cart?._id, product.productId._id);
+    await deleteProductFromOrder(cart?._id, product.product._id);
     const newProducts = cart?.products.filter(item => item?._id !== product?._id);
     if (newProducts) {
       setCart({...cart, products: newProducts} as Order);
@@ -55,9 +55,9 @@ export function CartProvider({children}: {
   const updateProductQuantity = async (product: OrderProduct, amount: number) => {
     try {
       if (cart?._id) {
-        await changeProductQuantityInOrder(cart?._id, product.productId._id, amount);
+        await changeProductQuantityInOrder(cart?._id, product.product._id, amount);
         setCart(prevCart => {
-            const existingProduct = prevCart?.products.find(item => item?.productId._id === product?.productId._id);
+            const existingProduct = prevCart?.products.find(item => item?.product._id === product?.product._id);
             if (existingProduct) {
               existingProduct.quantity = amount;
               return {...prevCart, products: prevCart?.products} as Order;

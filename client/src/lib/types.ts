@@ -44,7 +44,7 @@ export type Order = {
 
 export type OrderProduct = {
   _id: string;
-  productId: ProductCardType;
+  product: ProductCardType;
   quantity: number;
   createdAt: Date;
   updatedAt: Date;

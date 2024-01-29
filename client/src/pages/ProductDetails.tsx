@@ -44,7 +44,7 @@ export default function ProductDetails() {
       }).finally(() => {
       setLoading(false);
     });
-  }, [productId])
+  }, [product])
 
 
   useEffect(() => {

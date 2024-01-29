@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {roles} from '../utils/roles.js';
+import { roles } from "../utils/constants.js";
 
 const UserSchema = new mongoose.Schema(
     {
@@ -25,6 +25,12 @@ const UserSchema = new mongoose.Schema(
             enum: roles, // Define the possible roles here
             default: 'user', // Default role is 'user'
         },
+        accounts: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Account',
+            },
+        ],
     },
     {
         timestamps: true,
