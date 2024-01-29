@@ -27,6 +27,14 @@ export default function ConfirmOrderForm({
 })
 {
     const {closeDialog, openDialog} = useDialog();
+    const openInfoDialog = () => {
+      openDialog({
+        title: `Розрахунок замовлення № ${cart._id}`,
+        description: "Щоб оплатити замовлення переведіть сумму на цю картку: 4242 4242 4242 4242 та укажіть в платежі номер замовлення. Після оплати ви можете переглянути статус замовлення в особистому кабінете. Якщо виникли питання, зверніться до адміністратора. Telegram: @MortalKomba",
+        content: <Button onClick={closeDialog}>Закрити</Button>
+      })
+    }
+
     const form = useForm<TConfirmForm>({
         defaultValues: {
             email: "",
@@ -43,21 +51,12 @@ export default function ConfirmOrderForm({
             toast.success("Замовлення успішно підтверджено", {id: "confirmOrderSuccess"})
             closeDialog();
             resetCart();
-
+            openInfoDialog();
           } catch (error: any) {
             console.error(error);
             toast.error(error?.message ?? "Щось пішло не так при підтвердженні вашого замовлення.", {id: "confirmOrderError"})
           }
     }}, [cart._id, closeDialog, resetCart]);
-
-    const openInfoDialog = () => {
-        openDialog({
-          title: `Розрахунок замовлення № ${cart._id}`,
-          description: "Щоб оплатити замовлення переведіть сумму на цю картку: 4242 4242 4242 4242 та укажіть в платежі номер замовлення. Після оплати ви можете переглянути статус замовлення в особистому кабінете. Якщо виникли питання, зверніться до адміністратора. Telegram: @MortalKomba",
-          content: <Button onClick={closeDialog}>Закрити</Button>
-        })
-      }
-
 
     function renderError(fieldName: keyof typeof form.formState.errors) {
       return form.formState.errors[fieldName]?.message &&
@@ -77,7 +76,6 @@ export default function ConfirmOrderForm({
             <Button 
                 disabled={!form.formState.isDirty || !form.formState.isValid}
                 className="bg-green-600 w-full md:w-auto hover:bg-green-500"
-                onClick={() => openInfoDialog()}
             >
                 Підтвердити
             </Button>
