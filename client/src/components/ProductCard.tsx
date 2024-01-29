@@ -17,7 +17,8 @@ export default function ProductCard({product}: { props?: any; product: ProductCa
   const {openDialog, closeDialog} = useDialog();
   const {user} = useCurrentUser();
   const {openAuthDialog} = useAuthDialog();
-  const {addToCart} = useCart();
+  const {addToCart, cart} = useCart();
+
   const onConfirm = async (amount: number) => {
     try {
       await addToCart(product, amount);
@@ -69,16 +70,20 @@ export default function ProductCard({product}: { props?: any; product: ProductCa
         <div className="flex items-center justify-between">
           {/* Use the formatter to format the price */}
           <span className="font-bold  text-sm">{formatter.format(product.price)}</span>
-          <Button
-            onClick={(event) => {
-              event.stopPropagation();
-              onBuy();
-            }}
-            className='flex items-center gap-x-2'
-          >
-            Buy <ShoppingCart size={16} strokeWidth={3}/>
-          </Button>
-        </div>
+            <div>
+              <Button
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onBuy();
+                }}
+                className='flex items-center gap-x-2'
+              >
+                Придбати <ShoppingCart size={16} strokeWidth={3}/>
+              </Button>
+              
+          
+              </div>
+          </div>
       </div>
     </div>
   )

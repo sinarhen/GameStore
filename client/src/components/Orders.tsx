@@ -24,8 +24,10 @@ export default function Orders({
   const {isAdmin} = useCurrentUser();
 
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   function updateOrder(order: Order) {
+    setSelectedOrder(order)
     if (orders) {
       setOrders(orders?.map((o) => (o._id === order._id ? order : o)));
     }
@@ -59,12 +61,12 @@ export default function Orders({
     })
   }
 
-  const onOrderDialogOpen = (order: Order) => {
+  const onOrderDialogOpen = () => {
     openDialog({
       title: "Деталі замовлення",
       description: "Переглянути деталі замовлення тут",
-      content: <OrderDialog updateOrder={updateOrder}  order={order} open={dialogOpen}
-                            setOpen={setDialogOpen}/>,
+      content: <OrderDialog updateOrder={updateOrder} order={selectedOrder} open={dialogOpen}
+                            setOpen={setDialogOpen} />,
       confirmText: null,
       cancelText: "Закрити"
     })
@@ -100,7 +102,10 @@ export default function Orders({
                 <TableCell className="w-full">
                   <div className="flex gap-x-1 justify-center items-center">
                     <div
-                      onClick={() => onOrderDialogOpen(order)}
+                      onClick={() => {
+                        setSelectedOrder(order)
+                        onOrderDialogOpen()
+                      }}
 
                       className='p-2  cursor-pointer group rounded-lg hover:bg-gray-400 transition-colors'
 

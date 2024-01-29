@@ -18,16 +18,17 @@ interface OrderDialogProps {
 
 const OrderDialog: React.FC<OrderDialogProps> = ({
                                                    order,
+                                                   updateOrder
                                                  }) => {
   const [status, setStatus] = useState(order?.status || 'pending');
   const [confirmOpen, setConfirmOpen] = useState(false);
   const {isAdmin} = useCurrentUser();
-
+  
   const handleUpdateStatus = async () => {
-    console.log("Clicked")
     try {
       if (order?._id) {
         await updateOrderStatus(order?._id, status);
+        updateOrder({...order, status})
         toast.success('Order status updated');
       }
     } catch (err) {

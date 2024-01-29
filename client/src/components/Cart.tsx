@@ -15,7 +15,10 @@ export default function Cart() {
     openDialog({
       title: "Підтвердіть замовлення",
       description: "Щоб підтвердити замовлення введіть логін та пароль від аккаунта Mortal-Kombat",
-      content: <><Input placeholder="Логін"/><Input placeholder="Пароль"/><Button
+      content: <>
+        <Input placeholder="Логін"/>
+        <Input placeholder="Пароль"/>
+        <Button
         className="bg-green-600 hover:bg-green-500">Підтвердити</Button></>
     })
   }
