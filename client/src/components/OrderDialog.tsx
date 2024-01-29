@@ -23,10 +23,12 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
   const [status, setStatus] = useState(order?.status || 'pending');
   const [confirmOpen, setConfirmOpen] = useState(false);
   const {isAdmin} = useCurrentUser();
-  
+  const [confirmedStatus, setConfirmedStatus] = useState(order?.status || 'pending');
+
   const handleUpdateStatus = async () => {
     try {
       if (order?._id) {
+        setConfirmedStatus(status)
         await updateOrderStatus(order?._id, status);
         updateOrder({...order, status})
         toast.success('Order status updated');
@@ -73,8 +75,8 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
       }}/>
       <div className="flex gap-x-4">
         <div className="flex flex-col">
-          <p className="mt-4 mb-1">Статус: {order?.status &&
-              <span className={statusColor(order?.status)}>{translateStatus(order.status)}</span>}</p>
+          <p className="mt-4 mb-1">Статус: {confirmedStatus &&
+              <span className={statusColor(confirmedStatus)}>{translateStatus(confirmedStatus)}</span>}</p>
           {isAdmin && <>
               <Select onValueChange={(e) => setStatus(e)}>
                   <SelectTrigger className="w-[180px]">

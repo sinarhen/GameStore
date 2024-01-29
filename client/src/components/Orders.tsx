@@ -24,10 +24,8 @@ export default function Orders({
   const {isAdmin} = useCurrentUser();
 
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   function updateOrder(order: Order) {
-    setSelectedOrder(order)
     if (orders) {
       setOrders(orders?.map((o) => (o._id === order._id ? order : o)));
     }
@@ -61,11 +59,11 @@ export default function Orders({
     })
   }
 
-  const onOrderDialogOpen = () => {
+  const onOrderDialogOpen = (order: Order) => {
     openDialog({
       title: "Деталі замовлення",
       description: "Переглянути деталі замовлення тут",
-      content: <OrderDialog updateOrder={updateOrder} order={selectedOrder} open={dialogOpen}
+      content: <OrderDialog updateOrder={updateOrder} order={order} open={dialogOpen}
                             setOpen={setDialogOpen} />,
       confirmText: null,
       cancelText: "Закрити"
@@ -103,8 +101,7 @@ export default function Orders({
                   <div className="flex gap-x-1 justify-center items-center">
                     <div
                       onClick={() => {
-                        setSelectedOrder(order)
-                        onOrderDialogOpen()
+                        onOrderDialogOpen(order)
                       }}
 
                       className='p-2  cursor-pointer group rounded-lg hover:bg-gray-400 transition-colors'
