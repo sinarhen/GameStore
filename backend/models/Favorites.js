@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const FavoritesSchema = new mongoose.Schema(
     {
-        userId: {
+        user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
             required: true,
@@ -18,7 +18,7 @@ const FavoritesSchema = new mongoose.Schema(
     },
 );
 
-FavoritesSchema.index({userId: 1, product: 1}, {unique: true});
+FavoritesSchema.index({user: 1, product: 1}, {unique: true});
 
 const Favorites = mongoose.model('Favorites', FavoritesSchema);
 

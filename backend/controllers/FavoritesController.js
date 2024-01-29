@@ -3,7 +3,7 @@ import Product from "../models/Product.js";
 
 export const getAllFavoritesByUserId = async (req, res) => {
     try {
-        const favorites = await Favorites.find({userId: req.userId}).populate('product');
+        const favorites = await Favorites.find({user: req.userId}).populate('product');
         const products = favorites.map(favorite => favorite.product);
         res.status(200).json(products);
     } catch (error) {
@@ -12,20 +12,20 @@ export const getAllFavoritesByUserId = async (req, res) => {
 };
 
 export const addFavorite = async (req, res) => {
-    const {product} = req.params;
+    const {productId} = req.params;
 
     try {
 
 
-        const product = await Product.findById(product);
+        const product = await Product.findById(productId);
 
         if (!product) {
             return res.status(404).json({message: 'Product not found'});
         }
 
         const favorite = new Favorites({
-            userId: req.userId,
-            product
+            user: req.userId,
+            productId: product._id,
         });
 
         await favorite.save();
@@ -38,13 +38,13 @@ export const addFavorite = async (req, res) => {
 
 export const deleteFavorite = async (req, res) => {
     try {
-        const {product} = req.params;
+        const {productId} = req.params;
 
-        const favorite = await Favorites.findOne({userId: req.userId, product});
+        const favorite = await Favorites.findOne({user: req.userId, product: productId});
         if (!favorite) {
             return res.status(404).json({message: 'Favorite not found'});
         }
-        await Favorites.deleteOne({userId: req.userId, product});
+        await Favorites.deleteOne({user: req.userId, productId: product._id});
 
         res.status(200).json({message: 'Favorite deleted successfully'});
     } catch (error) {

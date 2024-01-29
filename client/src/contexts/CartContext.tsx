@@ -95,7 +95,7 @@ export function CartProvider({children}: {
           setCart({
             products: [],
             status: "pending",
-            userId: user,
+            user: user,
             createdAt: new Date(),
             updatedAt: new Date(),
 

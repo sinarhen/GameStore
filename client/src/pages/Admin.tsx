@@ -182,7 +182,7 @@ export default function Admin() {
       <Section className="pt-20 h-full">
         <h1 className="pb-4">All users</h1>
         <Input
-          name="userId"
+          name="user"
           type="text"
           placeholder="User ID or name or email"
           value={userQuery}

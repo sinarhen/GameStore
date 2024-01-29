@@ -35,7 +35,7 @@ export type User = {
 export type Order = {
   _id?: string;
   products: OrderProduct[];
-  userId: User;
+  user: User;
   createdAt: Date;
   updatedAt: Date;
   status: string;

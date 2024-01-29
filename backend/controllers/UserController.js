@@ -252,15 +252,7 @@ export const deleteUser = async (req, res) => {
 
 export const getMe = async (req, res) => {
     try {
-        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
-
-        if (!token) {
-            return res.status(401).json({message: 'Unauthorized'});
-        }
-
-        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-        const userId = decodedToken._id;
-        const user = await UserModel.findById(userId);
+        const user = await UserModel.findById(req.userId);
         if (!user) {
             return res.status(404).json({message: 'User not found'});
         }
