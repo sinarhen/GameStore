@@ -32,7 +32,7 @@ const UserDialog: React.FC<UserDialogProps> = ({
         setUsers(users.map((u) => (u._id === user._id ? {...user, role} : u)));
       }
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Щось пішло не так");
     }
   }
 

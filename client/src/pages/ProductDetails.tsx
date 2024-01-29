@@ -40,7 +40,7 @@ export default function ProductDetails() {
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Something went wrong", {id: "products"});
+        toast.error("Щось пішло не так", {id: "products"});
       }).finally(() => {
       setLoading(false);
     });
@@ -94,7 +94,7 @@ export default function ProductDetails() {
       toast.success(`Added to cart ${inputValue} ${product.name}`);
 
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Щось пішло не так");
       console.error(error)
     } finally {
       setLoading(false)

@@ -13,7 +13,6 @@ export const getAllFavoritesByUserId = async (req, res) => {
 
 export const addFavorite = async (req, res) => {
     const {productId} = req.params;
-
     try {
 
 
@@ -22,11 +21,12 @@ export const addFavorite = async (req, res) => {
         if (!product) {
             return res.status(404).json({message: 'Product not found'});
         }
-
-        const favorite = new Favorites({
+        const newFavorite = {
             user: req.userId,
-            productId: product._id,
-        });
+            product: productId,
+        }
+
+        const favorite = new Favorites(newFavorite);
 
         await favorite.save();
 
@@ -44,7 +44,7 @@ export const deleteFavorite = async (req, res) => {
         if (!favorite) {
             return res.status(404).json({message: 'Favorite not found'});
         }
-        await Favorites.deleteOne({user: req.userId, productId: product._id});
+        await Favorites.deleteOne({user: req.userId, product: productId});
 
         res.status(200).json({message: 'Favorite deleted successfully'});
     } catch (error) {

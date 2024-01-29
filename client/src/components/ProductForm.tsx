@@ -100,7 +100,7 @@ export default function ProductForm({
       if (e?.response?.data?.message) {
         toast.error(e?.response?.data?.message);
       } else {
-        toast.error(e?.message || 'Something went wrong');
+        toast.error(e?.message || 'Щось пішло не так');
       }
       if (e?.response?.data?.field) {
         form.setError(e.response.data.field, {
@@ -136,7 +136,7 @@ export default function ProductForm({
       setIsLoading(true)
       setCategories(res.data);
     }).catch((err) => {
-      toast.error(`Something went wrong: ${err.message}`, {id: "categories"});
+      toast.error(`Щось пішло не так: ${err.message}`, {id: "categories"});
     }).finally(() => {
       setIsLoading(false);
     })
@@ -300,8 +300,6 @@ export default function ProductForm({
           <Button
             className="bg-green-600 hover:bg-green-500"
             type="submit"
-            disabled={!form.formState.isDirty}
-
           >
             Save
           </Button>

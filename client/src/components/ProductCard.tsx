@@ -25,18 +25,18 @@ export default function ProductCard({product}: { props?: any; product: ProductCa
       toast.success('Added to cart')
       closeDialog();
     } catch (error: any) {
-      toast.error(error?.message ?? "Something went wrong");
+      toast.error(error?.message ?? "Щось пішло не так");
     }
   }
   const onBuy = () => {
     if (!user) {
-      toast.error("You must be logged in to add items to your cart");
+      toast.error("Ви повинні бути авторизованим щоб придбати продукт.");
       openAuthDialog('login');
       return;
     }
     openDialog({
-      title: `Buy ${product.name}`,
-      description: "Please enter how many items you want to buy",
+      title: `Придбати ${product.name}`,
+      description: "Будь ласка, введіть як багато екземплярів ви хочете придбати.",
       content: (
         <AmountPicker onConfirm={onConfirm}/>
       ),

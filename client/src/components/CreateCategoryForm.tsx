@@ -31,7 +31,7 @@ export default function CreateCategoryForm({
       toast.success('Category created successfully');
     } catch (e: any) {
       console.error(e)
-      toast.error(e?.message || 'Something went wrong');
+      toast.error(e?.message || 'Щось пішло не так');
     }
   }
 

@@ -32,8 +32,8 @@ export default function Cart() {
         {cart?.products?.length ? (
           <>
             <SheetHeader>
-              <SheetTitle className="text-white">Cart</SheetTitle>
-              <SheetDescription>{cart?.products?.length} items</SheetDescription>
+              <SheetTitle className="text-white">Корзина</SheetTitle>
+              <SheetDescription>{cart?.products?.length} Предметів</SheetDescription>
             </SheetHeader>
             <div className="justify-between items-center flex max-h-full flex-col   text-white">
               <div className="w-full overflow-y-scroll flex flex-col pt-4">
@@ -55,10 +55,10 @@ export default function Cart() {
           <div className="flex flex-col h-full items-center justify-evenly">
             <div>
               <SheetHeader>
-                <SheetTitle>Cart is</SheetTitle>
+                <SheetTitle className="text-white">Корзина пуста</SheetTitle>
               </SheetHeader>
-              <p className="text-sm text-gray-400">Add items to your cart to see them here.</p>
-              <Button onClick={() => setOpen(false)}>Close</Button>
+              <p className="text-sm text-gray-400">Додайте продукти в корзину, щоб вони відобразились тут</p>
+              <Button className='mt-2' onClick={() => setOpen(false)}>Close</Button>
             </div>
             <p></p>
 

@@ -59,7 +59,7 @@ export default function EditProfileForm({initialValues}: { initialValues: any })
       toast.success('Profile updated successfully');
       window.location.reload()
     } catch (e: any) {
-      toast.error(e?.message || 'Something went wrong');
+      toast.error(e?.message || 'Щось пішло не так');
     }
   }
 

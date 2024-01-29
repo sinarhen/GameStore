@@ -6,7 +6,8 @@ export const addToOrder = async (req, res) => {
     try {
         const {productId} = req.params;
         const {quantity} = req.body;
-
+        console.log(productId)
+        console.log(req.params)
         const product = await Product.findById(productId);
         let order = await Order.findOne({user: req.userId, status: 'pending'}).populate('products.product');
 
@@ -149,11 +150,10 @@ export const getAllOrders = async (req, res) => {
 
 export const updateOrderProductQuantity = async (req, res) => {
     try {
-        console.log("updateOrderProductQuantity")
-        const {orderId, product} = req.params;
+        const {orderId, productId} = req.params;
         const {quantity} = req.body;
         let order = await Order.findById(orderId).populate('products.product');
-        const index = order.products.findIndex((p) => p.product._id.toString() === product);
+        const index = order.products.findIndex((p) => p.product._id.toString() === productId);
 
         if (!order) {
             return res.status(404).json({message: 'Order not found'});

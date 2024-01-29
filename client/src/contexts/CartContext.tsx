@@ -73,7 +73,7 @@ export function CartProvider({children}: {
 
     } catch (error: any) {
       console.error(error);
-      toast.error("Something went wrong: " + error?.message ?? "unknown error", {id: "updateProductQuantityInCart"});
+      toast.error("Щось пішло не так: " + error?.message ?? "unknown error", {id: "updateProductQuantityInCart"});
     }
 
 
@@ -86,12 +86,10 @@ export function CartProvider({children}: {
     async function getOrder() {
       try {
         const order = await getUserOrdersById();
-        console.log(order)
 
         if (order.data.length || order?.data[0]?.status === "pending") {
           setCart(order.data[0]);
         } else {
-          console.log("No cart suka")
           setCart({
             products: [],
             status: "pending",
@@ -110,9 +108,6 @@ export function CartProvider({children}: {
     getOrder();
   }, [user]);
 
-  useEffect(() => {
-    console.log("cart is: ", cart)
-  }, [cart])
   return (
     <CartContext.Provider value={{
       open,

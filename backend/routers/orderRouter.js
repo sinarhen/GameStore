@@ -17,10 +17,10 @@ const router = express.Router();
 router.get('/', checkAuth, getAllOrdersByUserId);
 router.get('/all', checkAuth, checkAdmin, getAllOrders);
 router.get('/:orderId', checkAuth, checkAdmin, getOrderById);
-router.post('/:product', checkAuth, addToOrder);
+router.post('/:productId', checkAuth, addToOrder);
 router.delete('/:orderId', checkAuth, checkAdmin, deleteOrder);
 router.put('/:orderId', checkAuth, checkAdmin, updateOrder);
-router.put('/:orderId/:product', checkAuth, updateOrderProductQuantity);
-router.delete('/:orderId/:product', checkAuth, deleteProductFromOrder);
+router.put('/:orderId/:productId', checkAuth, updateOrderProductQuantity);
+router.delete('/:orderId/:productId', checkAuth, deleteProductFromOrder);
 
 export default router;

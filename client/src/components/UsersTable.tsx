@@ -34,7 +34,7 @@ export default function UsersTable({
         toast.success("User deleted successfully");
       } catch (error) {
         console.log(error);
-        toast.error("Something went wrong");
+        toast.error("Щось пішло не так");
       }
     }
   }, [users, setUsers]);

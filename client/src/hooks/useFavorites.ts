@@ -26,9 +26,9 @@ export const useFavorites = () => {
 
 
         if (method === 'post') {
-          addToFavorites(product._id);
+          await addToFavorites(product._id);
         } else {
-          removeFromFavorites(product._id);
+          await removeFromFavorites(product._id);
         }
 
         setFavorites((prevFavorites: ProductCardType[]) => {
@@ -43,7 +43,7 @@ export const useFavorites = () => {
       }
     } catch (error) {
       console.error(error);
-      toast.error('Something went wrong! Unable to get your favorites');
+      toast.error('Щось пішло не так! Не вдалося додати/прибрати з улюблених.');
     }
   }, [favorites, setFavorites]);
 

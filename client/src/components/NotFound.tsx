@@ -1,8 +1,7 @@
-import {useNavigate} from "react-router-dom"
 
 export default function NotFound({
-                                   title = "Items not found.",
-                                   helperText = "Please try again later.",
+                                   title = "Не знайдено :(",
+                                   helperText = "Спробуйте перезавантажити сторінку.",
                                    buttonText,
                                    buttonAction
                                  }: {
@@ -24,7 +23,7 @@ export default function NotFound({
         {buttonText && (
 
           <button onClick={buttonAction} className="underline ">
-            Refresh
+            {buttonText}
           </button>
         )}
       </div>

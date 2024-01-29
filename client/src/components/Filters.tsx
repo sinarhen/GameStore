@@ -95,8 +95,8 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
         setLoading(false);
       })
       .catch((error) => {
-        toast.error(`Something went wrong: ${error.message}`, {id: "categories"});
-        setError(`Something went wrong while fetching categories: ${error.message}`);
+        toast.error(`Щось пішло не так: ${error.message}`, {id: "categories"});
+        setError(`Щось пішло не так while fetching categories: ${error.message}`);
       });
   }, []);
 

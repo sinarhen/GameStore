@@ -42,12 +42,11 @@ export default function CartItem({
               removeFromCart(item);
               toast.success("Deleted item from your cart")
             } else {
-              console.log(item.quantity + inputValue)
               updateProductQuantity(item, item.quantity + inputValue);
               toast.success(`Changed quantity succesfully`)
             }
           } catch (error) {
-            toast.error("Something went wrong")
+            toast.error("Щось пішло не так")
             console.error(error);
           } finally {
             setInputValue(0);
@@ -65,7 +64,7 @@ export default function CartItem({
                                 className={cn("text-red-600 absolute text-opacity-75 h-1/2 group-hover/image:text-opacity-100 group-hover/image:scale-125 transition-all w-1/2 opacity-0", inputValue === 0 ? "opacity-100" : "")}/>
                 
                 </span>
-          <img src={item.product.imageUrl} className="bg-cover object-cover"/>
+          <img src={item.product.imageUrl} className="bg-cover bg-center" alt={"No photo found"}/>
         </div>
         <div className="flex flex-col justify-between">
           <div onClick={() => {
@@ -75,7 +74,7 @@ export default function CartItem({
             <p className="align-start">{item?.product?.name} <span
               className="text-gray-400 text-xs flex items-center">x{item.quantity} {inputValue !== 0 ? (inputValue > 0 ? `+${inputValue}` : inputValue) : ""}</span>
             </p>
-            <p className="text-xs text-gray-700">{item.product.description}</p>
+            <p className="text-xs text-gray-700 line-clamp-2">{item.product.description}</p>
           </div>
         </div>
 
