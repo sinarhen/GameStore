@@ -47,6 +47,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
         <div className="flex flex-col">
           <p className="mt-4 mb-1">Статус: {confirmedStatus &&
               <span className={statusColor(confirmedStatus)}>{translateStatus(confirmedStatus)}</span>}</p>
+              {confirmedStatus === "paid" && <>Статус оплати:<p className={statusColor(confirmedStatus)}>{translateStatus(confirmedStatus)}</p></>}
           {isAdmin && <>
               <Select onValueChange={(e) => setStatus(e)}>
                   <SelectTrigger className="w-[180px]">

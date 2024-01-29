@@ -13,7 +13,7 @@ export const addToOrder = async (req, res) => {
             return res.status(404).json({message: 'Product not found'});
         }
 
-        if (!order || order.status === 'cancelled' || order.status === 'ready' || order.status === 'processing' || order.status === 'confirmed') {
+        if (!order || order.status !== 'pending') {
             order = new Order({user: req.userId, status: 'pending'});
         }
 
@@ -131,8 +131,6 @@ export const confirmOrder = async (req, res) => {
 
         order.login = login;
         order.password = password;
-
-        order.status = statusNames.processing;
 
         await order.save();
 
