@@ -20,7 +20,7 @@ export function CartProvider({children}: {
   const addToCart = useCallback(async (product: ProductCardType, amount: number) => {
     const res = await addToOrder(product._id, amount);
     const resOrderProduct = res.data;
-    const resOrderId = res.data.OrderId;
+    const resOrderId = res.data.orderId;
     const orderProduct: OrderProduct = {
       _id: resOrderProduct.orderProduct.productId,
       productId: product,
