@@ -56,7 +56,7 @@ export default function EditProfileForm({initialValues}: { initialValues: any })
       }
       await updateUser(values);
 
-      toast.success('Profile updated successfully');
+      toast.success('Профіль оновлено успішно');
       window.location.reload()
     } catch (e: any) {
       toast.error(e?.message || 'Щось пішло не так');

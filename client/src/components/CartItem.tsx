@@ -19,38 +19,40 @@ export default function CartItem({
   function handleInput(val: number) {
     if (val > 100) {
       setInputValue(100);
-      toast.error("You can't buy more than 100 items at once");
+      toast.error("Ви не можете купити більше 100 елементів");
       return;
     }
     if (val < -item.quantity) {
       setInputValue(val + 1);
-      toast.error("You can't remove more items than you have in your cart");
+      toast.error("Ви не можете прибрати стільки продуктів");
       return;
     }
     setInputValue(val);
   }
-  const onClick = () => {
-    try {
-      if (inputValue === 0 || inputValue === -item.quantity) {
-        removeFromCart(item);
-        toast.success("Deleted item from your cart")
-      } else {
-        updateProductQuantity(item, item.quantity + inputValue);
-        toast.success(`Changed quantity succesfully`)
-      }
-    } catch (error) {
-      toast.error("Щось пішло не так")
-      console.error(error);
-    } finally {
-      setInputValue(0);
-    }
-  }
+
 
   return (
     <div
       className="flex py-1 transition-colors group/cart cursor-pointer  w-full justify-between gap-4">
       <div className="flex gap-x-2">
-        <div onClick={onClick}
+        <div onClick={(e) => {
+          try {
+
+            if (inputValue === 0 || inputValue === -item.quantity) {
+              removeFromCart(item);
+              toast.success("Продукт видалено з кошика");
+            } else {
+              console.log(item.quantity + inputValue)
+              updateProductQuantity(item, item.quantity + inputValue);
+              toast.success(`Кількість продукту змінено на ${inputValue}`);
+            }
+          } catch (error) {
+            toast.error("Щось пішло не так");
+            console.error(error);
+          } finally {
+            setInputValue(0);
+          }
+        }}
              className="aspect-square relative min-w-20 h-20 w-20 rounded overflow-hidden border border-transparent  group-hover/cart:border-indigo-600 transition-all cursor-pointer">
                 <span
                   className="opacity-0 group/image flex items-center justify-center group-hover/cart:opacity-80 transition-all w-full h-full bg-black absolute">
@@ -63,7 +65,7 @@ export default function CartItem({
                                 className={cn("text-red-600 absolute text-opacity-75 h-1/2 group-hover/image:text-opacity-100 group-hover/image:scale-125 transition-all w-1/2 opacity-0", inputValue === 0 ? "opacity-100" : "")}/>
                 
                 </span>
-          <img src={item.product.imageUrl} className="bg-cover bg-center" alt={"No photo found"}/>
+          <img src={item.product.imageUrl} className="bg-cover object-cover"/>
         </div>
         <div className="flex flex-col justify-between">
           <div onClick={() => {
@@ -73,7 +75,7 @@ export default function CartItem({
             <p className="align-start">{item?.product?.name} <span
               className="text-gray-400 text-xs flex items-center">x{item.quantity} {inputValue !== 0 ? (inputValue > 0 ? `+${inputValue}` : inputValue) : ""}</span>
             </p>
-            <p className="text-xs text-gray-700 line-clamp-2">{item.product.description}</p>
+            <p className="text-xs text-gray-700">{item.product.description}</p>
           </div>
         </div>
 

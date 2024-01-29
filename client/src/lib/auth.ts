@@ -13,7 +13,7 @@ const fetchUser = async () => {
     const response = await http.get('/auth/me', true);
     return response.data;
   } catch (error) {
-    toast.error('Internal error with authentication. Please try again', {duration: 5000, id: 'fetchUser'});
+    toast.error('Внутрішня помилка з автентифікацією. Будь ласка, спробуйте ще раз', {duration: 5000, id: 'fetchUser'});
     console.error(error);
   }
 };

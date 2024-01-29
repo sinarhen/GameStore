@@ -89,7 +89,7 @@ export default function Admin() {
   }
 
   function toastRelogin() {
-    toast.error("It seems you were promoted to admin. But you need to log out and log in again to see the changes.", {id: "relogin"})
+    toast.error("Здається, вас було підвищено до адміністратора. Але вам потрібно вийти і увійти знову, щоб побачити зміни.", {id: "relogin"})
   }
 
   React.useEffect(() => {

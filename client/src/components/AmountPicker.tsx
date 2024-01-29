@@ -13,11 +13,11 @@ export default function AmountPicker({
   useEffect(() => {
     if (inputValue < 1) {
       setInputValue(1);
-      toast.error("You can't buy less than 1 item")
+      toast.error("Ви не можете купити менше 1 елементу");
     }
     if (inputValue > 100) {
       setInputValue(100);
-      toast.error("You can't buy more than 100 items at once");
+      toast.error("Ви не можете купити більше 100 елементів");
     }
   }, [inputValue])
   return (
@@ -44,7 +44,7 @@ export default function AmountPicker({
         onClick={() => onConfirm(inputValue)}
         disabled={inputValue < 1 || inputValue > 100}
       >
-        Add to cart
+        Додати до кошика
       </Button>
     </div>
   )

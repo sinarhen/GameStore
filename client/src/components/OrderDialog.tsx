@@ -31,47 +31,17 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
         setConfirmedStatus(status)
         await updateOrderStatus(order?._id, status);
         updateOrder({...order, status})
-        toast.success('Order status updated');
+        toast.success('Статус замовлення оновлено');
       }
     } catch (err) {
       console.log(err);
-      toast.error('Error updating order status. check console');
+      toast.error('Помилка оновлення статусу замовлення. Подивіться в консоль');
     }
   };
 
-  // function onConfirm(){
-  //     if (selectedProduct?._id && order?._id)
-  //     {
-  //         changeProductQuantityInOrder(selectedProduct?._id).then((data) => {
-  //             console.log(data);
-  //             const updatedProducts = order.products?.filter((product) => product._id !== selectedProduct?._id);
-  //             if (selectedProduct.quantity > 1) {
-  //                 updatedProducts?.push({...selectedProduct, quantity: selectedProduct.quantity - 1});
-  //             }
-  //             if (updatedProducts)
-  //             {
-  //                 setOrder({
-  //                     ...order,
-  //                     products: updatedProducts,
-
-  //                 })
-  //             }
-  //             toast.success('Product deleted from order');
-
-  //         }).catch((err) => {
-  //             console.log(err);
-  //             toast.error('Error deleting product from order');
-  //         }
-  //         );
-  //         return;
-  //     }
-  //     toast.error('Error deleting product from order');
-
-  // }
   return (
     <>
       <ConfirmDialog open={confirmOpen} setOpen={setConfirmOpen} onConfirm={() => {
-        // onConfirm();
       }}/>
       <div className="flex gap-x-4">
         <div className="flex flex-col">

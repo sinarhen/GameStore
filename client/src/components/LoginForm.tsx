@@ -36,7 +36,7 @@ export default function LoginForm({
       setCookie(response.data.token);
       setDialogOpen(false)
       window.location.reload();
-      toast.success("Logged in successfully")
+      toast.success("Успішний вхід")
 
 
     } catch (error: any) {
