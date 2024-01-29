@@ -89,7 +89,6 @@ export default function Orders({
                 <TableCell className="w-[10px]">{order._id}</TableCell>
                 <TableCell onClick={() => {
                   setDialogOpen(true);
-                  setSelectedOrder(order);
                 }}
                            className="text-center">
                   {order.products.length} товар

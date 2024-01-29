@@ -36,8 +36,8 @@ export function CartProvider({children}: {
         return {...prevCart, products: [...(prevCart?.products || []), orderProduct]} as Order;
       }
     });
-
-  }, [cart, user])
+    console.log(cart)
+  }, [])
 
 
   const removeFromCart = async (product: OrderProduct) => {
@@ -86,9 +86,12 @@ export function CartProvider({children}: {
     async function getOrder() {
       try {
         const order = await getUserOrdersById();
-        if (order.data[0].status === "pending") {
+        console.log(order)
+
+        if (order.data.length || order?.data[0]?.status === "pending") {
           setCart(order.data[0]);
         } else {
+          console.log("No cart suka")
           setCart({
             products: [],
             status: "pending",
@@ -97,6 +100,7 @@ export function CartProvider({children}: {
             updatedAt: new Date(),
 
           } as Order)
+
         }
       } catch (error) {
         console.error(error);
@@ -105,6 +109,10 @@ export function CartProvider({children}: {
 
     getOrder();
   }, [user]);
+
+  useEffect(() => {
+    console.log("cart i ")
+  }, [cart])
   return (
     <CartContext.Provider value={{
       open,

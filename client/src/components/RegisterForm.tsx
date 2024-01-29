@@ -22,8 +22,10 @@ type RegisterFormData = z.infer<typeof RegisterSchema>;
 
 export default function RegisterForm({
                                        setVariant,
+                                       setDialogOpen
                                      }: {
   setVariant: (variant: 'login' | 'register') => void;
+  setDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const form = useForm<RegisterFormData>({
     defaultValues: {

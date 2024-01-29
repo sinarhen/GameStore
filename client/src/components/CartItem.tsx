@@ -42,6 +42,7 @@ export default function CartItem({
               removeFromCart(item);
               toast.success("Deleted item from your cart")
             } else {
+              console.log(item.quantity + inputValue)
               updateProductQuantity(item, item.quantity + inputValue);
               toast.success(`Changed quantity succesfully`)
             }
