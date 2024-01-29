@@ -17,9 +17,9 @@ interface OrderDialogProps {
 }
 
 const OrderDialog: React.FC<OrderDialogProps> = ({
-                                                   order,
-                                                   updateOrder
-                                                 }) => {
+  order,
+  updateOrder
+}) => {
   const [status, setStatus] = useState(order?.status || 'pending');
   const [confirmOpen, setConfirmOpen] = useState(false);
   const {isAdmin} = useCurrentUser();
@@ -56,7 +56,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                       <SelectItem value="ready">Ready</SelectItem>
                       <SelectItem value="processing">Processing</SelectItem>
                       <SelectItem value="cancelled">Cancelled</SelectItem>
-                      <SelectItem value="confirmed">Confirmed</SelectItem>
+                      <SelectItem value="paid">Paid</SelectItem>
                       <SelectItem value="pending">Pending</SelectItem>
                   </SelectContent>
               </Select>
@@ -82,7 +82,6 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                 <TableCell>{formatter.format(orderedProduct.product.price)}</TableCell>
                 <TableCell>{orderedProduct.quantity}</TableCell>
                 <TableCell>{formatter.format(orderedProduct.quantity * orderedProduct.product.price)}</TableCell>
-
               </TableRow>
             )
           })}

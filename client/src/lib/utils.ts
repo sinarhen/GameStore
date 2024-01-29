@@ -64,7 +64,7 @@ export const translateStatus = (status: string) => {
     case "cancelled":
       return "Скасовано";
     case "processing":
-      return "В обробці";
+      return "В процесі";
     case "paid":
       return "Оплачено";
     case "confirmed":

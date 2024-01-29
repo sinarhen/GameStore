@@ -34,14 +34,14 @@ export function DialogProvider({children}: {
   }
 
   const openDialog = ({
-                        title,
-                        description,
-                        content,
-                        onConfirm,
-                        onCancel,
-                        confirmText,
-                        cancelText
-                      }: {
+  title,
+  description,
+  content,
+  onConfirm,
+  onCancel,
+  confirmText,
+  cancelText
+}: {
     title?: string,
     description?: string,
     content?: React.ReactNode | null,

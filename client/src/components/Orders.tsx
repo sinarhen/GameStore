@@ -13,10 +13,10 @@ import TableEmpty from "./TableEmpty";
 import {useDialog} from "../hooks/useDialog";
 
 export default function Orders({
-                                 orders,
-                                 setOrders,
-                                 tableCaption
-                               }: {
+  orders,
+  setOrders,
+  tableCaption
+}: {
   orders: Order[] | null;
   setOrders: (orders: Order[]) => void;
   tableCaption?: string;

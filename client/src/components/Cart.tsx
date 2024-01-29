@@ -14,7 +14,7 @@ export default function Cart() {
   const openConfirmDialog = () => {
     openDialog({
       title: "Підтвердіть замовлення",
-      description: "Щоб підтвердити замовлення введіть логін та пароль від аккаунта Mortal-Kombat",
+      description: "Щоб підтвердити замовлення введіть пошту та пароль від аккаунта Mortal-Kombat",
       content: <ConfirmOrderForm resetCart={resetCart} cart={cart}/>
     })
   }
@@ -29,35 +29,30 @@ export default function Cart() {
           <>
             <SheetHeader>
               <SheetTitle className="text-white">Корзина</SheetTitle>
-              <SheetDescription>{cart?.products?.length}</SheetDescription>
+              <SheetDescription>Продуктів: {cart?.products?.length}</SheetDescription>
             </SheetHeader>
             <div className="justify-between items-center flex max-h-full flex-col   text-white">
               <div className="w-full overflow-y-scroll flex flex-col pt-4">
                 {cart?.products?.map((orderProduct) => (
                   <CartItem key={orderProduct._id} item={orderProduct} />
                 ))}
-
               </div>
-
               <Button onClick={() => {
                 setOpen(false);
-                openConfirmDialog()
-              }}>Confirm Order</Button>
+                openConfirmDialog();
+              }}>Оформити</Button>
             </div>
           </>
-
         ) : (
-
           <div className="flex flex-col h-full items-center justify-evenly">
             <div>
               <SheetHeader>
-                <SheetTitle className="text-white">Корзина пуста</SheetTitle>
+                <SheetTitle className="text-white">Корзина порожня</SheetTitle>
               </SheetHeader>
               <p className="text-sm text-gray-400">Додайте продукти в корзину, щоб вони відобразились тут</p>
-              <Button className='mt-2' onClick={() => setOpen(false)}>Close</Button>
+              <Button className='mt-2' onClick={() => setOpen(false)}>Закрити</Button>
             </div>
             <p></p>
-
           </div>
         )}
 

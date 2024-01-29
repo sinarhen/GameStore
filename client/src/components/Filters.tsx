@@ -10,12 +10,12 @@ import {cn} from "../lib/utils";
 import {PiBroom} from "react-icons/pi";
 
 const sortByOptions = [
-  {label: 'Price (Lowest first)', value: 'price_asc'},
-  {label: 'Price (Highest first)', value: 'price_desc'},
+  {label: 'Ціна (спочатку найменша)', value: 'price_asc'},
+  {label: 'Ціна (спочатку найбільша)', value: 'price_desc'},
   {label: 'A-Z', value: 'name_asc'},
   {label: 'Z-A', value: 'name_desc'},
-  {label: 'Recently added', value: 'date_desc'},
-  {label: 'Oldest by date', value: 'date_asc'},
+  {label: 'Нещодавно додано', value: 'date_desc'},
+  {label: 'Найстаріша за датою', value: 'date_asc'},
 ];
 const pageSizeOptions = [
   {label: '10', value: 10},

@@ -12,12 +12,11 @@ import {useCurrentUser} from '../hooks/useCurrentUser';
 import {useAuthDialog} from '../hooks/useAuthDialog';
 
 export default function ProductCard({product}: { props?: any; product: ProductCardType; }) {
-  // const imageUrl = "https://media.slovoidilo.ua/media/cache/person_thumb_exx/uploads/persons/origin/Po/Poroshenko-Petr-Alekseevich_origin.png";
   const imageUrl = product.imageUrl;
   const {openDialog, closeDialog} = useDialog();
   const {user} = useCurrentUser();
   const {openAuthDialog} = useAuthDialog();
-  const {addToCart, cart} = useCart();
+  const {addToCart} = useCart();
 
   const onConfirm = async (amount: number) => {
     try {
@@ -36,7 +35,7 @@ export default function ProductCard({product}: { props?: any; product: ProductCa
     }
     openDialog({
       title: `Придбати ${product.name}`,
-      description: "Будь ласка, введіть як багато екземплярів ви хочете придбати.",
+      description: "Будь ласка, введіть скільки екземплярів ви хочете придбати.",
       content: (
         <AmountPicker onConfirm={onConfirm}/>
       ),
@@ -68,7 +67,6 @@ export default function ProductCard({product}: { props?: any; product: ProductCa
         <p
           className="text-gray-600 text-sm mb-4 truncate">{!product.description ? "No description" : product.description}</p>
         <div className="flex items-center justify-between">
-          {/* Use the formatter to format the price */}
           <span className="font-bold  text-sm">{formatter.format(product.price)}</span>
             <div>
               <Button

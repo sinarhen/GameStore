@@ -21,12 +21,12 @@ type TConfirmForm = z.infer<typeof confirmOrderSchema>;
 export default function ConfirmOrderForm({
   cart,
   resetCart
-                                         }: {
+}: {
   cart: Order;
   resetCart: () => void;
 })
 {
-    const {closeDialog} = useDialog();
+    const {closeDialog, openDialog} = useDialog();
     const form = useForm<TConfirmForm>({
         defaultValues: {
             email: "",
@@ -48,7 +48,15 @@ export default function ConfirmOrderForm({
             console.error(error);
             toast.error(error?.message ?? "Щось пішло не так при підтвердженні вашого замовлення.", {id: "confirmOrderError"})
           }
-    }}, [cart._id, closeDialog, resetCart])
+    }}, [cart._id, closeDialog, resetCart]);
+
+    const openInfoDialog = () => {
+        openDialog({
+          title: `Розрахунок замовлення № ${cart._id}`,
+          description: "Щоб оплатити замовлення переведіть сумму на цю картку: 4242 4242 4242 4242 та укажіть в платежі номер замовлення. Після оплати ви можете переглянути статус замовлення в особистому кабінете. Якщо виникли питання, зверніться до адміністратора. Telegram: @MortalKomba",
+          content: <Button onClick={closeDialog}>Закрити</Button>
+        })
+      }
 
 
     function renderError(fieldName: keyof typeof form.formState.errors) {
@@ -58,19 +66,20 @@ export default function ConfirmOrderForm({
     return (
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <div>
-                <Input {...form.register('email')} type="text" />
+                <Input {...form.register('email')} type="text" placeholder="Email" />
                 {renderError("email")}
             </div>
             <div>
-                <Input {...form.register('password')} type="password"/>
+                <Input {...form.register('password')} type="password" placeholder="Пароль"/>
                 {renderError("password")}
 
             </div>
             <Button 
                 disabled={!form.formState.isDirty || !form.formState.isValid}
                 className="bg-green-600 w-full md:w-auto hover:bg-green-500"
+                onClick={() => openInfoDialog()}
             >
-                Confirm
+                Підтвердити
             </Button>
         </form>
     )

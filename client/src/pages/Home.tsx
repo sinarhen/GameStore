@@ -23,7 +23,7 @@ export default function Home() {
         <div
           className='flex flex-col w-full'
         >
-          <Header appearDuration={appearDuration} animateableText='MkmShop.' baseText='Welcome to '/>
+          <Header appearDuration={appearDuration} animateableText='MKm-Shop.' baseText='Welcome to '/>
         </div>
 
         <motion.p

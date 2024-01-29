@@ -16,7 +16,7 @@ const Navbar = () => {
           <div className="flex duration-200 items-center justify-between h-16">
             <Link className='flex gap-x-2 items-center' to="/">
               <img className={"h-12 w-auto"} src="/logo.png" alt={"not found"} />
-              <h1 className="text-white">Mk-Shop</h1>
+              <h1 className="text-white">MKm-Shop</h1>
             </Link>
             <div className="flex">
               <NavLink to="/"
