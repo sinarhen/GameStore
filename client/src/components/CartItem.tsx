@@ -19,12 +19,12 @@ export default function CartItem({
   function handleInput(val: number) {
     if (val > 100) {
       setInputValue(100);
-      toast.error("You can't buy more than 100 items at once");
+      toast.error("Ви не можете купити більше 100 елементів");
       return;
     }
     if (val < -item.quantity) {
       setInputValue(val + 1);
-      toast.error("You can't remove more items than you have in your cart");
+      toast.error("Ви не можете прибрати стільки продуктів");
       return;
     }
     setInputValue(val);
@@ -40,14 +40,14 @@ export default function CartItem({
 
             if (inputValue === 0 || inputValue === -item.quantity) {
               removeFromCart(item);
-              toast.success("Deleted item from your cart")
+              toast.success("Продукт видалено з кошика");
             } else {
               console.log(item.quantity + inputValue)
               updateProductQuantity(item, item.quantity + inputValue);
-              toast.success(`Changed quantity succesfully`)
+              toast.success(`Кількість продукту змінено на ${inputValue}`);
             }
           } catch (error) {
-            toast.error("Something went wrong")
+            toast.error("Щось пішло не так");
             console.error(error);
           } finally {
             setInputValue(0);

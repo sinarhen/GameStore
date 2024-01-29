@@ -42,7 +42,7 @@ export default function Orders({
       if (orders) {
         setOrders(orders.filter((order) => order._id !== orderId));
       }
-      toast.success("Order deleted successfully");
+      toast.success("Замовлення видалено успішно");
       closeDialog();
     } catch (error) {
       console.log(error);

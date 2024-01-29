@@ -8,13 +8,11 @@ export default function Clipboard({text, className}: {
 }) {
   const onClick = () => {
     navigator.clipboard.writeText(text);
-    toast.success("Copied to clipboard")
+    toast.success("Скопіювано в буфер");
   }
   return (
 
     <LuClipboardSignature onClick={onClick}
-                          className={cn("w-4 h-4 cursor-pointer text-white hover:text-gray-400 transition-colors", className)}/>
-
-
+    className={cn("w-4 h-4 cursor-pointer text-white hover:text-gray-400 transition-colors", className)}/>
   )
 }

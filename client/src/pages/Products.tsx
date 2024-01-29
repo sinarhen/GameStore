@@ -36,7 +36,7 @@ export default function Products() {
       })
       .catch((error) => {
         console.log(error);
-        toast.error(`Something went wrong: ${error.message}`, {id: "products"});
+        toast.error(`Щось пішло не так: ${error.message}`, {id: "products"});
         setError(`Something went wrong while fetching products: ${error.message}`);
       });
   }, []);

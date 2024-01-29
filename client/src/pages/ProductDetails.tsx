@@ -33,14 +33,14 @@ export default function ProductDetails() {
     getProductById(productId)
       .then((response) => {
         if (!response.data) {
-          toast.error("Product not found");
+          toast.error("Продукт не знайдено");
           return;
         }
         setProduct(response.data);
       })
       .catch((error) => {
         console.log(error);
-        toast.error("Something went wrong", {id: "products"});
+        toast.error("Щось пішло не так", {id: "products"});
       }).finally(() => {
       setLoading(false);
     });
@@ -78,7 +78,7 @@ export default function ProductDetails() {
   function onSubmit() {
 
     if (!inputValue) {
-      toast.error("You must add at least 1 item to your order");
+      toast.error("Ви повинні додати принаймні 1 позицію до свого замовлення");
       return;
     }
     if (!user) {
@@ -91,10 +91,10 @@ export default function ProductDetails() {
         throw new Error("Unexpected internal error")
       }
       addToCart(product, inputValue)
-      toast.success(`Added to cart ${inputValue} ${product.name}`);
+      toast.success(`Додано до кошика ${inputValue} ${product.name}`);
 
     } catch (error) {
-      toast.error("Something went wrong");
+      toast.error("Щось пішло не так");
       console.error(error)
     } finally {
       setLoading(false)

@@ -22,21 +22,21 @@ export default function ProductCard({product}: { props?: any; product: ProductCa
   const onConfirm = async (amount: number) => {
     try {
       await addToCart(product, amount);
-      toast.success('Added to cart')
+      toast.success('Додано до кошика!');
       closeDialog();
     } catch (error: any) {
-      toast.error(error?.message ?? "Something went wrong");
+      toast.error(error?.message ?? "Щось пішло не так");
     }
   }
   const onBuy = () => {
     if (!user) {
-      toast.error("You must be logged in to add items to your cart");
+      toast.error("Ви повинні увійти, щоб купити цей продукт");
       openAuthDialog('login');
       return;
     }
     openDialog({
-      title: `Buy ${product.name}`,
-      description: "Please enter how many items you want to buy",
+      title: `Купити ${product.name}`,
+      description: "Введіть кількість, яку ви хочете купити",
       content: (
         <AmountPicker onConfirm={onConfirm}/>
       ),

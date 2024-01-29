@@ -28,10 +28,10 @@ export default function CreateCategoryForm({
     try {
       const newCategory = await createCategory(data.name);
       setCategories([...categories, newCategory.data]);
-      toast.success('Category created successfully');
+      toast.success('Категорія створена успішно');
     } catch (e: any) {
       console.error(e)
-      toast.error(e?.message || 'Something went wrong');
+      toast.error(e?.message || 'Щось пішло не так');
     }
   }
 

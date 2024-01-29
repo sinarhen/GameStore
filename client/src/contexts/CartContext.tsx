@@ -73,7 +73,7 @@ export function CartProvider({children}: {
 
     } catch (error: any) {
       console.error(error);
-      toast.error("Something went wrong: " + error?.message ?? "unknown error", {id: "updateProductQuantityInCart"});
+      toast.error("Щось пішло не так: " + error?.message ?? "невідома помилка", {id: "updateProductQuantityInCart"});
     }
 
 

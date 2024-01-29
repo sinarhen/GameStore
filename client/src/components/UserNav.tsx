@@ -14,7 +14,7 @@ export default function UserNav({username, avatarUrl, isAdmin}: {
   function handleLogout() {
     removeCookie()
     window.location.replace("/")
-    toast.success("Logged out successfully")
+    toast.success("Успішний вихід")
   }
 
   const [open, setOpen] = useState(false)

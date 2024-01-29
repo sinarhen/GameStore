@@ -43,7 +43,7 @@ export const useFavorites = () => {
       }
     } catch (error) {
       console.error(error);
-      toast.error('Something went wrong! Unable to get your favorites');
+      toast.error('Щось пішло не так! Не вдається отримати обране');
     }
   }, [favorites, setFavorites]);
 

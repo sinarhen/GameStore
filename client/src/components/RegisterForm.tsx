@@ -49,7 +49,7 @@ export default function RegisterForm({
       const token = response.data.token;
       setCookie(token)
       window.location.reload();
-      toast.success("Logged in successfully")
+      toast.success("Успішна реєстрація")
 
     } catch (error: any) {
       if (error.response.data.field) {

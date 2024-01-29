@@ -89,7 +89,7 @@ export default function ProductForm({
         toast.success('Product created successfully');
         addProductToProducts(res.data);
       } else if (variant === 'edit') {
-        if (!initialValues?._id) throw new Error('No product id provided for edit');
+        if (!initialValues?._id) throw new Error('Не надано ID продукту для редагування');
         const res = await updateProduct(initialValues?._id, values);
         toast.success('Product updated successfully');
         updateProductInProducts(res.data);

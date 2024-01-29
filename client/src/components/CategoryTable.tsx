@@ -23,11 +23,11 @@ export default function CategoryTable({
         if (categories) {
           setCategories(categories.filter((category) => category._id !== selectedCategory?._id));
         }
-        toast.success("Category deleted successfully");
+        toast.success("Категорія видалена успішно");
         closeDialog();
       } catch (error) {
         console.log(error);
-        toast.error("Something went wrong");
+        toast.error("Щось пішло не так");
       }
     }
   }
