@@ -132,6 +132,8 @@ export const confirmOrder = async (req, res) => {
         order.login = login;
         order.password = password;
 
+        order.status = statusNames.confirmed;
+
         await order.save();
 
         res.status(200).json({message: 'Order confirmed successfully'});
