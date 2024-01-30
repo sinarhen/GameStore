@@ -1,0 +1,33 @@
+{
+  "name": "gamestore",
+  "version": "1.0.0",
+  "description": "Welcome to the Game Store Application repository! This application allows users to browse and purchase games online.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sinarhen/GameStore.git"
+  },
+  "author": "Sinarhen,RostikSQX",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sinarhen/GameStore/issues"
+  },
+  "homepage": "https://github.com/sinarhen/GameStore#readme",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.4",
+    "nodemon": "^3.0.2"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}
