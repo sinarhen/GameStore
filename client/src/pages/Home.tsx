@@ -33,7 +33,11 @@ export default function Home() {
 
           className='text-gray-400 mt-4 text-md'>
           Опис до магазину
-
+          <div className='text-gray-600 mt-2'>
+            <p>Телеграм для зв'язку: <a href="https://t.me/temslivv" target="_blank" rel="noopener noreferrer" className="cursor-pointer underlineg">@temslivv</a></p>
+            <p></p>
+            <p></p>
+          </div>
         </motion.p>
         <AnimatedSeparator delay={appearDuration + 1.5}/>
         <motion.div
