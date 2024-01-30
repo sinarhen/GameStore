@@ -49,14 +49,13 @@ const Navbar = () => {
                     onClick={() => {
                       openAuthDialog('login');
                     }}
-                    className='bg-green-300 bg-opacity-70 transition-all hover:bg-green-700 hover:bg-opacity-100 text-white px-4 py-2 rounded-md'>Log
-                    in
+                    className='bg-green-300 bg-opacity-70 transition-all hover:bg-green-700 hover:bg-opacity-100 text-white px-4 py-2 rounded-md'>Вхід
                   </button>
                   <button
                     onClick={() => {
                       openAuthDialog('register');
                     }}
-                    className='hover:bg-neutral-900 transition-colors text-white px-4 py-2 rounded-md'>Register
+                    className='hover:bg-neutral-900 transition-colors text-white px-4 py-2 rounded-md'>Реєстрація
                   </button>
 
                 </div>
