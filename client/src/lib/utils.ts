@@ -2,8 +2,7 @@ import Cookies from "js-cookie";
 import {headerName} from "./constants";
 import {type ClassValue, clsx} from "clsx";
 import {twMerge} from "tailwind-merge";
-import axios from "axios";
-
+import fetcher from "./fetcher";
 
 export function isValidURLImage(url: string) {
   // Regular expression for a valid image URL
@@ -84,7 +83,7 @@ export async function uploadImageToCloud(imageMeta: string) {
   formData.append('file', imageMeta);
   console.log(imageMeta)
   formData.append('upload_preset', process.env.REACT_APP_CLOUDINARY_PRESET as string);
-  const imageUploaded = await axios.post(
+  const imageUploaded = await fetcher.post(
     process.env.REACT_APP_CLOUDINARY_URL as string,
     formData
   );
