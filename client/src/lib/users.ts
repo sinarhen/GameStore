@@ -11,3 +11,7 @@ export async function deleteUserForAdmin(id: string) {
 export async function updateUserRole(id: string, role: string) {
   return await http.put(`/users/role/${id}`, {role}, true);
 }
+
+export async function registerUser(user: any) {
+  return await http.post('//register', user);
+}

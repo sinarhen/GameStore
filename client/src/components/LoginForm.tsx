@@ -4,7 +4,7 @@ import * as z from 'zod';
 import Input from "./Input";
 import axios from "axios";
 import toast from "react-hot-toast";
-import {setCookie} from "../lib/auth";
+import {loginUser, setCookie} from "../lib/auth";
 import InputError from "./InputError";
 import {Label} from "./Label";
 
@@ -32,7 +32,7 @@ export default function LoginForm({
 
   const onSubmit = async (data: LoginFormData) => {
     try {
-      const response = await axios.post('/auth/login', data);
+      const response = await loginUser(data);
       setCookie(response.data.token);
       setDialogOpen(false)
       window.location.reload();

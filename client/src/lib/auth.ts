@@ -47,9 +47,29 @@ const updateUser = async ({
   }
 };
 
+const registerUser = async (user: any) => {
+  try {
+    const response = await http.post('/auth/register', user);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const loginUser = async (user: any) => {
+  try {
+    const response = await http.post('/auth/login', user);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export {
   fetchUser,
   setCookie,
   removeCookie,
   updateUser,
+  registerUser,
+  loginUser
 };

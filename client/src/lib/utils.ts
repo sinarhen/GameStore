@@ -18,6 +18,9 @@ export function isValidURLImage(url: string) {
 
 export const getHeadersWithCookiesByHeaderName = () => {
   const cookie = Cookies.get(headerName);
+  if (!cookie) {
+    return null;
+  }
   return {
     [headerName]: `Bearer ${cookie}`,
   };
