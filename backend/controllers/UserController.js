@@ -197,6 +197,8 @@ export const updateUser = async (req, res) => {
 
         if (avatarUrl) {
             user.avatarUrl = avatarUrl;
+        } else {
+            user.avatarUrl = null;
         }
 
         await user.save();

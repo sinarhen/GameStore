@@ -43,7 +43,7 @@ export default function EditProfileForm({initialValues}: { initialValues: any })
     try {
       const formData = new FormData();
       if (values.avatarUrl !== initialValues.avatarUrl) {
-        if (inputType === 'file') {
+        if (inputType === 'file' && values.avatarUrl instanceof File){
           formData.append('file', values?.avatarUrl);
           formData.append('upload_preset', 'gwuh0xnp');
           const imageUploaded = await axios.post(
@@ -85,6 +85,7 @@ export default function EditProfileForm({initialValues}: { initialValues: any })
     return form.formState.errors[fieldName]?.message &&
         <InputError>{String(form.formState.errors[fieldName]?.message)}</InputError>;
   }
+
 
   return (
     <form className="gap-y-4 gap-x-2 grid grid-cols-4 overflow-y-auto" onSubmit={form.handleSubmit(onSubmit)}>
@@ -154,8 +155,8 @@ export default function EditProfileForm({initialValues}: { initialValues: any })
         {
           <div className='w-full relative bg-gray-200 overflow-hidden rounded-lg'>
             <div className="w-full h-full aspect-square">
-              {tempSrcUrlForFile || form.getValues().avatarUrl ? (
-                <img alt="avatar" src={tempSrcUrlForFile ?? form.getValues().avatarUrl}
+              {form.getValues().avatarUrl ? (
+                <img alt="avatar" src={form.getValues().avatarUrl}
                      className="object-cover w-full h-full bg-center"/>
               ) : (
                 <FaUser className="w-full h-full"/>

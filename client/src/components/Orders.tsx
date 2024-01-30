@@ -83,7 +83,9 @@ export default function Orders({
               <TableHead className="text-center w-full">Статус</TableHead>
               <TableHead className="text-center w-full">Оплачено</TableHead>
               <TableHead className="text-right align-center justify-end w-full">Сума</TableHead>
+              <TableHead className="text-right align-center justify-end w-full">Створено</TableHead>
               <TableHead className="text-center align-center justify-center  w-full"></TableHead>
+
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -135,7 +137,7 @@ export default function Orders({
           {!isEmpty && (
             <TableFooter className="bg-transparent">
               <TableRow className="sticky bg-neutral-900 bottom-0">
-                <TableCell colSpan={4}>Сума</TableCell>
+                <TableCell colSpan={5}>Сума</TableCell>
                 <TableCell
                   className="text-right">{formatter.format(orders.reduce((total, order) => total + order.products.reduce((total, product) => total + product.product.price * product.quantity, 0), 0))}</TableCell>
                 <TableCell></TableCell>
