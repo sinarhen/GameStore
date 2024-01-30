@@ -2,7 +2,6 @@ import AnimatedSeparator from "../components/AnimatedSeparator";
 import Header from "../components/Header";
 import {useCurrentUser} from "../hooks/useCurrentUser";
 import {FaUser} from "react-icons/fa";
-import {useFavorites} from "../hooks/useFavorites";
 import Section from "../components/Section";
 import MyFavorites from "../components/MyFavorites";
 import Orders from "../components/Orders";

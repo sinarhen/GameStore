@@ -57,7 +57,7 @@ export const FavoritesProvider = ({children}: {
       console.error(error);
       toast.error('Щось пішло не так! Не вдалося додати/прибрати з улюблених.');
     }
-  }, [setFavorites, user, openAuthDialog]);
+  }, [favorites, setFavorites, user, openAuthDialog]);
 
 
   return (
