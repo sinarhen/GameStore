@@ -22,15 +22,9 @@ const UserSchema = new mongoose.Schema(
         },
         role: {
             type: String,
-            enum: roles, // Define the possible roles here
-            default: 'user', // Default role is 'user'
+            enum: roles,
+            default: 'user',
         },
-        accounts: [
-            {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Account',
-            },
-        ],
     },
     {
         timestamps: true,

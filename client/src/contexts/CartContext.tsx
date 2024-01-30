@@ -23,6 +23,7 @@ export function CartProvider({children}: {
       user: user,
       createdAt: new Date(),
       updatedAt: new Date(),
+      isPaid: false
     } as Order)
   }, [user])
 

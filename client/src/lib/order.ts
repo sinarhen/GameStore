@@ -32,6 +32,11 @@ export async function deleteProductFromOrder(orderId: string, product: string) {
   return await http.delete(`/orders/${orderId}/${product}`, true);
 }
 
+export async function updateIsPaid(orderId: string, isPaid: boolean) {
+  return await http.put(`/orders/${orderId}`, {isPaid}, true);
+
+}
+
 export async function confirmOrder(orderId: string, login: string, password: string)
 {
   return await http.put(`/orders/${orderId}/confirm`, {login, password}, true);

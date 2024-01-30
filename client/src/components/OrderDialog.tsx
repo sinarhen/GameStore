@@ -1,13 +1,15 @@
 import {Order, OrderProduct} from '../lib/types';
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from "./Table"
 import {formatter, statusColor, translateStatus} from "../lib/utils";
-import React, {useState} from "react";
+import React, {useCallback, useState} from "react";
 import Button from "./Button";
-import {updateOrderStatus} from "../lib/order";
+import {updateIsPaid, updateOrderStatus} from "../lib/order";
 import toast from "react-hot-toast";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./Select";
 import {useCurrentUser} from "../hooks/useCurrentUser";
 import ConfirmDialog from "./ConfirmDialog";
+import {CheckCircledIcon, CrossCircledIcon} from "@radix-ui/react-icons";
+import Clipboard from "./Clipboard";
 
 interface OrderDialogProps {
   order: Order | null,
@@ -24,8 +26,25 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
   const [confirmOpen, setConfirmOpen] = useState(false);
   const {isAdmin} = useCurrentUser();
   const [confirmedStatus, setConfirmedStatus] = useState(order?.status || 'pending');
+  const [isPaid, setIsPaid] = useState(order?.isPaid || false);
 
-  const handleUpdateStatus = async () => {
+  const toggleIsPaid = useCallback(async () => {
+    try {
+      if (order?._id)
+      {
+        await updateIsPaid(order?._id, !isPaid);
+        setIsPaid(!isPaid);
+        updateOrder({...order, isPaid: !isPaid})
+        toast.success('Статус оплати замовлення оновлено');
+      } else {
+        toast.error('Помилка. Подивіться в консоль');
+        console.error("No order id in order dialog");
+      }
+    } catch (err: any){
+      toast.error(err.message ?? 'Помилка. Подивіться в консоль');
+    }
+  }, [order, isPaid])
+  const handleUpdateStatus = useCallback(async () => {
     try {
       if (order?._id) {
         setConfirmedStatus(status)
@@ -37,14 +56,14 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
       console.log(err);
       toast.error('Помилка оновлення статусу замовлення. Подивіться в консоль');
     }
-  };
+  }, [order, status, updateOrder]);
 
   return (
     <>
       <ConfirmDialog open={confirmOpen} setOpen={setConfirmOpen} onConfirm={() => {
       }}/>
-      <div className="flex gap-x-4">
-        <div className="flex flex-col">
+      <div className="flex w-full gap-x-4">
+        <div className="flex w-full flex-col">
           <p className="mt-4 mb-1">Статус: {confirmedStatus &&
               <span className={statusColor(confirmedStatus)}>{translateStatus(confirmedStatus)}</span>}</p>
               {confirmedStatus === "paid" && <>Статус оплати:<p className={statusColor(confirmedStatus)}>{translateStatus(confirmedStatus)}</p></>}
@@ -62,9 +81,32 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                   </SelectContent>
               </Select>
               <Button onClick={handleUpdateStatus}
-                      className="w-[180px] bg-green-500 hover:bg-green-600 mt-4">Update</Button>
+                      className="w-[180px] bg-green-600 hover:bg-green-500 mt-4">Застосувати</Button>
           </>}
         </div>
+
+        {isAdmin && <div className='mt-4 mb-1 flex flex-col justify-between'>
+            <div className=''>
+                <div className='w-full gap-x-2 flex items-center'>
+                    <p className=''>Оплачено: </p>
+                    <span>
+                      {isPaid ? <CheckCircledIcon className='' color='green' /> : <CrossCircledIcon className='' color='red'/>}
+                    </span>
+                </div>
+                <Button
+                    onClick={toggleIsPaid}
+                    className={isPaid ? "bg-red-600 hover:bg-red-500": "bg-green-600 hover:bg-green-500"}>Змінити</Button>
+
+            </div>
+
+          { order?.login && order?.password &&
+            <div className='gap-y-2 text-xs'>
+                <p className='flex'>{order?.login}<Clipboard text={order?.login} /></p>
+                <p className='flex'>{order?.password}<Clipboard text={order?.password} /></p>
+            </div>
+          }
+        </div>
+        }
       </div>
       <Table>
         <TableHeader>

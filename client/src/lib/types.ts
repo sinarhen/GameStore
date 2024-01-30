@@ -37,8 +37,11 @@ export type Order = {
   _id?: string;
   products: OrderProduct[];
   user: User;
+  login?: string;
+  password?: string;
   createdAt: Date;
   updatedAt: Date;
+  isPaid?: boolean;
   status: string;
 }
 

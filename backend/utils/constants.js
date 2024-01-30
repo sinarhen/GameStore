@@ -19,5 +19,4 @@ export const statusNames = {
     cancelled: 'cancelled',
     // TODO: delete confirmed
     confirmed: 'confirmed',
-    paid: 'paid',
 }

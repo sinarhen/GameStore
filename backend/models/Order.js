@@ -30,6 +30,11 @@ const orderSchema = new mongoose.Schema({
             enum: Object.keys(statusNames),
             default: "pending"
         },
+        isPaid: {
+            type: Boolean,
+            default: false
+        },
+
     },
     {
         timestamps: true

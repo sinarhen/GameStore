@@ -146,7 +146,7 @@ export const confirmOrder = async (req, res) => {
 export const updateOrder = async (req, res) => {
     try {
         const {orderId} = req.params;
-        const {status} = req.body;
+        const {status, isPaid} = req.body;
 
         let order = await Order.findById(orderId);
 
@@ -156,6 +156,9 @@ export const updateOrder = async (req, res) => {
 
         if (status) {
             order.status = status;
+        }
+        if (isPaid) {
+            order.isPaid = isPaid;
         }
 
         await order.save();

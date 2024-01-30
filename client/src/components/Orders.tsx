@@ -1,5 +1,5 @@
 import {Table, TableBody, TableCell, TableFooter, TableHead, TableHeader, TableRow} from "./Table";
-import {Trash2} from "lucide-react";
+import {CheckCircle, Trash2} from "lucide-react";
 import {useState} from "react";
 import {Order} from "../lib/types";
 import OrderDialog from "./OrderDialog";
@@ -11,6 +11,7 @@ import {FaInfo} from "react-icons/fa";
 import {useCurrentUser} from "../hooks/useCurrentUser";
 import TableEmpty from "./TableEmpty";
 import {useDialog} from "../hooks/useDialog";
+import {CrossCircledIcon, CheckCircledIcon} from "@radix-ui/react-icons";
 
 export default function Orders({
   orders,
@@ -79,6 +80,7 @@ export default function Orders({
               <TableHead className="overflow-hidden">ID</TableHead>
               <TableHead className="text-center w-full">Продукти</TableHead>
               <TableHead className="text-center w-full">Статус</TableHead>
+              <TableHead className="text-center w-full">Оплачено</TableHead>
               <TableHead className="text-right align-center justify-end w-full">Сума</TableHead>
               <TableHead className="text-center align-center justify-center  w-full"></TableHead>
             </TableRow>
@@ -95,6 +97,7 @@ export default function Orders({
                 </TableCell>
                 <TableCell
                   className={statusColor(order.status) + " text-center"}>{translateStatus(order.status)}</TableCell>
+                <TableCell className=' flex w-full h-full items-center justify-center'>{order.isPaid ? <CheckCircledIcon className='h-full w-auto' color='green' /> : <CrossCircledIcon className='w-auto h-full' color='red'/>}</TableCell>
                 <TableCell
                   className="text-right w-full">{formatter.format(order.products.reduce((total, product) => total + product.product.price * product.quantity, 0))}</TableCell>
                 <TableCell className="w-full">
@@ -128,7 +131,7 @@ export default function Orders({
           {!isEmpty && (
             <TableFooter className="bg-transparent">
               <TableRow className="sticky bg-neutral-900 bottom-0">
-                <TableCell colSpan={3}>Сума</TableCell>
+                <TableCell colSpan={4}>Сума</TableCell>
                 <TableCell
                   className="text-right">{formatter.format(orders.reduce((total, order) => total + order.products.reduce((total, product) => total + product.product.price * product.quantity, 0), 0))}</TableCell>
                 <TableCell></TableCell>
