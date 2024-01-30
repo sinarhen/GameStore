@@ -33,18 +33,20 @@ export default function MyAccount() {
     })
   }
 
+  const [isMounted, setIsMounted] = useState(false);
+
   useEffect(() => {
     getUserOrdersById().then((data) => {
       setOrders(data.data);
     }).catch((err) => {
       console.log(err);
     }).finally(() => {
-
+      setIsMounted(true);
     });
   }, []);
   const navigate = useNavigate();
   const {openAuthDialog} = useAuthDialog();
-  if (!user){
+  if (!user && isMounted){
     navigate('/products')
     toast.success('Ви не авторизовані. Будь ласка, увійдіть в систему.')
     openAuthDialog('login')

@@ -86,7 +86,6 @@ export default function EditProfileForm({initialValues}: { initialValues: any })
         <InputError>{String(form.formState.errors[fieldName]?.message)}</InputError>;
   }
 
-
   return (
     <form className="gap-y-4 gap-x-2 grid grid-cols-4 overflow-y-auto" onSubmit={form.handleSubmit(onSubmit)}>
       <div className="col-span-2">
