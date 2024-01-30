@@ -1,4 +1,5 @@
 import * as z from 'zod';
+import {Dispatch, SetStateAction} from "react";
 
 
 export type ProductCardType = {
@@ -117,4 +118,10 @@ export type DialogContextType = {
   setCancelText: React.Dispatch<React.SetStateAction<string | null>>;
   setConfirmText: React.Dispatch<React.SetStateAction<string | null>>;
 
+};
+
+export type FavoritesContextType = {
+  favorites: ProductCardType[],
+  setFavorites: Dispatch<SetStateAction<ProductCardType[]>>;
+  toggleFavorite: (product: ProductCardType) => void;
 };

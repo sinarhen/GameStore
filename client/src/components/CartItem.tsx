@@ -37,7 +37,6 @@ export default function CartItem({
       <div className="flex gap-x-2">
         <div onClick={(e) => {
           try {
-
             if (inputValue === 0 || inputValue === -item.quantity) {
               removeFromCart(item);
               toast.success("Продукт видалено з кошика");

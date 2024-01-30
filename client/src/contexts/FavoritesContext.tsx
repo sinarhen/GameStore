@@ -1,9 +1,10 @@
-import React, {createContext, Dispatch, SetStateAction, useEffect, useState} from 'react';
-import {getFavorites} from '../lib/favorites';
-import {ProductCardType} from '../lib/types';
+import React, {createContext, useCallback, useEffect, useState} from 'react';
+import {addToFavorites, getFavorites, removeFromFavorites} from '../lib/favorites';
+import {FavoritesContextType, ProductCardType} from '../lib/types';
 import {useCurrentUser} from '../hooks/useCurrentUser';
+import {useAuthDialog} from "../hooks/useAuthDialog";
+import toast from "react-hot-toast";
 
-type FavoritesContextType = { favorites: ProductCardType[], setFavorites: Dispatch<SetStateAction<ProductCardType[]>> };
 
 // Create the context with the correct type
 export const FavoritesContext = createContext<FavoritesContextType | undefined>(undefined);
@@ -13,6 +14,7 @@ export const FavoritesProvider = ({children}: {
 }) => {
   const [favorites, setFavorites] = useState<ProductCardType[]>([]);
   const {user} = useCurrentUser();
+  const {openAuthDialog} = useAuthDialog();
 
   useEffect(() => {
     if (user) {
@@ -28,8 +30,39 @@ export const FavoritesProvider = ({children}: {
     }
   }, [user]);
 
+  const toggleFavorite = useCallback(async (product: ProductCardType) => {
+    const isFavorite = (favorites as ProductCardType[]).find((favorite: ProductCardType) => favorite?._id === product?._id);
+    const method = isFavorite ? 'delete' : 'post';
+
+    try {
+      if (user !== null) {
+
+
+        if (method === 'post') {
+          await addToFavorites(product._id);
+        } else {
+          await removeFromFavorites(product._id);
+        }
+
+        setFavorites((prevFavorites: ProductCardType[]) => {
+          if (isFavorite) {
+            return prevFavorites.filter(favorite => favorite._id !== product._id);
+          } else {
+            return [...prevFavorites, product];
+          }
+        });
+      } else {
+        openAuthDialog('login');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Щось пішло не так! Не вдалося додати/прибрати з улюблених.');
+    }
+  }, [setFavorites, user, openAuthDialog]);
+
+
   return (
-    <FavoritesContext.Provider value={{favorites, setFavorites}}>
+    <FavoritesContext.Provider value={{favorites, setFavorites, toggleFavorite}}>
       {children}
     </FavoritesContext.Provider>
   );

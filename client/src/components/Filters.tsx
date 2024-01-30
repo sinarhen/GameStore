@@ -65,7 +65,7 @@ export default function Filters({
 
   useEffect(() => {
     getAllCategoriesAndSetState();
-  }, [onProductsChange, setLoading, setError]);
+  }, [getAllCategoriesAndSetState]);
 
   const memoizedSortProducts = useMemo(() => sortProducts, [orderBy]);
 

@@ -14,11 +14,11 @@ root.render(
   <React.StrictMode>
 
     <AuthProvider>
-      <FavoritesProvider>
-        <DialogProvider>
+      <DialogProvider>
+        <FavoritesProvider>
           <App/>
-        </DialogProvider>
-      </FavoritesProvider>
+        </FavoritesProvider>
+      </DialogProvider>
     </AuthProvider>
     <Toaster position="bottom-right"/>
 
