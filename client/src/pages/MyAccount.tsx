@@ -15,12 +15,16 @@ import {PencilLine} from "lucide-react";
 import Clipboard from "../components/Clipboard";
 import {motion} from "framer-motion";
 import Button from "../components/Button";
+import {useNavigate} from "react-router-dom";
+import {useAuthDialog} from "../hooks/useAuthDialog";
+import toast from "react-hot-toast";
 
 export default function MyAccount() {
   const {user} = useCurrentUser();
   const {openDialog} = useDialog();
 
   const [orders, setOrders] = useState<Order[] | null>(null);
+
 
   const openProfileDialog = () => {
     openDialog({
@@ -39,6 +43,14 @@ export default function MyAccount() {
 
     });
   }, []);
+  const navigate = useNavigate();
+  const {openAuthDialog} = useAuthDialog();
+  if (!user){
+    navigate('/products')
+    toast.success('Ви не авторизовані. Будь ласка, увійдіть в систему.')
+    openAuthDialog('login')
+    return null;
+  }
   return (
     <>
       <Section className="pt-24">
