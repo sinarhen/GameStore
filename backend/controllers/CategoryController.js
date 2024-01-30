@@ -2,7 +2,7 @@ import CategoryModel from "../models/Category.js";
 
 export const getAllCategories = async (req, res) => {
     try {
-        const categories = await CategoryModel.find().populate('products').exec();
+        const categories = await CategoryModel.find().exec();
         res.json(categories);
     } catch (err) {
         console.log(err);
