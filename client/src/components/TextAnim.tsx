@@ -37,11 +37,10 @@ export default function TextAnim({duration, baseText, className, delay}: {
       setShowBlinker(true);
     }, (delay ? delay - 0.7 : 0) * 1000);
     return () => clearTimeout(timer);
-  }, [delay]);
+  }, [delay, setShowBlinker]);
 
   return (
     <span className={className}>
-      {" "}
       <motion.span className="w-fit mt-2 ">{displayText}</motion.span>
       {showBlinker && <CursorBlinker/>}
     </span>

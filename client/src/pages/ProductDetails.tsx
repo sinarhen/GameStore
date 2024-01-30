@@ -44,7 +44,7 @@ export default function ProductDetails() {
       }).finally(() => {
       setLoading(false);
     });
-  }, [product])
+  }, [productId])
 
 
   useEffect(() => {
@@ -113,7 +113,7 @@ export default function ProductDetails() {
             <div className="w-full h-96 justify-center flex">
               <div className="w-full overflow-hidden">
 
-                <img alt="No photo" className="rounded-lg h-full w-full object-cover object-center"
+                <img className="rounded-lg h-full w-full object-cover object-center"
                      src={product.imageUrl}>
                 </img>
               </div>

@@ -39,7 +39,8 @@ export default function Products() {
         toast.error(`Щось пішло не так: ${error.message}`, {id: "products"});
         setError(`Щось пішло не так while fetching products: ${error.message}`);
       });
-  }, []);
+    
+  }, [setProducts, setLoading, setError]);
 
   if (error) {
     return <NotFound helperText={error} buttonText="Перезавантажити" buttonAction={() => window.location.reload()}/>;
@@ -62,7 +63,7 @@ export default function Products() {
   return (
     <>
       <div className="w-full h-full">
-        <Header animateableText="Продукти." appearDuration={appearDuration}/>
+        <Header   baseText="Продукти." appearDuration={appearDuration}/>
         <AnimatedSeparator delay={appearDuration + delay}/>
         <motion.div
           initial={{opacity: 0}}

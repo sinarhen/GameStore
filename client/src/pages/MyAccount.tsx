@@ -47,9 +47,6 @@ export default function MyAccount() {
   const navigate = useNavigate();
   const {openAuthDialog} = useAuthDialog();
   if (!user && isMounted){
-    navigate('/products')
-    toast.success('Ви не авторизовані. Будь ласка, увійдіть в систему.')
-    openAuthDialog('login')
     return null;
   }
   return (

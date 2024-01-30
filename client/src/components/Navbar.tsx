@@ -20,7 +20,7 @@ const Navbar = () => {
             </Link>
             <div className="flex">
               <NavLink to="/"
-                       className={({isActive}) => `hover:bg-neutral-700 transition-colors px-3 py-2 rounded-md ${!isActive ? "text-gray-300" : "text-indigo-400"}`}>Home</NavLink>
+                       className={({isActive}) => `hover:bg-neutral-700 transition-colors px-3 py-2 rounded-md ${!isActive ? "text-gray-300" : "text-indigo-400"}`}>Головна</NavLink>
               <NavLink to="/products"
                        className={({isActive}) => `hover:bg-neutral-700 transition-colors px-3 py-2 rounded-md ${!isActive ? "text-gray-300" : "text-indigo-400"}`}>Продукти</NavLink>
               {isAdmin && <NavLink to="/admin"

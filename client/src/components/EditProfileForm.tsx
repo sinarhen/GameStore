@@ -148,8 +148,8 @@ export default function EditProfileForm({initialValues}: { initialValues: any })
         {
           <div className='w-full relative bg-gray-200 overflow-hidden rounded-lg'>
             <div className="w-full h-full aspect-square">
-              {form.getValues().avatarUrl ? (
-                <img alt="avatar" src={form.getValues().avatarUrl}
+              {form.getValues().avatarUrl || tempSrcUrlForFile ? (
+                <img alt="avatar" src={tempSrcUrlForFile || form.getValues().avatarUrl}
                      className="object-cover w-full h-full bg-center"/>
               ) : (
                 <FaUser className="w-full h-full"/>
