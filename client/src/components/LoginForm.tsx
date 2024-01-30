@@ -33,7 +33,6 @@ export default function LoginForm({
   const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await loginUser(data);
-      setCookie(response.data.token);
       setDialogOpen(false)
       window.location.reload();
       toast.success("Успішний вхід")

@@ -17,9 +17,9 @@ const PORT = process.env.PORT || 8000;
 const app = express();
 
 app.use(express.json());
-app.use(cors({
-    origin: process.env.ORIGIN_URL || 'http://localhost:3000'
-}));
+// app.use(cors({
+//     origin: process.env.ORIGIN_URL || 'http://localhost:3000'
+// }));
 
 // Import routes
 app.use('/api', apiRouter);

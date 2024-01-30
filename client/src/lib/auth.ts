@@ -50,6 +50,7 @@ const updateUser = async ({
 const registerUser = async (user: any) => {
   try {
     const response = await http.post('/auth/register', user);
+    setCookie(response.data.token);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -59,6 +60,7 @@ const registerUser = async (user: any) => {
 const loginUser = async (user: any) => {
   try {
     const response = await http.post('/auth/login', user);
+    setCookie(response.data.token);
     return response.data;
   } catch (error) {
     console.log(error);
