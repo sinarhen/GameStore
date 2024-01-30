@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {CategoryType, ProductCardType} from "../lib/types";
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "./Select";
 import {motion} from "framer-motion";
@@ -9,14 +9,6 @@ import {appearDuration, delay, delayPerItem} from "../lib/constants";
 import {cn} from "../lib/utils";
 import {PiBroom} from "react-icons/pi";
 
-const sortByOptions = [
-  {label: 'Ціна (спочатку найменша)', value: 'price_asc'},
-  {label: 'Ціна (спочатку найбільша)', value: 'price_desc'},
-  {label: 'A-Z', value: 'name_asc'},
-  {label: 'Z-A', value: 'name_desc'},
-  {label: 'Нещодавно додано', value: 'date_desc'},
-  {label: 'Найстаріша за датою', value: 'date_asc'},
-];
 const pageSizeOptions = [
   {label: '10', value: 10},
   {label: '20', value: 20},
@@ -27,18 +19,40 @@ const pageSizeOptions = [
 const sortByPrice = (a: ProductCardType, b: ProductCardType) => a.price - b.price;
 const sortByName = (a: ProductCardType, b: ProductCardType) => a.name.localeCompare(b.name);
 const sortByDate = (a: ProductCardType, b: ProductCardType) => new Date(a.updatedAt).getTime() - new Date(b.updatedAt).getTime();
+enum OrderBy {
+  PRICE_ASC = 'price_asc',
+  PRICE_DESC = 'price_desc',
+  NAME_ASC = 'name_asc',
+  NAME_DESC = 'name_desc',
+  DATE_ASC = 'date_asc',
+  DATE_DESC = 'date_desc',
+}
 
-export default function Filters({products, pageSize, onProductsChange, setLoading, setError, setPageSize}: {
+const sortByOptions = [
+  {label: 'Ціна (спочатку найменша)', value: OrderBy.PRICE_ASC},
+  {label: 'Ціна (спочатку найбільша)', value: OrderBy.PRICE_DESC},
+  {label: 'A-Z', value: OrderBy.NAME_ASC},
+  {label: 'Z-A', value: OrderBy.NAME_DESC},
+  {label: 'Нещодавно додано', value: OrderBy.DATE_DESC},
+  {label: 'Найстаріша за датою', value: OrderBy.DATE_ASC},
+];
+
+export default function Filters({
+                                  products,
+                                  pageSize,
+                                  onProductsChange,
+                                  setLoading,
+                                  setError,
+                                  setPageSize,
+                                }: {
   products: ProductCardType[];
   pageSize: number;
   setPageSize: (size: number) => void;
-  onProductsChange: (
-    products: ProductCardType[]
-  ) => void;
+  onProductsChange: (products: ProductCardType[]) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string) => void;
 }) {
-  const [orderBy, setOrderBy] = useState<string>('asc');
+  const [orderBy, setOrderBy] = useState<OrderBy>(OrderBy.PRICE_ASC);
   const [categories, setCategories] = useState<CategoryType[] | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
@@ -47,35 +61,33 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
       const filteredProducts = sortProducts(products);
       onProductsChange(filteredProducts);
     }
-  }, [pageSize, orderBy, products]);
+  }, [pageSize, orderBy, products, onProductsChange, sortProducts]);
 
   useEffect(() => {
-    if (selectedCategory && products) {
-      onProductsChange(products.filter((product) => product.category?._id === selectedCategory));
-    } else {
-      onProductsChange(products);
-    }
-  }, [selectedCategory, products]);
+    getAllCategoriesAndSetState();
+  }, [onProductsChange, setLoading, setError]);
+
+  const memoizedSortProducts = useMemo(() => sortProducts, [orderBy]);
 
   function sortProducts(products: ProductCardType[]) {
     let sortedProducts = [...products];
     switch (orderBy) {
-      case 'price_asc':
+      case OrderBy.PRICE_ASC:
         sortedProducts.sort(sortByPrice);
         break;
-      case 'price_desc':
+      case OrderBy.PRICE_DESC:
         sortedProducts.sort(sortByPrice).reverse();
         break;
-      case 'name_asc':
+      case OrderBy.NAME_ASC:
         sortedProducts.sort(sortByName);
         break;
-      case 'name_desc':
+      case OrderBy.NAME_DESC:
         sortedProducts.sort(sortByName).reverse();
         break;
-      case 'date_asc':
+      case OrderBy.DATE_ASC:
         sortedProducts.sort(sortByDate);
         break;
-      case 'date_desc':
+      case OrderBy.DATE_DESC:
         sortedProducts.sort(sortByDate).reverse();
         break;
     }
@@ -83,24 +95,24 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
   }
 
   function clearFilters() {
-    setOrderBy('price_asc');
+    setOrderBy(OrderBy.PRICE_ASC);
     setPageSize(10);
     setSelectedCategory(null);
   }
 
-  useEffect(() => {
-    getAllCategories()
-      .then((response) => {
-        setCategories(response.data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        toast.error(`Щось пішло не так: ${error.message}`, {id: "categories"});
-        setError(`Something went wrong while fetching categories: ${error.message}`);
-      });
-  }, []);
+  async function getAllCategoriesAndSetState() {
+    try {
+      const response = await getAllCategories();
+      setCategories(response.data);
+      setLoading(false);
+    } catch (error: any) {
+      const errorMessage = `Something went wrong while fetching categories: ${error.message}`;
+      toast.error(`Щось пішло не так: ${error?.message}`, { id: 'categories' });
+      setError(errorMessage);
+    }
+  }
 
-  const isFilterApplied = (selectedCategory != null || pageSize !== 10 || orderBy !== 'price_asc')
+  const isFilterApplied = selectedCategory !== null || pageSize !== 10 || orderBy !== OrderBy.PRICE_ASC;
   return (
     <>
       <div className="flex flex-col sm:flex-row gap-y-4 justify-between  text-sm items-center w-full sm:py-10 py-4">
@@ -123,7 +135,7 @@ export default function Filters({products, pageSize, onProductsChange, setLoadin
 
         <div className="flex items-center  gap-x-2">
           <span>Фільтрація</span>
-          <Select defaultValue="price_asc" onValueChange={setOrderBy}>
+          <Select defaultValue={OrderBy.PRICE_ASC} onValueChange={(value) => setOrderBy(value as OrderBy)}>
             <SelectTrigger className="w-[100px]">
               <SelectValue placeholder="---------"/>
             </SelectTrigger>

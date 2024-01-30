@@ -29,7 +29,7 @@ function App() {
               <Route path='/' element={<Home/>}/>
               <Route path='/products' element={<Products/>}/>
               <Route path='/me' element={<MyAccount/>}/>
-              <Route path='/products/:product' element={<ProductDetails/>}/>
+              <Route path='/products/:productId' element={<ProductDetails/>}/>
               <Route path='/admin' element={<Admin/>}/>
               <Route path='*' element={<h1>Такої сторінки не існує</h1>}/>
             </Routes>
