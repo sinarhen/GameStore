@@ -23,7 +23,7 @@ export default function Home() {
         <div
           className='flex flex-col w-full'
         >
-          <Header appearDuration={appearDuration} animateableText='MKm-Shop.' baseText='Welcome to '/>
+          <Header appearDuration={appearDuration} animateableText='MKm-Shop.' baseText='Ласкаво просимо до '/>
         </div>
 
         <motion.p
@@ -32,8 +32,7 @@ export default function Home() {
           transition={{delay: appearDuration + 1, duration: appearDuration}}
 
           className='text-gray-400 mt-4 text-md'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel eos sapiente minus rerum nulla officia deserunt
-          at, distinctio a id qui, est ratione esse. Et reprehenderit accusamus illum odio molestiae.
+          Опис до магазину
 
         </motion.p>
         <AnimatedSeparator delay={appearDuration + 1.5}/>
