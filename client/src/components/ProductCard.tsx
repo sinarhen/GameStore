@@ -50,7 +50,7 @@ export default function ProductCard({product}: { props?: any; product: ProductCa
       className="max-w-md h-fit transition-all hover:translate-x-0.5 hover:-translate-y-0.5 group hover:bg bg-neutral-800 cursor-pointer mx-auto rounded-md overflow-hidden shadow-lg hover:shadow-xl">
       <div className="relative">
         <div className="aspect-square">
-          <img className="w-full object-cover h-full" src={imageUrl}/>
+          <img className="w-full object-cover h-full" src={imageUrl} alt={product.name}/>
 
         </div>
 

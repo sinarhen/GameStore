@@ -38,13 +38,13 @@ const sortByOptions = [
 ];
 
 export default function Filters({
-                                  products,
-                                  pageSize,
-                                  onProductsChange,
-                                  setLoading,
-                                  setError,
-                                  setPageSize,
-                                }: {
+  products,
+  pageSize,
+  onProductsChange,
+  setLoading,
+  setError,
+  setPageSize,
+}: {
   products: ProductCardType[];
   pageSize: number;
   setPageSize: (size: number) => void;
