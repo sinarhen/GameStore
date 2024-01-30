@@ -36,8 +36,6 @@ export const FavoritesProvider = ({children}: {
 
     try {
       if (user !== null) {
-
-
         if (method === 'post') {
           await addToFavorites(product._id);
         } else {
@@ -53,6 +51,7 @@ export const FavoritesProvider = ({children}: {
         });
       } else {
         openAuthDialog('login');
+        toast.error('Ви повинні бути авторизованим щоб додати в обране.');
       }
     } catch (error) {
       console.error(error);
