@@ -34,7 +34,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
       {
         await updateIsPaid(order?._id, !isPaid);
         setIsPaid(!isPaid);
-        updateOrder({...order, isPaid: !isPaid})
+        updateOrder({...order, isPaid: !isPaid, status: confirmedStatus});
         toast.success('Статус оплати замовлення оновлено');
       } else {
         toast.error('Помилка. Подивіться в консоль');
@@ -43,7 +43,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
     } catch (err: any){
       toast.error(err.message ?? 'Помилка. Подивіться в консоль');
     }
-  }, [order, isPaid])
+  }, [order, isPaid, confirmedStatus, updateOrder]);
   const handleUpdateStatus = useCallback(async () => {
     try {
       if (order?._id) {
@@ -66,7 +66,6 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
         <div className="flex w-full flex-col">
           <p className="mt-4 mb-1">Статус: {confirmedStatus &&
               <span className={statusColor(confirmedStatus)}>{translateStatus(confirmedStatus)}</span>}</p>
-              {confirmedStatus === "paid" && <>Статус оплати:<p className={statusColor(confirmedStatus)}>{translateStatus(confirmedStatus)}</p></>}
           {isAdmin && <>
               <Select onValueChange={(e) => setStatus(e)}>
                   <SelectTrigger className="w-[180px]">
@@ -76,8 +75,7 @@ const OrderDialog: React.FC<OrderDialogProps> = ({
                       <SelectItem value="ready">Ready</SelectItem>
                       <SelectItem value="processing">Processing</SelectItem>
                       <SelectItem value="cancelled">Cancelled</SelectItem>
-                      <SelectItem value="paid">Paid</SelectItem>
-                      <SelectItem value="pending">Pending</SelectItem>
+                      <SelectItem value="confirmed">Confirmed</SelectItem>
                   </SelectContent>
               </Select>
               <Button onClick={handleUpdateStatus}
