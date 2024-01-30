@@ -28,7 +28,7 @@ export default function Home() {
         <AnimatedSeparator delay={appearDuration + 1.5}/>
 
       </Section>
-      <Section className='h-full '>
+      <Section className=' '>
         <motion.p
           initial={{opacity: 0, x: -1000}}
           animate={{opacity: 1, x: 0, animationTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)'}}
@@ -66,7 +66,7 @@ export default function Home() {
         </motion.p>
         
       </Section>
-      <Section className='pb-32 flex flex-col justify-evenly'>
+      <Section className='pb-16 flex flex-col justify-evenly'>
           <div className=''>
             <div className='text-gray-600 mt-2'>
               <p>Телеграм для зв'язку: <a href="https://t.me/temslivv" target="_blank" rel="noopener noreferrer" className="cursor-pointer underlineg">@temslivv</a></p>
