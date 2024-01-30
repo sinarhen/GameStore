@@ -12,6 +12,7 @@ import {useCurrentUser} from "../hooks/useCurrentUser";
 import TableEmpty from "./TableEmpty";
 import {useDialog} from "../hooks/useDialog";
 import {CrossCircledIcon, CheckCircledIcon} from "@radix-ui/react-icons";
+import Clipboard from "./Clipboard";
 
 export default function Orders({
   orders,
@@ -88,7 +89,10 @@ export default function Orders({
           <TableBody>
             {orders.map((order) => (
               <TableRow key={order._id}>
-                <TableCell className="w-[10px]">{order._id}</TableCell>
+                <TableCell className="w-[10px] underline hover:text-indigo-600 transition-colors  underline-offset-1 cursor-pointer" onClick={() => {
+                  navigator.clipboard.writeText(order._id as string);
+                  toast.success("ID замовлення скопійовано")
+                }}>{order._id} </TableCell>
                 <TableCell onClick={() => {
                   setDialogOpen(true);
                 }}
