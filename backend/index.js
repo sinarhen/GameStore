@@ -3,7 +3,6 @@ import express from 'express';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import apiRouter from './routers/apiRouter.js';
-import cors from 'cors';
 
 dotenv.config();
 
