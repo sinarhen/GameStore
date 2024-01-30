@@ -1,6 +1,6 @@
 import {useState} from "react";
 import {MdArrowDropDown} from "react-icons/md";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {removeCookie} from "../lib/auth";
 import toast from "react-hot-toast";
 import {FaUser} from "react-icons/fa";
@@ -16,12 +16,12 @@ export default function UserNav({username, avatarUrl, isAdmin}: {
     window.location.replace("/")
     toast.success("Успішний вихід")
   }
-
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false)
   return (
     <div className='flex items-center gap-x-2'>
       {isAdmin && <span className="px-1 text-xs rounded-sm py-0.5 bg-green-600 ">Admin</span>}
-      <div className='rounded-full w-10 h-10 overflow-hidden flex items-center justify-center bg-neutral-900'>
+      <div onClick={() => navigate('/me')} className='rounded-full w-10 h-10 overflow-hidden flex items-center justify-center bg-neutral-900'>
         {avatarUrl ? (
           <img className="w-full h-full object-cover bg-center rounded-3xl" src={avatarUrl} alt={"avatar"}/>
         ) : (
