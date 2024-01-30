@@ -2,12 +2,12 @@ import Button from "./Button";
 import {Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle} from "./Dialog";
 
 export default function ConfirmDialog({
-                                        onConfirm,
-                                        open,
-                                        setOpen,
-                                        title,
-                                        description
-                                      }: {
+  onConfirm,
+  open,
+  setOpen,
+  title,
+  description
+}: {
   onConfirm: () => void;
   open: boolean;
   setOpen: (open: boolean) => void;
