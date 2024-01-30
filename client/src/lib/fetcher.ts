@@ -4,7 +4,7 @@ import {getHeadersWithCookiesByHeaderName} from "./utils";
 async function request(method: 'get' | 'post' | 'put' | 'delete', url: string, data: any = null, withAuth: boolean = false) {
   const config = {
     method,
-    url: process.env.REACT_APP_API_URL as string + url,
+    url: process.env.REACT_APP_API_URL + url,
     ...(data && {data}),
     ...(withAuth && {headers: getHeadersWithCookiesByHeaderName()}),
   };
