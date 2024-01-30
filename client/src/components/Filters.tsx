@@ -64,8 +64,21 @@ export default function Filters({
   }, [pageSize, orderBy, products, onProductsChange, sortProducts]);
 
   useEffect(() => {
-    getAllCategoriesAndSetState();
-  }, [getAllCategoriesAndSetState]);
+      async function getAllCategoriesAndSetState() {
+        try {
+          const response = await getAllCategories();
+          setCategories(response.data);
+          setLoading(false);
+        } catch (error: any) {
+          const errorMessage = `Something went wrong while fetching categories: ${error.message}`;
+          toast.error(`Щось пішло не так: ${error?.message}`, { id: 'categories' });
+          setError(errorMessage);
+        }
+
+      }
+      getAllCategoriesAndSetState();
+
+    }, []);
 
   const memoizedSortProducts = useMemo(() => sortProducts, [orderBy]);
 
@@ -100,17 +113,7 @@ export default function Filters({
     setSelectedCategory(null);
   }
 
-  async function getAllCategoriesAndSetState() {
-    try {
-      const response = await getAllCategories();
-      setCategories(response.data);
-      setLoading(false);
-    } catch (error: any) {
-      const errorMessage = `Something went wrong while fetching categories: ${error.message}`;
-      toast.error(`Щось пішло не так: ${error?.message}`, { id: 'categories' });
-      setError(errorMessage);
-    }
-  }
+
 
   const isFilterApplied = selectedCategory !== null || pageSize !== 10 || orderBy !== OrderBy.PRICE_ASC;
   return (

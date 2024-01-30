@@ -74,7 +74,7 @@ export default function CartItem({
             <p className="align-start">{item?.product?.name} <span
               className="text-gray-400 text-xs flex items-center">x{item.quantity} {inputValue !== 0 ? (inputValue > 0 ? `+${inputValue}` : inputValue) : ""}</span>
             </p>
-            <p className="text-xs text-gray-700">{item.product.description}</p>
+            <p className="text-xs text-gray-700 line-clamp-2">{item.product.description}</p>
           </div>
         </div>
 
