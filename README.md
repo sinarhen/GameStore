@@ -2,7 +2,80 @@
 This simple web application was built using Mongo, Express, React, Node
 
 ## Frontend
-*(Documentation in progess)*
+
+Frontend was built with React and TypeScript 
+
+## Website Review
+
+### Landing page
+
+The landing page contains these elements:
+
+- Navigation bar with links to other pages and Authorization
+- Description of the game store
+
+### Image:
+![](docs/images/landing.png)
+
+### Navigation bar
+
+- When clicking on the logo, the user is redirected to the landing page
+- When clicking on the links, the user is redirected to the corresponding page
+- When clicking on the Authorization button, the user is redirected to the login page
+
+### Products Page
+
+- Route: "/products"
+- Authentication is required to add to cart or favorites products
+
+![](docs/images/products.gif)
+
+
+### Product Detail
+
+- Route: "/products/:productID"
+- The name and full description before it is shown, also here you can add a product to your cart too
+
+![](docs/images/productDetail.gif)
+
+
+### Authentication Page
+
+- Route: "/auth"
+- Provides two variants of the form (login and registration)
+- Users can change the form by clicking on a button below the header or manually by changing search parameters with `?variant=<"login" or "register">`.
+- Performs validation with Zod schema.
+- Password length must be more than 5 characters.
+- Name must be at least 2 characters
+
+![](docs/images/auth.gif)
+
+### User Profile
+
+- Route: "/me"
+- Authentication Required.
+- Allows users to change their name, email and avatar.
+- Allows users to add to cart and favorites products
+
+![](docs/images/userProfile.gif)
+
+### Cart
+
+- Without route
+- Authentication Required
+- Allows users to add to cart products
+
+![](docs/images/cart.gif)
+
+
+### Confirmation Order
+
+- Without route
+- Authentication Required
+- Allows users to confirm their order
+- After confirmation, order changes status to "confirmed"
+
+![](docs/images/confirmationOrder.gif)
 
 ## Backend
 Backend was built with Node and Express as main technologies (Without typescript)
