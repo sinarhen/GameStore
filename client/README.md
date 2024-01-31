@@ -24,7 +24,7 @@ The landing page contains these elements:
 - Description of the game store
 
 ### Image:
-![](docs/images/landing.gif)
+![](../docs/images/landing.gif)
 
 ### 🔝 Navigation bar
 
@@ -37,7 +37,7 @@ The landing page contains these elements:
 - Route: "/products"
 - Authentication is required to add to cart or favorites products
 
-![](docs/images/products.gif)
+![](../docs/images/products.gif)
 
 
 ### 🔍 Product Detail
@@ -45,7 +45,7 @@ The landing page contains these elements:
 - Route: "/products/:productID"
 - The name and full description before it is shown, also here you can add a product to your cart too
 
-![](docs/images/productDetail.gif)
+![](../docs/images/productDetail.gif)
 
 
 ### 🔐 Authentication Page
@@ -57,7 +57,7 @@ The landing page contains these elements:
 - Password length must be more than 5 characters.
 - Name must be at least 2 characters
 
-![](docs/images/auth.gif)
+![](../docs/images/auth.gif)
 
 ### 👤 User Profile
 
@@ -66,7 +66,7 @@ The landing page contains these elements:
 - Allows users to change their name, email and avatar.
 - Allows users to add to cart and favorites products
 
-![](docs/images/userProfile.gif)
+![](../docs/images/userProfile.gif)
 
 ### 🛒 Cart
 
@@ -74,7 +74,7 @@ The landing page contains these elements:
 - Authentication Required
 - Allows users to add to cart products
 
-![](docs/images/cart.gif)
+![](../docs/images/cart.gif)
 
 
 ### ✅ Confirmation Order
@@ -84,7 +84,7 @@ The landing page contains these elements:
 - Allows users to confirm their order
 - After confirmation, order changes status to "confirmed"
 
-![](docs/images/confirmationOrder.gif)
+![](../docs/images/confirmationOrder.gif)
 
 
 
