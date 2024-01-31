@@ -202,7 +202,8 @@ Authentication is implemented using JWT tokens. The token is sent in the `author
 
 ##### checkAuth
 
-This middleware function checks if the request has a valid JWT token in the `authorization` header. If the token is valid, it decodes the token to get the user's ID and role and attaches them to the request object. If the token is not valid or not present, it sends a 401 or 403 status code with a message 'Unauthorized'. 
+This middleware function checks if the request has a valid JWT token in the `authorization` header. If the token is valid, it decodes the token to get the user's ID and role and attaches them to the request object. If the token is not valid or not present, it sends a 401 or 403 status code with a message 'Unauthorized'.  
+
 ![checkAuth](docs/images/checkAuth.png)
 
 ##### checkAdmin
