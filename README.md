@@ -1,11 +1,9 @@
 # Game store
-This simple web application was built using Mongo, Express, React, Node
+This web application was built using Mongo, Express, React, Node
 
 ## Frontend
 
 Frontend was built with React and TypeScript 
-
-## Website Review
 
 ### Landing page
 
