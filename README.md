@@ -14,7 +14,7 @@ The landing page contains these elements:
 - Description of the game store
 
 ### Image:
-![](docs/images/landing.png)
+![](docs/images/landing.gif)
 
 ### Navigation bar
 
