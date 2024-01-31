@@ -1,9 +1,10 @@
 # Game store
-This web application was built using Mongo, Express, React, Node
+This web application was built using Mongo, Express, React, Node 
 
+deployed at: *https://mkmobile.org*
 ## Frontend
 
-Frontend was built with React and TypeScript 
+Frontend was built with React, TypeScript and Tailwind CSS 
 
 ### Landing page
 
