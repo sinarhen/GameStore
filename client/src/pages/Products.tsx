@@ -55,6 +55,7 @@ export default function Products() {
                      buttonAction={() => window.location.reload()}/>;
   }
 
+  console.log(filteredProducts)
   const indexOfLastItem = currentPage * pageSize;
   const indexOfFirstItem = indexOfLastItem - pageSize;
   const currentItems = filteredProducts?.slice(indexOfFirstItem, indexOfLastItem);
