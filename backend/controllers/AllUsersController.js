@@ -13,11 +13,10 @@ export const getAllUsers = async (req, res) => {
 export const deleteUserForAdmin = async (req, res) => {
     try {
         const {userId} = req.params;
-        const user = await UserModel.findById(userId);
+        const user = await UserModel.findByIdAndDelete(userId);
         if (!user) {
             return res.status(404).json({message: 'User not found'});
         }
-        await user.remove();
         res.json({message: 'User deleted successfully'});
     } catch (err) {
         console.log(err);

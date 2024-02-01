@@ -23,7 +23,6 @@ The landing page contains these elements:
 - Navigation bar with links to other pages and Authorization
 - Description of the game store
 
-### Image:
 ![](../docs/images/landing.gif)
 
 ### 🔝 Navigation bar
@@ -85,9 +84,59 @@ The landing page contains these elements:
 - After confirmation, order changes status to "confirmed"
 
 ![](../docs/images/confirmationOrder.gif)
+### 👮‍♂️ Admin Panel
+- Route: "/admin". Authentication and admin role in the token are required.
+- The admin panel is a powerful feature that allows users with the admin role to manage various aspects of the application.
 
+![Admin panel](../docs/images/adminPanel.gif)
 
+#### 🚀 Admin panel allows to manage users
 
+##### 🔄 Admin can change user's role
+Admins have the ability to change the role of a user. Note: When the role of a user gets changed, they will need to log in again to see the changes because the token needs to be updated.
+
+![Admin panel role](../docs/images/adminPanelUsersRole.gif)
+
+##### 🗑️ Admin can delete users
+Admins can remove users from the system, providing a way to manage who has access to the application.
+
+![Admin panel delete](../docs/images/adminPanelUsersDelete.gif)
+
+#### 📦 Admin panel allows to manage orders
+
+##### 🔄 Admin can change order's status and isPaid status
+Admins can update the status of orders, including whether or not the order has been paid for. This helps keep track of order fulfillment.
+
+![Admin panel orders status](../docs/images/adminPanelOrdersStatus.gif)
+
+##### 🗑️ Admin can delete order's products
+Admins can remove products from orders, providing flexibility in order management.
+
+![Admin panel orders delete](../docs/images/adminPanelOrdersDelete.gif)
+
+#### 🛍️ Admin panel allows to manage products
+
+##### ➕ Admin can create products
+Admins can add new products to the application, allowing for the introduction of new items for purchase.
+
+![Admin panel products](../docs/images/adminPanelProductsCreate.gif)
+
+##### 🗑️ Admin can delete products
+Admins can remove products from the application, providing a way to manage the available inventory.
+
+![Admin panel products delete](../docs/images/adminPanelProductsDelete.gif)
+
+##### 🔄 Admin can change products
+Admins can update product details, allowing for adjustments in product information, pricing, and more.
+
+![Admin panel products change](../docs/images/adminPanelProductsUpdate.gif)
+
+#### 🏷️ Admin panel allows to manage categories
+
+##### ➕🗑️ Admin can create and delete categories
+Admins can add and remove product categories, providing a way to organize the products in the application.
+
+![Admin panel categories](../docs/images/adminPanelCategoriesCrDe.gif)
 ## 🏃‍♂️ Running the Frontend
 To run the frontend, first install the necessary dependencies:
 
